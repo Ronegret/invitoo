@@ -1,0 +1,313 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Invitoo — tokens
+   El sitio comercial usa los valores de :root.
+   Cada invitación sobrescribe --tinta/--papel/--acento en su <main>.
+   ------------------------------------------------------------------ */
+
+:root {
+  /* Paleta de papelería de boda: crema cálido, tinta que tira a marrón y
+     un granate de lacre. Nada gris: el gris enfría, y esto no puede. */
+  --papel: #fbf8f3;
+  --tinta: #1a1512;
+  --acento: #8c1d2c;
+  --bruma: #f0e8dc;
+  --oro: #b08d57;
+  /* Verde de olivo, más profundo que antes: el anterior se lavaba sobre
+     crema y las ramas no se leían. */
+  --verde: #5f7051;
+
+  --display: var(--font-display), "Bodoni Moda", Didot, Georgia, serif;
+  --texto: var(--font-texto), ui-sans-serif, system-ui, sans-serif;
+
+  --grano: 0.035;
+}
+
+@theme inline {
+  --color-papel: var(--papel);
+  --color-tinta: var(--tinta);
+  --color-acento: var(--acento);
+  --color-bruma: var(--bruma);
+  --color-oro: var(--oro);
+  --color-verde: var(--verde);
+  --font-display: var(--display);
+  --font-texto: var(--texto);
+}
+
+html,
+body {
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: var(--texto);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Grano de papel: 1 KB de SVG, sin peticiones extra. */
+.grano::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--grano);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+/* Tipografía display: Cruilla pide tamaño y aire. */
+.display {
+  font-family: var(--display);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Detalle de movimiento
+   Lo que separa «funciona» de «está terminado». Nada dura más de
+   400 ms y nada mueve el contenido de sitio.
+   ------------------------------------------------------------------ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enlaces y botones: el cambio se nota, no se ve. */
+a,
+button,
+summary {
+  transition:
+    color 220ms ease,
+    background-color 260ms ease,
+    border-color 260ms ease,
+    opacity 220ms ease,
+    transform 260ms cubic-bezier(.22,.7,.28,1);
+}
+
+a:active,
+button:not(:disabled):active {
+  transform: scale(0.985);
+}
+
+/* Foco visible de verdad: mucha gente de una boda navega con teclado
+   sin saber que lo hace (teclados bluetooth, lectores, TV). */
+:where(a, button, input, textarea, select, summary):focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Las tarjetas de precio se levantan un punto al pasar por encima.
+   Solo donde hay ratón: en táctil el hover se queda pegado. */
+@media (hover: hover) {
+  .plan {
+    transition:
+      transform 320ms cubic-bezier(.22,.7,.28,1),
+      box-shadow 320ms ease;
+  }
+  .plan:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.35);
+  }
+}
+
+/* El marco de móvil de la galería, igual. */
+@media (hover: hover) {
+  .marco {
+    transition: transform 420ms cubic-bezier(.22,.7,.28,1);
+  }
+  .marco:hover {
+    transform: translateY(-6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .plan:hover,
+  .marco:hover,
+  a:active,
+  button:active { transform: none; }
+}
+
+/* ------------------------------------------------------------------
+   Botones
+   Cada uno tiene que devolver algo al tocarlo. Un botón que no
+   responde se siente roto aunque funcione.
+   ------------------------------------------------------------------ */
+
+/* Relleno que barre de izquierda a derecha por debajo del texto. */
+.boton {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.boton::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--tinta);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 480ms cubic-bezier(.65,0,.25,1);
+}
+@media (hover: hover) {
+  .boton:hover::before { transform: scaleX(1); }
+  .boton:hover { color: var(--papel); border-color: var(--tinta); }
+}
+
+/* El inverso, para los que ya vienen llenos. */
+.boton-lleno {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.boton-lleno::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--acento);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 480ms cubic-bezier(.65,0,.25,1);
+}
+@media (hover: hover) {
+  .boton-lleno:hover::before { transform: scaleX(1); }
+  .boton-lleno:hover { color: #fff; }
+}
+
+/* Enlace de texto: el subrayado crece desde la izquierda. */
+.enlace-sub {
+  position: relative;
+}
+.enlace-sub::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 380ms cubic-bezier(.65,0,.25,1);
+}
+@media (hover: hover) {
+  .enlace-sub:hover::after { transform: scaleX(1); transform-origin: left; }
+}
+
+/* Los enlaces del menú, igual pero más discreto. */
+.nav-enlace {
+  position: relative;
+}
+.nav-enlace::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  height: 1px;
+  width: 100%;
+  background: var(--acento);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 340ms cubic-bezier(.65,0,.25,1);
+}
+@media (hover: hover) {
+  .nav-enlace:hover::after { transform: scaleX(1); transform-origin: left; }
+}
+
+/* Los titulares grandes entran letra a letra desde abajo. */
+.linea-mascara {
+  display: block;
+  overflow: hidden;
+  /* La máscara recorta por abajo; sin este respiro se comía las colas de
+     la «g» y la «y» de una didone, que bajan mucho. */
+  padding-bottom: 0.06em;
+}
+.linea-mascara > span {
+  display: block;
+  /* Cada línea es UNA línea. Si se parte, la máscara recorta por la mitad
+     y el titular se lee a trozos. */
+  white-space: nowrap;
+  transform: translateY(105%);
+  animation: sube-linea 1000ms cubic-bezier(.22,.7,.28,1) forwards;
+}
+@keyframes sube-linea {
+  to { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boton::before,
+  .boton-lleno::before { transition: none; }
+  .linea-mascara > span { animation: none; transform: none; }
+}
+
+/* La foto del hero se descubre de abajo a arriba, como se levanta un velo. */
+.foto-hero {
+  clip-path: inset(100% 0 0 0);
+  animation: descubre-foto 1200ms cubic-bezier(.62,0,.24,1) forwards 620ms;
+}
+@keyframes descubre-foto {
+  to { clip-path: inset(0 0 0 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .foto-hero { animation: none; clip-path: none; }
+}
+
+/* ------------------------------------------------------------------
+   Sutilezas
+   Lo que se nota sin verse. Nada aquí llama la atención: si alguien
+   repara en uno de estos efectos, está mal calibrado.
+   ------------------------------------------------------------------ */
+
+/* El retrato de la portada respira: 4 % en 24 segundos. */
+.respira-lento {
+  animation: respiraLento 24s ease-in-out infinite alternate;
+}
+@keyframes respiraLento {
+  from { transform: scale(1); }
+  to   { transform: scale(1.04); }
+}
+
+/* El titular de la portada entra con la letra abriéndose: es el gesto de
+   una invitación grabada, el texto se asienta.
+   Va en su propia clase y NO en `.display`: puesto ahí, los treinta
+   titulares de la página se animaban todos a la vez al cargar, la mayoría
+   fuera de pantalla, y el efecto se perdía entero. */
+.asienta {
+  animation: asienta 1400ms cubic-bezier(.19,1,.22,1) both;
+}
+@keyframes asienta {
+  from { letter-spacing: .08em; opacity: 0; }
+  to   { letter-spacing: -.02em; opacity: 1; }
+}
+
+/* Las secciones de la invitación se separan con un hilo que crece desde
+   el centro, no con un borde que ya está ahí. */
+.hilo {
+  display: block;
+  height: 1px;
+  width: 100%;
+  background: color-mix(in srgb, currentColor 18%, transparent);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 1400ms cubic-bezier(.22,.7,.28,1);
+}
+.hilo.crece { transform: scaleX(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .respira-lento { animation: none; }
+  .asienta { animation: none; }
+  .hilo { transform: none; transition: none; }
+}

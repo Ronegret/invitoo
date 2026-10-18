@@ -1,9 +1,11 @@
-# Invitoo
+<div align="center">
 
-Digital wedding invitations with custom branding, RSVP management and
-AI-generated songs for the couple.
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=20,12,24&height=170&section=header&text=Invitoo&fontSize=42&fontColor=ffffff&fontAlignY=38&desc=AI%20digital%20wedding%20invitations&descSize=16&descAlignY=60&animation=fadeIn" alt="Invitoo" />
 
-> ℹ️ Work in progress. Demo/placeholder data only.
+</div>
+
+## 🧭 Overview
+Digital wedding invitations with custom branding, RSVP management and AI-generated songs for the couple. Work in progress; demo data only.
 
 ## ✨ Features
 - Custom-branded digital invitations
@@ -11,9 +13,19 @@ AI-generated songs for the couple.
 - AI-generated personalized songs
 - Supabase backend
 
-## 🛠️ Tech stack
-`React` · `Supabase` · `AI (Suno)` · JavaScript
+## 🛠️ Built with
+`React` · `Supabase` · `AI (Suno)` · `JavaScript`
 
-## 👤 Author
-**Rodrigo Negrete** — AI Product Designer & Automation Architect
-[Portfolio](https://www.rodrigonegrete.es) · [Case study](https://www.rodrigonegrete.es/invitoo/)
+## 🚀 Run locally
+```bash
+npm install
+npm run dev
+```
+
+
+---
+
+<div align="center">
+<sub>Made by <b>Rodrigo Negrete</b> — AI Product Designer &amp; Automation Architect<br/>
+<a href="https://www.rodrigonegrete.es">Portfolio</a> · <a href="https://linkedin.com/in/rodrigonegretearos">LinkedIn</a> · <a href="https://github.com/Ronegret">GitHub</a></sub>
+</div>

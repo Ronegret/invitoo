@@ -1,3 +1,4 @@
+import CuentaPortada from "@/components/bloques/CuentaPortada";
 import { partesMadrid } from "@/lib/fecha";
 import SelloRegistro from "./aperturas/SelloRegistro";
 import { Despedida, Secciones, Y, type Props } from "./comun";
@@ -61,6 +62,7 @@ function Portada(props: Props) {
             <Y /> <span className="registro-marca wow">{d.b}</span>
           </span>
         </h1>
+        <CuentaPortada hasta={props.inv.pareja.fecha} estilo="dos-puntos" antes="Faltan" className="cp-izq mt-8" />
         {d.frase && <p className="mt-8 max-w-[28rem] text-[1.1875rem] leading-[1.55]">{d.frase}</p>}
       </div>
 

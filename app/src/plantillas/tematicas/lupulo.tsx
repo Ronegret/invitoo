@@ -1,3 +1,4 @@
+import CuentaPortada from "@/components/bloques/CuentaPortada";
 import Calendario from "@/components/bloques/Calendario";
 import ComoLlegar, { destinosDe } from "@/components/bloques/ComoLlegar";
 import Rsvp from "@/components/bloques/Rsvp";
@@ -35,8 +36,8 @@ import "./lupulo.css";
  */
 
 const fuente: FuenteVideo = {
-  vertical: "/aperturas/constelacion/vertical.mp4",
-  horizontal: "/aperturas/constelacion/horizontal.mp4",
+  vertical: "/tematicas/lupulo/hero-v.mp4",
+  horizontal: "/tematicas/lupulo/hero-h.mp4",
   poster: "/tematicas/lupulo/poster-v.avif",
   posterHorizontal: "/tematicas/lupulo/poster-h.avif",
   webm: "/tematicas/lupulo/hero-v.webm",
@@ -128,6 +129,7 @@ function Portada(props: Props) {
             <span className="first-letter:uppercase inline-block">{d.fechaLarga}</span>
             {d.lugar && <span className="block tabular-nums">a las {d.hora} · {d.lugar}</span>}
           </p>
+          <CuentaPortada hasta={d.fechaIso} estilo="rombo" className="k-cuenta lupulo-cuenta" />
         </div>
         <a href="#k-inicio" className="k-baja lp-baja">
           Descubrid la invitación

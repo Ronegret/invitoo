@@ -145,7 +145,14 @@
         "generadas/apertura-brasa-768.webp",
         "generadas/apertura-brasa-1080.avif",
         "generadas/apertura-brasa-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: apertura-terracota",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "apertura-bruma",
@@ -166,7 +173,14 @@
         "generadas/apertura-bruma-768.webp",
         "generadas/apertura-bruma-1080.avif",
         "generadas/apertura-bruma-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: apertura-lino",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "apertura-cielo",
@@ -187,7 +201,14 @@
         "generadas/apertura-cielo-768.webp",
         "generadas/apertura-cielo-1080.avif",
         "generadas/apertura-cielo-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: apertura-velo",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "apertura-constelacion",
@@ -208,7 +229,14 @@
         "generadas/apertura-constelacion-768.webp",
         "generadas/apertura-constelacion-1080.avif",
         "generadas/apertura-constelacion-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: apertura-tinta",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "apertura-floracion",
@@ -250,7 +278,14 @@
         "generadas/apertura-jardin-768.webp",
         "generadas/apertura-jardin-1080.avif",
         "generadas/apertura-jardin-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: apertura-floracion",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "apertura-lino",
@@ -313,7 +348,14 @@
         "generadas/apertura-marea-768.webp",
         "generadas/apertura-marea-1080.avif",
         "generadas/apertura-marea-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: apertura-sobre",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "apertura-terracota",
@@ -397,7 +439,14 @@
         "generadas/azulejo-album-1-768.webp",
         "generadas/azulejo-album-1-1080.avif",
         "generadas/azulejo-album-1-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: marca-ramo-azahar",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "azulejo-album-2",
@@ -565,7 +614,14 @@
         "generadas/bachata-detalle-768.webp",
         "generadas/bachata-detalle-1080.avif",
         "generadas/bachata-detalle-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: marca-alianzas-terciopelo",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "bachata-album-4",
@@ -576,8 +632,8 @@
       "lista": "encargos-tematicas-k4.json",
       "grupo": "tematicas/bachata",
       "original": {
-        "ancho": 832,
-        "alto": 1248
+        "ancho": 896,
+        "alto": 1120
       },
       "variantes": [
         "generadas/bachata-album-4-480.avif",
@@ -586,7 +642,14 @@
         "generadas/bachata-album-4-768.webp",
         "generadas/bachata-album-4-1080.avif",
         "generadas/bachata-album-4-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: marca-alianzas-mano",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "blason-album-1",
@@ -744,8 +807,8 @@
       "lista": "encargos-tematicas-k3.json",
       "grupo": "tematicas/brazada",
       "original": {
-        "ancho": 832,
-        "alto": 1248
+        "ancho": 1024,
+        "alto": 1024
       },
       "variantes": [
         "generadas/brazada-1-480.avif",
@@ -754,7 +817,14 @@
         "generadas/brazada-1-768.webp",
         "generadas/brazada-1-1080.avif",
         "generadas/brazada-1-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: orilla-detalle-2",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "brazada-2",
@@ -807,8 +877,8 @@
       "lista": "encargos-tematicas-k3.json",
       "grupo": "tematicas/brazada",
       "original": {
-        "ancho": 832,
-        "alto": 1248
+        "ancho": 720,
+        "alto": 1280
       },
       "variantes": [
         "generadas/brazada-4-480.avif",
@@ -817,7 +887,14 @@
         "generadas/brazada-4-768.webp",
         "generadas/brazada-4-1080.avif",
         "generadas/brazada-4-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: orilla-poster-hero",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "brazada-detalle-gotas",
@@ -901,7 +978,14 @@
         "generadas/carta-album-3-768.webp",
         "generadas/carta-album-3-1080.avif",
         "generadas/carta-album-3-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: marca-lugar-segovia",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "carta-album-2",
@@ -985,7 +1069,14 @@
         "generadas/carta-capitulo-2-768.webp",
         "generadas/carta-capitulo-2-1080.avif",
         "generadas/carta-capitulo-2-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: marca-ramo-olivo",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "carta-capitulo-3",
@@ -1027,7 +1118,14 @@
         "generadas/carta-capitulo-4-768.webp",
         "generadas/carta-capitulo-4-1080.avif",
         "generadas/carta-capitulo-4-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: marca-mesa-finca",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "constelacion-album-1",
@@ -1342,7 +1440,14 @@
         "generadas/directo-amigas-768.webp",
         "generadas/directo-amigas-1080.avif",
         "generadas/directo-amigas-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: web-corte-2",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "directo-brindis",
@@ -1384,7 +1489,14 @@
         "generadas/directo-mesa-detalle-768.webp",
         "generadas/directo-mesa-detalle-1080.avif",
         "generadas/directo-mesa-detalle-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: marca-mesa-palacio",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "directo-ninos",
@@ -1426,7 +1538,14 @@
         "generadas/directo-pista-768.webp",
         "generadas/directo-pista-1080.avif",
         "generadas/directo-pista-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: marca-lugar-masia",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "directo-salida",
@@ -1479,8 +1598,8 @@
       "lista": "encargos-tematicas-k5.json",
       "grupo": "tematicas/estadio",
       "original": {
-        "ancho": 832,
-        "alto": 1248
+        "ancho": 896,
+        "alto": 1120
       },
       "variantes": [
         "generadas/estadio-album-1-480.avif",
@@ -1489,7 +1608,14 @@
         "generadas/estadio-album-1-768.webp",
         "generadas/estadio-album-1-1080.avif",
         "generadas/estadio-album-1-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: marca-sobre-algodon",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "estadio-album-2",
@@ -1531,7 +1657,14 @@
         "generadas/estadio-album-4-768.webp",
         "generadas/estadio-album-4-1080.avif",
         "generadas/estadio-album-4-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: marca-lugar-olivar",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "estadio-album-3",
@@ -1668,8 +1801,8 @@
       "lista": "encargos-tematicas-k4.json",
       "grupo": "tematicas/festival",
       "original": {
-        "ancho": 832,
-        "alto": 1248
+        "ancho": 1024,
+        "alto": 1024
       },
       "variantes": [
         "generadas/festival-album-4-480.avif",
@@ -1678,7 +1811,14 @@
         "generadas/festival-album-4-768.webp",
         "generadas/festival-album-4-1080.avif",
         "generadas/festival-album-4-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: festival-detalle",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "festival-poster",
@@ -1741,7 +1881,14 @@
         "generadas/floracion-album-3-768.webp",
         "generadas/floracion-album-3-1080.avif",
         "generadas/floracion-album-3-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: marca-lugar-patio-sevilla",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "floracion-album-2",
@@ -1909,7 +2056,14 @@
         "generadas/fuego-detalle-768.webp",
         "generadas/fuego-detalle-1080.avif",
         "generadas/fuego-detalle-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: marca-lacre-oro",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "lupulo-album-1",
@@ -2161,7 +2315,14 @@
         "generadas/marca-alianzas-lino-768.webp",
         "generadas/marca-alianzas-lino-1080.avif",
         "generadas/marca-alianzas-lino-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: marca-alianzas-mano",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "marca-alianzas-mano",
@@ -2224,7 +2385,14 @@
         "generadas/marca-bodegon-movil-768.webp",
         "generadas/marca-bodegon-movil-1080.avif",
         "generadas/marca-bodegon-movil-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: marca-sobre-algodon",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "marca-lacre-alianzas",
@@ -2245,7 +2413,14 @@
         "generadas/marca-lacre-alianzas-768.webp",
         "generadas/marca-lacre-alianzas-1080.avif",
         "generadas/marca-lacre-alianzas-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: marca-lacre-oro",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "marca-lacre-oro",
@@ -2634,8 +2809,8 @@
       "lista": "encargos-tematicas-k2.json",
       "grupo": "tematicas/memorias",
       "original": {
-        "ancho": 1024,
-        "alto": 1024
+        "ancho": 896,
+        "alto": 1120
       },
       "variantes": [
         "generadas/memorias-detalle-1-480.avif",
@@ -2644,7 +2819,14 @@
         "generadas/memorias-detalle-1-768.webp",
         "generadas/memorias-detalle-1-1080.avif",
         "generadas/memorias-detalle-1-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: marca-lacre-roto",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "memorias-detalle-2",
@@ -2728,7 +2910,14 @@
         "generadas/meta-album-2-768.webp",
         "generadas/meta-album-2-1080.avif",
         "generadas/meta-album-2-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: marca-lugar-cala",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "meta-album-3",
@@ -2791,7 +2980,14 @@
         "generadas/meta-detalle-medalla-768.webp",
         "generadas/meta-detalle-medalla-1080.avif",
         "generadas/meta-detalle-medalla-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "recorte del original [0,170,660,830]",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "mk-abuela",
@@ -2833,7 +3029,14 @@
         "generadas/mk-equipo-estudio-768.webp",
         "generadas/mk-equipo-estudio-1080.avif",
         "generadas/mk-equipo-estudio-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: marca-mesa-finca",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "mk-invitados-qr",
@@ -2854,7 +3057,14 @@
         "generadas/mk-invitados-qr-768.webp",
         "generadas/mk-invitados-qr-1080.avif",
         "generadas/mk-invitados-qr-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: mk-movil-invitada",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "mk-libro-deseos",
@@ -2907,8 +3117,8 @@
       "lista": "encargos-flux.json",
       "grupo": "marketing",
       "original": {
-        "ancho": 1248,
-        "alto": 832
+        "ancho": 1360,
+        "alto": 768
       },
       "variantes": [
         "generadas/mk-novios-sofa-480.avif",
@@ -2917,7 +3127,14 @@
         "generadas/mk-novios-sofa-768.webp",
         "generadas/mk-novios-sofa-1080.avif",
         "generadas/mk-novios-sofa-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: mk-tv-salon",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "mk-tv-salon",
@@ -2991,8 +3208,8 @@
       "lista": "encargos-tematicas-k4.json",
       "grupo": "tematicas/neon",
       "original": {
-        "ancho": 832,
-        "alto": 1248
+        "ancho": 1024,
+        "alto": 1024
       },
       "variantes": [
         "generadas/neon-album-3-480.avif",
@@ -3001,7 +3218,14 @@
         "generadas/neon-album-3-768.webp",
         "generadas/neon-album-3-1080.avif",
         "generadas/neon-album-3-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: marca-alianzas-terciopelo",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "neon-album-2",
@@ -3054,8 +3278,8 @@
       "lista": "encargos-tematicas-k4.json",
       "grupo": "tematicas/neon",
       "original": {
-        "ancho": 832,
-        "alto": 1248
+        "ancho": 1024,
+        "alto": 1024
       },
       "variantes": [
         "generadas/neon-album-4-480.avif",
@@ -3064,7 +3288,14 @@
         "generadas/neon-album-4-768.webp",
         "generadas/neon-album-4-1080.avif",
         "generadas/neon-album-4-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: marca-lacre-oro",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "neon-poster",
@@ -3127,7 +3358,14 @@
         "generadas/orbita-3-768.webp",
         "generadas/orbita-3-1080.avif",
         "generadas/orbita-3-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: cuento-album-4",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "orbita-2",
@@ -3400,7 +3638,14 @@
         "generadas/pasaporte-detalle-1-768.webp",
         "generadas/pasaporte-detalle-1-1080.avif",
         "generadas/pasaporte-detalle-1-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "recorte del original [0,0,680,680]",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "pasaporte-detalle-2",
@@ -3421,7 +3666,14 @@
         "generadas/pasaporte-detalle-2-768.webp",
         "generadas/pasaporte-detalle-2-1080.avif",
         "generadas/pasaporte-detalle-2-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "recorte del original [0,0,680,680]",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "pasaporte-poster-hero",
@@ -3631,7 +3883,14 @@
         "generadas/regencia-album-2-768.webp",
         "generadas/regencia-album-2-1080.avif",
         "generadas/regencia-album-2-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: marca-ramo-peonias",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "regencia-album-4",
@@ -3652,7 +3911,14 @@
         "generadas/regencia-album-4-768.webp",
         "generadas/regencia-album-4-1080.avif",
         "generadas/regencia-album-4-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: web-corte-1",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "regencia-portada",
@@ -3831,8 +4097,8 @@
       "lista": "encargos-tematicas-k5.json",
       "grupo": "tematicas/riviera",
       "original": {
-        "ancho": 832,
-        "alto": 1248
+        "ancho": 768,
+        "alto": 1360
       },
       "variantes": [
         "generadas/riviera-album-1-480.avif",
@@ -3841,7 +4107,14 @@
         "generadas/riviera-album-1-768.webp",
         "generadas/riviera-album-1-1080.avif",
         "generadas/riviera-album-1-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: apertura-velo",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "riviera-album-4",
@@ -3936,8 +4209,8 @@
       "lista": "encargos-tematicas-k5.json",
       "grupo": "tematicas/riviera",
       "original": {
-        "ancho": 720,
-        "alto": 1280
+        "ancho": 768,
+        "alto": 1360
       },
       "variantes": [
         "generadas/riviera-poster-480.avif",
@@ -3946,7 +4219,14 @@
         "generadas/riviera-poster-768.webp",
         "generadas/riviera-poster-1080.avif",
         "generadas/riviera-poster-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: apertura-terracota",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "sobre-album-3",
@@ -3978,8 +4258,8 @@
       "lista": "encargos-flux.json",
       "grupo": "sobre",
       "original": {
-        "ancho": 832,
-        "alto": 1248
+        "ancho": 896,
+        "alto": 1120
       },
       "variantes": [
         "generadas/sobre-album-2-480.avif",
@@ -3988,7 +4268,14 @@
         "generadas/sobre-album-2-768.webp",
         "generadas/sobre-album-2-1080.avif",
         "generadas/sobre-album-2-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: marca-lacre-roto",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "sobre-album-4",
@@ -4114,7 +4401,14 @@
         "generadas/tinta-album-1-768.webp",
         "generadas/tinta-album-1-1080.avif",
         "generadas/tinta-album-1-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: marca-lugar-barcelona (B/N)",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "textura-terciopelo",
@@ -4335,8 +4629,8 @@
       "lista": "encargos-tematicas-k4.json",
       "grupo": "tematicas/vinilo",
       "original": {
-        "ancho": 832,
-        "alto": 1248
+        "ancho": 1024,
+        "alto": 1024
       },
       "variantes": [
         "generadas/vinilo-album-3-480.avif",
@@ -4345,7 +4639,14 @@
         "generadas/vinilo-album-3-768.webp",
         "generadas/vinilo-album-3-1080.avif",
         "generadas/vinilo-album-3-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: vinilo-detalle",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     },
     {
       "id": "vinilo-album-2",
@@ -4524,8 +4825,8 @@
       "lista": "encargos-flux.json",
       "grupo": "web",
       "original": {
-        "ancho": 1360,
-        "alto": 768
+        "ancho": 1248,
+        "alto": 832
       },
       "variantes": [
         "generadas/web-portada-480.avif",
@@ -4534,7 +4835,14 @@
         "generadas/web-portada-768.webp",
         "generadas/web-portada-1080.avif",
         "generadas/web-portada-1080.webp"
-      ]
+      ],
+      "qa": {
+        "revision": "Q1 24-10-2026",
+        "veredicto_original": "fail",
+        "motivo": "",
+        "servida_como": "sustituta: web-hero",
+        "pendiente": "regenerar (herramientas/imagenes/encargos-correccion.json)"
+      }
     }
   ],
   "actualizado": "2026-10-24T14:48:56.638Z",
@@ -4547,5 +4855,10 @@
     "orbita-detalle-anillos": "Carta celeste con pseudo-texto legible",
     "estadio-detalle-entrada": "Balón de rugby en la temática de fútbol",
     "meta-poster": "Dos hombres corriendo: no es la pareja de la demo (novia y novio)"
+  },
+  "revision_q1": {
+    "fecha": "2026-10-24",
+    "hoja": "qa/v4/q1/revision.csv",
+    "sustituciones": "qa/v4/q1/sustituciones.json"
   }
 }

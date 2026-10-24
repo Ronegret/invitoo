@@ -40,6 +40,11 @@ export type FichaCatalogo = {
   /** La fecha de la muestra, en ISO, para reescribirla dentro de la invitación. */
   fechaIso: string;
   estilos: string[];
+  /** La familia de estilo (de la casa, época, naturaleza, música, vida). */
+  familia?: string;
+  /** El póster vertical de la ficha y el vídeo de su apertura (W2). */
+  poster?: string;
+  video?: string;
   colores: { id: string; nombre: string; papel: string; tinta: string; acento: string }[];
 };
 
@@ -52,7 +57,7 @@ function quieto() {
 }
 
 /** Una transición de vista si el navegador sabe y nadie pide calma. */
-function conTransicion(cambio: () => void) {
+export function conTransicion(cambio: () => void) {
   const d = document as Document & { startViewTransition?: (f: () => void) => { finished: Promise<void> } };
   if (!d.startViewTransition || quieto()) {
     cambio();
@@ -389,7 +394,7 @@ export default function CatalogoVivo({
 
 /* ───────────────────────── La vista a pantalla completa ───────────────────────── */
 
-function VistaCompleta({
+export function VistaCompleta({
   ficha,
   color,
   fichas,

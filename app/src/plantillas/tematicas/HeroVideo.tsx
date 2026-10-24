@@ -29,7 +29,9 @@ export type FuenteVideo = {
 };
 
 const ANCHO = "(orientation: landscape) and (min-width: 768px)";
-const INICIO_MP4 = 1.0; // el máster entra desde negro: se salta el primer segundo
+// Los clips de V1 (doc qa/v4/v1/CONTRATO.md) arrancan en el póster y son un
+// bucle limpio también en MP4: ya no hay negro que saltar.
+const INICIO_MP4 = 0;
 
 function aperturaDelante() {
   return document.querySelector<HTMLElement>(
@@ -70,13 +72,12 @@ export default function HeroVideo({
     // Un solo montaje: el WebM recortado si se puede, si no el MP4.
     v.src = webm ?? (ancho && fuente.horizontal ? fuente.horizontal : fuente.vertical);
     let INICIO = webm ? 0 : INICIO_MP4;
-    v.loop = Boolean(webm);
+    v.loop = true;
     // Si el WebM falla (no está, o el códec no va), el MP4 de siempre.
     const fallo = () => {
       if (!webm || v.src.endsWith(".mp4")) return;
       webm = null;
       INICIO = INICIO_MP4;
-      v.loop = false;
       v.src = ancho && fuente.horizontal ? fuente.horizontal : fuente.vertical;
       if (listo && visible) reproducir();
     };

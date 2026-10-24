@@ -85,9 +85,9 @@
   .cu-rotulo > :nth-child(2) { animation-delay: 250ms; }
   .cu-rotulo > :nth-child(3) { animation-delay: 650ms; }
   .cu-rotulo > :nth-child(n+4) { animation-delay: 850ms; }
-  main:has(> .apertura[data-estado="dentro"]) .cu-rotulo > * { animation-play-state: paused; }
+  main[data-ap="dentro"] .cu-rotulo > * { animation-play-state: paused; }
 }
-@keyframes cu-aparece { from { opacity: 0; filter: blur(8px); transform: translateY(12px); } }
+@keyframes cu-aparece { from { opacity: 0; transform: translateY(12px); } } /* (P3) sin filter: va ligada al scroll */
 
 .lienzo[data-plantilla="cuento"] .kv-play {
   --kv-play-fondo: color-mix(in srgb, var(--papel) 70%, transparent);
@@ -321,3 +321,12 @@
 @media (prefers-reduced-motion: reduce) {
   .cu-rotulo > *, .cu-esquina path, .cu-marco-linea { animation: none !important; }
 }
+
+/* U1 · legibilidad: el rótulo sube con la cuenta atrás; el papel de detrás
+   también, y el oro de los rótulos pequeños se oscurece hacia la tinta. */
+.cu-tinte::after {
+  background:
+    radial-gradient(100% 64% at 50% 54%, color-mix(in srgb, var(--papel) 80%, transparent), color-mix(in srgb, var(--papel) 50%, transparent) 78%),
+    linear-gradient(180deg, color-mix(in srgb, var(--papel) 60%, transparent), transparent 22%, transparent 78%, var(--papel));
+}
+.cu-erase, .cu-baja { color: color-mix(in srgb, var(--acento-texto) 72%, var(--tinta)); }

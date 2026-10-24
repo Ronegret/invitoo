@@ -70,7 +70,7 @@
   .rv-hoja.der:not([data-mano]) { animation: rv-aparta-der 1600ms var(--ease-velo) 900ms both; }
   .rv-tapa { animation: rv-entra 1200ms var(--ease-carta) 400ms both; }
 }
-main:has(> .apertura[data-estado="dentro"]) :is(.rv-hoja, .rv-tapa) { animation-play-state: paused; }
+main[data-ap="dentro"] :is(.rv-hoja, .rv-tapa) { animation-play-state: paused; }
 @keyframes rv-aparta-izq { from { transform: translateX(0); } to { transform: translateX(-90%); } }
 @keyframes rv-aparta-der { from { transform: translateX(0); } to { transform: translateX(90%); } }
 @keyframes rv-entra { from { opacity: 0; transform: translateY(18px); filter: blur(3px); } }

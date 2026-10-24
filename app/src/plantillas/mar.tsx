@@ -1,3 +1,4 @@
+import CuentaPortada from "@/components/bloques/CuentaPortada";
 import { Italiana, Jost } from "next/font/google";
 import { Alojamiento, Despedida, Secciones, Y, type Props } from "./comun";
 import { datosPortada } from "./datos-portada";
@@ -31,7 +32,7 @@ function Portada(props: Props) {
   const d = datosPortada(props);
   return (
     <header className="relative">
-      <div className="relative h-[56svh] min-h-[22rem] w-full overflow-hidden bg-[color-mix(in_srgb,var(--acento)_30%,var(--papel))]">
+      <div className="relative h-[44svh] min-h-[17rem] w-full md:h-[56svh] md:min-h-[22rem] overflow-hidden bg-[color-mix(in_srgb,var(--acento)_30%,var(--papel))]">
         {d.foto && (
           /* eslint-disable-next-line @next/next/no-img-element -- AVIF ya optimizado */
           <img
@@ -82,6 +83,7 @@ function Portada(props: Props) {
           <Y bloque className="my-1 text-[0.5em]" />
           {d.b}
         </h1>
+        <CuentaPortada hasta={props.inv.pareja.fecha} estilo="filete" antes="" className="mt-6" />
         <div className="mx-auto mt-8 flex max-w-[22rem] items-center justify-between border-y border-current/25 py-4 text-[1.125rem]">
           <span className="first-letter:uppercase">{d.fechaCorta}</span>
           <span className="tabular-nums">{d.hora}</span>

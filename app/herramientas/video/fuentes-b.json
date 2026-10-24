@@ -1,0 +1,389 @@
+{
+ "carta": {
+  "imagen": "marca/marca-lacre-oro.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.5
+   ]
+  }
+ },
+ "sobre": {
+  "imagen": "aperturas/apertura-sobre.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.62
+   ]
+  }
+ },
+ "floracion": {
+  "imagen": "aperturas/apertura-floracion.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.5
+   ]
+  }
+ },
+ "mar": {
+  "imagen": "tematicas/orilla/orilla-detalle-2.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.5
+   ]
+  },
+  "nota": "provisional: orilla con estrella de mar (la de marea tenía personas)"
+ },
+ "velo": {
+  "imagen": "aperturas/apertura-velo.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.45
+   ]
+  }
+ },
+ "constelacion": {
+  "imagen": "marca/marca-alianzas-terciopelo.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.5
+   ]
+  },
+  "nota": "alianzas sobre terciopelo, gradación de noche y estrellas"
+ },
+ "tinta": {
+  "imagen": "aperturas/apertura-tinta.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.62
+   ]
+  }
+ },
+ "registro": {
+  "imagen": "web/web-corte-1.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.45
+   ]
+  },
+  "nota": "provisional"
+ },
+ "azulejo": {
+  "imagen": "lugares/marca-lugar-patio-sevilla.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.5
+   ]
+  }
+ },
+ "regencia": {
+  "imagen": "marca/marca-mesa-palacio.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.5
+   ]
+  }
+ },
+ "aire": {
+  "imagen": "aire/aire-apertura.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.55
+   ]
+  }
+ },
+ "cuento": {
+  "imagen": "tematicas/blason/blason-lamina.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.5
+   ]
+  },
+  "nota": "lámina de castillo en acuarela"
+ },
+ "blason": {
+  "imagen": "tematicas/blason/blason-poster-hero.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.55
+   ]
+  }
+ },
+ "memorias": {
+  "imagen": "tematicas/memorias/memorias-poster-hero.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.68
+   ]
+  }
+ },
+ "pasaporte": {
+  "imagen": "tematicas/pasaporte/pasaporte-poster-hero.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.5
+   ]
+  }
+ },
+ "orilla": {
+  "imagen": "tematicas/orilla/orilla-poster-hero.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.42
+   ]
+  }
+ },
+ "pinar": {
+  "imagen": "lugares/marca-lugar-segovia.jpg",
+  "encuadre": {
+   "v": [
+    0.38,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.5
+   ]
+  }
+ },
+ "orbita": {
+  "imagen": "tematicas/orbita/orbita-poster.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.5
+   ]
+  },
+  "nota": ""
+ },
+ "brazada": {
+  "imagen": "tematicas/brazada/brazada-poster.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.5
+   ]
+  }
+ },
+ "fuego": {
+  "imagen": "texturas/textura-terciopelo.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.6
+   ]
+  },
+  "nota": "terciopelo con brasas"
+ },
+ "neon": {
+  "imagen": "tematicas/neon/neon-detalle.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.5
+   ]
+  }
+ },
+ "vinilo": {
+  "imagen": "tematicas/vinilo/vinilo-detalle.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.5
+   ]
+  }
+ },
+ "festival": {
+  "imagen": "tematicas/festival/festival-detalle.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.5
+   ]
+  }
+ },
+ "lupulo": {
+  "imagen": "tematicas/lupulo/lupulo-detalle-lupulo.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.5
+   ]
+  }
+ },
+ "estadio": {
+  "imagen": "marca/marca-mesa-finca.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.5
+   ]
+  },
+  "nota": "PROVISIONAL: no hay ninguna imagen de estadio sin personas aprobada por Q1"
+ },
+ "meta": {
+  "imagen": "aperturas/apertura-lino.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.55
+   ]
+  },
+  "nota": "PROVISIONAL: no hay imagen de meta/sendero sin personas aprobada"
+ },
+ "riviera": {
+  "imagen": "aperturas/apertura-terracota.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.55
+   ]
+  }
+ },
+ "bachata": {
+  "imagen": "marca/marca-ramo-peonias.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.45
+   ]
+  },
+  "nota": "PROVISIONAL: la guitarra tenía 5 cuerdas"
+ },
+ "invitoo": {
+  "imagen": "tematicas/pinar/pinar-detalle-rodaja.jpg",
+  "encuadre": {
+   "v": [
+    0.5,
+    0.5
+   ],
+   "h": [
+    0.5,
+    0.5
+   ]
+  },
+  "nota": "alianzas sobre rodaja de pino"
+ }
+}

@@ -121,7 +121,7 @@
   }
 }
 @keyframes ba-crece { from { transform: scaleY(0); } to { transform: none; } }
-@keyframes ba-enfoca { from { filter: blur(5px); opacity: .35; } to { filter: none; opacity: 1; } }
+@keyframes ba-enfoca { from { opacity: .35; } to { opacity: 1; } } /* (P3) sin filter: va ligada al scroll */
 
 /* —— la vela —— */
 .ba-vela { position: relative; display: block; width: 2.4rem; height: 6rem; margin: 0 auto 1.4rem; }

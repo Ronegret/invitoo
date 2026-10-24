@@ -55,7 +55,7 @@
 @media (prefers-reduced-motion: no-preference) {
   .es-rotulo { animation: es-entra 1300ms var(--ease-carta) 500ms both; }
 }
-main:has(> .apertura[data-estado="dentro"]) .es-rotulo { animation-play-state: paused; }
+main[data-ap="dentro"] .es-rotulo { animation-play-state: paused; }
 @keyframes es-entra { from { opacity: 0; transform: translateY(22px); filter: blur(4px); } }
 
 .lienzo[data-plantilla="estadio"] .kv-play { --kv-play-borde: var(--oro-marcador); text-transform: uppercase; letter-spacing: .14em; }
@@ -326,3 +326,12 @@ main:has(> .apertura[data-estado="dentro"]) .es-rotulo { animation-play-state: p
 .lienzo[data-plantilla="estadio"] :is(.display, h1, h2, h3).display { font-family: var(--p-display), "Barlow Condensed", "Arial Narrow", ui-sans-serif, sans-serif; }
 /* El botón «Ver el vídeo», arriba a la DERECHA: la esquina izquierda es de la etiqueta «Demo». */
 .lienzo[data-plantilla="estadio"] .kv-play { left: auto; right: max(1rem, env(safe-area-inset-right, 0px)); }
+
+/* U1 · legibilidad: el velo sube con el rótulo (ahora lleva la cuenta atrás). */
+.es-velo {
+  background:
+    radial-gradient(70% 30% at 15% 0%, rgb(255 246 214 / .18), transparent 70%),
+    radial-gradient(70% 30% at 85% 0%, rgb(255 246 214 / .18), transparent 70%),
+    linear-gradient(to top, rgb(10 8 12 / .82) 0 52%, rgb(10 8 12 / .55) 70%, rgb(10 8 12 / .3) 100%);
+}
+.es-final { text-shadow: 0 1px 12px rgb(0 0 0 / .6); }

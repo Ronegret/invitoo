@@ -79,8 +79,16 @@ export function cuandoOciosoYVisible(el: Element, fn: () => void, margen = "200p
         hecho = true;
         fn();
       };
-      if (w.requestIdleCallback) ocioso = w.requestIdleCallback(ya, { timeout: 1500 });
-      else ocioso = window.setTimeout(ya, 200);
+      // (P3) Nunca antes de `load`: three.js son ~200 KB gz / 750 KB de JS que
+      // compilar, y antes competía con el LCP y la hidratación (un hueco
+      // ocioso de 50 ms durante la carga bastaba para lanzarlo).
+      const pedir = () => {
+        if (hecho) return;
+        if (w.requestIdleCallback) ocioso = w.requestIdleCallback(ya, { timeout: 2500 });
+        else ocioso = window.setTimeout(ya, 200);
+      };
+      if (document.readyState === "complete") pedir();
+      else window.addEventListener("load", pedir, { once: true });
     },
     { rootMargin: margen },
   );

@@ -18,8 +18,9 @@ export const viniloDisplay = DM_Serif_Display({
 // configuraciones distintas de una misma familia con la misma variable dan
 // el mismo módulo en Turbopack y rompen la compilación.
 export const viniloTexto = Karla({
+  // Variable (sin `weight`): con pesos sueltos Turbopack falla con
+  // «next/font/google queries have exactly one entry».
   subsets: ["latin"],
-  weight: ["400", "500"],
   variable: "--p-texto",
   display: "swap",
   preload: false,

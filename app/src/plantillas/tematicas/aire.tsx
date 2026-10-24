@@ -1,3 +1,4 @@
+import CuentaPortada from "@/components/bloques/CuentaPortada";
 import Calendario from "@/components/bloques/Calendario";
 import ComoLlegar, { destinosDe } from "@/components/bloques/ComoLlegar";
 import { Regalos } from "@/components/bloques/Simples";
@@ -83,6 +84,7 @@ function Portada(props: Props) {
             {d.lugar}
             {d.ciudad && <> · {d.ciudad}</>}
           </p>
+          <CuentaPortada hasta={d.fechaIso} estilo="filete" className="k-cuenta aire-cuenta" />
         </div>
         {/* El telón: la línea de oro, el monograma y las dos hojas que se
             abren. Decorativo (aria-hidden) y sin eventos: no tapa ni un

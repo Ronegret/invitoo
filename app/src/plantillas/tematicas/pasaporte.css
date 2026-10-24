@@ -65,7 +65,7 @@
   .ps-persiana { animation: ps-persiana 900ms var(--ease-carta, cubic-bezier(.22,.61,.36,1)) 500ms backwards; }
 }
 @keyframes ps-persiana { from { transform: none; } }
-main:has(> .apertura[data-estado="dentro"]) .ps-persiana { animation-play-state: paused; }
+main[data-ap="dentro"] .ps-persiana { animation-play-state: paused; }
 /* Al bajar, atravesamos la ventanilla. */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
@@ -364,3 +364,13 @@ main:has(> .apertura[data-estado="dentro"]) .ps-persiana { animation-play-state:
 
 /* Pantallas bajas (360×740): la ventanilla cede sitio al billete. */
 @media (max-height: 760px) { .ps-ventanilla { max-height: 42svh; margin-bottom: 1.8rem; } }
+
+/* U1: la cuenta atrás de la portada entra en la primera pantalla. */
+.pasaporte-cuenta { margin: .9rem 0 1.2rem; }
+@media (max-height: 900px) { .ps-ventanilla { max-height: 36svh; margin-bottom: 1.6rem; } }
+@media (max-height: 700px) { .ps-ventanilla { max-height: 27svh; margin-bottom: 1.4rem; } }
+
+/* U1 · legibilidad. */
+.ps-billete-marca + .ps-billete-marca { opacity: .78; }
+.ps-mrz { opacity: .8; }
+.ps-nota-mapa { color: color-mix(in srgb, var(--acento-texto) 80%, var(--tinta)); text-shadow: 0 0 2px #f6f1e6, 0 0 6px #f6f1e6, 0 0 12px #f6f1e6; }

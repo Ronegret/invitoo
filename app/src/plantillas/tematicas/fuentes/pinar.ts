@@ -14,8 +14,9 @@ export const pinarDisplay = Young_Serif({
   preload: false,
 });
 export const pinarTexto = Karla({
+  // Variable (sin `weight`): con pesos sueltos Turbopack falla con
+  // «next/font/google queries have exactly one entry».
   subsets: ["latin"],
-  weight: ["400", "500"],
   variable: "--p-texto",
   display: "swap",
   preload: false,

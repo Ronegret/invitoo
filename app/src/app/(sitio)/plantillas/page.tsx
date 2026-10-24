@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import CatalogoVivo from "@/components/sitio/catalogo/CatalogoVivo";
+import CatalogoRejilla from "@/components/sitio/catalogo/CatalogoRejilla";
 import { fichasCatalogo } from "@/components/sitio/catalogo/datos";
 import LlamadaFinal from "@/components/sitio/LlamadaFinal";
 import { PLANTILLAS } from "@/data/plantillas";
-import { FILTROS_PLANTILLA, enLetra } from "@/data/sitio";
+import { FAMILIAS_PLANTILLA, FILTROS_PLANTILLA, enLetra } from "@/data/sitio";
 
 const N = PLANTILLAS.length;
 
@@ -16,10 +16,10 @@ export const metadata: Metadata = {
 /**
  * El catálogo entero, vivo.
  *
- * Antes era una lista larga de fichas. Ahora la cabecera es corta y lo
- * primero es el producto: las nueve invitaciones en un abanico que se pasa
- * con el dedo, ya con vuestros nombres, con sus filtros y con la vista a
- * pantalla completa (y el probador de colores) a un toque.
+ * W2: las 28 en una rejilla de teléfonos iguales, con las cinco familias
+ * de estilo y el tipo de boda como filtros, la apertura al pasar el ratón
+ * y la vista rápida (la invitación de verdad, con vuestros nombres, sus
+ * colores y «La queremos así») a un toque.
  */
 export default function Plantillas() {
   return (
@@ -37,18 +37,18 @@ export default function Plantillas() {
               </h1>
             </div>
             <p className="max-w-[30rem] text-[1.06rem] leading-[1.75] text-[var(--tinta)]/75 lg:col-span-4 lg:pb-2">
-              Escribid vuestros nombres y las {enLetra(N)} se reescriben. Tocad
-              una y se abre entera, como la verá un invitado, con sus colores
-              para probar en vivo.
+              Cinco estilos, de la casa al festival. Pasad el ratón para ver
+              cómo se abre cada una y tocadla para verla entera, con vuestros
+              nombres y sus colores, como la verá un invitado.
             </p>
           </div>
 
           <div className="mt-10 sm:mt-14">
-            <CatalogoVivo
+            <CatalogoRejilla
               fichas={fichasCatalogo()}
-              filtros={FILTROS_PLANTILLA}
+              familias={FAMILIAS_PLANTILLA}
+              lugares={FILTROS_PLANTILLA}
               conCampo
-              titulo={`Las ${N} plantillas`}
             />
           </div>
 

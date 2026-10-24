@@ -4,16 +4,17 @@ import BodasReales from "@/components/sitio/BodasReales";
 import Cancion from "@/components/sitio/Cancion";
 import DatosEstructurados from "@/components/sitio/DatosEstructurados";
 import EnDirecto from "@/components/sitio/EnDirecto";
-import CatalogoVivo from "@/components/sitio/catalogo/CatalogoVivo";
+import AsiLoVive from "@/components/sitio/asi-lo-vive/AsiLoVive";
+import CatalogoRejilla from "@/components/sitio/catalogo/CatalogoRejilla";
 import { fichasCatalogo } from "@/components/sitio/catalogo/datos";
 import LlamadaFinal from "@/components/sitio/LlamadaFinal";
-import MomentoWhatsApp from "@/components/sitio/MomentoWhatsApp";
 import Planes from "@/components/sitio/Planes";
-import PortadaSobre from "@/components/sitio/portada/PortadaSobre";
+import Preguntas from "@/components/sitio/Preguntas";
+import PortadaTelefonos from "@/components/sitio/portada/PortadaTelefonos";
 import Rotulo from "@/components/sitio/Rotulo";
 import VuestroPanel from "@/components/sitio/VuestroPanel";
 import { PLANTILLAS } from "@/data/plantillas";
-import { ANADIDOS, DENTRO, PLANES, enLetra, euros } from "@/data/sitio";
+import { ANADIDOS, DENTRO, DESCUENTO_INVITADO, FAMILIAS_PLANTILLA, PLANES, enLetra, euros } from "@/data/sitio";
 
 const DESDE = Math.min(...PLANES.map((p) => p.precio));
 
@@ -24,25 +25,21 @@ export const metadata: Metadata = {
 };
 
 /**
- * invitoo.es — la portada.
+ * invitoo.es — la portada (v3, W2).
  *
- * El orden responde a las cuatro preguntas de una pareja, en el orden en
- * que se las hace: qué es y cuánto cuesta (portada), cómo son (catálogo),
- * qué tiene que no tengan otros (canción), qué trabajo me quita (lo que
- * lleva), funciona de verdad (bodas reales) y cuánto exactamente (planes).
+ * El orden sigue las preguntas de una pareja, en el orden en que se las
+ * hace: qué es y cuánto cuesta (portada con tres invitaciones de verdad en
+ * tres teléfonos), cómo lo vive un invitado (un teléfono fijo y cuatro
+ * escenas), cuál es la nuestra (el catálogo por estilos), qué tiene que no
+ * tengan otros (la canción), qué trabajo nos quita (lo que lleva), cómo lo
+ * seguimos (el panel), el día de la boda (En directo), la abuela, bodas
+ * reales, cuánto exactamente (planes), las dudas de siempre y el cierre.
  *
  * RITMO. Ninguna sección repite la composición de la anterior: portada
- * partida con el móvil a la derecha; catálogo en rejilla a contratiempo;
- * canción en negativo a sangre; lo que lleva con el titular fijo a la
- * izquierda y la lista corriendo a la derecha; el chat con el móvil a la
- * izquierda; el panel de los novios como una ventana ancha; el día de la
- * boda en negativo, de noche, con la TV en medio; una frase enorme
- * desplazada a la derecha; bodas reales como
- * lista; precios como una hoja de tres columnas. Cambia la escala, cambia
- * el lado, cambia el fondo.
- *
- * Fuera las fotografías de banco que separaban secciones: no eran nuestras
- * y se notaba.
+ * partida; escenas con el teléfono pegado; rejilla de teléfonos; canción
+ * en negativo; titular fijo y lista que corre; ventana ancha del panel;
+ * noche con la TV; una frase enorme; lista de bodas; hoja de precios;
+ * preguntas a dos columnas. Cambia la escala, el lado y el fondo.
  */
 export default function Home() {
   const n = PLANTILLAS.length;
@@ -51,30 +48,24 @@ export default function Home() {
   return (
     <>
       <DatosEstructurados tipo="negocio" />
-      <PortadaSobre />
+      <PortadaTelefonos />
+
+      <AsiLoVive descuento={DESCUENTO_INVITADO} />
 
       {/* ───────────── El catálogo ───────────── */}
       <section
         id="plantillas"
-        className="relative scroll-mt-24 border-t border-[var(--tinta)]/10 bg-[var(--papel)] px-4 py-24 sm:px-6 sm:py-32"
+        className="relative scroll-mt-24 bg-[var(--papel)] px-4 py-24 sm:px-6 sm:py-32"
       >
         <div className="mx-auto max-w-[72rem]">
           <Rotulo
             sobre="El catálogo"
             titulo={`${enLetra(n, true)} maneras de abrirse`}
-            bajo="Cada plantilla es un gesto distinto: no se abre igual una boda de campo que una de noche. Ya llevan los nombres que escribisteis arriba. Pasadlas con el dedo y tocad una para abrirla entera."
+            bajo="Cada plantilla es un gesto distinto: no se abre igual una boda de campo que una de noche. Elegid por estilo, pasad el ratón para ver la apertura y tocad una para verla entera."
           />
-          <div className="mt-10">
-            <CatalogoVivo fichas={fichasCatalogo()} titulo={`Las ${n} plantillas`} />
+          <div className="mt-12">
+            <CatalogoRejilla fichas={fichasCatalogo()} familias={FAMILIAS_PLANTILLA} limite={8} />
           </div>
-          <p className="mt-10 text-center">
-            <Link
-              href="/plantillas"
-              className="boton inline-flex min-h-14 items-center justify-center rounded-full border border-[var(--tinta)]/30 px-8 text-[1rem]"
-            >
-              Ver las {n} con sus colores
-            </Link>
-          </p>
         </div>
       </section>
 
@@ -126,8 +117,6 @@ export default function Home() {
           </dl>
         </div>
       </section>
-
-      <MomentoWhatsApp />
 
       <VuestroPanel />
 
@@ -186,6 +175,29 @@ export default function Home() {
               Los añadidos, los plazos y la letra pequeña
             </Link>
           </p>
+        </div>
+      </section>
+
+      {/* ───────────── Las dudas de siempre ───────────── */}
+      <section className="relative bg-[var(--papel)] px-4 py-24 sm:px-6 sm:py-32">
+        <div className="mx-auto grid max-w-[72rem] gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <p className="flex items-center gap-3 text-[1rem] text-[var(--acento)]">
+              <span aria-hidden className="h-px w-8 bg-current" />
+              Antes de decidir
+            </p>
+            <h2 className="display mt-4 text-[clamp(2.2rem,5.4vw,3.6rem)] leading-[1.04]">
+              Lo que nos preguntan siempre
+            </h2>
+            <p className="mt-6">
+              <Link href="/preguntas" className="enlace-sub inline-flex min-h-12 items-center text-[1rem] underline decoration-[var(--tinta)]/30 underline-offset-4">
+                Todas las preguntas
+              </Link>
+            </p>
+          </div>
+          <div className="lg:col-span-8">
+            <Preguntas de={["invitados", "producto", "precio"]} max={6} />
+          </div>
         </div>
       </section>
 

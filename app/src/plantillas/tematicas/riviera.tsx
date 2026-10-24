@@ -1,3 +1,4 @@
+import CuentaPortada from "@/components/bloques/CuentaPortada";
 import Calendario from "@/components/bloques/Calendario";
 import ComoLlegar, { destinosDe } from "@/components/bloques/ComoLlegar";
 import { LimiteRsvp } from "@/components/bloques/Protocolo";
@@ -38,8 +39,8 @@ import "./riviera.css";
  */
 
 const fuente: FuenteVideo = {
-  vertical: "/aperturas/bruma/vertical.mp4",
-  horizontal: "/aperturas/bruma/horizontal.mp4",
+  vertical: "/tematicas/riviera/hero-v.mp4",
+  horizontal: "/tematicas/riviera/hero-h.mp4",
   poster: "/tematicas/riviera/poster-v.avif",
   posterHorizontal: "/tematicas/riviera/poster-h.avif",
   webm: "/tematicas/riviera/hero-v.webm",
@@ -98,6 +99,7 @@ function Portada(props: Props) {
             <span className="first-letter:uppercase inline-block">{d.fechaLarga}</span>
             {d.lugar && <span className="block">{d.lugar}</span>}
           </p>
+          <CuentaPortada hasta={d.fechaIso} estilo="filete" className="k-cuenta riviera-cuenta" />
           <RivieraSeda />
         </div>
         <a href="#k-inicio" className="k-baja rv-baja">

@@ -1,3 +1,4 @@
+import CuentaPortada from "@/components/bloques/CuentaPortada";
 import Calendario from "@/components/bloques/Calendario";
 import ComoLlegar, { destinosDe } from "@/components/bloques/ComoLlegar";
 import { LimiteRsvp } from "@/components/bloques/Protocolo";
@@ -36,8 +37,8 @@ import "./estadio.css";
  */
 
 const fuente: FuenteVideo = {
-  vertical: "/aperturas/marea/vertical.mp4",
-  horizontal: "/aperturas/marea/horizontal.mp4",
+  vertical: "/tematicas/estadio/hero-v.mp4",
+  horizontal: "/tematicas/estadio/hero-h.mp4",
   poster: "/tematicas/estadio/poster-v.avif",
   posterHorizontal: "/tematicas/estadio/poster-h.avif",
   webm: "/tematicas/estadio/hero-v.webm",
@@ -120,6 +121,7 @@ function Portada(props: Props) {
             {d.lugar && <span className="block">{d.lugar}</span>}
           </p>
         </div>
+        <CuentaPortada hasta={d.fechaIso} estilo="dos-puntos" className="k-cuenta estadio-cuenta" />
         <a href="#es-entrada" className="k-baja es-baja">
           Vuestra entrada
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="1.5" /></svg>

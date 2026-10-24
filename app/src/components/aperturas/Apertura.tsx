@@ -7,6 +7,7 @@ import ArranqueApertura from "./ArranqueApertura";
 import SaludoApertura from "./SaludoApertura";
 import SobreEscena from "./Sobre";
 import { CLASE_TITULAR_PORTADA, programaApertura, type ConfigApertura } from "./programa";
+import { DESTELLO_MS, VELO_MS, luzDestello, resolverTransicion } from "./transicion";
 
 export { CLASE_TITULAR_PORTADA };
 
@@ -69,6 +70,9 @@ export default function Apertura(props: {
   const sinVideo = ap || conSobre ? null : aperturaSinVideo(inv);
   const sobre = !ap && !sinVideo;
 
+  const transicion = resolverTransicion(inv.plantilla, inv.tema?.apertura?.transicion);
+  const luz = luzDestello(inv.plantilla);
+
   const cfg: ConfigApertura = {
     clave: `invitoo:abierta:${inv.slug}`,
     vertical: ap?.vertical ?? "",
@@ -84,6 +88,10 @@ export default function Apertura(props: {
     // viajan desde el rótulo (View Transitions) y no se tocan.
     trazo: !ap,
     salirMs: sobre ? 700 : medidasMovimiento(resolverMovimiento(inv.plantilla, inv.tema?.movimiento)).salida,
+    // U1: la salida es un destello (o el velo que se retira). El sobre
+    // tarda 1,55 s en abrirse + 0,68 s de destello: 2,23 s hasta la portada.
+    transicion,
+    transicionMs: transicion === "destello" ? DESTELLO_MS : VELO_MS,
   };
 
   const script = `(${programaApertura.toString()})(document.currentScript&&document.currentScript.parentNode,${json(cfg)});`;
@@ -96,6 +104,8 @@ export default function Apertura(props: {
         data-apertura=""
         data-estado="espera"
         data-claro={claro ? "1" : "0"}
+        data-transicion={transicion}
+        data-luz={luz}
         role="dialog"
         aria-label={`Invitación de boda de ${a} y ${b}`}
         // El script de abajo cambia estos atributos antes de hidratar.
@@ -156,7 +166,7 @@ export default function Apertura(props: {
             después. Si la boda no tiene música, no existe. */}
         {inv.musica && (
           <div
-            className="absolute inset-x-0 z-10 flex justify-center"
+            className="apertura-sonido absolute inset-x-0 z-10 flex justify-center"
             style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 2rem)" }}
           >
             <BotonSonido
@@ -167,6 +177,21 @@ export default function Apertura(props: {
             />
           </div>
         )}
+
+        {transicion === "velo-scroll" && (
+          <p aria-hidden className="apertura-pista pointer-events-none absolute inset-x-0 z-10 text-center text-[1rem] uppercase tracking-[0.24em]">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden>
+              <path d="M6 14l6-6 6 6" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Desliza para abrir
+          </p>
+        )}
+
+        {/* La luz del destello: encima de todo, sin capturar toques. */}
+        <div aria-hidden className="apertura-destello pointer-events-none absolute inset-0 z-20">
+          <span className="apertura-destello-rayos" />
+          <span className="apertura-destello-nucleo" />
+        </div>
 
         <ArranqueApertura cfg={cfg} />
         <script dangerouslySetInnerHTML={{ __html: script }} />
@@ -219,6 +244,8 @@ const CSS = `
 .apertura[data-claro="0"] .apertura-amp { color: var(--acento-texto, var(--acento)); }
 .apertura[data-rotulo="1"] .apertura-velo,
 .apertura[data-rotulo="1"] .apertura-rotulo { opacity: 1; transform: none; filter: none; }
+/* El final del clip (V1) sube a papel: el rótulo se retira antes. */
+.apertura[data-rotulo-sale="1"] .apertura-rotulo, .apertura[data-rotulo-sale="1"] .apertura-velo { opacity: 0; transition-duration: 450ms; }
 /* La «&» llega un instante después que los nombres: es el gesto. */
 .apertura-amp { display: inline-block; margin-inline: .22em; opacity: 0; transition: opacity 1200ms cubic-bezier(.25,.1,.12,1) 500ms; }
 .apertura[data-rotulo="1"] .apertura-amp { opacity: 1; }
@@ -240,7 +267,7 @@ const CSS = `
 
 /* View Transitions: el rótulo se convierte en el titular de la portada. */
 .apertura[data-rotulo="1"][data-estado="dentro"] .apertura-nombres { view-transition-name: invitoo-nombres; }
-main:has(> .apertura[data-estado="fuera"]) .${CLASE_TITULAR_PORTADA} { view-transition-name: invitoo-nombres; }
+main[data-ap="fuera"] .${CLASE_TITULAR_PORTADA} { view-transition-name: invitoo-nombres; }
 ::view-transition-group(invitoo-nombres) { animation-duration: calc(var(--mov-salida, 1100ms) + 300ms); animation-timing-function: cubic-bezier(.65,.05,.36,1); }
 /* El rótulo (una línea) y el titular (tres) no tienen la misma forma: si
    las dos fotos viajan opacas, en mitad del viaje se ven unos nombres
@@ -262,7 +289,7 @@ h1[tabindex="-1"]:focus { outline: none; }
    velo de izquierda a derecha (con fuentes web, el trazo de verdad no se
    puede: no hay contornos). Sin viaje de View Transitions: entran con la
    portada y se escriben dentro de ella. */
-main[data-trazo="1"]:has(> .apertura[data-estado="fuera"]) .${CLASE_TITULAR_PORTADA} {
+main[data-trazo="1"][data-ap="fuera"] .${CLASE_TITULAR_PORTADA} {
   view-transition-name: none;
   animation: invitoo-trazo 1200ms var(--ease-velo, cubic-bezier(.65,0,.35,1)) 240ms both;
 }
@@ -272,11 +299,101 @@ main[data-trazo="1"]:has(> .apertura[data-estado="fuera"]) .${CLASE_TITULAR_PORT
   to   { clip-path: inset(-20% -6% -20% -6%); filter: none; }
 }
 
+/* —— U1 · DESTELLO ————————————————————————————————————————————————
+   Al cerrar, la luz florece desde el centro (0–38 %), tapa el último
+   fotograma y se disuelve (38–100 %) dejando la portada debajo. A partir
+   del pico, la capa ya no pinta nada propio: ni fondo, ni vídeo, ni
+   botones. Solo opacity y transform. */
+.apertura { --dst-centro: #fffcf4; --dst-halo: rgba(230, 196, 128, .44); --dst-lavado: #fff9ee; }
+.apertura[data-luz="plata"] { --dst-centro: #ffffff; --dst-halo: rgba(206, 214, 230, .44); --dst-lavado: #f8f9fc; }
+.apertura[data-luz="rosa"]  { --dst-centro: #fffafb; --dst-halo: rgba(238, 192, 210, .42); --dst-lavado: #fff6f8; }
+.apertura[data-luz="perla"] { --dst-centro: #ffffff; --dst-halo: rgba(222, 230, 234, .5); --dst-lavado: #fcfdfd; }
+.apertura-destello { opacity: 0; overflow: hidden; }
+.apertura-destello > span { position: absolute; inset: -30%; display: block; }
+.apertura-destello-nucleo {
+  background:
+    radial-gradient(circle at 50% 46%, var(--dst-centro) 0%, var(--dst-centro) 14%, var(--dst-halo) 34%, transparent 64%),
+    var(--dst-lavado);
+  opacity: 0;
+}
+.apertura-destello-rayos {
+  background: repeating-conic-gradient(from 8deg at 50% 46%, transparent 0deg 9deg, var(--dst-halo) 11deg 12deg, transparent 14deg 22deg);
+  -webkit-mask: radial-gradient(circle at 50% 46%, #000 0%, transparent 58%);
+          mask: radial-gradient(circle at 50% 46%, #000 0%, transparent 58%);
+  opacity: 0;
+}
+.apertura[data-estado="destello"] { pointer-events: none; animation: apertura-sin-fondo var(--dst-dur, 680ms) linear both; }
+.apertura[data-estado="destello"] > :not(.apertura-destello) { animation: apertura-apaga var(--dst-dur, 680ms) linear both; }
+.apertura[data-estado="destello"] .apertura-destello { opacity: 1; }
+.apertura[data-estado="destello"] .apertura-destello-nucleo { animation: apertura-florece var(--dst-dur, 680ms) var(--ease-carta, cubic-bezier(.22,.61,.36,1)) both; }
+.apertura[data-estado="destello"] .apertura-destello-rayos { animation: apertura-rayos var(--dst-dur, 680ms) var(--ease-carta, cubic-bezier(.22,.61,.36,1)) both; }
+@keyframes apertura-florece {
+  0%   { opacity: 0; transform: scale(.35); }
+  38%  { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.35); }
+}
+@keyframes apertura-rayos {
+  0%   { opacity: 0; transform: scale(.5) rotate(-6deg); }
+  34%  { opacity: .9; }
+  100% { opacity: 0; transform: scale(1.6) rotate(10deg); }
+}
+@keyframes apertura-apaga { 0%, 34% { opacity: 1; } 40%, 100% { opacity: 0; } }
+@keyframes apertura-sin-fondo { 0%, 37% { background-color: #000; } 38%, 100% { background-color: transparent; } }
+.apertura:not(.bg-black)[data-estado="destello"] { animation-name: apertura-sin-fondo-papel; }
+@keyframes apertura-sin-fondo-papel { 0%, 37% { background-color: var(--papel); } 38%, 100% { background-color: transparent; } }
+/* Los nombres de la portada se escriben también tras el destello. */
+main[data-trazo="1"][data-ap="destello"] .${CLASE_TITULAR_PORTADA},
+main[data-trazo="1"][data-ap="levantando"] .${CLASE_TITULAR_PORTADA} {
+  view-transition-name: none;
+  animation: invitoo-trazo 1100ms var(--ease-velo, cubic-bezier(.65,0,.35,1)) 260ms both;
+}
+
+/* El sobre es de papel crema aunque la boda sea oscura (Órbita): dentro de
+   la apertura, la tinta vuelve a ser oscura para que los nombres pasen AA. */
+main[data-modo="oscuro"] > .apertura:not(.bg-black) {
+  --tinta: #241a16;
+  --acento-texto: color-mix(in srgb, var(--acento) 55%, #1a1020);
+}
+
+/* —— U1 · VELO ———————————————————————————————————————————————————————
+   La capa entera es un velo: sube con el dedo (--velo, 0–1) y deja ver
+   la portada debajo; el borde inferior se curva como una tela. */
+.apertura[data-velo="1"] {
+  touch-action: none;
+  transform: translate3d(0, calc(var(--velo, 0) * -104%), 0);
+  border-bottom-left-radius: calc(var(--velo, 0) * 48vw) calc(var(--velo, 0) * 9rem);
+  border-bottom-right-radius: calc(var(--velo, 0) * 48vw) calc(var(--velo, 0) * 9rem);
+  box-shadow: 0 1.5rem 3rem rgb(0 0 0 / calc(var(--velo, 0) * .35));
+}
+.apertura[data-velo="1"] video { transform: scale(calc(1 + var(--velo, 0) * .08)); transform-origin: 50% 0; }
+.apertura[data-velo-vuelve="1"] { transition: transform 420ms var(--ease-carta, cubic-bezier(.22,.61,.36,1)), border-radius 420ms var(--ease-carta, cubic-bezier(.22,.61,.36,1)); }
+.apertura[data-estado="levantando"] {
+  --velo: 1 !important;
+  pointer-events: none;
+  transition: transform var(--velo-dur, 620ms) var(--ease-velo, cubic-bezier(.65,0,.35,1)), border-radius var(--velo-dur, 620ms) var(--ease-velo, cubic-bezier(.65,0,.35,1));
+}
+.apertura-pista {
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 1.4rem);
+  display: flex; flex-direction: column; align-items: center; gap: .3rem;
+  color: #fff; text-shadow: 0 1px 14px rgba(0,0,0,.6);
+  opacity: 0; transition: opacity 900ms var(--ease-carta, ease) 400ms;
+}
+.apertura[data-rotulo="1"] .apertura-pista { opacity: .92; }
+.apertura:not(.bg-black) .apertura-pista { color: var(--tinta); text-shadow: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .apertura-pista svg { animation: apertura-pista 2.2s cubic-bezier(.45,0,.55,1) 3; }
+}
+@keyframes apertura-pista { 0%, 100% { transform: none; } 50% { transform: translateY(-6px); } }
+/* Con «Desliza para abrir» abajo, el botón de sonido sube un poco. */
+.apertura[data-velo="1"] .apertura-sonido { bottom: calc(env(safe-area-inset-bottom, 0px) + 5.5rem) !important; }
+
 @media (prefers-reduced-motion: reduce) {
+  .apertura[data-velo="1"] { transform: none; border-radius: 0; box-shadow: none; }
+  .apertura[data-estado="saliendo"] { transition: opacity 200ms linear !important; }
   .apertura-rotulo, .apertura-velo, .apertura-amp, .apertura[data-estado="saliendo"] { transition: none; filter: none; transform: none; }
   ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none; }
   /* El sobre sin gesto: al tocar, un fundido simple y nada más. */
   .apertura[data-quieto="1"][data-estado="saliendo"] { transition: opacity 450ms ease-out; }
-  main[data-trazo="1"]:has(> .apertura[data-estado="fuera"]) .${CLASE_TITULAR_PORTADA} { animation: none; }
+  main[data-trazo="1"][data-ap="fuera"] .${CLASE_TITULAR_PORTADA} { animation: none; }
 }
 `;

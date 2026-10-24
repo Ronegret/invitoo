@@ -1,0 +1,482 @@
+/*
+ * «Así lo vive un invitado» (W2): un teléfono fijo y cuatro escenas que
+ * pasan al bajar. El teléfono cambia de pantalla con un fundido y un leve
+ * desplazamiento (solo transform y opacidad).
+ */
+
+.seccion {
+  position: relative;
+  background: color-mix(in srgb, var(--bruma) 45%, var(--papel));
+  padding: 6rem 1rem 5rem;
+}
+@media (min-width: 640px) {
+  .seccion {
+    padding: 8rem 1.5rem 6rem;
+  }
+}
+
+.cabeza {
+  margin: 0 auto;
+  max-width: 68rem;
+}
+
+.escenario {
+  position: relative;
+  margin: 3rem auto 0;
+  max-width: 68rem;
+  display: grid;
+}
+@media (min-width: 1024px) {
+  .escenario {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+    gap: 5rem;
+    margin-top: 2rem;
+  }
+}
+
+/* El teléfono, pegado mientras pasan las escenas. */
+.pegado {
+  position: sticky;
+  z-index: 1;
+  top: 5.25rem;
+  align-self: start;
+  height: fit-content;
+  display: grid;
+  justify-items: center;
+}
+.movil {
+  width: clamp(9.5rem, 40vw, 11rem);
+}
+@media (min-width: 1024px) {
+  .pegado {
+    top: calc(50svh - 19.5rem);
+  }
+  .movil {
+    width: 18rem;
+  }
+}
+
+/* Las escenas, una sobre otra dentro de la pantalla. */
+.capa {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateY(4%) scale(0.985);
+  transition:
+    opacity 520ms cubic-bezier(0.65, 0, 0.35, 1),
+    transform 620ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  pointer-events: none;
+}
+.capa[data-activa] {
+  opacity: 1;
+  transform: none;
+}
+
+/* El indicador: cuatro puntos bajo el teléfono. */
+.puntos {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1.4rem;
+}
+.puntos span {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--tinta) 22%, transparent);
+  transition:
+    transform 300ms ease,
+    background-color 300ms ease;
+}
+.puntos span[data-activo] {
+  background: var(--acento);
+  transform: scale(1.35);
+}
+
+/* Los pasos. */
+.pasos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  z-index: 2;
+}
+.paso {
+  min-height: 82svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 6svh;
+}
+.paso:first-child {
+  min-height: 70svh;
+}
+@media (min-width: 1024px) {
+  .paso,
+  .paso:first-child {
+    min-height: 88svh;
+    justify-content: center;
+    padding-bottom: 0;
+  }
+}
+.tarjeta {
+  border-radius: 1.4rem;
+  padding: 1.5rem 1.4rem 1.6rem;
+  background: color-mix(in srgb, var(--papel) 94%, transparent);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.7) inset,
+    0 24px 50px -30px rgb(18 16 14 / 0.4);
+  border: 1px solid color-mix(in srgb, var(--tinta) 8%, transparent);
+  transition:
+    opacity 500ms ease,
+    transform 600ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+@media (min-width: 1024px) {
+  .tarjeta {
+    background: none;
+    box-shadow: none;
+    border: 0;
+    padding: 0;
+    opacity: 0.32;
+  }
+  .paso[data-activo] .tarjeta {
+    opacity: 1;
+  }
+}
+.numero {
+  font-family: var(--display);
+  font-size: 1rem;
+  color: var(--acento);
+  letter-spacing: 0.08em;
+}
+.titulo {
+  margin: 0.4rem 0 0;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(1.9rem, 6vw, 2.9rem);
+  line-height: 1.04;
+  text-wrap: balance;
+}
+.texto {
+  margin: 0.9rem 0 0;
+  max-width: 30rem;
+  font-size: 1.06rem;
+  line-height: 1.75;
+  color: color-mix(in srgb, var(--tinta) 78%, transparent);
+}
+
+.cierre {
+  margin: 4rem auto 0;
+  max-width: 68rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  padding: 1.5rem 0 0;
+  border-top: 1px solid color-mix(in srgb, var(--tinta) 14%, transparent);
+  font-size: 1.04rem;
+  line-height: 1.65;
+}
+.cierre p {
+  margin: 0;
+  flex: 1 1 22rem;
+  color: color-mix(in srgb, var(--tinta) 80%, transparent);
+}
+.cierre a {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0 1.3rem;
+  border: 1px solid color-mix(in srgb, var(--tinta) 28%, transparent);
+}
+
+/* ───── Pantalla 1: el chat ───── */
+.chat {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: #ece5dd;
+  color: #12241c;
+}
+.chatCabeza {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 2.9em 0.9em 0.7em;
+  background: #1d5c4b;
+  color: #fff;
+  font-size: max(7px, 4.6cqi);
+}
+.chatAvatar {
+  display: grid;
+  place-items: center;
+  width: 2.2em;
+  height: 2.2em;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.16);
+  font-size: 0.8em;
+}
+.chatLista {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.55em;
+  margin: 0;
+  padding: 0.9em 0.8em 1.6em;
+  list-style: none;
+  font-size: max(7px, 5.2cqi);
+  line-height: 1.38;
+}
+.burbuja {
+  max-width: 84%;
+  border-radius: 1em;
+  padding: 0.5em 0.8em;
+  background: #fff;
+  align-self: flex-start;
+  border-bottom-left-radius: 0.25em;
+}
+.burbuja[data-de="novios"] {
+  align-self: flex-end;
+  background: #d6f2c4;
+  border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 0.25em;
+}
+.enlaceChat {
+  display: block;
+  margin-top: 0.3em;
+  overflow: hidden;
+  border-radius: 0.6em;
+  background: rgb(255 255 255 / 0.65);
+  font-size: 0.86em;
+}
+.enlaceChat img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+.enlaceChat span {
+  display: block;
+  padding: 0.35em 0.6em 0.45em;
+}
+
+/* ───── Pantalla 3: la confirmación ───── */
+.rsvp {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
+  justify-content: flex-start;
+  padding: 4.6em 1.1em 1.4em;
+  background: #f4efe4;
+  color: #2a241c;
+  font-size: max(7px, 5.1cqi);
+  text-align: center;
+}
+.rsvpNombres {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.7em;
+  line-height: 1;
+}
+.rsvpPregunta {
+  margin: 0.2em 0 0;
+  font-family: var(--display);
+  font-size: 1.3em;
+}
+.opciones {
+  display: grid;
+  gap: 0.45em;
+}
+.opcion {
+  border-radius: 999px;
+  padding: 0.55em 0.8em;
+  border: 1px solid rgb(42 36 28 / 0.28);
+  transition:
+    background-color 300ms ease,
+    color 300ms ease;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35em;
+  font-size: 0.86em;
+}
+.chips span {
+  border-radius: 999px;
+  padding: 0.3em 0.7em;
+  border: 1px solid rgb(42 36 28 / 0.2);
+}
+.sello {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: end center;
+  padding-bottom: 9%;
+  pointer-events: none;
+}
+.selloDisco {
+  display: grid;
+  place-items: center;
+  width: 44%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, #b3354a, #8c1d2c 55%, #6a1220);
+  color: #fbe9ea;
+  box-shadow:
+    inset 0 0 0 0.35em rgb(255 255 255 / 0.12),
+    0 1.2em 2em -1em rgb(60 10 18 / 0.6);
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 0.86em;
+  line-height: 1.15;
+  text-align: center;
+  opacity: 0;
+  transform: scale(1.7) rotate(-14deg);
+}
+
+/* ───── Pantalla 4: en directo ───── */
+.directo {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+  padding: 3.2em 0.8em 1em;
+  background: #1a1614;
+  color: #f4efe8;
+  font-size: max(7px, 4.8cqi);
+}
+.directoTitulo {
+  font-family: var(--display);
+  font-size: 1.45em;
+  text-align: center;
+  line-height: 1.1;
+}
+.mosaico {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.35em;
+}
+.mosaico img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 0.45em;
+}
+.barra {
+  height: 0.3em;
+  border-radius: 1em;
+  background: rgb(255 255 255 / 0.15);
+  overflow: hidden;
+}
+.barra i {
+  display: block;
+  height: 100%;
+  background: #e2c47c;
+  transform-origin: 0 50%;
+  transform: scaleX(0.15);
+}
+.deseo {
+  border-radius: 0.7em;
+  padding: 0.6em 0.75em;
+  background: #f6f1e9;
+  color: #2a241c;
+  font-family: var(--display);
+  font-style: italic;
+  line-height: 1.3;
+}
+.deseo small {
+  display: block;
+  margin-top: 0.3em;
+  font-family: var(--texto, sans-serif);
+  font-style: normal;
+  font-size: 0.8em;
+  opacity: 0.7;
+}
+.aviso {
+  border-radius: 0.7em;
+  padding: 0.5em 0.7em;
+  background: rgb(255 255 255 / 0.1);
+  font-size: 0.86em;
+  text-align: center;
+}
+
+/* ── Lo que se mueve dentro de cada pantalla, solo si se quiere ── */
+@media (prefers-reduced-motion: no-preference) {
+  .burbuja {
+    opacity: 0;
+    transform: translateY(0.6em) scale(0.96);
+    transition:
+      opacity 320ms ease,
+      transform 420ms cubic-bezier(0.22, 0.7, 0.28, 1);
+    transition-delay: calc(var(--n) * 650ms + 250ms);
+  }
+  .capa[data-activa] .burbuja {
+    opacity: 1;
+    transform: none;
+  }
+
+  .capa[data-activa] .opcion[data-si] {
+    animation: elige 400ms ease 700ms both;
+  }
+  .capa[data-activa] .chips [data-si] {
+    animation: elige 400ms ease 1200ms both;
+  }
+  .capa[data-activa] .selloDisco {
+    animation: estampa 650ms cubic-bezier(0.2, 0.9, 0.3, 1.15) 1900ms both;
+  }
+  .capa[data-activa] .barra i {
+    animation: sube 2.2s cubic-bezier(0.22, 0.61, 0.36, 1) 400ms both;
+  }
+  .capa[data-activa] .aviso {
+    animation: llega 500ms ease 2600ms both;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .capa,
+  .tarjeta {
+    transition: none;
+  }
+  .opcion[data-si],
+  .chips [data-si] {
+    background: #2a241c;
+    color: #f4efe4;
+  }
+  .selloDisco {
+    opacity: 1;
+    transform: none;
+  }
+  .barra i {
+    transform: none;
+  }
+}
+@keyframes elige {
+  to {
+    background: #2a241c;
+    color: #f4efe4;
+  }
+}
+@keyframes estampa {
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(-8deg);
+  }
+}
+@keyframes sube {
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes llega {
+  from {
+    opacity: 0;
+    transform: translateY(0.6em);
+  }
+}

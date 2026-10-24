@@ -1,3 +1,4 @@
+import CuentaPortada from "@/components/bloques/CuentaPortada";
 import Calendario from "@/components/bloques/Calendario";
 import ComoLlegar, { destinosDe } from "@/components/bloques/ComoLlegar";
 import { LimiteRsvp } from "@/components/bloques/Protocolo";
@@ -39,8 +40,8 @@ import "./vinilo.css";
 // Metraje provisional: public/aperturas/velo (la falda que gira), en B/N y
 // con el rojo de escenario en CSS. Lo sustituye el vídeo de los novios.
 const HERO: FuenteVideo = {
-  vertical: "/aperturas/velo/vertical.mp4",
-  horizontal: "/aperturas/velo/horizontal.mp4",
+  vertical: "/tematicas/vinilo/hero-v.mp4",
+  horizontal: "/tematicas/vinilo/hero-h.mp4",
   poster: "/tematicas/vinilo/poster-v.avif",
   posterHorizontal: "/tematicas/vinilo/poster-h.avif",
   webm: "/tematicas/vinilo/hero-v.webm",
@@ -98,6 +99,7 @@ function Portada(props: Props) {
             <span>En directo</span> · {mayuscula(d.fechaLarga)}
             {d.lugar && <span className="block">{d.lugar}</span>}
           </p>
+          <CuentaPortada hasta={d.fechaIso} estilo="dos-puntos" className="k-cuenta vinilo-cuenta" />
           <a href="#k-inicio" className="k-baja vi-baja">
             Sacad el disco
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="1.5" /></svg>

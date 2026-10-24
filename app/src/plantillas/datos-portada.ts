@@ -17,6 +17,8 @@ export function datosPortada({ inv, b }: Pick<Props, "inv" | "b">) {
   return {
     a: inv.pareja.a,
     b: inv.pareja.b,
+    /** La fecha ISO de la boda (la cuenta atrás de la portada). */
+    fechaIso: fecha,
     frase: portada?.frase ?? "",
     foto: portada?.foto,
     fechaLarga: formatearFecha(fecha, { weekday: "long", day: "numeric", month: "long", year: "numeric" }),

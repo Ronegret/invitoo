@@ -1,0 +1,111 @@
+/* ------------------------------------------------------------------
+   CUENTA ATRÁS DE PORTADA (U1) — components/bloques/CuentaPortada.tsx
+   Hereda el color del rótulo. Cada plantilla la ajusta con:
+     --cp-fuente   letra de las cifras (por defecto, la de titulares)
+     --cp-num      tamaño de las cifras
+     --cp-color    color de las cifras (por defecto, el del texto)
+     --cp-filete   color de los separadores
+     --cp-peso     peso de las cifras
+   Solo transform, opacity y filter en piezas pequeñas.
+   ------------------------------------------------------------------ */
+.cp {
+  --cp-num: clamp(2.15rem, 10.6vw, 3.1rem);
+  text-align: center;
+  line-height: 1.2;
+}
+.cp-antes {
+  margin: 0 0 .4rem;
+  font-family: var(--texto);
+  font-size: 1.0625rem;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  opacity: .88;
+}
+.cp-cifras { display: none; justify-content: center; align-items: flex-start; }
+.cp[data-lleno="1"] .cp-cifras { display: flex; }
+.cp[data-lleno="1"] .cp-fecha { display: none; }
+.cp-fecha {
+  margin: 0;
+  font-family: var(--cp-fuente, var(--display));
+  font-size: clamp(1.4rem, 6.4vw, 1.9rem);
+  line-height: 1.2;
+}
+.cp-celda {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center;
+  min-width: 3.9rem;
+  padding-inline: .8rem;
+}
+.cp-num {
+  display: block;
+  height: 1.08em;
+  overflow: hidden;
+  font-family: var(--cp-fuente, var(--display));
+  font-size: var(--cp-num);
+  font-weight: var(--cp-peso, inherit);
+  line-height: 1.08;
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--cp-color, currentColor);
+}
+.cp-num > span { display: inline-block; }
+.cp-etq {
+  margin-top: .3rem;
+  font-family: var(--texto);
+  font-size: 1.0625rem;
+  line-height: 1.2;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  opacity: .86;
+}
+.cp-fin {
+  margin: 0;
+  font-family: var(--cp-fuente, var(--display));
+  font-size: clamp(1.8rem, 8vw, 2.6rem);
+}
+
+/* —— separadores —— */
+.cp-celda + .cp-celda::before {
+  content: "";
+  position: absolute; left: 0; translate: -50% 0; top: calc(var(--cp-num) * .22);
+  height: calc(var(--cp-num) * .62);
+  border-left: 1px solid var(--cp-filete, currentColor);
+  opacity: .42;
+}
+.cp[data-estilo="punto"] .cp-celda + .cp-celda::before,
+.cp[data-estilo="rombo"] .cp-celda + .cp-celda::before {
+  border: 0; width: 5px; height: 5px;
+  top: calc(var(--cp-num) * .48);
+  background: var(--cp-filete, currentColor);
+  border-radius: 50%; opacity: .7;
+}
+.cp[data-estilo="rombo"] .cp-celda + .cp-celda::before { border-radius: 0; transform: rotate(45deg); }
+.cp[data-estilo="dos-puntos"] .cp-celda + .cp-celda::before {
+  content: ":"; border: 0; height: auto; top: 0;
+  font-family: var(--cp-fuente, var(--display)); font-size: var(--cp-num); line-height: 1;
+  color: var(--cp-filete, currentColor); opacity: .55;
+}
+
+@media (max-width: 370px) {
+  .cp { --cp-num: clamp(2rem, 10.2vw, 2.4rem); }
+  .cp-celda { min-width: 3.6rem; padding-inline: .62rem; }
+}
+
+/* —— movimiento —— */
+@media (prefers-reduced-motion: no-preference) {
+  /* Los segundos ruedan hacia arriba (nueva cifra desde abajo). */
+  .cp-rueda { animation: cp-rueda 520ms var(--ease-carta, cubic-bezier(.22,.61,.36,1)) both; }
+  /* Al retirarse la apertura (o al llegar, si ya se vio), las cuatro
+     celdas entran escalonadas, como tinta que aparece. */
+  html.js main[data-ap="fuera"] .cp-celda,
+  html.js main[data-ap="destello"] .cp-celda,
+  html.js main[data-ap="levantando"] .cp-celda {
+    animation: cp-entra 900ms var(--ease-carta, cubic-bezier(.22,.61,.36,1)) calc(380ms + var(--i, 0) * 90ms) both;
+  }
+}
+@keyframes cp-rueda { from { transform: translateY(70%); opacity: 0; } }
+@keyframes cp-entra { from { opacity: 0; transform: translateY(10px); filter: blur(5px); } }
+
+/* Alineada a la izquierda (Registro). */
+.cp.cp-izq { text-align: left; }
+.cp.cp-izq .cp-cifras { justify-content: flex-start; }
+.cp.cp-izq .cp-celda:first-child { padding-left: 0; align-items: flex-start; }

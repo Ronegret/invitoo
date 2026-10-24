@@ -1,3 +1,4 @@
+import CuentaPortada from "@/components/bloques/CuentaPortada";
 import { Marcellus, Outfit } from "next/font/google";
 import { Despedida, Secciones, type Props } from "./comun";
 import { datosPortada } from "./datos-portada";
@@ -34,7 +35,7 @@ const texto = Outfit({
 function Portada(props: Props) {
   const d = datosPortada(props);
   return (
-    <header className="relative flex min-h-[100svh] flex-col items-center justify-center px-6 py-16 text-center">
+    <header className="relative flex min-h-[100svh] flex-col items-center justify-center px-6 py-16 text-center [@media(max-height:760px)]:py-10">
       {/* El momento: las estrellas se encienden y dibujan vuestras iniciales. */}
       <InicialesEstrellas a={d.a} b={d.b} />
       <p className="mt-8 text-[1.125rem] tracking-[0.1em] text-[var(--acento-texto)] first-letter:uppercase">
@@ -45,6 +46,7 @@ function Portada(props: Props) {
         <Estrella size={18} className="mx-auto my-3 block text-[var(--acento-texto)]" />
         {d.b}
       </h1>
+      <CuentaPortada hasta={props.inv.pareja.fecha} estilo="punto" className="const-cuenta mt-6" />
       <p className="mt-6 text-[1.125rem] opacity-90">
         Desde las {d.hora}, {d.lugar}
       </p>

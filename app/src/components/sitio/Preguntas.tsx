@@ -9,9 +9,17 @@ import { PREGUNTAS, type Pregunta } from "@/data/sitio";
  * `de` filtra: en /precios solo salen las dudas de dinero, en /servicios las
  * de producto, y en /preguntas todas.
  */
-export default function Preguntas({ de }: { de?: Pregunta["de"] | Pregunta["de"][] }) {
+export default function Preguntas({
+  de,
+  max,
+}: {
+  de?: Pregunta["de"] | Pregunta["de"][];
+  /** Cuántas como mucho (en la portada, las seis primeras). */
+  max?: number;
+}) {
   const filtro = de ? (Array.isArray(de) ? de : [de]) : null;
-  const lista = filtro ? PREGUNTAS.filter((p) => filtro.includes(p.de)) : PREGUNTAS;
+  const todas = filtro ? PREGUNTAS.filter((p) => filtro.includes(p.de)) : PREGUNTAS;
+  const lista = max ? todas.slice(0, max) : todas;
 
   return (
     <div className="border-t border-[var(--tinta)]/15">

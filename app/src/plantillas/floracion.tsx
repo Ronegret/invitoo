@@ -1,3 +1,4 @@
+import CuentaPortada from "@/components/bloques/CuentaPortada";
 import { Figtree, Fraunces } from "next/font/google";
 import { Florecer } from "@/components/flores";
 import { Despedida, Secciones, Y, type Props } from "./comun";
@@ -33,7 +34,7 @@ function Portada(props: Props) {
   const d = datosPortada(props);
   return (
     <header className="relative overflow-hidden px-6 pb-20 pt-[max(2rem,env(safe-area-inset-top))] text-center">
-      <div className="relative mx-auto w-[78%] max-w-[22rem]">
+      <div className="relative mx-auto w-[min(78%,34svh)] max-w-[22rem]">
         <div className="floracion-arco aspect-[3/4] w-full overflow-hidden bg-[color-mix(in_srgb,var(--acento)_18%,var(--papel))]">
           {d.foto && (
             /* eslint-disable-next-line @next/next/no-img-element -- AVIF ya optimizado */
@@ -54,11 +55,12 @@ function Portada(props: Props) {
       <Florecer variante="azahar" alCargar retraso={900} tamano="min(28vw, 120px)" className="floracion-rama izq-2" />
       <Florecer variante="eucalipto" alCargar retraso={500} lado="derecha" tamano="min(46vw, 220px)" densidad="plena" className="floracion-rama der-1" />
       <Florecer variante="peonia" alCargar retraso={1200} lado="derecha" tamano="min(26vw, 110px)" className="floracion-rama der-2" />
-      <h1 className="display asienta vt-nombres mt-10 text-[clamp(3rem,14vw,5rem)] leading-[1]">
+      <h1 className="display asienta vt-nombres mt-8 text-[clamp(3rem,14vw,5rem)] leading-[1]">
         {d.a} <Y signo="&" /> {d.b}
       </h1>
       <p className="mt-5 text-[1.125rem] first-letter:uppercase">{d.fechaLarga}</p>
       <p className="mt-1 text-[1.0625rem] opacity-80">{d.lugar}</p>
+      <CuentaPortada hasta={props.inv.pareja.fecha} estilo="punto" className="mt-6" />
       {d.frase && (
         <p className="mx-auto mt-6 max-w-[25rem] text-[1.125rem] leading-[1.7] opacity-90">{d.frase}</p>
       )}

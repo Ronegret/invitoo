@@ -277,6 +277,12 @@ export const CSS_FLORES = `
   display: inline-block; width: var(--fl-ancho, 120px); max-width: 100%;
   line-height: 0; pointer-events: none; user-select: none;
   contain: layout paint;
+  /* (P3) Fuera de pantalla, el navegador no recalcula ni pinta la flor. Una
+     guirnalda son ~780 trazos SVG (80 % del DOM de la invitación) y antes se
+     volvían a calcular en cada fotograma de scroll. «auto» recuerda el
+     tamaño ya pintado: no hay saltos. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto var(--fl-ancho, 120px) auto var(--fl-ancho, 120px);
 }
 .flor > svg { display: block; width: 100%; height: auto; overflow: visible; }
 [data-mov-flores="ninguna"] .flor { display: none; }

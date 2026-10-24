@@ -499,14 +499,14 @@
     animation-delay: calc(250ms + var(--l, 0) * 22ms);
   }
 }
+/* (P3) Sin `filter: blur` por letra: eran 48 animaciones de filtro a la vez
+   (Lighthouse: «44 animaciones no compuestas») justo mientras se pinta el
+   LCP. El enfoque se sugiere con opacidad y un leve escalado, que hace el
+   compositor. */
 @keyframes enfoca {
   from {
     opacity: 0;
-    filter: blur(8px);
-    transform: translateY(0.18em);
-  }
-  60% {
-    filter: blur(1px);
+    transform: translateY(0.18em) scale(1.08);
   }
 }
 
@@ -565,11 +565,12 @@
   pointer-events: none;
   opacity: 0.9;
 }
+/* (P3) Sin `filter: blur(60px)`: el degradado radial ya se funde en
+   transparente; el blur obligaba a desenfocar en GPU tres capas de medio
+   viewport en cada fotograma, para siempre. Se mece solo con transform. */
 .aurora i {
   position: absolute;
   border-radius: 50%;
-  filter: blur(60px);
-  will-change: transform;
 }
 .aurora i:nth-child(1) {
   width: 46vmax;

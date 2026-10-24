@@ -303,3 +303,6 @@
 
 /* Pilas de reserva sans (GENERICA de tokens.ts no conoce estas familias). */
 .lienzo[data-plantilla="vinilo"] { font-family: var(--p-texto), "Karla", ui-sans-serif, system-ui, sans-serif; }
+
+/* U1 · legibilidad: el acento sobre el negro, un punto más claro. */
+.vi-toca, .vi-antes { color: color-mix(in srgb, var(--acento-texto) 84%, var(--tinta)); }

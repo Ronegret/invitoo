@@ -81,7 +81,7 @@
 @media (prefers-reduced-motion: no-preference) {
   .mt-dorsal { animation: mt-tensa 1300ms var(--ease-sello) 500ms both; transform-origin: 50% 0; }
 }
-main:has(> .apertura[data-estado="dentro"]) .mt-dorsal { animation-play-state: paused; }
+main[data-ap="dentro"] .mt-dorsal { animation-play-state: paused; }
 @keyframes mt-tensa { from { opacity: 0; transform: translateY(20px) rotate(3deg); } 60% { opacity: 1; } }
 
 .lienzo[data-plantilla="meta"] .kv-play { --kv-play-borde: var(--acento); }

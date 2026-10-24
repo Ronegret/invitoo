@@ -57,7 +57,7 @@
   .ol-lema { animation: ol-enfoca 1100ms ease 300ms both; }
 }
 @keyframes ol-enfoca { from { opacity: 0; filter: blur(8px); transform: translateY(10px); } }
-main:has(> .apertura[data-estado="dentro"]) :is(.ol-nombres, .ol-lema) { animation-play-state: paused; }
+main[data-ap="dentro"] :is(.ol-nombres, .ol-lema) { animation-play-state: paused; }
 /* LA RESACA: al bajar, la ola se retira hacia arriba y descubre la arena. */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
@@ -257,4 +257,22 @@ main:has(> .apertura[data-estado="dentro"]) :is(.ol-nombres, .ol-lema) { animati
 @media (prefers-reduced-motion: reduce) {
   .ol-nombres, .ol-lema, .ol-agua, .ol-espuma, .ol-cifra-v, .ol-onda, .ol-arena :is(.ol-concha, .ol-estrella) { animation: none !important; }
   .ol-olita { display: none; }
+}
+
+/* U1: la cuenta atrás de la portada entra en la primera pantalla. */
+.orilla-cuenta { margin-top: .9rem; }
+@media (max-width: 767px), (max-height: 900px) { .ol-mar { height: max(60svh, 23rem); padding-bottom: 4.5rem; } }
+
+/* U1 · legibilidad: el mar es claro (arena, espuma). Con la cabecera más
+   baja, el rótulo cae sobre el agua: el velo sube y se refuerza. */
+.ol-velo {
+  background:
+    linear-gradient(0deg, color-mix(in srgb, var(--tinta) 78%, transparent) 0%, color-mix(in srgb, var(--tinta) 66%, transparent) 38%, color-mix(in srgb, var(--tinta) 38%, transparent) 64%, color-mix(in srgb, var(--tinta) 12%, transparent) 84%),
+    linear-gradient(180deg, color-mix(in srgb, var(--tinta) 30%, transparent), transparent 20%);
+}
+.ol-sobre-agua { text-shadow: 0 1px 16px rgb(0 0 0 / .5), 0 0 2px rgb(0 0 0 / .3); }
+/* Un velo propio, solo detrás del rótulo: el agua sigue clara alrededor. */
+.ol-sobre-agua::before {
+  content: ""; position: absolute; inset: -3rem -2rem -2rem; z-index: -1; pointer-events: none;
+  background: radial-gradient(115% 72% at 50% 46%, color-mix(in srgb, var(--tinta) 74%, transparent) 0%, color-mix(in srgb, var(--tinta) 58%, transparent) 55%, transparent 82%);
 }

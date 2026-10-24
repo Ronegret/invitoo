@@ -181,7 +181,11 @@ body {
   pointer-events: none;
   opacity: var(--grano);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
-  mix-blend-mode: multiply;
+  /* (P3) Sin `mix-blend-mode`. Con `multiply` sobre una capa del alto de la
+     invitación entera (15.000 px), cada fotograma de scroll obligaba a
+     fundir la página con el grano: 3,8 fps → 24 fps en un móvil emulado
+     (qa/v4/p3). A un 3,5 % de opacidad, «normal» y «multiply» no se
+     distinguen a simple vista. */
 }
 
 /* Tipografía display: Cruilla pide tamaño y aire. */
@@ -511,7 +515,7 @@ button:not(:disabled):active {
 .lienzo[data-modo="oscuro"] { color-scheme: dark; }
 /* La marca «Demo» de las muestras va arriba a la izquierda; en Registro ahí
    está la cabecera («Boda civil» y la fecha), así que baja bajo su filete. */
-main:has(.lienzo[data-plantilla="registro"]) > .marca-demo {
+main[data-demo="registro"] > .marca-demo {
   top: calc(max(0.75rem, env(safe-area-inset-top)) + 4.1rem);
 }
 /* 17 px como mínimo en todo el texto de lectura de TODAS las invitaciones
@@ -520,7 +524,7 @@ main:has(.lienzo[data-plantilla="registro"]) > .marca-demo {
 .lienzo :is(.text-\[1rem\], .text-\[0\.95rem\], .text-sm, .text-base, label, legend) {
   font-size: 1.0625rem;
 }
-.lienzo[data-modo="oscuro"].grano::after { mix-blend-mode: screen; }
+/* (P3) En oscuro tampoco: `screen` costaba lo mismo que `multiply`. */
 
 /* El acento como TEXTO es siempre su versión AA: un lima puro sobre
    blanco no se lee. Red de seguridad para los bloques que aún pintan
@@ -831,9 +835,9 @@ main:has(.lienzo[data-plantilla="registro"]) > .marca-demo {
 @keyframes y-hilo { from { transform: scaleX(0); opacity: 0; } }
 
 /* Mientras la apertura está delante, lo de la portada espera. */
-main:has(> .apertura[data-estado="dentro"]) .lienzo :is(.foto-entra, .y-gesto),
-main:has(> .apertura[data-estado="dentro"]) .lienzo .y-gesto::before,
-main:has(> .apertura[data-estado="dentro"]) .lienzo .y-gesto::after {
+main[data-ap="dentro"] .lienzo :is(.foto-entra, .y-gesto),
+main[data-ap="dentro"] .lienzo .y-gesto::before,
+main[data-ap="dentro"] .lienzo .y-gesto::after {
   animation-play-state: paused;
 }
 

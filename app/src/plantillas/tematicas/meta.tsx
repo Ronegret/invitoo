@@ -1,3 +1,4 @@
+import CuentaPortada from "@/components/bloques/CuentaPortada";
 import Calendario from "@/components/bloques/Calendario";
 import ComoLlegar, { destinosDe } from "@/components/bloques/ComoLlegar";
 import { LimiteRsvp } from "@/components/bloques/Protocolo";
@@ -36,8 +37,8 @@ import "./meta.css";
  */
 
 const fuente: FuenteVideo = {
-  vertical: "/aperturas/cielo/vertical.mp4",
-  horizontal: "/aperturas/cielo/horizontal.mp4",
+  vertical: "/tematicas/meta/hero-v.mp4",
+  horizontal: "/tematicas/meta/hero-h.mp4",
   poster: "/tematicas/meta/poster-v.avif",
   posterHorizontal: "/tematicas/meta/poster-h.avif",
   webm: "/tematicas/meta/hero-v.webm",
@@ -114,6 +115,7 @@ function Portada(props: Props) {
             Salida: <span className="tabular-nums">{d.fechaCorta}, {d.hora}</span>
             {d.lugar && <span className="block">{d.lugar}</span>}
           </p>
+          <CuentaPortada hasta={d.fechaIso} estilo="dos-puntos" className="k-cuenta meta-cuenta" />
         </div>
         <a href="#k-inicio" className="k-baja mt-baja">
           Al ritmo de la invitación

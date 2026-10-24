@@ -1,0 +1,1692 @@
+{
+ "version": 1,
+ "autor": "V1 (vídeo), 24-10-2026",
+ "reglas": [
+  "Sin personas: ni novios, ni manos, ni siluetas. Sin texto, logos, letras ni números.",
+  "Anillos como el logo de Invitoo: alianzas lisas, una con un brillante pequeño.",
+  "Apertura: 6,5 s, termina con 0,6 s de fundido luminoso al color `papel` (CONTRATO.md).",
+  "Cabecera: bucle limpio de 6 s, sin fundidos.",
+  "Vertical 720×1280 y horizontal 1280×720, 24 fps, H.264 (MP4) + VP9 (WebM), vertical ≤ 1,5 MB."
+ ],
+ "fotograma_sufijo": "Photorealistic cinematic film still, 35mm, shallow depth of field, soft natural light, delicate film grain, romantic and elegant wedding mood, a calm uncluttered area in the centre of the frame. An empty scene: no people, no person, no hands, no text, no logos, no letters, no numbers, no watermark.",
+ "fotograma_vertical": "vertical portrait composition, the subject in the lower two thirds",
+ "fotograma_horizontal": "wide landscape composition, the subject off-centre",
+ "movimiento_sufijo": "Slow cinematic camera move, smooth and steady, gentle natural motion, soft light, photorealistic, elegant, no people, no text.",
+ "movimiento_negativo": "people, person, human, face, hands, body, bride, groom, text, letters, words, logo, watermark, subtitles, fast motion, shaky camera, flicker, distortion, blurry, low quality, cartoon",
+ "encargos": [
+  {
+   "id": "carta",
+   "tipo": "casa",
+   "papel": "#f6f0e4",
+   "escena": "Sobre crema con lacre dorado sobre lino",
+   "fotograma": "a cream cotton-paper envelope lying on natural linen, closed with a smooth gold wax seal, a small sprig of dried olive leaves beside it, soft morning window light from the left, dust motes in the light",
+   "movimiento": "the camera pushes in very slowly towards the wax seal, dust motes drift in the window light, a soft light leak warms the frame",
+   "receta_b": {
+    "camara": "push",
+    "capas": [
+     "polvo",
+     "fuga"
+    ],
+    "tono": "calido"
+   },
+   "semilla": 1000,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/carta/vertical.mp4",
+      "public/aperturas/carta/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/carta/horizontal.mp4",
+      "public/aperturas/carta/horizontal.webm"
+     ],
+     "poster": "public/aperturas/carta/poster.avif",
+     "posterHorizontal": "public/aperturas/carta/poster-h.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "marca/marca-lacre-oro.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.5
+     ]
+    }
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "sobre",
+   "tipo": "casa",
+   "papel": "#f6f1e9",
+   "escena": "Lacre granate y velas sobre nogal",
+   "fotograma": "a sealed ivory envelope with a smooth deep burgundy wax seal on a dark walnut desk, two lit candles softly out of focus in the background with warm golden bokeh, evening",
+   "movimiento": "candle flames flicker gently, the warm bokeh shimmers, the camera glides slowly forward towards the wax seal",
+   "receta_b": {
+    "camara": "push",
+    "capas": [
+     "bokeh",
+     "fuga"
+    ],
+    "tono": "calido"
+   },
+   "semilla": 1007,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/sobre/vertical.mp4",
+      "public/aperturas/sobre/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/sobre/horizontal.mp4",
+      "public/aperturas/sobre/horizontal.webm"
+     ],
+     "poster": "public/aperturas/sobre/poster.avif",
+     "posterHorizontal": "public/aperturas/sobre/poster-h.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "aperturas/apertura-sobre.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.62
+     ]
+    }
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "floracion",
+   "tipo": "casa",
+   "papel": "#f1f2e6",
+   "escena": "Peonías y olivo al amanecer",
+   "fotograma": "pale blush peonies in full bloom and silvery olive branches in a sunlit spring garden at sunrise, dew on the petals, soft golden backlight, airy and bright",
+   "movimiento": "the petals sway gently in a light breeze, a few petals drift through the air, sunlight flickers through the leaves, slow push-in",
+   "receta_b": {
+    "camara": "push",
+    "capas": [
+     "petalos",
+     "bokeh",
+     "fuga"
+    ],
+    "tono": "fresco"
+   },
+   "semilla": 1014,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/floracion/vertical.mp4",
+      "public/aperturas/floracion/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/floracion/horizontal.mp4",
+      "public/aperturas/floracion/horizontal.webm"
+     ],
+     "poster": "public/aperturas/floracion/poster.avif",
+     "posterHorizontal": "public/aperturas/floracion/poster-h.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "aperturas/apertura-floracion.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.5
+     ]
+    }
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "mar",
+   "tipo": "casa",
+   "papel": "#edf3f4",
+   "escena": "Mar en calma al amanecer entre nubes",
+   "fotograma": "a calm Mediterranean sea at sunrise seen from a high cliff, soft pastel clouds, a thin golden horizon line across the middle, gentle sun glitter on the water",
+   "movimiento": "the camera glides slowly forward above the calm sea, soft clouds drift, the sun glitter sparkles on the gentle waves",
+   "receta_b": {
+    "camara": "rise",
+    "capas": [
+     "destellos",
+     "fuga"
+    ],
+    "tono": "fresco"
+   },
+   "semilla": 1021,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/mar/vertical.mp4",
+      "public/aperturas/mar/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/mar/horizontal.mp4",
+      "public/aperturas/mar/horizontal.webm"
+     ],
+     "poster": "public/aperturas/mar/poster.avif",
+     "posterHorizontal": "public/aperturas/mar/poster-h.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "tematicas/orilla/orilla-detalle-2.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.5
+     ]
+    },
+    "nota": "provisional: orilla con estrella de mar (la de marea tenía personas)"
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "velo",
+   "tipo": "casa",
+   "papel": "#eeeae3",
+   "escena": "Tul de seda a contraluz",
+   "fotograma": "a sheer ivory silk tulle curtain backlit by soft daylight in an elegant stone room, delicate folds, warm neutral tones, minimal",
+   "movimiento": "the sheer silk fabric drifts and billows slowly in a gentle breeze, light glows through the folds",
+   "receta_b": {
+    "camara": "pan-r",
+    "capas": [
+     "fuga",
+     "polvo"
+    ],
+    "tono": "neutro"
+   },
+   "semilla": 1028,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/velo/vertical.mp4",
+      "public/aperturas/velo/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/velo/horizontal.mp4",
+      "public/aperturas/velo/horizontal.webm"
+     ],
+     "poster": "public/aperturas/velo/poster.avif",
+     "posterHorizontal": "public/aperturas/velo/poster-h.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "aperturas/apertura-velo.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.45
+     ]
+    }
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "constelacion",
+   "tipo": "casa",
+   "papel": "#0e1428",
+   "escena": "Alianzas de oro sobre terciopelo de noche",
+   "fotograma": "two plain smooth gold wedding bands, one with a single small diamond, resting on deep midnight-blue velvet, surrounded by tiny sparkling star-like bokeh lights, dark and luminous",
+   "movimiento": "the tiny star lights twinkle softly, the camera orbits very slowly around the two gold rings, the diamond catches a glint of light",
+   "receta_b": {
+    "camara": "orbit",
+    "capas": [
+     "estrellas",
+     "bokeh"
+    ],
+    "tono": "noche"
+   },
+   "semilla": 1035,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/constelacion/vertical.mp4",
+      "public/aperturas/constelacion/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/constelacion/horizontal.mp4",
+      "public/aperturas/constelacion/horizontal.webm"
+     ],
+     "poster": "public/aperturas/constelacion/poster.avif",
+     "posterHorizontal": "public/aperturas/constelacion/poster-h.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "marca/marca-alianzas-terciopelo.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.5
+     ]
+    },
+    "nota": "alianzas sobre terciopelo, gradación de noche y estrellas"
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "tinta",
+   "tipo": "casa",
+   "papel": "#f7f7f4",
+   "escena": "Gota de tinta que florece en agua",
+   "fotograma": "a single drop of black ink blooming into soft swirling clouds in clear water against a pure white background, elegant monochrome, high key",
+   "movimiento": "the black ink slowly blooms and swirls in the clear water like silk, delicate tendrils unfold",
+   "receta_b": {
+    "camara": "push",
+    "capas": [
+     "tinta"
+    ],
+    "tono": "mono"
+   },
+   "semilla": 1042,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/tinta/vertical.mp4",
+      "public/aperturas/tinta/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/tinta/horizontal.mp4",
+      "public/aperturas/tinta/horizontal.webm"
+     ],
+     "poster": "public/aperturas/tinta/poster.avif",
+     "posterHorizontal": "public/aperturas/tinta/poster-h.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "aperturas/apertura-tinta.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.62
+     ]
+    }
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "registro",
+   "tipo": "casa",
+   "papel": "#ffffff",
+   "escena": "Alianzas y pluma sobre mármol blanco",
+   "fotograma": "two plain smooth gold wedding bands, one with a single small diamond, on a white marble desk beside a black fountain pen and a small bouquet of white flowers, crisp modern city daylight with soft shadows of window blinds",
+   "movimiento": "the soft shadows of the window blinds slide slowly across the marble, the camera pushes in gently towards the rings",
+   "receta_b": {
+    "camara": "push",
+    "capas": [
+     "fuga"
+    ],
+    "tono": "neutro"
+   },
+   "semilla": 1049,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/registro/vertical.mp4",
+      "public/aperturas/registro/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/registro/horizontal.mp4",
+      "public/aperturas/registro/horizontal.webm"
+     ],
+     "poster": "public/aperturas/registro/poster.avif",
+     "posterHorizontal": "public/aperturas/registro/poster-h.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "web/web-corte-1.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.45
+     ]
+    },
+    "nota": "provisional"
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "azulejo",
+   "tipo": "casa",
+   "papel": "#fbf8f2",
+   "escena": "Patio encalado con azulejos y buganvilla",
+   "fotograma": "a sunlit whitewashed Andalusian patio with cobalt blue and white hand-painted tiles, magenta bougainvillea and a small stone fountain, bright summer light and deep shadows",
+   "movimiento": "bougainvillea leaves sway in a warm breeze, the water in the fountain ripples and sparkles, slow push-in",
+   "receta_b": {
+    "camara": "push",
+    "capas": [
+     "destellos",
+     "petalos"
+    ],
+    "tono": "calido"
+   },
+   "semilla": 1056,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/azulejo/vertical.mp4",
+      "public/aperturas/azulejo/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/azulejo/horizontal.mp4",
+      "public/aperturas/azulejo/horizontal.webm"
+     ],
+     "poster": "public/aperturas/azulejo/poster.avif",
+     "posterHorizontal": "public/aperturas/azulejo/poster-h.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "lugares/marca-lugar-patio-sevilla.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.5
+     ]
+    }
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "regencia",
+   "tipo": "tematica",
+   "papel": "#f2f4f6",
+   "escena": "Glicinias en un jardín inglés",
+   "fotograma": "cascading lilac wisteria over a pale stone balustrade in a romantic English palace garden, soft pastel morning light, a misty lawn and topiary behind",
+   "movimiento": "the wisteria blossoms sway gently in the breeze, a few petals fall, soft light, slow push-in",
+   "receta_b": {
+    "camara": "push",
+    "capas": [
+     "petalos",
+     "bokeh"
+    ],
+    "tono": "pastel"
+   },
+   "semilla": 1063,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/regencia/vertical.mp4",
+      "public/aperturas/regencia/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/regencia/horizontal.mp4",
+      "public/aperturas/regencia/horizontal.webm"
+     ],
+     "poster": "public/aperturas/regencia/poster.avif",
+     "posterHorizontal": "public/aperturas/regencia/poster-h.avif"
+    },
+    "cabecera": {
+     "vertical": [
+      "public/tematicas/regencia/hero-v.mp4",
+      "public/tematicas/regencia/hero-v.webm"
+     ],
+     "horizontal": [
+      "public/tematicas/regencia/hero-h.mp4",
+      "public/tematicas/regencia/hero-h.webm"
+     ],
+     "poster": "public/tematicas/regencia/poster-v.avif",
+     "posterHorizontal": "public/tematicas/regencia/poster-h.avif",
+     "posterApertura": "public/tematicas/regencia/apertura.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "marca/marca-mesa-palacio.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.5
+     ]
+    }
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "aire",
+   "tipo": "tematica",
+   "papel": "#faf9f6",
+   "escena": "Galería blanca de palacio con cortinas",
+   "fotograma": "an empty minimalist white palace gallery with tall arched windows, sheer white curtains and a polished pale marble floor, soft golden morning light streaming in",
+   "movimiento": "the sheer white curtains drift slowly in a soft breeze, the golden light shifts on the marble floor, slow dolly forward",
+   "receta_b": {
+    "camara": "push",
+    "capas": [
+     "polvo",
+     "fuga"
+    ],
+    "tono": "neutro"
+   },
+   "semilla": 1070,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/aire/vertical.mp4",
+      "public/aperturas/aire/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/aire/horizontal.mp4",
+      "public/aperturas/aire/horizontal.webm"
+     ],
+     "poster": "public/aperturas/aire/poster.avif",
+     "posterHorizontal": "public/aperturas/aire/poster-h.avif"
+    },
+    "cabecera": {
+     "vertical": [
+      "public/tematicas/aire/hero-v.mp4",
+      "public/tematicas/aire/hero-v.webm"
+     ],
+     "horizontal": [
+      "public/tematicas/aire/hero-h.mp4",
+      "public/tematicas/aire/hero-h.webm"
+     ],
+     "poster": "public/tematicas/aire/poster-v.avif",
+     "posterHorizontal": "public/tematicas/aire/poster-h.avif",
+     "posterApertura": "public/tematicas/aire/apertura.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "aire/aire-apertura.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.55
+     ]
+    }
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "cuento",
+   "tipo": "tematica",
+   "papel": "#1d1030",
+   "escena": "Bosque nevado con castillo al anochecer",
+   "fotograma": "an enchanted snowy forest at blue dusk with a distant fairytale castle with warm lit windows, violet sky, magical sparkling light in the air",
+   "movimiento": "snow falls slowly, magical golden sparkles float through the air, the camera glides forward through the forest",
+   "receta_b": {
+    "camara": "push",
+    "capas": [
+     "destellos",
+     "polvo"
+    ],
+    "tono": "pastel"
+   },
+   "semilla": 1077,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/cuento/vertical.mp4",
+      "public/aperturas/cuento/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/cuento/horizontal.mp4",
+      "public/aperturas/cuento/horizontal.webm"
+     ],
+     "poster": "public/aperturas/cuento/poster.avif",
+     "posterHorizontal": "public/aperturas/cuento/poster-h.avif"
+    },
+    "cabecera": {
+     "vertical": [
+      "public/tematicas/cuento/hero-v.mp4",
+      "public/tematicas/cuento/hero-v.webm"
+     ],
+     "horizontal": [
+      "public/tematicas/cuento/hero-h.mp4",
+      "public/tematicas/cuento/hero-h.webm"
+     ],
+     "poster": "public/tematicas/cuento/poster-v.avif",
+     "posterHorizontal": "public/tematicas/cuento/poster-h.avif",
+     "posterApertura": "public/tematicas/cuento/apertura.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "tematicas/blason/blason-lamina.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.5
+     ]
+    },
+    "nota": "lámina de castillo en acuarela"
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "blason",
+   "tipo": "tematica",
+   "papel": "#f2e8d5",
+   "escena": "Castillo en la colina con niebla dorada",
+   "fotograma": "a medieval stone castle on a hill at golden hour, morning mist in the valley, soft warm light, distant mountains",
+   "movimiento": "the morning mist drifts slowly through the valley, clouds move gently, slow push-in towards the castle",
+   "receta_b": {
+    "camara": "push",
+    "capas": [
+     "niebla",
+     "fuga"
+    ],
+    "tono": "calido"
+   },
+   "semilla": 1084,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/blason/vertical.mp4",
+      "public/aperturas/blason/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/blason/horizontal.mp4",
+      "public/aperturas/blason/horizontal.webm"
+     ],
+     "poster": "public/aperturas/blason/poster.avif",
+     "posterHorizontal": "public/aperturas/blason/poster-h.avif"
+    },
+    "cabecera": {
+     "vertical": [
+      "public/tematicas/blason/hero-v.mp4",
+      "public/tematicas/blason/hero-v.webm"
+     ],
+     "horizontal": [
+      "public/tematicas/blason/hero-h.mp4",
+      "public/tematicas/blason/hero-h.webm"
+     ],
+     "poster": "public/tematicas/blason/poster-v.avif",
+     "posterHorizontal": "public/tematicas/blason/poster-h.avif",
+     "posterApertura": "public/tematicas/blason/apertura.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "tematicas/blason/blason-poster-hero.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.55
+     ]
+    }
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "memorias",
+   "tipo": "tematica",
+   "papel": "#efe4cf",
+   "escena": "Cartas antiguas y rosas secas, luz de tarde",
+   "fotograma": "a bundle of old blank cream letters tied with a faded silk ribbon, dried roses and an old brass key on a wooden table, warm late afternoon sunlight, nostalgic sepia",
+   "movimiento": "dust motes float in the warm sunbeam, the light flickers softly like an old film, slow push-in",
+   "receta_b": {
+    "camara": "push",
+    "capas": [
+     "polvo",
+     "super8"
+    ],
+    "tono": "sepia"
+   },
+   "semilla": 1091,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/memorias/vertical.mp4",
+      "public/aperturas/memorias/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/memorias/horizontal.mp4",
+      "public/aperturas/memorias/horizontal.webm"
+     ],
+     "poster": "public/aperturas/memorias/poster.avif",
+     "posterHorizontal": "public/aperturas/memorias/poster-h.avif"
+    },
+    "cabecera": {
+     "vertical": [
+      "public/tematicas/memorias/hero-v.mp4",
+      "public/tematicas/memorias/hero-v.webm"
+     ],
+     "horizontal": [
+      "public/tematicas/memorias/hero-h.mp4",
+      "public/tematicas/memorias/hero-h.webm"
+     ],
+     "poster": "public/tematicas/memorias/poster-v.avif",
+     "posterHorizontal": "public/tematicas/memorias/poster-h.avif",
+     "posterApertura": "public/tematicas/memorias/apertura.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "tematicas/memorias/memorias-poster-hero.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.68
+     ]
+    }
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "pasaporte",
+   "tipo": "tematica",
+   "papel": "#f3eadb",
+   "escena": "Ventanilla de avión sobre nubes al atardecer",
+   "fotograma": "the view through an airplane window above a sea of soft clouds at golden sunset, the wing tip glowing, warm sky",
+   "movimiento": "the clouds drift slowly past below the wing, the golden light shifts softly, gentle motion",
+   "receta_b": {
+    "camara": "pan-l",
+    "capas": [
+     "fuga"
+    ],
+    "tono": "calido"
+   },
+   "semilla": 1098,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/pasaporte/vertical.mp4",
+      "public/aperturas/pasaporte/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/pasaporte/horizontal.mp4",
+      "public/aperturas/pasaporte/horizontal.webm"
+     ],
+     "poster": "public/aperturas/pasaporte/poster.avif",
+     "posterHorizontal": "public/aperturas/pasaporte/poster-h.avif"
+    },
+    "cabecera": {
+     "vertical": [
+      "public/tematicas/pasaporte/hero-v.mp4",
+      "public/tematicas/pasaporte/hero-v.webm"
+     ],
+     "horizontal": [
+      "public/tematicas/pasaporte/hero-h.mp4",
+      "public/tematicas/pasaporte/hero-h.webm"
+     ],
+     "poster": "public/tematicas/pasaporte/poster-v.avif",
+     "posterHorizontal": "public/tematicas/pasaporte/poster-h.avif",
+     "posterApertura": "public/tematicas/pasaporte/apertura.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "tematicas/pasaporte/pasaporte-poster-hero.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.5
+     ]
+    }
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "orilla",
+   "tipo": "tematica",
+   "papel": "#f7f4ee",
+   "escena": "Orilla turquesa en una cala, vista cenital",
+   "fotograma": "aerial top-down view of a quiet Mediterranean cove, gentle turquoise waves washing onto smooth pale sand, bright summer day",
+   "movimiento": "gentle turquoise waves wash slowly onto the sand and retreat, foam patterns move, very slow drift",
+   "receta_b": {
+    "camara": "push",
+    "capas": [
+     "destellos"
+    ],
+    "tono": "fresco"
+   },
+   "semilla": 1105,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/orilla/vertical.mp4",
+      "public/aperturas/orilla/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/orilla/horizontal.mp4",
+      "public/aperturas/orilla/horizontal.webm"
+     ],
+     "poster": "public/aperturas/orilla/poster.avif",
+     "posterHorizontal": "public/aperturas/orilla/poster-h.avif"
+    },
+    "cabecera": {
+     "vertical": [
+      "public/tematicas/orilla/hero-v.mp4",
+      "public/tematicas/orilla/hero-v.webm"
+     ],
+     "horizontal": [
+      "public/tematicas/orilla/hero-h.mp4",
+      "public/tematicas/orilla/hero-h.webm"
+     ],
+     "poster": "public/tematicas/orilla/poster-v.avif",
+     "posterHorizontal": "public/tematicas/orilla/poster-h.avif",
+     "posterApertura": "public/tematicas/orilla/apertura.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "tematicas/orilla/orilla-poster-hero.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.42
+     ]
+    }
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "pinar",
+   "tipo": "tematica",
+   "papel": "#ece4d3",
+   "escena": "Pinar con niebla y luciérnagas al anochecer",
+   "fotograma": "a quiet pine forest at dusk with ferns and moss, soft mist between the trunks, warm last light rays, tiny glowing fireflies",
+   "movimiento": "fireflies glow and drift slowly, the mist moves between the pines, light rays shimmer, slow dolly forward",
+   "receta_b": {
+    "camara": "push",
+    "capas": [
+     "luciernagas",
+     "niebla"
+    ],
+    "tono": "bosque"
+   },
+   "semilla": 1112,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/pinar/vertical.mp4",
+      "public/aperturas/pinar/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/pinar/horizontal.mp4",
+      "public/aperturas/pinar/horizontal.webm"
+     ],
+     "poster": "public/aperturas/pinar/poster.avif",
+     "posterHorizontal": "public/aperturas/pinar/poster-h.avif"
+    },
+    "cabecera": {
+     "vertical": [
+      "public/tematicas/pinar/hero-v.mp4",
+      "public/tematicas/pinar/hero-v.webm"
+     ],
+     "horizontal": [
+      "public/tematicas/pinar/hero-h.mp4",
+      "public/tematicas/pinar/hero-h.webm"
+     ],
+     "poster": "public/tematicas/pinar/poster-v.avif",
+     "posterHorizontal": "public/tematicas/pinar/poster-h.avif",
+     "posterApertura": "public/tematicas/pinar/apertura.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "lugares/marca-lugar-segovia.jpg",
+    "encuadre": {
+     "v": [
+      0.38,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.5
+     ]
+    }
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "orbita",
+   "tipo": "tematica",
+   "papel": "#0b0f24",
+   "escena": "Vía Láctea sobre paisaje volcánico",
+   "fotograma": "the Milky Way arching over a volcanic mountain landscape at night, a deep violet and indigo starry sky, faint glow on the horizon, clear and serene",
+   "movimiento": "the stars twinkle and the sky rotates very slowly like a time-lapse, a faint shooting star, slow push-in",
+   "receta_b": {
+    "camara": "rise",
+    "capas": [
+     "estrellas"
+    ],
+    "tono": "noche"
+   },
+   "semilla": 1119,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/orbita/vertical.mp4",
+      "public/aperturas/orbita/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/orbita/horizontal.mp4",
+      "public/aperturas/orbita/horizontal.webm"
+     ],
+     "poster": "public/aperturas/orbita/poster.avif",
+     "posterHorizontal": "public/aperturas/orbita/poster-h.avif"
+    },
+    "cabecera": {
+     "vertical": [
+      "public/tematicas/orbita/hero-v.mp4",
+      "public/tematicas/orbita/hero-v.webm"
+     ],
+     "horizontal": [
+      "public/tematicas/orbita/hero-h.mp4",
+      "public/tematicas/orbita/hero-h.webm"
+     ],
+     "poster": "public/tematicas/orbita/poster-v.avif",
+     "posterHorizontal": "public/tematicas/orbita/poster-h.avif",
+     "posterApertura": "public/tematicas/orbita/apertura.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "tematicas/orbita/orbita-poster.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.5
+     ]
+    },
+    "nota": ""
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "brazada",
+   "tipo": "tematica",
+   "papel": "#f2fafb",
+   "escena": "Luz bailando en el fondo de una piscina",
+   "fotograma": "underwater view of a turquoise swimming pool, dancing sunlight caustics on the pale tiled floor, light rays through the clear water, small bubbles",
+   "movimiento": "the sunlight caustics ripple and dance across the pool floor, light rays shimmer, tiny bubbles rise slowly",
+   "receta_b": {
+    "camara": "push",
+    "capas": [
+     "burbujas",
+     "causticas"
+    ],
+    "tono": "cian"
+   },
+   "semilla": 1126,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/brazada/vertical.mp4",
+      "public/aperturas/brazada/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/brazada/horizontal.mp4",
+      "public/aperturas/brazada/horizontal.webm"
+     ],
+     "poster": "public/aperturas/brazada/poster.avif",
+     "posterHorizontal": "public/aperturas/brazada/poster-h.avif"
+    },
+    "cabecera": {
+     "vertical": [
+      "public/tematicas/brazada/hero-v.mp4",
+      "public/tematicas/brazada/hero-v.webm"
+     ],
+     "horizontal": [
+      "public/tematicas/brazada/hero-h.mp4",
+      "public/tematicas/brazada/hero-h.webm"
+     ],
+     "poster": "public/tematicas/brazada/poster-v.avif",
+     "posterHorizontal": "public/tematicas/brazada/poster-h.avif",
+     "posterApertura": "public/tematicas/brazada/apertura.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "tematicas/brazada/brazada-poster.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.5
+     ]
+    }
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "fuego",
+   "tipo": "tematica",
+   "papel": "#f8eee3",
+   "escena": "Seda roja que gira con brasas",
+   "fotograma": "flowing deep red silk fabric swirling in the air in a dark room, warm golden embers and sparks floating, rich velvet light",
+   "movimiento": "the red silk swirls and flows slowly like a dancing skirt, golden embers float upwards",
+   "receta_b": {
+    "camara": "orbit",
+    "capas": [
+     "chispas",
+     "bokeh"
+    ],
+    "tono": "rojo"
+   },
+   "semilla": 1133,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/fuego/vertical.mp4",
+      "public/aperturas/fuego/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/fuego/horizontal.mp4",
+      "public/aperturas/fuego/horizontal.webm"
+     ],
+     "poster": "public/aperturas/fuego/poster.avif",
+     "posterHorizontal": "public/aperturas/fuego/poster-h.avif"
+    },
+    "cabecera": {
+     "vertical": [
+      "public/tematicas/fuego/hero-v.mp4",
+      "public/tematicas/fuego/hero-v.webm"
+     ],
+     "horizontal": [
+      "public/tematicas/fuego/hero-h.mp4",
+      "public/tematicas/fuego/hero-h.webm"
+     ],
+     "poster": "public/tematicas/fuego/poster-v.avif",
+     "posterHorizontal": "public/tematicas/fuego/poster-h.avif",
+     "posterApertura": "public/tematicas/fuego/apertura.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "texturas/textura-terciopelo.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.6
+     ]
+    },
+    "nota": "terciopelo con brasas"
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "neon",
+   "tipo": "tematica",
+   "papel": "#0a0910",
+   "escena": "Azotea de noche con lluvia y neón rosa",
+   "fotograma": "an empty rooftop terrace at night after the rain, wet reflections, pink and violet neon bokeh of the city skyline, elegant and moody",
+   "movimiento": "the neon city lights shimmer in the wet reflections, light rain falls, slow dolly forward",
+   "receta_b": {
+    "camara": "push",
+    "capas": [
+     "lluvia",
+     "bokeh"
+    ],
+    "tono": "neon"
+   },
+   "semilla": 1140,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/neon/vertical.mp4",
+      "public/aperturas/neon/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/neon/horizontal.mp4",
+      "public/aperturas/neon/horizontal.webm"
+     ],
+     "poster": "public/aperturas/neon/poster.avif",
+     "posterHorizontal": "public/aperturas/neon/poster-h.avif"
+    },
+    "cabecera": {
+     "vertical": [
+      "public/tematicas/neon/hero-v.mp4",
+      "public/tematicas/neon/hero-v.webm"
+     ],
+     "horizontal": [
+      "public/tematicas/neon/hero-h.mp4",
+      "public/tematicas/neon/hero-h.webm"
+     ],
+     "poster": "public/tematicas/neon/poster-v.avif",
+     "posterHorizontal": "public/tematicas/neon/poster-h.avif",
+     "posterApertura": "public/tematicas/neon/apertura.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "tematicas/neon/neon-detalle.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.5
+     ]
+    }
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "vinilo",
+   "tipo": "tematica",
+   "papel": "#111011",
+   "escena": "Disco de vinilo girando con luz roja",
+   "fotograma": "close-up of a black vinyl record spinning on a vintage turntable, the tonearm resting on the groove, warm red and amber light, dark background, blank label",
+   "movimiento": "the vinyl record spins steadily, light glints across the grooves, slow push-in",
+   "receta_b": {
+    "camara": "push",
+    "capas": [
+     "bokeh",
+     "polvo"
+    ],
+    "tono": "rojo"
+   },
+   "semilla": 1147,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/vinilo/vertical.mp4",
+      "public/aperturas/vinilo/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/vinilo/horizontal.mp4",
+      "public/aperturas/vinilo/horizontal.webm"
+     ],
+     "poster": "public/aperturas/vinilo/poster.avif",
+     "posterHorizontal": "public/aperturas/vinilo/poster-h.avif"
+    },
+    "cabecera": {
+     "vertical": [
+      "public/tematicas/vinilo/hero-v.mp4",
+      "public/tematicas/vinilo/hero-v.webm"
+     ],
+     "horizontal": [
+      "public/tematicas/vinilo/hero-h.mp4",
+      "public/tematicas/vinilo/hero-h.webm"
+     ],
+     "poster": "public/tematicas/vinilo/poster-v.avif",
+     "posterHorizontal": "public/tematicas/vinilo/poster-h.avif",
+     "posterApertura": "public/tematicas/vinilo/apertura.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "tematicas/vinilo/vinilo-detalle.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.5
+     ]
+    }
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "festival",
+   "tipo": "tematica",
+   "papel": "#f4efe4",
+   "escena": "Guirnaldas de luces y confeti al atardecer",
+   "fotograma": "festoon string lights over an empty summer meadow at golden sunset, warm haze, a few colourful confetti pieces floating in the air, distant hills",
+   "movimiento": "confetti drifts slowly through the warm air, the string lights glow and sway, golden lens flare",
+   "receta_b": {
+    "camara": "pan-r",
+    "capas": [
+     "confeti",
+     "fuga"
+    ],
+    "tono": "calido"
+   },
+   "semilla": 1154,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/festival/vertical.mp4",
+      "public/aperturas/festival/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/festival/horizontal.mp4",
+      "public/aperturas/festival/horizontal.webm"
+     ],
+     "poster": "public/aperturas/festival/poster.avif",
+     "posterHorizontal": "public/aperturas/festival/poster-h.avif"
+    },
+    "cabecera": {
+     "vertical": [
+      "public/tematicas/festival/hero-v.mp4",
+      "public/tematicas/festival/hero-v.webm"
+     ],
+     "horizontal": [
+      "public/tematicas/festival/hero-h.mp4",
+      "public/tematicas/festival/hero-h.webm"
+     ],
+     "poster": "public/tematicas/festival/poster-v.avif",
+     "posterHorizontal": "public/tematicas/festival/poster-h.avif",
+     "posterApertura": "public/tematicas/festival/apertura.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "tematicas/festival/festival-detalle.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.5
+     ]
+    }
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "lupulo",
+   "tipo": "tematica",
+   "papel": "#f2e8d5",
+   "escena": "Cerveza ámbar con burbujas y cobre",
+   "fotograma": "a glass of amber craft beer with rising bubbles and a creamy head on a wooden bar, copper brewing tanks softly out of focus behind, warm light, fresh green hop cones",
+   "movimiento": "fine bubbles rise slowly through the amber beer, warm light glows on the copper, slow push-in",
+   "receta_b": {
+    "camara": "push",
+    "capas": [
+     "burbujas",
+     "bokeh"
+    ],
+    "tono": "ambar"
+   },
+   "semilla": 1161,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/lupulo/vertical.mp4",
+      "public/aperturas/lupulo/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/lupulo/horizontal.mp4",
+      "public/aperturas/lupulo/horizontal.webm"
+     ],
+     "poster": "public/aperturas/lupulo/poster.avif",
+     "posterHorizontal": "public/aperturas/lupulo/poster-h.avif"
+    },
+    "cabecera": {
+     "vertical": [
+      "public/tematicas/lupulo/hero-v.mp4",
+      "public/tematicas/lupulo/hero-v.webm"
+     ],
+     "horizontal": [
+      "public/tematicas/lupulo/hero-h.mp4",
+      "public/tematicas/lupulo/hero-h.webm"
+     ],
+     "poster": "public/tematicas/lupulo/poster-v.avif",
+     "posterHorizontal": "public/tematicas/lupulo/poster-h.avif",
+     "posterApertura": "public/tematicas/lupulo/apertura.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "tematicas/lupulo/lupulo-detalle-lupulo.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.5
+     ]
+    }
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "estadio",
+   "tipo": "tematica",
+   "papel": "#f3f1e7",
+   "escena": "Estadio vacío de noche con focos",
+   "fotograma": "an empty football stadium at night, bright floodlights glowing through a light mist, lush green pitch with white lines, empty seats, no signs, no advertising",
+   "movimiento": "the floodlights flare softly, mist drifts through the light beams, the camera rises slowly over the pitch",
+   "receta_b": {
+    "camara": "rise",
+    "capas": [
+     "bokeh",
+     "fuga"
+    ],
+    "tono": "calido"
+   },
+   "semilla": 1168,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/estadio/vertical.mp4",
+      "public/aperturas/estadio/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/estadio/horizontal.mp4",
+      "public/aperturas/estadio/horizontal.webm"
+     ],
+     "poster": "public/aperturas/estadio/poster.avif",
+     "posterHorizontal": "public/aperturas/estadio/poster-h.avif"
+    },
+    "cabecera": {
+     "vertical": [
+      "public/tematicas/estadio/hero-v.mp4",
+      "public/tematicas/estadio/hero-v.webm"
+     ],
+     "horizontal": [
+      "public/tematicas/estadio/hero-h.mp4",
+      "public/tematicas/estadio/hero-h.webm"
+     ],
+     "poster": "public/tematicas/estadio/poster-v.avif",
+     "posterHorizontal": "public/tematicas/estadio/poster-h.avif",
+     "posterApertura": "public/tematicas/estadio/apertura.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "marca/marca-mesa-finca.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.5
+     ]
+    },
+    "nota": "PROVISIONAL: no hay ninguna imagen de estadio sin personas aprobada por Q1"
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "meta",
+   "tipo": "tematica",
+   "papel": "#f5f5f1",
+   "escena": "Sendero de montaña al amanecer",
+   "fotograma": "an empty mountain trail winding along a ridge at sunrise, golden light, low clouds in the valleys, wild grass",
+   "movimiento": "the camera moves slowly forward along the trail, low clouds drift in the valleys, the sun rises",
+   "receta_b": {
+    "camara": "push",
+    "capas": [
+     "fuga",
+     "polvo"
+    ],
+    "tono": "calido"
+   },
+   "semilla": 1175,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/meta/vertical.mp4",
+      "public/aperturas/meta/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/meta/horizontal.mp4",
+      "public/aperturas/meta/horizontal.webm"
+     ],
+     "poster": "public/aperturas/meta/poster.avif",
+     "posterHorizontal": "public/aperturas/meta/poster-h.avif"
+    },
+    "cabecera": {
+     "vertical": [
+      "public/tematicas/meta/hero-v.mp4",
+      "public/tematicas/meta/hero-v.webm"
+     ],
+     "horizontal": [
+      "public/tematicas/meta/hero-h.mp4",
+      "public/tematicas/meta/hero-h.webm"
+     ],
+     "poster": "public/tematicas/meta/poster-v.avif",
+     "posterHorizontal": "public/tematicas/meta/poster-h.avif",
+     "posterApertura": "public/tematicas/meta/apertura.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "aperturas/apertura-lino.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.55
+     ]
+    },
+    "nota": "PROVISIONAL: no hay imagen de meta/sendero sin personas aprobada"
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "riviera",
+   "tipo": "tematica",
+   "papel": "#f3ece1",
+   "escena": "Carretera de costa en la Riviera",
+   "fotograma": "an empty winding coastal road along the cliffs of the French Riviera at golden hour, deep blue sea, cypress and pine trees, elegant villa in the distance",
+   "movimiento": "the camera glides slowly along the coastal road, the sea sparkles, soft golden light",
+   "receta_b": {
+    "camara": "pan-l",
+    "capas": [
+     "destellos",
+     "fuga"
+    ],
+    "tono": "calido"
+   },
+   "semilla": 1182,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/riviera/vertical.mp4",
+      "public/aperturas/riviera/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/riviera/horizontal.mp4",
+      "public/aperturas/riviera/horizontal.webm"
+     ],
+     "poster": "public/aperturas/riviera/poster.avif",
+     "posterHorizontal": "public/aperturas/riviera/poster-h.avif"
+    },
+    "cabecera": {
+     "vertical": [
+      "public/tematicas/riviera/hero-v.mp4",
+      "public/tematicas/riviera/hero-v.webm"
+     ],
+     "horizontal": [
+      "public/tematicas/riviera/hero-h.mp4",
+      "public/tematicas/riviera/hero-h.webm"
+     ],
+     "poster": "public/tematicas/riviera/poster-v.avif",
+     "posterHorizontal": "public/tematicas/riviera/poster-h.avif",
+     "posterApertura": "public/tematicas/riviera/apertura.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "aperturas/apertura-terracota.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.55
+     ]
+    }
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "bachata",
+   "tipo": "tematica",
+   "papel": "#1b1324",
+   "escena": "Velas y pétalos bajo la luna",
+   "fotograma": "lit candles and scattered rose petals on a terrace table at night, a full moon over a calm sea, soft violet and warm amber light, a classical guitar resting in soft focus",
+   "movimiento": "the candle flames flicker gently, the moonlight shimmers on the sea, slow push-in",
+   "receta_b": {
+    "camara": "push",
+    "capas": [
+     "bokeh",
+     "fuga"
+    ],
+    "tono": "violeta"
+   },
+   "semilla": 1189,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/bachata/vertical.mp4",
+      "public/aperturas/bachata/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/bachata/horizontal.mp4",
+      "public/aperturas/bachata/horizontal.webm"
+     ],
+     "poster": "public/aperturas/bachata/poster.avif",
+     "posterHorizontal": "public/aperturas/bachata/poster-h.avif"
+    },
+    "cabecera": {
+     "vertical": [
+      "public/tematicas/bachata/hero-v.mp4",
+      "public/tematicas/bachata/hero-v.webm"
+     ],
+     "horizontal": [
+      "public/tematicas/bachata/hero-h.mp4",
+      "public/tematicas/bachata/hero-h.webm"
+     ],
+     "poster": "public/tematicas/bachata/poster-v.avif",
+     "posterHorizontal": "public/tematicas/bachata/poster-h.avif",
+     "posterApertura": "public/tematicas/bachata/apertura.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "marca/marca-ramo-peonias.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.45
+     ]
+    },
+    "nota": "PROVISIONAL: la guitarra tenía 5 cuerdas"
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  },
+  {
+   "id": "invitoo",
+   "tipo": "sitio",
+   "papel": "#f6f1e9",
+   "escena": "Alianzas Invitoo sobre seda crema",
+   "fotograma": "two plain smooth gold wedding bands interlocked, one with a single small diamond, resting on cream silk with soft folds, warm golden bokeh, luxurious and minimal",
+   "movimiento": "the camera orbits very slowly around the interlocked gold rings, the diamond sparkles, warm bokeh shimmers",
+   "receta_b": {
+    "camara": "orbit",
+    "capas": [
+     "bokeh",
+     "destellos"
+    ],
+    "tono": "calido"
+   },
+   "semilla": 1196,
+   "salidas": {
+    "apertura": {
+     "vertical": [
+      "public/aperturas/invitoo/vertical.mp4",
+      "public/aperturas/invitoo/vertical.webm"
+     ],
+     "horizontal": [
+      "public/aperturas/invitoo/horizontal.mp4",
+      "public/aperturas/invitoo/horizontal.webm"
+     ],
+     "poster": "public/aperturas/invitoo/poster.avif",
+     "posterHorizontal": "public/aperturas/invitoo/poster-h.avif"
+    }
+   },
+   "fuente_b": {
+    "imagen": "tematicas/pinar/pinar-detalle-rodaja.jpg",
+    "encuadre": {
+     "v": [
+      0.5,
+      0.5
+     ],
+     "h": [
+      0.5,
+      0.5
+     ]
+    },
+    "nota": "alianzas sobre rodaja de pino"
+   },
+   "estado": {
+    "via": "B",
+    "fotograma": "imagenes-ia (FLUX.2 klein, revisada)",
+    "pendiente_pc": "fotograma propio (fotogramas.py) y prueba de Wan 2.2 (wan_i2v.py)"
+   }
+  }
+ ]
+}

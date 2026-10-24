@@ -21,7 +21,7 @@
 .lienzo .decor { pointer-events: none; user-select: none; }
 .lienzo img { outline: 1px solid rgb(0 0 0 / 0.05); outline-offset: -1px; }
 
-main:has(> .apertura[data-estado="dentro"]) .lienzo :is(.wow, .wow *, .wow::before, .wow::after, .wow *::before, .wow *::after) {
+main[data-ap="dentro"] .lienzo :is(.wow, .wow *, .wow::before, .wow::after, .wow *::before, .wow *::after) {
   animation-play-state: paused !important;
 }
 
@@ -125,18 +125,22 @@ main:has(> .apertura[data-estado="dentro"]) .lienzo :is(.wow, .wow *, .wow::befo
     }
   }
 }
+/* (P3) Los revelados LIGADOS AL SCROLL van sin `filter`: un desenfoque o un
+   saturate que cambia en cada fotograma de scroll no lo hace el compositor
+   (recalcula y repinta cada vez). Opacity + transform sí, y en Chrome van
+   fuera del hilo principal. Las entradas por tiempo conservan su blur. */
 @keyframes vida-titulo {
-  from { opacity: 0; transform: translateY(28px); filter: blur(6px); }
-  to { opacity: 1; transform: none; filter: none; }
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: none; }
 }
 @keyframes vida-mascara { from { clip-path: inset(18% 8% 0 8% round var(--radio, 2px)); } to { clip-path: inset(0 0 0 0); } }
-@keyframes vida-mascara-sola { from { clip-path: inset(22% 6% 0 6% round var(--radio, 2px)); filter: saturate(.7); } to { clip-path: inset(0 0 0 0); filter: none; } }
-@keyframes vida-mascara-img { from { transform: scale(1.14); filter: saturate(.7); } to { transform: none; filter: none; } }
+@keyframes vida-mascara-sola { from { clip-path: inset(22% 6% 0 6% round var(--radio, 2px)); } to { clip-path: inset(0 0 0 0); } }
+@keyframes vida-mascara-img { from { transform: scale(1.14); } to { transform: none; } }
 @keyframes vida-ventana { from { clip-path: inset(10% 7% 10% 7% round 28px); } to { clip-path: inset(0 0 0 0 round 0); } }
 @keyframes vida-parallax { from { transform: translateY(-7%) scale(1.16); } to { transform: translateY(7%) scale(1.16); } }
 @keyframes vida-enfoca {
-  from { opacity: 0; filter: blur(10px); transform: scale(1.06); letter-spacing: 0.04em; }
-  to { opacity: 1; filter: none; transform: none; }
+  from { opacity: 0; transform: scale(1.06); }
+  to { opacity: 1; transform: none; }
 }
 @keyframes vida-comilla { from { opacity: 0; transform: translateY(30%) scale(.6); } }
 @keyframes vida-carril { from { opacity: .45; transform: scale(.92); } to { opacity: 1; transform: none; } }
@@ -151,13 +155,13 @@ main:has(> .apertura[data-estado="dentro"]) .lienzo :is(.wow, .wow *, .wow::befo
     animation: enfoca-l 900ms var(--ease-carta, cubic-bezier(.22,.61,.36,1)) both;
     animation-delay: calc(var(--e0, 0ms) + var(--l) * 42ms);
   }
-  main:has(> .apertura[data-estado="dentro"]) .enfoca[data-enfoca="carga"] .enfoca-l { animation-play-state: paused; }
+  main[data-ap="dentro"] .enfoca[data-enfoca="carga"] .enfoca-l { animation-play-state: paused; }
 }
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .enfoca[data-enfoca="scroll"] { view-timeline: --enfoca block; }
     .enfoca[data-enfoca="scroll"] .enfoca-l {
-      animation: enfoca-l linear both;
+      animation: enfoca-l-scroll linear both;
       animation-timeline: --enfoca;
       animation-range: cover calc(4% + var(--l) * 0.9%) cover calc(26% + var(--l) * 0.9%);
     }
@@ -166,6 +170,11 @@ main:has(> .apertura[data-estado="dentro"]) .lienzo :is(.wow, .wow *, .wow::befo
 @keyframes enfoca-l {
   from { opacity: 0; filter: blur(7px); transform: translateY(.18em) scale(1.12); }
   to { opacity: 1; filter: none; transform: none; }
+}
+/* (P3) La misma, ligada al scroll y sin blur (ver vida-titulo). */
+@keyframes enfoca-l-scroll {
+  from { opacity: 0; transform: translateY(.18em) scale(1.12); }
+  to { opacity: 1; transform: none; }
 }
 
 /* ==================================================================
@@ -187,7 +196,8 @@ main:has(> .apertura[data-estado="dentro"]) .lienzo :is(.wow, .wow *, .wow::befo
   line-height: 0.6;
   height: 0.5em;
   color: var(--acento-texto);
-  opacity: 0.55;
+  /* U1: con .55 se quedaba en 2,1:1; la comilla grande pide 3:1. */
+  opacity: 0.9;
 }
 .cita-frase {
   max-width: 19ch;
@@ -440,3 +450,7 @@ main:has(> .apertura[data-estado="dentro"]) .lienzo :is(.wow, .wow *, .wow::befo
    dentro de la caja (sin tocar los márgenes de cada plantilla). La «y» y el
    marcador conservan su color propio. */
 .lienzo h1.vt-nombres[data-nv-brillo] :is(.y-gesto, .carta-y) { -webkit-text-fill-color: currentColor; }
+
+/* U1: en pantallas bajas, las iniciales de estrellas encogen para que la
+   cuenta atrás de la portada quepa en la primera pantalla. */
+@media (max-height: 760px) { .const-iniciales { width: min(56vw, 14rem); } }

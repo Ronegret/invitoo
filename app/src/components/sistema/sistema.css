@@ -3,6 +3,10 @@
    Tokens en el bloque SISTEMA de globals.css. */
 
 /* ───────────────────────────── Cursor ───────────────────────────── */
+/* v2 (P3): el ratón del sistema se queda siempre (0 ms de retraso); esto es
+   solo el aro de adorno, que va a 1:1 con él. Sin `cursor: none`, sin
+   `mix-blend-mode` (dentro de `contain: strict` no mezclaba con nada y
+   obligaba a una capa de fusión) y sin `will-change` fijo en dos capas. */
 
 .ci {
   --ci-tinta: 18 16 14;
@@ -22,59 +26,38 @@ html.ci-activo .ci { display: block; }
   --ci-rotulo: #12100e;
 }
 
-/* El ratón del sistema se oculta solo con el nuestro activo, y nunca en
-   formularios, campos ni zonas que pidan el nativo. */
-html.ci-activo,
-html.ci-activo :not(:is(form, form *, input, textarea, select, [contenteditable], [contenteditable] *, [data-cursor="nativo"], [data-cursor="nativo"] *)) {
-  cursor: none;
-}
-
-.ci-aro,
-.ci-punto {
+.ci-aro {
   position: fixed;
   left: 0;
   top: 0;
   opacity: 0;
-  will-change: transform;
   transition: opacity var(--dur-rapida, 200ms) ease;
 }
-.ci[data-visible="1"] :is(.ci-aro, .ci-punto) { opacity: 1; }
-.ci[data-estado="nativo"] :is(.ci-aro, .ci-punto) { opacity: 0; }
-
-.ci-punto {
-  width: 6px;
-  height: 6px;
-  margin: -3px 0 0 -3px;
-  border-radius: 50%;
-  background: rgb(var(--ci-tinta));
-}
-.ci:is([data-estado="abrir"], [data-estado="ver"], [data-estado="arrastrar"], [data-estado="texto"]) .ci-punto { opacity: 0; }
-.ci[data-estado="enlace"] .ci-punto { background: rgb(var(--ci-acento)); }
+.ci[data-visible="1"] .ci-aro { opacity: 1; }
+/* Sobre texto, campos y formularios manda el del sistema: sin aro. */
+.ci[data-estado="nativo"] .ci-aro { opacity: 0; transition-duration: 90ms; }
 
 .ci-circulo,
-.ci-barra,
 .ci-rotulo { position: absolute; left: 0; top: 0; }
 
 .ci-circulo {
-  width: 36px;
-  height: 36px;
-  margin: -18px 0 0 -18px;
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
   border-radius: 50%;
-  border: 1px solid rgb(var(--ci-tinta) / .38);
-  mix-blend-mode: multiply;
+  border: 1px solid rgb(var(--ci-tinta) / .32);
   transition:
     transform var(--dur-breve, 320ms) var(--ease-carta),
     background-color var(--dur-rapida, 200ms) ease,
     border-color var(--dur-rapida, 200ms) ease,
     opacity var(--dur-rapida, 200ms) ease;
 }
-.ci[data-tema="claro"] .ci-circulo { mix-blend-mode: screen; }
 
 /* Enlaces y botones: el aro crece y se tiñe. Es un tinte, no una tapa. */
 .ci[data-estado="enlace"] .ci-circulo {
-  transform: scale(1.5);
+  transform: scale(1.45);
   border-color: rgb(var(--ci-acento) / .5);
-  background: rgb(var(--ci-acento) / .1);
+  background: rgb(var(--ci-acento) / .08);
 }
 
 /* Con rótulo: el aro se abre y dice lo que va a pasar. */
@@ -84,7 +67,6 @@ html.ci-activo :not(:is(form, form *, input, textarea, select, [contenteditable]
   transform: scale(2.2);
   border-color: transparent;
   background: rgb(var(--ci-acento) / .94);
-  mix-blend-mode: normal;
   box-shadow: 0 6px 16px -6px rgb(18 16 14 / .35);
 }
 .ci-rotulo {
@@ -106,19 +88,6 @@ html.ci-activo :not(:is(form, form *, input, textarea, select, [contenteditable]
 .ci[data-estado="arrastrar"] .ci-circulo { transform: scale(2.9); }
 .ci[data-estado="arrastrar"] .ci-rotulo::before { content: "‹  "; }
 .ci[data-estado="arrastrar"] .ci-rotulo::after { content: "  ›"; }
-
-/* En texto: una barra fina del alto de la letra. */
-.ci-barra {
-  width: 2px;
-  height: min(56px, calc(var(--ci-alto, 18px) * 1.25));
-  margin-left: -1px;
-  border-radius: 1px;
-  background: rgb(var(--ci-acento) / .85);
-  transform: translateY(-50%) scaleY(0);
-  transition: transform var(--dur-rapida, 200ms) var(--ease-carta);
-}
-.ci[data-estado="texto"] .ci-barra { transform: translateY(-50%) scaleY(1); }
-.ci[data-estado="texto"] .ci-circulo { transform: scale(.3); opacity: 0; }
 
 /* Clic: una onda, o pétalos. */
 .ci-onda,

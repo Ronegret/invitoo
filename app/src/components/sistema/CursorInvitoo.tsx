@@ -4,40 +4,68 @@ import { useEffect, useRef } from "react";
 import "./sistema.css";
 
 /**
- * El cursor de Invitoo: un punto de tinta y un aro que lo sigue con inercia.
+ * El cursor de Invitoo (v2, P3): el ratón del sistema y un aro de tinta.
  *
- * Se monta UNA vez por página (en el layout) y no pinta nada hasta que hay
- * un ratón de verdad: `(pointer: fine) and (hover: hover)`, sin
- * `prefers-reduced-motion`. En táctil no existe. Nunca recibe eventos
- * (pointer-events: none) y nunca tapa: todos sus rellenos son tintes con
- * `mix-blend-mode`, el texto de debajo se sigue leyendo.
+ * POR QUÉ CAMBIÓ. La v1 escondía el ratón (`cursor: none`) y dibujaba un
+ * punto y un aro que lo seguía con inercia (20 % por fotograma: ~75 ms de
+ * retraso, y más en un portátil cargado). Se notaba «lento»: la mano iba
+ * por delante de lo que se veía. Además, en cada movimiento medía las
+ * líneas del párrafo de debajo (`Range.getClientRects`) y, en cada fotograma
+ * de scroll, volvía a mirar qué había bajo el puntero.
+ *
+ * AHORA:
+ *  · El ratón del sistema se queda SIEMPRE: es el único que va a 0 ms (lo
+ *    pinta el sistema, no la página). Sobre texto es su barra; en campos,
+ *    el suyo.
+ *  · El aro es adorno: va a 1:1 con el ratón, colocado con `transform` en el
+ *    mismo evento (sin bucle, sin inercia). Solo crece y se tiñe sobre
+ *    enlaces y botones, y con [data-cursor="abrir" | "ver" | "arrastrar"]
+ *    se hace disco con rótulo.
+ *  · No existe en táctil, con `prefers-reduced-motion`, ni en la vista
+ *    previa (iframe). Se esconde sobre texto, formularios y campos.
+ *  · El tono (claro/oscuro) se calcula una vez por elemento y se recuerda.
+ *  · Al hacer scroll no se toca nada por fotograma: se recalcula al pararse.
  *
  * Estados (por delegación, sin listeners por elemento):
- *  - a, button, [role=button], label, summary  → el aro crece y se tiñe de granate
+ *  - a, button, [role=button], label, summary  → el aro crece y se tiñe
  *  - [data-cursor="abrir" | "ver" | "arrastrar"] → aro grande con rótulo
- *  - p, h1–h6, li, blockquote… o [data-cursor="texto"] → barra fina
- *  - formularios, campos, iframes, [data-cursor="nativo"] → cursor del sistema
+ *  - texto, campos, iframes, [data-cursor="nativo" | "texto"] → sin aro
  *  - clic → onda; con [data-cursor-petalos] en un ancestro → pétalos
- *  - tema: [data-cursor-tema="oscuro" | "claro"] o, si no hay, la luminancia
- *    del primer fondo opaco hacia arriba.
  */
 
 const ROTULO: Record<string, string> = { abrir: "Abrir", ver: "Ver", arrastrar: "Arrastrar" };
-const NATIVO = "form,input,textarea,select,iframe,[contenteditable],[data-cursor=nativo]";
+// Los campos (no el formulario entero: sus botones sí llevan aro).
+const NATIVO = "input:not([type=button],[type=submit],[type=reset]),textarea,select,iframe,[contenteditable],[data-cursor=nativo],[data-cursor=texto]";
 const ENLACE = "a,button,[role=button],label,summary,[data-cursor=enlace]";
-const TEXTO = "p,h1,h2,h3,h4,h5,h6,li,blockquote,figcaption,dd,dt,td,[data-cursor=texto]";
+const TEXTO = "p,h1,h2,h3,h4,h5,h6,li,blockquote,figcaption,dd,dt,td";
 
-function oscuro(el: Element | null): boolean {
-  for (; el; el = el.parentElement) {
+const tonos = new WeakMap<Element, boolean>();
+function oscuro(el0: Element | null): boolean {
+  const camino: Element[] = [];
+  let res = false;
+  for (let el = el0; el; el = el.parentElement) {
+    const visto = tonos.get(el);
+    if (visto !== undefined) {
+      res = visto;
+      break;
+    }
+    camino.push(el);
     const t = el.getAttribute("data-cursor-tema");
-    if (t) return t == "oscuro";
+    if (t) {
+      res = t == "oscuro";
+      break;
+    }
     const s = getComputedStyle(el);
     let m = s.backgroundColor.match(/[\d.]+/g);
     // Un degradado (botón de oro) cuenta por su primer color.
     if (!m || +m[3] < 0.5) m = s.backgroundImage.match(/rgba?\([^)]+/)?.[0].match(/[\d.]+/g) ?? null;
-    if (m && !(+m[3] < 0.5)) return +m[0] * 0.3 + +m[1] * 0.59 + +m[2] * 0.11 < 110;
+    if (m && !(+m[3] < 0.5)) {
+      res = +m[0] * 0.3 + +m[1] * 0.59 + +m[2] * 0.11 < 110;
+      break;
+    }
   }
-  return false;
+  for (const el of camino) tonos.set(el, res);
+  return res;
 }
 
 export default function CursorInvitoo() {
@@ -45,67 +73,41 @@ export default function CursorInvitoo() {
 
   useEffect(() => {
     const r = raiz.current!;
-    const [aro, punto] = r.children as unknown as HTMLElement[];
+    const aro = r.firstElementChild as HTMLElement;
     const rotulo = aro.lastElementChild as HTMLElement;
     const mq = matchMedia("(pointer: fine) and (hover: hover) and (prefers-reduced-motion: no-preference)");
-    const html = document.documentElement;
-    let x = -99, y = -99, ax = x, ay = y, t = 0, raf = 0;
-    // Bloque de texto bajo el puntero: la barra solo sale sobre las líneas
-    // de letra, no en el hueco a la derecha de un titular.
-    let tx: Element | null = null;
-    const rango = document.createRange();
-    const enLetra = () => {
-      rango.selectNodeContents(tx!);
-      for (const b of rango.getClientRects()) if (x >= b.left && x <= b.right && y >= b.top && y <= b.bottom) return "texto";
-      return "";
-    };
-
-    const bucle = (ahora: number) => {
-      const k = 1 - Math.pow(0.8, Math.min(64, ahora - t || 16) / 16.7);
-      t = ahora;
-      ax += (x - ax) * k;
-      ay += (y - ay) * k;
-      aro.style.transform = `translate3d(${ax}px,${ay}px,0)`;
-      raf = Math.abs(x - ax) + Math.abs(y - ay) > 0.1 ? requestAnimationFrame(bucle) : 0;
-    };
+    let x = -99, y = -99, ultimo: Element | null = null;
 
     const mover = (e: PointerEvent) => {
       if (e.pointerType != "mouse") return void (r.dataset.visible = "");
       x = e.clientX;
       y = e.clientY;
-      punto.style.transform = `translate3d(${x}px,${y}px,0)`;
-      if (!r.dataset.visible) {
-        ax = x;
-        ay = y;
-        r.dataset.visible = "1";
-      }
-      if (!raf) raf = requestAnimationFrame((n) => ((t = n), bucle(n)));
-      if (tx) r.dataset.estado = enLetra();
+      // 1:1, en este mismo evento: el aro se pinta en el mismo fotograma.
+      aro.style.transform = `translate3d(${x}px,${y}px,0)`;
+      if (!r.dataset.visible) r.dataset.visible = "1";
     };
 
-    const sobre = (e: PointerEvent) => {
+    const sobre = (e: { target: EventTarget | null }) => {
       const el = e.target as Element;
+      if (!el || el === ultimo || !el.closest) return;
+      ultimo = el;
       const c = el.closest("[data-cursor]");
       const d = c?.getAttribute("data-cursor");
-      tx = null;
-      let est = el.closest(NATIVO)
+      const est = el.closest(NATIVO)
         ? "nativo"
         : d && ROTULO[d]
           ? d
           : el.closest(ENLACE)
             ? "enlace"
             : el.closest(TEXTO)
-              ? "texto"
+              ? "nativo"
               : "";
-      if (est == "texto" && d != "texto") {
-        tx = el.closest(TEXTO);
-        est = enLetra();
-      }
-      r.dataset.estado = est;
+      if (r.dataset.estado !== est) r.dataset.estado = est;
       rotulo.textContent = ROTULO[est] || "";
-      r.style.setProperty("--ci-alto", getComputedStyle(el).fontSize);
+      if (est == "nativo") return;
       // Con rótulo, el tono lo decide la pieza entera (el sobre), no el sello.
-      r.dataset.tema = oscuro(ROTULO[est] ? c : el) ? "claro" : "";
+      const tema = oscuro(ROTULO[est] ? c : el) ? "claro" : "";
+      if (r.dataset.tema !== tema) r.dataset.tema = tema;
     };
 
     const clic = (e: PointerEvent) => {
@@ -121,14 +123,19 @@ export default function CursorInvitoo() {
       }
     };
 
-    // Al hacer scroll no hay pointerover: se recalcula bajo el puntero.
-    let rs = 0;
-    const desplazar = () =>
-      (rs ||= requestAnimationFrame(() => {
-        rs = 0;
-        const el = r.dataset.visible && document.elementFromPoint(x, y);
-        if (el) sobre({ target: el } as unknown as PointerEvent);
-      }));
+    // Al hacer scroll no hay pointerover: se mira qué hay debajo UNA vez,
+    // cuando el scroll se para (nada por fotograma).
+    let espera = 0;
+    const alParar = () => {
+      espera = 0;
+      if (!r.dataset.visible) return;
+      ultimo = null;
+      sobre({ target: document.elementFromPoint(x, y) });
+    };
+    const desplazar = () => {
+      clearTimeout(espera);
+      espera = window.setTimeout(alParar, 140);
+    };
     const fuera = () => (r.dataset.visible = "");
     const evs: [string, EventListener][] = [
       ["pointermove", mover as EventListener],
@@ -144,6 +151,7 @@ export default function CursorInvitoo() {
       (vivo ? document.addEventListener : document.removeEventListener).call(document, "mouseleave", fuera);
       if (!vivo) fuera();
     };
+    const html = document.documentElement;
 
     activar();
     mq.addEventListener("change", activar);
@@ -152,8 +160,7 @@ export default function CursorInvitoo() {
       html.classList.remove("ci-activo");
       for (const [n, f] of evs) removeEventListener(n, f);
       document.removeEventListener("mouseleave", fuera);
-      cancelAnimationFrame(raf);
-      cancelAnimationFrame(rs);
+      clearTimeout(espera);
     };
   }, []);
 
@@ -161,10 +168,8 @@ export default function CursorInvitoo() {
     <div ref={raiz} className="ci" aria-hidden="true">
       <div className="ci-aro">
         <span className="ci-circulo" />
-        <span className="ci-barra" />
         <span className="ci-rotulo" />
       </div>
-      <div className="ci-punto" />
     </div>
   );
 }

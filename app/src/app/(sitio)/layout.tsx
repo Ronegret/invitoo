@@ -34,10 +34,18 @@ export const metadata: Metadata = {
     template: "%s · Invitoo",
     default: "Invitoo · Invitaciones de boda digitales a medida",
   },
+  // W2: al declarar `openGraph` aquí, Next deja de heredar la imagen del
+  // archivo `app/opengraph-image.jpg`, y la web salía SIN imagen al
+  // compartirla por WhatsApp. Se declara a mano.
   openGraph: {
     type: "website",
     locale: "es_ES",
     siteName: "Invitoo",
+    images: [{ url: "/opengraph-image.jpg", width: 1200, height: 630, alt: "Invitoo · Invitaciones de boda digitales a medida" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/opengraph-image.jpg"],
   },
 };
 

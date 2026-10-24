@@ -1,0 +1,266 @@
+/*
+ * El teléfono de la web (W2). Un iPhone actual dibujado en CSS:
+ * chasis de titanio con sus botones, bisel negro, isla dinámica, cristal
+ * con reflejo y sombra de contacto. Sin imágenes ni WebGL.
+ *
+ * Todo se mide en `cqi` (el ancho del propio teléfono): el mismo marco
+ * sirve a 120 px en una ficha del catálogo y a 320 px en la portada.
+ * Proporciones de un iPhone 16 Pro: 71,5 × 149,6 mm.
+ */
+
+.telefono {
+  container-type: inline-size;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 71.5 / 149.6;
+}
+
+/* El chasis de titanio: un degradado frío con dos brillos de canto. */
+.chasis {
+  position: absolute;
+  inset: 0;
+  border-radius: 17.5cqi;
+  padding: 1.15cqi;
+  background:
+    linear-gradient(
+      152deg,
+      #b9b4ad 0%,
+      #59544f 9%,
+      #2c2a28 22%,
+      #8d8780 47%,
+      #3a3734 66%,
+      #23211f 84%,
+      #a8a29b 100%
+    );
+  box-shadow:
+    inset 0 0 0 0.35cqi rgb(255 255 255 / 0.18),
+    inset 0 0.6cqi 0.8cqi rgb(255 255 255 / 0.22),
+    0 1.2cqi 2.4cqi -0.4cqi rgb(18 16 14 / 0.22),
+    0 9cqi 16cqi -5cqi rgb(18 16 14 / 0.38),
+    0 26cqi 40cqi -18cqi rgb(18 16 14 / 0.42);
+}
+.claro .chasis {
+  background:
+    linear-gradient(
+      152deg,
+      #f4efe8 0%,
+      #c9c2b8 10%,
+      #e9e3da 30%,
+      #b9b2a7 52%,
+      #eee8df 72%,
+      #a59d92 100%
+    );
+}
+
+/* El bisel negro y la pantalla. */
+.bisel {
+  position: relative;
+  height: 100%;
+  border-radius: 16.4cqi;
+  padding: 3.1cqi;
+  background: #070708;
+  box-shadow: inset 0 0 0 0.3cqi rgb(255 255 255 / 0.07);
+}
+.pantalla {
+  position: relative;
+  height: 100%;
+  overflow: clip;
+  border-radius: 13.4cqi;
+  background: var(--bruma, #ede6dd);
+  isolation: isolate;
+  transform: translateZ(0);
+}
+
+/* La isla dinámica, con la lente de la cámara. */
+.isla {
+  position: absolute;
+  z-index: 8;
+  top: 3.4cqi;
+  left: 50%;
+  width: 31%;
+  height: 9.2cqi;
+  translate: -50% 0;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 78% 50%, #1d2633 0 1.3cqi, #0d1118 1.5cqi 2.1cqi, transparent 2.3cqi),
+    #000;
+  pointer-events: none;
+}
+
+/* El cristal: un reflejo diagonal fijo y un brillo que se mueve con la
+   inclinación (--brillo, de −1 a 1). Solo transform y opacidad. */
+.cristal {
+  position: absolute;
+  z-index: 9;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    118deg,
+    rgb(255 255 255 / 0.2) 0%,
+    rgb(255 255 255 / 0.06) 24%,
+    transparent 38%,
+    transparent 72%,
+    rgb(255 255 255 / 0.05) 100%
+  );
+}
+.cristal::after {
+  content: "";
+  position: absolute;
+  inset: -20% -60%;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgb(255 255 255 / 0.16) 48%,
+    rgb(255 255 255 / 0.05) 53%,
+    transparent 60%
+  );
+  transform: translateX(calc(var(--brillo, 0) * 22%));
+  transition: transform 600ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* Los botones de los cantos. */
+.boton {
+  position: absolute;
+  width: 1.3cqi;
+  border-radius: 0.6cqi;
+  background: linear-gradient(90deg, #2a2826, #8a847d 45%, #3a3734);
+}
+.claro .boton {
+  background: linear-gradient(90deg, #a69f95, #efe9e1 45%, #b8b1a7);
+}
+.boton[data-lado="i"] {
+  left: -0.9cqi;
+}
+.boton[data-lado="d"] {
+  right: -0.9cqi;
+}
+
+/* La sombra de contacto: una elipse bajo el teléfono, sin `filter`. */
+.sombra {
+  position: absolute;
+  z-index: -1;
+  left: 8%;
+  right: 8%;
+  bottom: -5%;
+  height: 9%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(18 16 14 / 0.34), rgb(18 16 14 / 0.12) 55%, transparent);
+  pointer-events: none;
+}
+
+/* ─────────── La pantalla viva ─────────── */
+
+.viva {
+  position: absolute;
+  inset: 0;
+  background: var(--fondo, #f6f1e9);
+}
+
+/* La tira de la invitación, de arriba abajo. */
+.tira {
+  position: absolute;
+  inset: 0 0 auto;
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* El vídeo de la apertura y su póster, encima de la tira. */
+.capa {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 2;
+  transition: opacity 700ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+.viva[data-fase="invitacion"] .capa {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* El destello entre el vídeo y la invitación. */
+.destello {
+  position: absolute;
+  inset: -10%;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle at 50% 42%, #fffaf0 0 18%, rgb(255 246 228 / 0.85) 38%, transparent 70%);
+}
+.viva[data-fase="destello"] .destello {
+  animation: destello 900ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+@keyframes destello {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  35% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.4);
+  }
+}
+
+/*
+ * EL SCROLL. Cuando la invitación ya está, la tira sube con el scroll de
+ * la página (animation-timeline): bajáis por la web y el móvil baja por la
+ * invitación. Sin JavaScript por frame. Donde no hay scroll-driven
+ * animations, se desliza sola y despacio mientras se ve.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    .viva[data-modo="scroll"] .tira {
+      animation: recorre linear both;
+      animation-timeline: var(--linea, scroll(root block));
+      animation-range: var(--desde, 0px) var(--hasta-rango, 1400px);
+    }
+  }
+  @supports not (animation-timeline: scroll()) {
+    .viva[data-modo="scroll"][data-visible][data-fase="invitacion"] .tira {
+      animation: recorre 22s cubic-bezier(0.45, 0, 0.55, 1) 600ms infinite alternate both;
+    }
+  }
+  .viva[data-modo="auto"][data-visible][data-fase="invitacion"] .tira {
+    animation: recorre var(--duracion, 22s) cubic-bezier(0.45, 0, 0.55, 1) 900ms infinite alternate both;
+  }
+}
+@keyframes recorre {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(var(--hasta, -45%));
+  }
+}
+
+/* En táctil, el teléfono entero es un enlace a la invitación. */
+.enlace {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  border-radius: inherit;
+}
+.enlace:focus-visible {
+  outline: 2px solid var(--acento, #8c1d2c);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Sin vídeo que esperar: se ve la invitación directamente. */
+  .viva[data-tira] .capa {
+    opacity: 0;
+  }
+  .capa,
+  .cristal::after {
+    transition: none;
+  }
+}

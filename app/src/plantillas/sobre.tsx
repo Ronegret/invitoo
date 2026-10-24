@@ -1,3 +1,4 @@
+import CuentaPortada from "@/components/bloques/CuentaPortada";
 import { EB_Garamond, Playfair_Display } from "next/font/google";
 import { Guirnalda } from "@/components/flores";
 import { Despedida, Secciones, Y, type Props } from "./comun";
@@ -55,6 +56,7 @@ function Portada(props: Props) {
         <p className="mt-1 text-[1.125rem] opacity-85">
           a las {d.hora}, {d.lugar}
         </p>
+        <CuentaPortada hasta={props.inv.pareja.fecha} estilo="punto" className="mt-7" />
         {d.frase && (
           <p className="mx-auto mt-7 max-w-[24rem] text-[1.125rem] leading-[1.7] opacity-90">{d.frase}</p>
         )}

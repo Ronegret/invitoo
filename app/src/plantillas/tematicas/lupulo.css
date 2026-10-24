@@ -111,7 +111,7 @@
   .lp-nombres { animation: lp-tinta 1500ms var(--ease-carta) 700ms both; }
   .lp-medalla .lp-pina path { animation: lp-graba 1800ms var(--ease-velo) 1100ms both; }
 }
-main:has(> .apertura[data-estado="dentro"]) :is(.lp-etiqueta, .lp-nombres, .lp-medalla .lp-pina path) { animation-play-state: paused; }
+main[data-ap="dentro"] :is(.lp-etiqueta, .lp-nombres, .lp-medalla .lp-pina path) { animation-play-state: paused; }
 @keyframes lp-imprime { from { opacity: 0; transform: translateY(18px) scale(1.03); filter: blur(3px); } }
 @keyframes lp-tinta { from { text-shadow: 0 6px 14px rgb(60 30 0 / .25), 0 0 0 transparent; } }
 @keyframes lp-graba { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
@@ -367,3 +367,6 @@ main:has(> .apertura[data-estado="dentro"]) :is(.lp-etiqueta, .lp-nombres, .lp-m
 .lienzo[data-plantilla="lupulo"] :is(.display, h1, h2, h3).display { font-family: var(--p-display), "Zilla Slab", Rockwell, Georgia, serif; }
 /* El botón «Ver el vídeo», arriba a la DERECHA: la esquina izquierda es de la etiqueta «Demo». */
 .lienzo[data-plantilla="lupulo"] .kv-play { left: auto; right: max(1rem, env(safe-area-inset-right, 0px)); }
+
+/* U1 · legibilidad: el cobre sobre la etiqueta, un punto más hondo (≥ 4,5:1). */
+.lienzo[data-plantilla="lupulo"] :is(.lp-lote, .lp-firma, .lp-nota-tipo, .lp-antes, .lp-cosecha, .lp-y) { color: color-mix(in srgb, var(--acento-texto) 80%, var(--tinta)); }

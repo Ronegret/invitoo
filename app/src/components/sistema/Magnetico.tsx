@@ -26,6 +26,9 @@ export default function Magnetico({ children, fuerza = 6, className }: Props) {
     const mq = matchMedia("(pointer: fine) and (hover: hover) and (prefers-reduced-motion: no-preference)");
     const max = Math.min(6, fuerza);
     let tx = 0, ty = 0, x = 0, y = 0, vx = 0, vy = 0, raf = 0;
+    // La caja se mide al entrar, no en cada movimiento: así no se fuerza
+    // layout por evento y no se mide con su propio desplazamiento encima.
+    let b: DOMRect | null = null;
 
     const paso = () => {
       // Muelle amortiguado (k 0,12 · amortiguación 0,72): llega sin prisa y
@@ -40,14 +43,17 @@ export default function Magnetico({ children, fuerza = 6, className }: Props) {
     const ir = () => (raf ||= requestAnimationFrame(paso));
     const mover = (e: PointerEvent) => {
       if (e.pointerType != "mouse" || !mq.matches) return;
-      const b = el.getBoundingClientRect();
+      if (!b) {
+        const r = el.getBoundingClientRect();
+        b = new DOMRect(r.left - x, r.top - y, r.width, r.height);
+      }
       const nx = (e.clientX - b.left - b.width / 2) / (b.width / 2);
       const ny = (e.clientY - b.top - b.height / 2) / (b.height / 2);
       tx = Math.max(-1, Math.min(1, nx)) * max;
       ty = Math.max(-1, Math.min(1, ny)) * max;
       ir();
     };
-    const soltar = () => ((tx = ty = 0), ir());
+    const soltar = () => ((tx = ty = 0), (b = null), ir());
 
     el.addEventListener("pointermove", mover);
     el.addEventListener("pointerleave", soltar);

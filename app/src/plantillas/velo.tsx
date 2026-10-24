@@ -1,3 +1,4 @@
+import CuentaPortada from "@/components/bloques/CuentaPortada";
 import { Cinzel, Manrope } from "next/font/google";
 import { Despedida, Secciones, type Props } from "./comun";
 import { CitaGrande } from "./vida";
@@ -65,6 +66,7 @@ function Portada(props: Props) {
         <p className="mt-5 text-[1.0625rem]">
           {d.lugar}, a las {d.hora}
         </p>
+        <CuentaPortada hasta={props.inv.pareja.fecha} estilo="filete" antes="" className="velo-cuenta mt-6" />
       </div>
       <div className="absolute inset-x-0 bottom-0 z-[1] px-6 pb-[max(2.5rem,env(safe-area-inset-bottom))] text-center">
         <a

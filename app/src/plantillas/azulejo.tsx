@@ -1,3 +1,4 @@
+import CuentaPortada from "@/components/bloques/CuentaPortada";
 import { Despedida, Secciones, Y, type Props } from "./comun";
 import { datosPortada } from "./datos-portada";
 import { azulejoDisplay as display, azulejoTexto as texto } from "./fuentes/azulejo";
@@ -52,7 +53,7 @@ function Portada(props: Props) {
   const d = datosPortada(props);
   return (
     <header className="pb-16 pt-[max(1.5rem,env(safe-area-inset-top))] text-center">
-      <div className="relative mx-auto aspect-[3/4] w-[min(92vw,30rem)]">
+      <div className="relative mx-auto aspect-[3/4] w-[min(92vw,30rem,45svh)]">
         {/* El momento: las teselas llegan girando, en ola desde abajo, y
             cada pocos segundos dan un cuarto de vuelta. */}
         <PuertaAzulejo className="absolute inset-0 h-full w-full" id="puerta-portada" vivo />
@@ -70,6 +71,7 @@ function Portada(props: Props) {
         </div>
       </div>
       <div className="px-6">
+        <CuentaPortada hasta={props.inv.pareja.fecha} estilo="rombo" antes="" className="mt-7" />
         <p className="mt-8 text-[1.125rem]">
           A las {d.hora}, {d.lugar}
           {d.ciudad && <span className="block opacity-80">{d.ciudad}</span>}

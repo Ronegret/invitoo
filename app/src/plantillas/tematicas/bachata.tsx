@@ -1,3 +1,4 @@
+import CuentaPortada from "@/components/bloques/CuentaPortada";
 import Calendario from "@/components/bloques/Calendario";
 import ComoLlegar, { destinosDe } from "@/components/bloques/ComoLlegar";
 import { LimiteRsvp } from "@/components/bloques/Protocolo";
@@ -38,8 +39,8 @@ import "./bachata.css";
 // Metraje provisional: public/aperturas/lino (encaje y manos), virado a
 // violeta. Lo sustituye el vídeo de los novios.
 const HERO: FuenteVideo = {
-  vertical: "/aperturas/lino/vertical.mp4",
-  horizontal: "/aperturas/lino/horizontal.mp4",
+  vertical: "/tematicas/bachata/hero-v.mp4",
+  horizontal: "/tematicas/bachata/hero-h.mp4",
   poster: "/tematicas/bachata/poster-v.avif",
   posterHorizontal: "/tematicas/bachata/poster-h.avif",
   webm: "/tematicas/bachata/hero-v.webm",
@@ -106,6 +107,7 @@ function Portada(props: Props) {
             {mayuscula(d.fechaLarga)}
             {d.lugar && <span className="block">{d.lugar}</span>}
           </p>
+          <CuentaPortada hasta={d.fechaIso} estilo="punto" className="k-cuenta bachata-cuenta" />
           <a href="#k-inicio" className="k-baja ba-baja">
             Acercaos
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="1.5" /></svg>

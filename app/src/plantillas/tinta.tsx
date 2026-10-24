@@ -1,3 +1,4 @@
+import CuentaPortada from "@/components/bloques/CuentaPortada";
 import { Geist, Instrument_Serif } from "next/font/google";
 import { Despedida, Secciones, type Props } from "./comun";
 import { CitaGrande } from "./vida";
@@ -66,6 +67,7 @@ function Portada(props: Props) {
         <p className="mt-1 text-[1.0625rem] opacity-80">
           {d.hora}, {d.lugar}
         </p>
+        <CuentaPortada hasta={props.inv.pareja.fecha} estilo="filete" antes="" className="mt-8" />
         <a
           href="#confirmar"
           className="mx-auto mt-10 inline-flex min-h-14 items-center border-b-2 border-current px-2 text-[1.125rem]"

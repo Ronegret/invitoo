@@ -58,7 +58,7 @@ export default function Capitulos({
             </span>
 
             {c.cuando && (
-              <p className="text-[1rem] uppercase tracking-[0.28em] text-[var(--acento-texto,var(--acento))]">
+              <p className="text-[1rem] uppercase tracking-[0.28em] text-[color-mix(in_srgb,var(--acento-texto,var(--acento))_82%,var(--tinta))]">
                 {c.cuando}
               </p>
             )}

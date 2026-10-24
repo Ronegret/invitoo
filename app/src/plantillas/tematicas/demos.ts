@@ -76,6 +76,7 @@ export const DEMOS_TEMATICAS: Invitacion[] = [
   boda({
     slug: "olivia-y-edmundo",
     plantilla: "regencia",
+    apertura: video("regencia", 3.0, "regencia"),
     a: "Olivia",
     b: "Edmundo",
     fecha: "2027-06-19T18:00:00+02:00",
@@ -85,7 +86,7 @@ export const DEMOS_TEMATICAS: Invitacion[] = [
       acento: "#3e5f82",
       grano: 0.04,
       // El sobre con lacre de oro sobre papel marfil y forro de damasco azul.
-      sobre: { activo: true, forro: "damasco", forroColor: "#8fa7c4", papel: "#f6efe2", lacre: "iniciales", lacreColor: "oro", matasellos: true, ciudad: "Aranjuez" },
+      sobre: { activo: false, forro: "damasco", forroColor: "#8fa7c4", papel: "#f6efe2", lacre: "iniciales", lacreColor: "oro", matasellos: true, ciudad: "Aranjuez" },
       movimiento: { estilo: "romantico", entrada: "fundido-desenfoque", flores: "ninguna", particulas: "ninguna", petalosAlTocar: true, colorVivo: false },
     },
     frase: "Tenemos el honor de pediros el placer de vuestra compañía en el día más feliz de nuestra temporada.",
@@ -135,7 +136,7 @@ export const DEMOS_TEMATICAS: Invitacion[] = [
       grano: 0,
       movimiento: { estilo: "sereno", entrada: "fundido", flores: "ninguna", particulas: "ninguna", petalosAlTocar: false, colorVivo: false, ornamentos: true },
     },
-    apertura: video("tinta", 3.0, "aire"),
+    apertura: video("aire", 3.0, "aire"),
     frase: "Sin prisa y con lo esencial: vosotros.",
     album: [f("aire-album-1"), f("aire-album-2"), f("aire-album-3"), f("aire-album-4")],
     capitulos: [
@@ -182,7 +183,7 @@ export const DEMOS_TEMATICAS: Invitacion[] = [
       grano: 0.05,
       movimiento: { estilo: "cinematografico", entrada: "fundido-desenfoque", flores: "ninguna", particulas: "destellos", petalosAlTocar: false, colorVivo: false },
     },
-    apertura: video("constelacion", 3.5, "cuento"),
+    apertura: video("cuento", 3.5, "cuento"),
     frase: "Érase una vez dos personas que se encontraron en la página más inesperada.",
     album: [f("cuento-album-1"), f("cuento-album-2"), f("cuento-album-3"), f("cuento-album-4")],
     capitulos: [
@@ -229,7 +230,7 @@ export const DEMOS_TEMATICAS: Invitacion[] = [
       grano: 0.04,
       movimiento: { estilo: "sereno", entrada: "ascenso", flores: "ninguna", particulas: "ninguna", petalosAlTocar: false, colorVivo: true },
     },
-    apertura: video("constelacion", 2.6, "festival"),
+    apertura: video("festival", 2.6, "festival"),
     frase: "Nos conocimos delante de un escenario. Ahora queremos que el escenario seáis vosotros.",
     album: [f("festival-album-1"), f("festival-album-2"), f("festival-album-3"), f("festival-album-4")],
     capitulos: [
@@ -277,7 +278,7 @@ export const DEMOS_TEMATICAS: Invitacion[] = [
       grano: 0.06,
       movimiento: { estilo: "cinematografico", entrada: "fundido-desenfoque", flores: "ninguna", particulas: "ninguna", petalosAlTocar: false, colorVivo: false },
     },
-    apertura: video("velo", 2.6, "vinilo"),
+    apertura: video("vinilo", 2.6, "vinilo"),
     frase: "Hay canciones que se ponen una vez y no se quitan nunca. Nosotros somos una de esas.",
     album: [f("vinilo-album-1"), f("vinilo-album-2"), f("vinilo-album-3"), f("vinilo-album-4")],
     capitulos: [
@@ -325,7 +326,7 @@ export const DEMOS_TEMATICAS: Invitacion[] = [
       grano: 0.03,
       movimiento: { estilo: "cinematografico", entrada: "fundido-desenfoque", flores: "ninguna", particulas: "ninguna", petalosAlTocar: false, colorVivo: false },
     },
-    apertura: video("bruma", 2.6, "neon"),
+    apertura: video("neon", 2.6, "neon"),
     frase: "Nos conocimos a las dos de la mañana y desde entonces la noche es nuestra. Esta vez, también vuestra.",
     album: [f("neon-album-1"), f("neon-album-2"), f("neon-album-3"), f("neon-album-4")],
     capitulos: [
@@ -372,7 +373,7 @@ export const DEMOS_TEMATICAS: Invitacion[] = [
       grano: 0.05,
       movimiento: { estilo: "romantico", entrada: "ascenso", flores: "ninguna", particulas: "ninguna", petalosAlTocar: false, colorVivo: true },
     },
-    apertura: video("terracota", 2.6, "fuego"),
+    apertura: video("fuego", 2.6, "fuego"),
     frase: "Aprendimos a bailar juntos sin pisarnos. Ahora queremos bailar con vosotros toda la noche.",
     album: [f("fuego-album-1"), f("fuego-album-2"), f("fuego-album-3"), f("fuego-album-4")],
     capitulos: [
@@ -420,7 +421,7 @@ export const DEMOS_TEMATICAS: Invitacion[] = [
       grano: 0.05,
       movimiento: { estilo: "romantico", entrada: "fundido-desenfoque", flores: "ninguna", particulas: "ninguna", petalosAlTocar: false, colorVivo: true },
     },
-    apertura: video("lino", 2.6, "bachata"),
+    apertura: video("bachata", 2.6, "bachata"),
     frase: "Una canción lenta, una vela y vosotros cerca. No necesitamos nada más.",
     album: [f("bachata-album-1"), f("bachata-album-2"), f("bachata-album-3"), f("bachata-album-4")],
     capitulos: [
@@ -459,6 +460,7 @@ export const DEMOS_TEMATICAS: Invitacion[] = [
   boda({
     slug: "lucia-y-bruno",
     plantilla: "pinar",
+    apertura: video("pinar", 3.0, "pinar"),
     a: "Lucía",
     b: "Bruno",
     fecha: "2027-09-25T17:30:00+02:00",
@@ -506,6 +508,7 @@ export const DEMOS_TEMATICAS: Invitacion[] = [
   boda({
     slug: "vega-y-dario",
     plantilla: "orbita",
+    apertura: video("orbita", 3.0, "orbita"),
     a: "Vega",
     b: "Darío",
     fecha: "2027-08-14T20:30:00+01:00",
@@ -553,6 +556,7 @@ export const DEMOS_TEMATICAS: Invitacion[] = [
   boda({
     slug: "marina-y-hugo",
     plantilla: "brazada",
+    apertura: video("brazada", 3.0, "brazada"),
     a: "Marina",
     b: "Hugo",
     fecha: "2027-06-04T12:30:00+02:00",
@@ -610,7 +614,7 @@ export const DEMOS_TEMATICAS: Invitacion[] = [
       grano: 0.06,
       movimiento: { estilo: "sereno", velocidad: 1, intensidad: 0.5, entrada: "ascenso", particulas: "ninguna", flores: "ninguna", petalosAlTocar: false, colorVivo: true },
     },
-    apertura: video("constelacion", 4.0, "lupulo"),
+    apertura: video("lupulo", 4.0, "lupulo"),
     frase: "Nos conocimos esperando turno en una barra. Ahora queremos que la ronda sea para todos.",
     album: [f("lupulo-album-1"), f("lupulo-album-2"), f("lupulo-album-3"), f("lupulo-album-4")],
     capitulos: [
@@ -657,7 +661,7 @@ export const DEMOS_TEMATICAS: Invitacion[] = [
       grano: 0.04,
       movimiento: { estilo: "sereno", velocidad: 1.1, intensidad: 0.6, entrada: "ascenso", particulas: "ninguna", flores: "ninguna", petalosAlTocar: false, colorVivo: false },
     },
-    apertura: video("marea", 3.0, "estadio"),
+    apertura: video("estadio", 3.0, "estadio"),
     frase: "Llevamos años compartiendo grada. Ahora jugamos la final, y os queremos en el campo.",
     album: [f("estadio-album-1"), f("estadio-album-2"), f("estadio-album-3"), f("estadio-album-4")],
     capitulos: [
@@ -704,7 +708,7 @@ export const DEMOS_TEMATICAS: Invitacion[] = [
       grano: 0.03,
       movimiento: { estilo: "minimo", velocidad: 1.2, intensidad: 0.55, entrada: "ascenso", particulas: "ninguna", flores: "ninguna", petalosAlTocar: false, colorVivo: false },
     },
-    apertura: video("cielo", 3.5, "meta"),
+    apertura: video("meta", 3.5, "meta"),
     frase: "Hemos corrido muchos kilómetros juntos. Los últimos metros queremos hacerlos con vosotros.",
     album: [f("meta-album-1"), f("meta-album-2"), f("meta-album-3"), f("meta-album-4")],
     capitulos: [
@@ -751,7 +755,7 @@ export const DEMOS_TEMATICAS: Invitacion[] = [
       grano: 0.03,
       movimiento: { estilo: "cinematografico", velocidad: 0.9, intensidad: 0.5, entrada: "fundido-desenfoque", particulas: "ninguna", flores: "ninguna", petalosAlTocar: false, colorVivo: true },
     },
-    apertura: video("bruma", 3.0, "riviera"),
+    apertura: video("riviera", 3.0, "riviera"),
     frase: "Una carretera de costa, un coche con más años que nosotros y toda la vida por delante.",
     album: [f("riviera-album-1"), f("riviera-album-2"), f("riviera-album-3"), f("riviera-album-4")],
     capitulos: [
@@ -787,6 +791,7 @@ export const DEMOS_TEMATICAS: Invitacion[] = [
   boda({
     slug: "leonor-y-alvaro",
     plantilla: "blason",
+    apertura: video("blason", 3.0, "blason"),
     a: "Leonor",
     b: "Álvaro",
     fecha: "2027-09-25T17:30:00+02:00",
@@ -834,6 +839,7 @@ export const DEMOS_TEMATICAS: Invitacion[] = [
   boda({
     slug: "julia-y-mateo",
     plantilla: "memorias",
+    apertura: video("memorias", 3.0, "memorias"),
     a: "Julia",
     b: "Mateo",
     fecha: "2027-05-15T12:30:00+02:00",
@@ -881,6 +887,7 @@ export const DEMOS_TEMATICAS: Invitacion[] = [
   boda({
     slug: "celia-y-tomas",
     plantilla: "pasaporte",
+    apertura: video("pasaporte", 3.0, "pasaporte"),
     a: "Celia",
     b: "Tomás",
     fecha: "2027-06-05T18:30:00+01:00",
@@ -928,6 +935,7 @@ export const DEMOS_TEMATICAS: Invitacion[] = [
   boda({
     slug: "paula-y-marc",
     plantilla: "orilla",
+    apertura: video("orilla", 3.0, "orilla"),
     a: "Paula",
     b: "Marc",
     fecha: "2027-07-10T19:00:00+02:00",

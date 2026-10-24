@@ -1,3 +1,4 @@
+import CuentaPortada from "@/components/bloques/CuentaPortada";
 import Calendario from "@/components/bloques/Calendario";
 import ComoLlegar, { destinosDe } from "@/components/bloques/ComoLlegar";
 import { Regalos } from "@/components/bloques/Simples";
@@ -127,6 +128,7 @@ function Portada(props: Props) {
         </h1>
         <p className="or-fecha">{mayuscula(d.fechaLarga)}</p>
         {d.lugar && <p className="or-lugar">{d.lugar}</p>}
+        <CuentaPortada hasta={d.fechaIso} estilo="punto" className="k-cuenta orbita-cuenta" />
         <a href="#k-inicio" className="k-baja or-baja">
           Despegad
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="1.5" /></svg>

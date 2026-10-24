@@ -132,7 +132,7 @@
   .rg-cartela { animation: rg-cartela 1400ms cubic-bezier(.22,.61,.36,1) 600ms both; }
 }
 @keyframes rg-cartela { from { opacity: 0; transform: translateY(24px); filter: blur(4px); } }
-main:has(> .apertura[data-estado="dentro"]) .rg-cartela { animation-play-state: paused; }
+main[data-ap="dentro"] .rg-cartela { animation-play-state: paused; }
 
 .lienzo[data-plantilla="regencia"] .kv-play {
   --kv-play-fondo: color-mix(in srgb, var(--papel) 82%, transparent);

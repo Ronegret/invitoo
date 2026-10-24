@@ -1,3 +1,4 @@
+import CuentaPortada from "@/components/bloques/CuentaPortada";
 import Calendario from "@/components/bloques/Calendario";
 import ComoLlegar, { destinosDe } from "@/components/bloques/ComoLlegar";
 import { LimiteRsvp } from "@/components/bloques/Protocolo";
@@ -149,6 +150,7 @@ function Portada(props: Props) {
             <span className="first-letter:uppercase inline-block">{d.fechaLarga}</span>
             {primera && <span className="block">{d.lugar}</span>}
           </p>
+          <CuentaPortada hasta={d.fechaIso} estilo="rombo" className="k-cuenta blason-cuenta" />
           <a href="#k-inicio" className="k-baja bl-baja">
             Abrid las puertas
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="1.5" /></svg>

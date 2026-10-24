@@ -34,7 +34,7 @@ import s from "./cabecera.module.css";
  */
 
 const ENLACES: { href: string; texto: string; nota: string; ancho?: boolean }[] = [
-  { href: "/plantillas", texto: "Plantillas", nota: "nueve, vivas" },
+  { href: "/plantillas", texto: "Plantillas", nota: "28, por estilo" },
   { href: "/en-directo", texto: "En directo", nota: "en el salón" },
   { href: "/servicios", texto: "Qué lleva", nota: "todo hecho" },
   { href: "/precios", texto: "Precios", nota: "pago único" },

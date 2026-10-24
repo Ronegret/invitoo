@@ -68,9 +68,9 @@
   .pi-rotulo > * { animation: pi-enfoca 1300ms var(--ease-carta) both; }
   .pi-rotulo > :nth-child(2) { animation-delay: 300ms; }
   .pi-rotulo > :nth-child(n+3) { animation-delay: 650ms; }
-  main:has(> .apertura[data-estado="dentro"]) .pi-rotulo > * { animation-play-state: paused; }
+  main[data-ap="dentro"] .pi-rotulo > * { animation-play-state: paused; }
 }
-@keyframes pi-enfoca { from { opacity: 0; filter: blur(8px); transform: translateY(10px); } }
+@keyframes pi-enfoca { from { opacity: 0; transform: translateY(10px); } } /* (P3) sin filter: va ligada al scroll */
 
 /* EL WOW, acto 1: el bosque se abre. Los helechos se apartan al bajar. */
 @supports (animation-timeline: view()) {
@@ -339,3 +339,8 @@
   .pi-rotulo > *, .pi-niebla, .pi-luciernagas > i, .pi-anillo-nuevo, .pi-luciernaga { animation: none !important; }
   .pi-orbita { transition: none; }
 }
+
+/* U1: la cuenta atrás en la cabecera; menos aire abajo para que quepa. */
+.pi-hero { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 2.5rem); }
+.pinar-cuenta { margin-top: 1rem; }
+@media (max-height: 700px) { .pi-hero { padding-top: calc(env(safe-area-inset-top, 0px) + 4.25rem); } .pi-lema { font-size: 1.9rem; } }

@@ -694,6 +694,77 @@ export const ESTILO_PLANTILLA: Record<string, FiltroPlantilla["id"][]> = {
   registro: ["civil", "ciudad"],
   azulejo: ["mediterranea", "mar"],
   carta: ["clasica"],
+  // Las diecinueve temáticas (W2): también por el tipo de boda.
+  regencia: ["clasica"],
+  aire: ["ciudad", "civil"],
+  cuento: ["noche", "clasica"],
+  blason: ["clasica", "campo"],
+  memorias: ["campo", "clasica"],
+  pasaporte: ["mar", "ciudad"],
+  orilla: ["mar", "mediterranea"],
+  pinar: ["campo"],
+  orbita: ["noche"],
+  brazada: ["mar"],
+  festival: ["campo", "noche"],
+  vinilo: ["noche", "ciudad"],
+  neon: ["noche", "ciudad"],
+  fuego: ["noche", "mediterranea"],
+  bachata: ["noche", "mar"],
+  lupulo: ["campo", "civil"],
+  estadio: ["ciudad", "civil"],
+  meta: ["campo", "civil"],
+  riviera: ["mediterranea", "ciudad"],
+};
+
+/**
+ * Las cinco familias del catálogo (W2): cómo se busca una invitación de
+ * verdad. Primero el ESTILO (¿somos de época o de festival?) y después,
+ * si hace falta, el tipo de boda (los filtros de arriba).
+ */
+export type FamiliaPlantilla = {
+  id: "casa" | "epoca" | "naturaleza" | "musica" | "vida";
+  nombre: string;
+  /** Una línea, para la cabecera del filtro. */
+  texto: string;
+};
+
+export const FAMILIAS_PLANTILLA: FamiliaPlantilla[] = [
+  { id: "casa", nombre: "De la casa", texto: "Las clásicas de Invitoo: papel, lacre, flores y mar. Sirven para casi cualquier boda." },
+  { id: "epoca", nombre: "Época y romance", texto: "De la Regencia al cuento de hadas: para bodas con vestido largo y baile." },
+  { id: "naturaleza", nombre: "Naturaleza y viajes", texto: "Playa, bosque, estrellas o el pasaporte lleno de sellos." },
+  { id: "musica", nombre: "Música y baile", texto: "Para parejas que se conocieron en un concierto o en la pista." },
+  { id: "vida", nombre: "Estilo de vida", texto: "Cerveza artesana, fútbol, carreras o coches: lo vuestro, con elegancia." },
+];
+
+export const FAMILIA_PLANTILLA: Record<string, FamiliaPlantilla["id"]> = {
+  carta: "casa",
+  sobre: "casa",
+  floracion: "casa",
+  mar: "casa",
+  velo: "casa",
+  constelacion: "casa",
+  tinta: "casa",
+  registro: "casa",
+  azulejo: "casa",
+  regencia: "epoca",
+  aire: "epoca",
+  cuento: "epoca",
+  blason: "epoca",
+  memorias: "epoca",
+  pasaporte: "naturaleza",
+  orilla: "naturaleza",
+  pinar: "naturaleza",
+  orbita: "naturaleza",
+  brazada: "naturaleza",
+  festival: "musica",
+  vinilo: "musica",
+  neon: "musica",
+  fuego: "musica",
+  bachata: "musica",
+  lupulo: "vida",
+  estadio: "vida",
+  meta: "vida",
+  riviera: "vida",
 };
 
 /* ─────────────────────────── Cómo se paga ────────────────────────── */

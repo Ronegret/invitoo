@@ -1,3 +1,4 @@
+import CuentaPortada from "@/components/bloques/CuentaPortada";
 import Calendario from "@/components/bloques/Calendario";
 import ComoLlegar, { destinosDe } from "@/components/bloques/ComoLlegar";
 import { LimiteRsvp } from "@/components/bloques/Protocolo";
@@ -41,8 +42,8 @@ import "./neon.css";
 // Metraje provisional: public/aperturas/bruma (orquídeas), virado a noche
 // rosa y violeta en CSS. Lo sustituye el vídeo de los novios.
 const HERO: FuenteVideo = {
-  vertical: "/aperturas/bruma/vertical.mp4",
-  horizontal: "/aperturas/bruma/horizontal.mp4",
+  vertical: "/tematicas/neon/hero-v.mp4",
+  horizontal: "/tematicas/neon/hero-h.mp4",
   poster: "/tematicas/neon/poster-v.avif",
   posterHorizontal: "/tematicas/neon/poster-h.avif",
   webm: "/tematicas/neon/hero-v.webm",
@@ -121,6 +122,7 @@ function Portada(props: Props) {
           {d.numerica.replace(/\./g, " · ")} — desde las {d.hora}
         </p>
         <p className="ne-lugar">{mayuscula(d.fechaLarga)}{d.lugar && <> · {d.lugar}</>}</p>
+        <CuentaPortada hasta={d.fechaIso} estilo="dos-puntos" className="k-cuenta neon-cuenta" />
         <a href="#k-inicio" className="k-baja ne-baja">
           Entrad
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="1.5" /></svg>

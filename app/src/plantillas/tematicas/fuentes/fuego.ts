@@ -15,7 +15,6 @@ export const fuegoDisplay = Yeseva_One({
 });
 export const fuegoTexto = Work_Sans({
   subsets: ["latin"],
-  weight: ["400", "500"],
   variable: "--p-texto",
   display: "swap",
   preload: false,

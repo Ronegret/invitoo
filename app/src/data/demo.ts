@@ -226,7 +226,7 @@ const BODAS: Invitacion[] = [
     b: "Marcos",
     fecha: "2027-06-04T19:00:00+02:00",
     tema: { tinta: "#14283a", papel: "#edf3f4", acento: "#2f6a8a", grano: 0.03 },
-    apertura: video("cielo", 4.0),
+    apertura: video("mar", 4.0),
     frase: "Nos casamos mirando al mar. Venid con tiempo y quedaos a dormir.",
     foto: ia("mar-portada"),
     album: fotos("mar"),

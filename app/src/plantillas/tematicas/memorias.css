@@ -87,7 +87,7 @@
   .me-foto-cae { animation: me-cae 1300ms var(--ease-carta, cubic-bezier(.22,.61,.36,1)) 1700ms both; }
 }
 @keyframes me-cae { from { transform: translate(30px, -60px) rotate(14deg); opacity: 0; } 60% { opacity: 1; } to { transform: rotate(-4deg); } }
-main:has(> .apertura[data-estado="dentro"]) .me-foto-cae { animation-play-state: paused; }
+main[data-ap="dentro"] .me-foto-cae { animation-play-state: paused; }
 
 .lienzo[data-plantilla="memorias"] .kv-play {
   --kv-play-fondo: #fbf7ee;
@@ -109,7 +109,7 @@ main:has(> .apertura[data-estado="dentro"]) .me-foto-cae { animation-play-state:
 }
 @keyframes me-teclea { from { width: 0; } }
 @keyframes me-cursor { 50% { border-right-color: currentColor; } }
-main:has(> .apertura[data-estado="dentro"]) .me-teclea { animation-play-state: paused; }
+main[data-ap="dentro"] .me-teclea { animation-play-state: paused; }
 .me-nos-casamos { margin-top: .75rem; font-family: var(--p-mano), cursive; font-size: 1.6rem; line-height: 1.6; color: var(--acento-texto); }
 .me-nombres { margin-top: .75rem; font-family: var(--display); font-weight: 400; line-height: 1; text-wrap: balance; }
 .me-nombres .me-y { display: block; font-size: .5em; line-height: 1.3; font-style: italic; color: var(--acento-texto); }
@@ -343,3 +343,8 @@ main:has(> .apertura[data-estado="dentro"]) .me-teclea { animation-play-state: p
 
 /* Pantallas bajas (360×740): la proyección cede sitio a los nombres. */
 @media (max-height: 760px) { .me-proyeccion { height: 46svh; } .me-rotulo { margin-top: 2.25rem; } }
+
+/* U1: la cuenta atrás de la portada entra en la primera pantalla. */
+.memorias-cuenta { margin-top: 1.1rem; }
+@media (max-width: 767px), (max-height: 900px) { .me-proyeccion { height: 40svh; } .me-rotulo { margin-top: 1.75rem; } }
+@media (max-height: 700px) { .me-proyeccion { height: 27svh; } .me-rotulo { margin-top: 1rem; } .memorias-cuenta { margin-top: .8rem; } }

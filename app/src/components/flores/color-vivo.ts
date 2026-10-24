@@ -125,7 +125,9 @@ export function montarColor(raiz: HTMLElement): () => void {
     entra.style.backgroundColor = c;
     entra.setAttribute("data-on", "");
     sale.removeAttribute("data-on");
-    raiz.style.setProperty("--color-vivo", c);
+    // (P3) Ya no se escribe `--color-vivo` en el lienzo: nadie la leía y,
+    // al heredarse, cada cambio de sección recalculaba el estilo de toda
+    // la invitación (≈4.000 elementos) en pleno scroll.
   };
 
   const io = new IntersectionObserver(
@@ -145,6 +147,5 @@ export function montarColor(raiz: HTMLElement): () => void {
     io.disconnect();
     velos.forEach((v) => v.remove());
     raiz.removeAttribute("data-color-vivo-on");
-    raiz.style.removeProperty("--color-vivo");
   };
 }

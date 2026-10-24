@@ -15,7 +15,6 @@ export const orillaDisplay = Bellefair({
 });
 export const orillaTexto = Nunito_Sans({
   subsets: ["latin"],
-  weight: ["400", "600"],
   variable: "--p-texto",
   display: "swap",
   preload: false,

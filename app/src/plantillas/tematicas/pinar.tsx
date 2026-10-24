@@ -1,3 +1,4 @@
+import CuentaPortada from "@/components/bloques/CuentaPortada";
 import Calendario from "@/components/bloques/Calendario";
 import ComoLlegar, { destinosDe } from "@/components/bloques/ComoLlegar";
 import { Regalos } from "@/components/bloques/Simples";
@@ -37,8 +38,8 @@ import "./pinar.css";
 // El vídeo de la casa mientras no haya uno de la pareja: el claro con el
 // arco entre pinos (metraje propio, `aperturas/marea`, recortado y en bucle).
 const HERO: FuenteVideo = {
-  vertical: "/aperturas/marea/vertical.mp4",
-  horizontal: "/aperturas/marea/horizontal.mp4",
+  vertical: "/aperturas/floracion/vertical.mp4",
+  horizontal: "/aperturas/floracion/horizontal.mp4",
   poster: "/tematicas/pinar/poster-v.avif",
   posterHorizontal: "/tematicas/pinar/poster-h.avif",
   webm: "/tematicas/pinar/hero-v.webm",
@@ -169,6 +170,7 @@ function Portada(props: Props) {
         <p className="pi-lema">nos casamos en el bosque</p>
         <p className="pi-fecha">{mayuscula(d.fechaLarga)}</p>
         {d.lugar && <p className="pi-lugar">{d.lugar}</p>}
+        <CuentaPortada hasta={d.fechaIso} estilo="filete" className="k-cuenta pinar-cuenta" />
         <a href="#k-inicio" className="k-baja pi-baja">
           Entrad en el bosque
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="1.5" /></svg>

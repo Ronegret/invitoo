@@ -1,3 +1,4 @@
+import CuentaPortada from "@/components/bloques/CuentaPortada";
 import Calendario from "@/components/bloques/Calendario";
 import ComoLlegar, { destinosDe } from "@/components/bloques/ComoLlegar";
 import { LimiteRsvp } from "@/components/bloques/Protocolo";
@@ -114,7 +115,7 @@ function Billete({ a, b, destino, fecha, hora }: { a: string; b: string; destino
           <dd>Sí, quiero</dd>
         </div>
       </dl>
-      <p className="ps-mrz" aria-hidden="true">
+      <p className="ps-mrz decor" aria-hidden="true">
         {`P<ESP${a.toUpperCase()}<<${b.toUpperCase()}`.padEnd(36, "<").slice(0, 36)}
       </p>
     </div>
@@ -136,6 +137,7 @@ function Portada(props: Props) {
       </div>
       <div className="ps-rotulo k-hero-sale">
         <p className="ps-lema">Os invitamos a nuestro viaje más importante</p>
+        <CuentaPortada hasta={d.fechaIso} estilo="filete" antes="Embarque en" className="k-cuenta pasaporte-cuenta" />
         <Billete a={d.a} b={d.b} destino={destino} fecha={`${dos(p.dia)} ${MESES[p.mes - 1]} ${p.anio}`} hora={d.hora} />
         <a href="#k-inicio" className="k-baja ps-baja">
           Empezad el viaje
@@ -266,7 +268,7 @@ function Viaje({ x }: { x: Caps }) {
       <ol className="ps-paginas">
         {x.capitulos.map((c, i) => (
           <li key={c.titulo} className="ps-pagina" data-k-escena="" style={{ "--i": i } as React.CSSProperties}>
-            <span className="ps-pagina-sello" aria-hidden="true">
+            <span className="ps-pagina-sello decor" aria-hidden="true">
               <span>{(c.cuando ?? "").split("·")[0].trim() || "✓"}</span>
             </span>
             {c.cuando && <p className="ps-pagina-cuando">{c.cuando}</p>}

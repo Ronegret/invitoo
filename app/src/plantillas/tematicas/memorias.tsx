@@ -1,3 +1,4 @@
+import CuentaPortada from "@/components/bloques/CuentaPortada";
 import Calendario from "@/components/bloques/Calendario";
 import ComoLlegar, { destinosDe } from "@/components/bloques/ComoLlegar";
 import { LimiteRsvp } from "@/components/bloques/Protocolo";
@@ -113,6 +114,7 @@ function Portada(props: Props) {
           {mayuscula(d.fechaLarga)}
           {d.lugar && <span className="block">{d.lugar}</span>}
         </p>
+        <CuentaPortada hasta={d.fechaIso} estilo="dos-puntos" className="k-cuenta memorias-cuenta" />
         <a href="#k-inicio" className="k-baja me-baja">
           Leed nuestra carta
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="1.5" /></svg>

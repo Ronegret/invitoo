@@ -43,7 +43,7 @@
 }
 .kv-play:active { transform: scale(.97); }
 /* Bajo la marca «Demo» de las muestras (arriba a la izquierda): sin solaparse. */
-:where(main):has(> .marca-demo) .kv-play { top: calc(env(safe-area-inset-top, 0px) + 3rem); }
+:where(main[data-demo]) .kv-play { top: calc(env(safe-area-inset-top, 0px) + 3rem); }
 /* Pausa del vídeo (WCAG 2.2.2): discreta, arriba a la derecha (el «Saltar»
    de la apertura ya se ha ido cuando aparece). 44 px de diana. */
 .kv-pausa {

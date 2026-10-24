@@ -70,7 +70,7 @@
   .pu-hoja.der { animation: pu-abre-der 1100ms var(--ease-aire) 2150ms both; }
   /* El monograma chico de la cabecera se dibuja cuando el telón se va. */
   .pu-mono-chico .pu-mono-aro { stroke-dasharray: 1; animation: pu-traza 1200ms var(--ease-aire) 2600ms both; }
-  main:has(> .apertura[data-estado="dentro"]) .pu-mono-chico .pu-mono-aro { animation-play-state: paused; }
+  main[data-ap="dentro"] .pu-mono-chico .pu-mono-aro { animation-play-state: paused; }
 }
 @keyframes pu-linea { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 @keyframes pu-traza { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
@@ -189,4 +189,26 @@
 
 @media (prefers-reduced-motion: reduce) {
   .pu-telon { display: none !important; }
+}
+
+/* U1: la cuenta atrás entra en la primera pantalla. */
+.aire-cuenta { margin-top: 1rem; }
+@media (max-height: 900px) {
+  .pu-hero { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 1.5rem); gap: 1rem; }
+  .pu-ventana { min-height: 30svh; }
+  .pu-mono-chico { display: none; }
+}
+.aire-cuenta { margin-inline: -1.75rem; }
+/* U1: tras el destello de la apertura, el telón es un eco breve y no una
+   segunda apertura: todo el gesto en 1,9 s (antes 3,3 s), para que la
+   cuenta atrás se vea antes de 2,4 s. */
+@media (prefers-reduced-motion: no-preference) {
+  .pu-telon { animation: pu-telon-fin 1ms linear 1900ms both; }
+  .pu-linea { animation: pu-linea 600ms var(--ease-aire) 50ms both, pu-desvanece 400ms ease-out 1400ms forwards; }
+  .pu-mono-telon .pu-mono-aro { animation: pu-traza 800ms var(--ease-aire) 250ms both; }
+  .pu-mono-telon .pu-mono-eje { animation: pu-traza 500ms var(--ease-aire) 150ms both; }
+  .pu-mono-telon .pu-mono-l { animation: pu-letra 800ms var(--ease-aire) 400ms both; }
+  .pu-mono-telon { animation: pu-desvanece 400ms ease-out 1100ms forwards; }
+  .pu-hoja.izq { animation: pu-abre-izq 800ms var(--ease-aire) 1100ms both; }
+  .pu-hoja.der { animation: pu-abre-der 800ms var(--ease-aire) 1100ms both; }
 }

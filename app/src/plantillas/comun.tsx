@@ -501,7 +501,9 @@ export function Secciones({ inv, b, opciones = {} }: Props & { opciones?: Opcion
         );
       }
       case "cuentaAtras":
-        return b("cuentaAtras") && <CuentaAtras hasta={fecha} />;
+        // U1: la cuenta atrás va en la portada de todas las plantillas
+        // (CuentaPortada). Aquí ya no se repite.
+        return null;
       case "capitulos": {
         const x = b("capitulos");
         return x && <Capitulos {...x} />;

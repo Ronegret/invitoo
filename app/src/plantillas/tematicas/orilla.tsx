@@ -1,3 +1,4 @@
+import CuentaPortada from "@/components/bloques/CuentaPortada";
 import Calendario from "@/components/bloques/Calendario";
 import ComoLlegar, { destinosDe } from "@/components/bloques/ComoLlegar";
 import { LimiteRsvp } from "@/components/bloques/Protocolo";
@@ -113,6 +114,7 @@ function Portada(props: Props) {
         <p className="ol-fecha">{mayuscula(d.fechaLarga)}</p>
         {d.lugar && <p className="ol-lugar">{d.lugar}{d.ciudad && d.ciudad !== d.lugar ? ` · ${d.ciudad}` : ""}</p>}
         <Estrella className="c2" />
+        <CuentaPortada hasta={d.fechaIso} estilo="punto" className="k-cuenta orilla-cuenta" />
         <a href="#k-inicio" className="k-baja ol-baja">
           Bajad a la orilla
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="1.5" /></svg>

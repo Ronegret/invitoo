@@ -114,7 +114,17 @@ export type Tema = {
    * la plantilla pone su vídeo temático. Va en el jsonb del tema.
    */
   heroVideo?: { src: string; poster: string; horizontal?: string; posterHorizontal?: string };
+  /**
+   * Cómo se pasa de la apertura a la invitación (U1). «destello»: un
+   * golpe de luz que florece y se disuelve; «velo-scroll»: el vídeo se
+   * retira hacia arriba con el dedo, como un velo. Si falta, el de la
+   * plantilla (`transicionPorDefecto` en `components/aperturas/transicion.ts`).
+   */
+  apertura?: { transicion?: TransicionApertura };
 };
+
+/** `Tema.apertura.transicion`. */
+export type TransicionApertura = "destello" | "velo-scroll";
 
 /** Los forros del sobre: SVG teñibles. Ver `src/components/sobre/Forro.tsx`. */
 export type ForroSobre =

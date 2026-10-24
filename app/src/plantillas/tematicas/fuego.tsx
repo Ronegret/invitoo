@@ -1,3 +1,4 @@
+import CuentaPortada from "@/components/bloques/CuentaPortada";
 import Calendario from "@/components/bloques/Calendario";
 import ComoLlegar, { destinosDe } from "@/components/bloques/ComoLlegar";
 import { LimiteRsvp } from "@/components/bloques/Protocolo";
@@ -38,8 +39,8 @@ import "./fuego.css";
 // Metraje provisional: public/aperturas/terracota (rosas), virado a rojo
 // terciopelo en CSS. Lo sustituye el vídeo de los novios.
 const HERO: FuenteVideo = {
-  vertical: "/aperturas/terracota/vertical.mp4",
-  horizontal: "/aperturas/terracota/horizontal.mp4",
+  vertical: "/tematicas/fuego/hero-v.mp4",
+  horizontal: "/tematicas/fuego/hero-h.mp4",
   poster: "/tematicas/fuego/poster-v.avif",
   posterHorizontal: "/tematicas/fuego/poster-h.avif",
   webm: "/tematicas/fuego/hero-v.webm",
@@ -109,6 +110,7 @@ function Portada(props: Props) {
             {mayuscula(d.fechaLarga)}
             {d.lugar && <span className="block">{d.lugar}</span>}
           </p>
+          <CuentaPortada hasta={d.fechaIso} estilo="punto" className="k-cuenta fuego-cuenta" />
           <a href="#k-inicio" className="k-baja fu-baja">
             Salid a la pista
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="1.5" /></svg>

@@ -52,20 +52,39 @@ export function programaMovimiento(raiz: HTMLElement | null) {
     return isFinite(n) ? n : porDefecto;
   }
 
+  // Duraciones: se leen UNA vez (P3). Antes se leían con getComputedStyle
+  // dentro de cada entrada, justo después de escribir un atributo: cada
+  // pieza forzaba un recálculo de estilo de toda la invitación.
+  var durPieza = 0;
+  var durRama = 0;
+  var durFlor: Map<Element, number> = new Map();
+  function leerDuraciones(piezas: ArrayLike<HTMLElement>) {
+    durPieza = ms("--mov-dur", 1100) + ms("--mov-paso", 110) * 8 + 400;
+    durRama = ms("--mov-ornamento", 2000) + 1600;
+    for (var i = 0; i < piezas.length; i++) {
+      if (!piezas[i].hasAttribute("data-flor")) continue;
+      var cs = getComputedStyle(piezas[i]);
+      durFlor.set(
+        piezas[i],
+        5200 / Math.max(0.5, parseFloat(cs.getPropertyValue("--fl-vel")) || 1) +
+          (parseFloat(cs.getPropertyValue("--fl-retraso")) || 0),
+      );
+    }
+  }
+
   function entrar(el: HTMLElement) {
     if (!el.hasAttribute("data-espera")) return;
+    var total = el.hasAttribute("data-flor")
+      ? durFlor.get(el) || 5200
+      : el.hasAttribute("data-rama")
+        ? durRama
+        : durPieza;
     el.setAttribute("data-entrando", "");
     // Dos fotogramas: el navegador tiene que ver el estado oculto CON la
     // transición declarada antes de quitarlo, o salta sin animar.
     window.requestAnimationFrame(function () {
       window.requestAnimationFrame(function () {
         el.removeAttribute("data-espera");
-        var total = el.hasAttribute("data-flor")
-          ? 5200 / Math.max(0.5, parseFloat(getComputedStyle(el).getPropertyValue("--fl-vel")) || 1) +
-            (parseFloat(getComputedStyle(el).getPropertyValue("--fl-retraso")) || 0)
-          : el.hasAttribute("data-rama")
-            ? ms("--mov-ornamento", 2000) + 1600
-            : ms("--mov-dur", 1100) + ms("--mov-paso", 110) * 8 + 400;
         window.setTimeout(function () {
           el.removeAttribute("data-entrando");
         }, total);
@@ -91,23 +110,33 @@ export function programaMovimiento(raiz: HTMLElement | null) {
       { rootMargin: "0px 0px -8% 0px", threshold: 0 },
     );
     var alCargar: HTMLElement[] = [];
+    // Primero TODAS las lecturas (una sola maquetación), después las
+    // escrituras: leer y escribir alternando recalculaba el estilo de toda
+    // la página por cada pieza (P3).
+    leerDuraciones(piezas);
+    var candidatas: HTMLElement[] = [];
+    var dentro: boolean[] = [];
     for (var i = 0; i < piezas.length; i++) {
       var el = piezas[i];
       // Ramas sin animación (ajuste «ornamentos» apagado): se quedan dibujadas.
       if (el.hasAttribute("data-rama") && raiz!.getAttribute("data-mov-ornamentos") === "0") continue;
-      // Las ramas de la portada se dibujan al entrar en la invitación, no al
-      // llegar a ellas: ya están en pantalla.
       // Flores apagadas por la boda: ni se esperan ni se observan.
       if (el.hasAttribute("data-flor") && raiz!.getAttribute("data-mov-flores") === "ninguna") continue;
+      // Las ramas de la portada se dibujan al entrar en la invitación, no al
+      // llegar a ellas: ya están en pantalla.
       if (el.getAttribute("data-rama") === "al-cargar" || el.getAttribute("data-flor") === "al-cargar") {
-        el.setAttribute("data-espera", "");
         alCargar.push(el);
         continue;
       }
       var r = el.getBoundingClientRect();
-      if (r.top < alto * 0.92 && r.bottom > 0) continue; // ya en pantalla
-      el.setAttribute("data-espera", "");
-      obs.observe(el);
+      candidatas.push(el);
+      dentro.push(r.top < alto * 0.92 && r.bottom > 0); // ya en pantalla
+    }
+    for (var a = 0; a < alCargar.length; a++) alCargar[a].setAttribute("data-espera", "");
+    for (var c = 0; c < candidatas.length; c++) {
+      if (dentro[c]) continue;
+      candidatas[c].setAttribute("data-espera", "");
+      obs.observe(candidatas[c]);
     }
     // Cinturón y tirantes: si el observador no avisa de algo (ya pasó en
     // algunos móviles), al hacer scroll se suelta todo lo que ya está a la
@@ -117,12 +146,14 @@ export function programaMovimiento(raiz: HTMLElement | null) {
       pedido = 0;
       var quedan = raiz!.querySelectorAll<HTMLElement>("[data-espera]:not([data-entrando])");
       var limite = (window.innerHeight || 800) * 0.96;
+      var sueltas: HTMLElement[] = [];
       for (var k = 0; k < quedan.length; k++) {
         if (quedan[k].getAttribute("data-rama") === "al-cargar" || quedan[k].getAttribute("data-flor") === "al-cargar") continue;
-        if (quedan[k].getBoundingClientRect().top < limite) {
-          if (obs) obs.unobserve(quedan[k]);
-          entrar(quedan[k]);
-        }
+        if (quedan[k].getBoundingClientRect().top < limite) sueltas.push(quedan[k]);
+      }
+      for (var q = 0; q < sueltas.length; q++) {
+        if (obs) obs.unobserve(sueltas[q]);
+        entrar(sueltas[q]);
       }
       if (!quedan.length) window.removeEventListener("scroll", alScroll);
     };
@@ -164,6 +195,7 @@ export function programaMovimiento(raiz: HTMLElement | null) {
       /* noop */
     }
     if (quieto || typeof IntersectionObserver === "undefined") return;
+    leerDuraciones(todas);
     // Todo a la espera, también lo que está en pantalla, y se revela.
     obs = new IntersectionObserver(
       function (entradas) {

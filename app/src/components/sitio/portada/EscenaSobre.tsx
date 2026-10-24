@@ -138,13 +138,43 @@ export default function EscenaSobre({
     const red = (navigator as { connection?: { saveData?: boolean; effectiveType?: string } })
       .connection;
     if (red?.saveData || /^(slow-)?2g$/.test(red?.effectiveType ?? "")) return;
-    if (document.readyState === "complete") {
-      const t = window.setTimeout(() => setVivo(true), 0);
-      return () => window.clearTimeout(t);
-    }
-    const alCargar = () => setVivo(true);
-    window.addEventListener("load", alCargar, { once: true });
-    return () => window.removeEventListener("load", alCargar);
+    // (P3) La invitación de dentro es una página entera y comparte el hilo
+    // principal con la portada (mismo origen): cargarla nada más abrirse el
+    // sobre metía 2–3 s de tareas largas justo cuando la pareja empieza a
+    // tocar (INP). Ahora entra con el primer gesto (tocar, teclear, bajar)
+    // o, si no lo hay, cuando la página lleva un rato ociosa. Mientras, la
+    // cartulina con sus nombres ya se lee en la pantalla.
+    let hecho = false;
+    let ocioso = 0;
+    let reloj = 0;
+    const w = window as Window & {
+      requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number;
+      cancelIdleCallback?: (id: number) => void;
+    };
+    const gestos = ["pointerdown", "keydown", "scroll", "wheel"] as const;
+    const ya = () => {
+      if (hecho) return;
+      hecho = true;
+      quitar();
+      setVivo(true);
+    };
+    const quitar = () => gestos.forEach((g) => window.removeEventListener(g, ya));
+    gestos.forEach((g) => window.addEventListener(g, ya, { passive: true, once: true }));
+    const esperar = () => {
+      reloj = window.setTimeout(() => {
+        if (w.requestIdleCallback) ocioso = w.requestIdleCallback(ya, { timeout: 4000 });
+        else ya();
+      }, 2500);
+    };
+    if (document.readyState === "complete") esperar();
+    else window.addEventListener("load", esperar, { once: true });
+    return () => {
+      hecho = true;
+      quitar();
+      window.removeEventListener("load", esperar);
+      window.clearTimeout(reloj);
+      if (ocioso && w.cancelIdleCallback) w.cancelIdleCallback(ocioso);
+    };
   }, [fase]);
 
   // La invitación se pinta a 390 px y se escala a la pantalla.

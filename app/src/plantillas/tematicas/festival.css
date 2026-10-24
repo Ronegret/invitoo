@@ -364,3 +364,13 @@
 /* Pilas de reserva sans (GENERICA de tokens.ts no conoce estas familias). */
 .lienzo[data-plantilla="festival"] { font-family: var(--p-texto), "Space Grotesk", ui-sans-serif, system-ui, sans-serif; }
 .lienzo[data-plantilla="festival"] .display { font-family: var(--p-display), "Big Shoulders", "Arial Narrow", ui-sans-serif, system-ui, sans-serif; }
+
+/* U1 · legibilidad: con la cuenta atrás el rótulo ocupa más alto; el velo
+   oscuro sube con él (blanco ≥ 4,5:1 sobre el peor fotograma). */
+.fe-tinte::after { background: linear-gradient(to top, rgb(16 10 22 / .82) 0 50%, rgb(16 10 22 / .6) 66%, rgb(16 10 22 / .22) 84%, transparent 96%); }
+.fe-lineup { text-shadow: 0 1px 14px rgb(0 0 0 / .55); }
+.fe-antes { color: color-mix(in srgb, var(--acento-texto) 84%, var(--tinta)); }
+.fe-rotulo::before {
+  content: ""; position: absolute; inset: -3rem -1.5rem -1rem; z-index: -1; pointer-events: none;
+  background: radial-gradient(closest-side, rgb(16 10 22 / .55), rgb(16 10 22 / .3) 65%, transparent);
+}

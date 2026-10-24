@@ -219,7 +219,7 @@ const BASE: Base[] = [
       "itinerario", "alojamiento", "notas", "cuentaAtras", "galeria", "dressCode",
       "rsvp", "capitulos", "historia", "playlist", "regalos", "album", "hashtag", "muro",
     ],
-    apertura: video("cielo", 4.0),
+    apertura: video("mar", 4.0),
     aperturaComponente: null,
     poster: "/generadas/mar-portada-768.avif",
     absorbe: ["cielo", "marea"],

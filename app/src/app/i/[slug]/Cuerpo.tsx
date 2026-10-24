@@ -50,6 +50,9 @@ export default function Cuerpo({
     <main
       className={`grano relative min-h-dvh overflow-x-clip ${FUENTES[plantilla.id]}`}
       data-modo={tokens.modo}
+      // Las muestras: la marca «Demo» va dentro. Atributo y no `:has()`,
+      // que obligaba a recalcular toda la invitación (U1).
+      data-demo={muestra ? plantilla.id : undefined}
       {...atributosMovimiento(mov)}
       style={
         {

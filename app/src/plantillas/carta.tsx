@@ -1,6 +1,6 @@
+import CuentaPortada from "@/components/bloques/CuentaPortada";
 import Calendario from "@/components/bloques/Calendario";
 import ComoLlegar, { destinosDe } from "@/components/bloques/ComoLlegar";
-import CuentaAtras from "@/components/bloques/CuentaAtras";
 import { ColorVivo, Guirnalda, Ramo } from "@/components/flores";
 import Icono from "@/components/Iconos";
 import { formatearFecha, horaDelDia } from "@/lib/fecha";
@@ -67,6 +67,7 @@ function Portada(props: Props) {
           <Y bloque signo="&" className="carta-y my-1" />
           <span className="block">{d.b}</span>
         </h1>
+        <CuentaPortada hasta={props.inv.pareja.fecha} estilo="rombo" className="carta-cuenta mt-6" />
         {/* La fecha a la manera de las cartulinas: el mes arriba y, debajo,
             el día grande entre el día de la semana y el año. */}
         <div className="carta-fecha mt-8" aria-label={d.fechaLarga} role="group">
@@ -211,15 +212,15 @@ function GranDia({ x, fecha, slug, a, b }: { x: Itinerario; fecha: string; slug:
 }
 
 /** La única sección en negativo: la cuenta atrás y, debajo, cómo vestir. */
-function Negativo({ fecha, dress }: { fecha: string; dress?: Extract<Bloque, { t: "dressCode" }> }) {
+function Negativo({ dress }: { dress?: Extract<Bloque, { t: "dressCode" }> }) {
+  // U1: la cuenta atrás sube a la portada; el negativo se queda con el dress code.
+  if (!dress) return null;
   return (
-    <section className="carta-negativo" aria-label="Cuenta atrás y cómo vestir">
+    <section className="carta-negativo" aria-label="Cómo vestir">
       <div className="carta-negativo-marco mx-auto max-w-[44rem]">
-        <CuentaAtras hasta={fecha} />
         {dress && (
-          <div className="px-6 pb-20 text-center">
-            <span aria-hidden className="carta-filete" />
-            <h2 className="display mt-14 text-[clamp(2.2rem,9vw,3.2rem)]">Dress code</h2>
+          <div className="px-6 pb-20 pt-20 text-center">
+            <h2 className="display text-[clamp(2.2rem,9vw,3.2rem)]">Dress code</h2>
             <p className="mx-auto mt-6 max-w-[28rem] text-[1.125rem] leading-[1.7]">{dress.nota}</p>
             {dress.paleta.length > 0 && (
               <ul className="mt-10 flex justify-center gap-4" aria-label="Colores sugeridos">
@@ -261,7 +262,7 @@ export default function Carta(props: Props) {
               <GranDia x={itinerario} fecha={inv.pareja.fecha} slug={inv.slug} a={inv.pareja.a} b={inv.pareja.b} />
             ),
             cuentaAtras: (b("cuentaAtras") || b("dressCode")) && (
-              <Negativo fecha={inv.pareja.fecha} dress={b("dressCode")} />
+              <Negativo dress={b("dressCode")} />
             ),
             // El dress code va dentro del negativo, con la cuenta atrás.
             dressCode: null,

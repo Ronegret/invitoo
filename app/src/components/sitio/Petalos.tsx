@@ -39,13 +39,24 @@ export default function Petalos() {
     if (!lienzo || !ctx) return;
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    // (P3) El lienzo solo tiene tamaño mientras hay pétalos: en reposo es
+    // 0×0 y no ocupa memoria de GPU ni se compone en cada fotograma de
+    // scroll (a pantalla completa y dpr 2 eran ~5 MB, siempre).
+    let medido = false;
     const medir = () => {
       lienzo.width = Math.round(window.innerWidth * dpr);
       lienzo.height = Math.round(window.innerHeight * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      medido = true;
     };
-    medir();
-    window.addEventListener("resize", medir);
+    const vaciar = () => {
+      lienzo.width = 0;
+      lienzo.height = 0;
+      medido = false;
+    };
+    vaciar();
+    const alRedimensionar = () => medido && medir();
+    window.addEventListener("resize", alRedimensionar);
 
     const vivos: Petalo[] = [];
     let animando = false;
@@ -99,6 +110,7 @@ export default function Petalos() {
       else {
         animando = false;
         ultimo = 0;
+        vaciar();
       }
     }
 
@@ -127,13 +139,14 @@ export default function Petalos() {
       }
       if (!animando) {
         animando = true;
+        if (!medido) medir();
         requestAnimationFrame(pintar);
       }
     };
     window.addEventListener("pointerdown", alPulsar, { passive: true });
 
     return () => {
-      window.removeEventListener("resize", medir);
+      window.removeEventListener("resize", alRedimensionar);
       window.removeEventListener("pointerdown", alPulsar);
     };
   }, []);

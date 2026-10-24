@@ -17,5 +17,8 @@
       "path": "/api/correos/novios",
       "schedule": "13 8 * * *"
     }
+  ],
+  "regions": [
+    "cdg1"
   ]
 }

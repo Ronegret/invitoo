@@ -1,0 +1,304 @@
+/*
+ * Las portadas vivas del catálogo. Todo se mide en cqw (el ancho de la
+ * propia portada), así que la misma portada vale para la tarjeta del
+ * carrusel, la del menú o la vista grande.
+ */
+
+.portada {
+  --e-carta: cubic-bezier(0.22, 0.61, 0.36, 1);
+  position: relative;
+  container-type: inline-size;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--p-papel);
+  color: var(--p-tinta);
+  font-family: var(--p-letra), var(--display);
+  transition:
+    background-color 500ms ease,
+    color 500ms ease;
+}
+
+.dibujo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--p-tinta);
+  z-index: 0;
+}
+.relleno {
+  fill: var(--p-acento);
+  transition: fill 500ms ease;
+}
+.lacre {
+  fill: var(--p-acento);
+  filter: drop-shadow(0 0.6px 0.6px rgb(0 0 0 / 0.25));
+}
+
+.texto {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4cqw;
+  padding: 0 10cqw;
+  text-align: center;
+}
+.sobre {
+  margin: 0;
+  font-family: var(--texto);
+  font-size: 4.2cqw;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+.nombres {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 15cqw;
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+  font-style: italic;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+}
+.y {
+  color: var(--p-acento);
+  font-size: 0.62em;
+  margin: 0.06em 0;
+  transition: color 500ms ease;
+}
+.fecha {
+  margin: 0;
+  font-family: var(--texto);
+  font-size: 4.1cqw;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.76;
+}
+
+/* Un reflejo dorado que cruza al pasar por encima (o al quedar centrada). */
+.brillo {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 38%, rgb(255 236 196 / 0.45) 50%, transparent 62%);
+  transform: translateX(-130%);
+  mix-blend-mode: soft-light;
+}
+
+/* ───────────── Cada plantilla, su gesto ───────────── */
+
+[data-p="carta"] .texto {
+  padding-top: 38cqw;
+}
+
+[data-p="sobre"] .nombres {
+  font-size: 16cqw;
+}
+[data-p="sobre"] .texto {
+  padding-bottom: 10cqw;
+}
+
+[data-p="floracion"] .ramas {
+  color: var(--p-acento);
+}
+[data-p="floracion"] .flor {
+  fill: none;
+  stroke: var(--p-acento);
+  stroke-width: 0.7;
+}
+[data-p="floracion"] .nombres {
+  font-style: normal;
+  font-variation-settings: "SOFT" 100;
+}
+
+[data-p="mar"] .horizonte {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--p-papel) 100%, #fff) 0 56%, transparent 56%),
+    linear-gradient(180deg, color-mix(in srgb, var(--p-acento) 55%, var(--p-papel)), var(--p-acento));
+}
+[data-p="mar"] .horizonte::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 56%;
+  height: 1px;
+  background: var(--p-papel);
+  opacity: 0.8;
+}
+[data-p="mar"] .texto {
+  justify-content: flex-start;
+  padding-top: 22cqw;
+}
+[data-p="mar"] .nombres {
+  font-style: normal;
+  font-size: 17cqw;
+  letter-spacing: 0.02em;
+}
+[data-p="mar"] .fecha {
+  margin-top: auto;
+  margin-bottom: 14cqw;
+  color: var(--p-papel);
+  opacity: 0.95;
+}
+
+[data-p="velo"] .veloTela {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.55), transparent 35%),
+    repeating-linear-gradient(95deg, rgb(255 255 255 / 0.12) 0 2px, transparent 2px 7px);
+}
+[data-p="velo"] .nombres {
+  font-style: normal;
+  font-size: 11.5cqw;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.15;
+}
+[data-p="velo"] .y {
+  font-size: 0.7em;
+  letter-spacing: 0;
+  text-transform: none;
+  font-family: var(--font-italica), var(--display);
+  font-style: italic;
+}
+
+[data-p="constelacion"] .cielo {
+  color: var(--p-acento);
+}
+[data-p="constelacion"] .estrella {
+  fill: var(--p-acento);
+}
+[data-p="constelacion"] .trazo {
+  stroke: var(--p-acento);
+}
+[data-p="constelacion"] .texto {
+  padding-top: 26cqw;
+}
+[data-p="constelacion"] .nombres {
+  font-style: normal;
+  letter-spacing: 0.04em;
+  font-size: 14cqw;
+}
+
+[data-p="tinta"] .gota {
+  opacity: 0.9;
+}
+[data-p="tinta"] .gota .relleno {
+  fill: var(--p-tinta);
+}
+[data-p="tinta"] .texto {
+  padding-top: 40cqw;
+}
+[data-p="tinta"] .nombres {
+  font-size: 16cqw;
+  font-style: italic;
+}
+[data-p="tinta"] .sobre {
+  display: none;
+}
+
+[data-p="registro"] .texto {
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 10cqw 8cqw 12cqw;
+  text-align: left;
+}
+[data-p="registro"] .sobre {
+  order: -1;
+  margin-bottom: auto;
+  font-size: 5cqw;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  font-family: var(--p-letra);
+  font-weight: 600;
+  opacity: 1;
+  border-bottom: 0.6cqw solid currentColor;
+  width: 100%;
+  padding-bottom: 2cqw;
+}
+[data-p="registro"] .nombres {
+  align-items: flex-start;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 17cqw;
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+}
+[data-p="registro"] .y {
+  font-size: 1em;
+  margin: 0;
+  color: var(--p-tinta);
+}
+[data-p="registro"] .fecha {
+  letter-spacing: 0.02em;
+  font-weight: 600;
+  font-family: var(--p-letra);
+  font-size: 5cqw;
+  text-transform: none;
+  opacity: 1;
+}
+[data-p="registro"] .sello {
+  position: absolute;
+  right: 7cqw;
+  top: 26cqw;
+  display: grid;
+  place-items: center;
+  width: 34cqw;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--p-acento);
+  color: var(--p-tinta);
+  font-family: var(--p-letra);
+  font-weight: 700;
+  font-size: 3.6cqw;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 4cqw;
+  rotate: -12deg;
+  transition: background-color 500ms ease;
+}
+
+[data-p="azulejo"] .azulejos {
+  position: absolute;
+  inset: 0;
+  --t: 12cqw;
+  background:
+    radial-gradient(circle at 50% 50%, var(--p-papel) 0 23%, transparent 24%) 0 0 / var(--t) var(--t),
+    conic-gradient(from 45deg, var(--p-acento) 0 25%, transparent 0 50%, var(--p-acento) 0 75%, transparent 0) 0 0 / var(--t) var(--t),
+    var(--p-papel);
+  -webkit-mask: radial-gradient(40cqw 62cqw at 50% 56%, transparent 98%, #000 100%);
+  mask: radial-gradient(40cqw 62cqw at 50% 56%, transparent 98%, #000 100%);
+  opacity: 0.85;
+}
+[data-p="azulejo"] .texto {
+  padding-top: 18cqw;
+}
+
+/* ───────────── Movimiento ───────────── */
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-p="constelacion"] .estrella {
+    animation: titila 3.2s ease-in-out infinite;
+    animation-delay: calc(var(--e) * -0.37s);
+  }
+}
+@keyframes titila {
+  50% {
+    opacity: 0.35;
+  }
+}

@@ -1,0 +1,295 @@
+/* Sistema de diseño (G2): cursor, botón y magnético.
+   Clases con prefijo propio (ci-, bt-, magnetico) para no pisar a nadie.
+   Tokens en el bloque SISTEMA de globals.css. */
+
+/* ───────────────────────────── Cursor ───────────────────────────── */
+
+.ci {
+  --ci-tinta: 18 16 14;
+  --ci-acento: 140 29 44;
+  --ci-rotulo: #fbf8f3;
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: var(--capa-cursor, 900);
+  pointer-events: none;
+  contain: strict;
+}
+html.ci-activo .ci { display: block; }
+.ci[data-tema="claro"] {
+  --ci-tinta: 250 246 239;
+  --ci-acento: 243 217 168;
+  --ci-rotulo: #12100e;
+}
+
+/* El ratón del sistema se oculta solo con el nuestro activo, y nunca en
+   formularios, campos ni zonas que pidan el nativo. */
+html.ci-activo,
+html.ci-activo :not(:is(form, form *, input, textarea, select, [contenteditable], [contenteditable] *, [data-cursor="nativo"], [data-cursor="nativo"] *)) {
+  cursor: none;
+}
+
+.ci-aro,
+.ci-punto {
+  position: fixed;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  will-change: transform;
+  transition: opacity var(--dur-rapida, 200ms) ease;
+}
+.ci[data-visible="1"] :is(.ci-aro, .ci-punto) { opacity: 1; }
+.ci[data-estado="nativo"] :is(.ci-aro, .ci-punto) { opacity: 0; }
+
+.ci-punto {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: rgb(var(--ci-tinta));
+}
+.ci:is([data-estado="abrir"], [data-estado="ver"], [data-estado="arrastrar"], [data-estado="texto"]) .ci-punto { opacity: 0; }
+.ci[data-estado="enlace"] .ci-punto { background: rgb(var(--ci-acento)); }
+
+.ci-circulo,
+.ci-barra,
+.ci-rotulo { position: absolute; left: 0; top: 0; }
+
+.ci-circulo {
+  width: 36px;
+  height: 36px;
+  margin: -18px 0 0 -18px;
+  border-radius: 50%;
+  border: 1px solid rgb(var(--ci-tinta) / .38);
+  mix-blend-mode: multiply;
+  transition:
+    transform var(--dur-breve, 320ms) var(--ease-carta),
+    background-color var(--dur-rapida, 200ms) ease,
+    border-color var(--dur-rapida, 200ms) ease,
+    opacity var(--dur-rapida, 200ms) ease;
+}
+.ci[data-tema="claro"] .ci-circulo { mix-blend-mode: screen; }
+
+/* Enlaces y botones: el aro crece y se tiñe. Es un tinte, no una tapa. */
+.ci[data-estado="enlace"] .ci-circulo {
+  transform: scale(1.5);
+  border-color: rgb(var(--ci-acento) / .5);
+  background: rgb(var(--ci-acento) / .1);
+}
+
+/* Con rótulo: el aro se abre y dice lo que va a pasar. */
+/* Aquí sí es un disco lleno: el rótulo tiene que leerse sobre cualquier
+   cosa (un sello granate, una foto). Es breve y está justo sobre el objetivo. */
+.ci:is([data-estado="abrir"], [data-estado="ver"], [data-estado="arrastrar"]) .ci-circulo {
+  transform: scale(2.2);
+  border-color: transparent;
+  background: rgb(var(--ci-acento) / .94);
+  mix-blend-mode: normal;
+  box-shadow: 0 6px 16px -6px rgb(18 16 14 / .35);
+}
+.ci-rotulo {
+  transform: translate(-50%, -50%) scale(.7);
+  opacity: 0;
+  font: 500 13px/1 var(--texto, system-ui);
+  letter-spacing: .03em;
+  -webkit-font-smoothing: antialiased;
+  white-space: nowrap;
+  color: var(--ci-rotulo);
+  transition:
+    transform var(--dur-breve, 320ms) var(--ease-carta),
+    opacity var(--dur-rapida, 200ms) ease;
+}
+.ci:is([data-estado="abrir"], [data-estado="ver"], [data-estado="arrastrar"]) .ci-rotulo {
+  transform: translate(-50%, -50%);
+  opacity: 1;
+}
+.ci[data-estado="arrastrar"] .ci-circulo { transform: scale(2.9); }
+.ci[data-estado="arrastrar"] .ci-rotulo::before { content: "‹  "; }
+.ci[data-estado="arrastrar"] .ci-rotulo::after { content: "  ›"; }
+
+/* En texto: una barra fina del alto de la letra. */
+.ci-barra {
+  width: 2px;
+  height: min(56px, calc(var(--ci-alto, 18px) * 1.25));
+  margin-left: -1px;
+  border-radius: 1px;
+  background: rgb(var(--ci-acento) / .85);
+  transform: translateY(-50%) scaleY(0);
+  transition: transform var(--dur-rapida, 200ms) var(--ease-carta);
+}
+.ci[data-estado="texto"] .ci-barra { transform: translateY(-50%) scaleY(1); }
+.ci[data-estado="texto"] .ci-circulo { transform: scale(.3); opacity: 0; }
+
+/* Clic: una onda, o pétalos. */
+.ci-onda,
+.ci-petalo {
+  position: fixed;
+  pointer-events: none;
+}
+.ci-onda {
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  border-radius: 50%;
+  border: 1px solid rgb(var(--ci-acento) / .6);
+  animation: ci-onda 560ms var(--ease-carta) forwards;
+}
+@keyframes ci-onda {
+  from { transform: scale(.35); opacity: .9; }
+  to { transform: scale(1.5); opacity: 0; }
+}
+.ci-petalo {
+  width: 9px;
+  height: 12px;
+  margin: -6px 0 0 -4px;
+  border-radius: 70% 0 70% 0;
+  background: linear-gradient(160deg, #f2cfcf, #c4606e);
+  animation: ci-petalo 1000ms var(--ease-carta) forwards;
+}
+@keyframes ci-petalo {
+  from { transform: translate(0, 0) rotate(var(--g)) scale(.5); opacity: 1; }
+  70% { opacity: .9; }
+  to { transform: translate(var(--dx), calc(var(--dy) + 30px)) rotate(calc(var(--g) + 140deg)) scale(1); opacity: 0; }
+}
+
+/* ───────────────────────────── Botón ───────────────────────────── */
+
+.bt {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  max-width: 100%;
+  padding: 10px 24px;
+  border: 0;
+  border-radius: var(--boton-radio, var(--radio-capsula));
+  font: 500 17px/1.2 var(--texto, system-ui);
+  letter-spacing: .005em;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition-property: transform, box-shadow, background-color, color;
+  transition-duration: var(--dur-rapida, 200ms);
+  transition-timing-function: var(--ease-suave);
+}
+.bt-56 { min-height: 56px; padding-inline: 30px; }
+.bt-ancho { width: 100%; }
+
+.bt-texto {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.bt-icono { display: inline-flex; transition: transform var(--dur-rapida, 200ms) var(--ease-carta); }
+.bt-icono svg { width: 18px; height: 18px; }
+
+.bt:focus-visible {
+  outline: none;
+  box-shadow: var(--foco), var(--bt-sombra, none);
+}
+
+/* Pulsado: 0,98, rápido, y vuelve sin rebote. */
+.bt:not(:disabled, [aria-disabled="true"]):active {
+  transform: scale(.98);
+  transition-duration: 90ms;
+}
+
+/* Primario: granate (o el acento de la plantilla). */
+.bt-primario {
+  --bt-sombra: inset 0 1px 0 rgb(255 255 255 / .14), var(--sombra-2);
+  background: var(--acento, #8c1d2c);
+  color: var(--sobre-acento, #fbf8f3);
+  box-shadow: var(--bt-sombra);
+}
+
+/* Oro: degradado de pan de oro, tinta encima (6:1) y un brillo que cruza. */
+.bt-oro {
+  --bt-sombra: var(--sombra-dorada);
+  background: linear-gradient(180deg, #cdab70 0%, #b8955c 52%, #a6834e 100%);
+  color: #12100e;
+  box-shadow: var(--bt-sombra);
+}
+.bt-oro::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 30%, rgb(255 249 230 / .55) 48%, rgb(255 249 230 / .2) 54%, transparent 70%);
+  transform: translateX(-110%);
+}
+
+.bt-contorno {
+  --bt-sombra: inset 0 0 0 1px color-mix(in srgb, var(--tinta, #1a1512) 32%, transparent);
+  background: transparent;
+  color: var(--tinta, #1a1512);
+  box-shadow: var(--bt-sombra);
+}
+
+.bt-fantasma {
+  background: transparent;
+  color: var(--tinta, #1a1512);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .bt:not(:disabled, [aria-disabled="true"]):hover .bt-icono { transform: translateX(3px); }
+  .bt-primario:not(:disabled, [aria-disabled="true"]):hover {
+    --bt-sombra: inset 0 1px 0 rgb(255 255 255 / .16), var(--sombra-3);
+    background: color-mix(in oklab, var(--acento, #8c1d2c) 88%, #12100e);
+    transform: translateY(-1px);
+  }
+  .bt-oro:not(:disabled, [aria-disabled="true"]):hover { transform: translateY(-1px); }
+  .bt-oro:not(:disabled, [aria-disabled="true"]):hover::after {
+    transform: translateX(110%);
+    transition: transform 900ms var(--ease-velo);
+  }
+  .bt-contorno:not(:disabled, [aria-disabled="true"]):hover {
+    --bt-sombra: inset 0 0 0 1px color-mix(in srgb, var(--tinta, #1a1512) 72%, transparent), var(--sombra-1);
+    background: color-mix(in srgb, var(--tinta, #1a1512) 3%, transparent);
+  }
+  .bt-fantasma:not(:disabled, [aria-disabled="true"]):hover {
+    background: color-mix(in srgb, var(--tinta, #1a1512) 7%, transparent);
+  }
+  .bt:is(:hover):not(:disabled, [aria-disabled="true"]) { box-shadow: var(--bt-sombra, none); }
+  .bt:hover:focus-visible { box-shadow: var(--foco), var(--bt-sombra, none); }
+}
+
+.bt:is(:disabled, [aria-disabled="true"]):not([aria-busy]) {
+  opacity: .5;
+  cursor: not-allowed;
+}
+.bt[aria-disabled="true"] { pointer-events: none; }
+
+/* Cargando: el texto se queda (invisible) para no cambiar el ancho. */
+.bt[aria-busy] { cursor: progress; }
+.bt[aria-busy] .bt-texto { visibility: hidden; }
+.bt-cargando {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+.bt-aro {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  border-right-color: transparent;
+  animation: bt-girar 900ms linear infinite;
+}
+@keyframes bt-girar { to { transform: rotate(1turn); } }
+
+/* ─────────────────────────── Magnético ─────────────────────────── */
+
+.magnetico { display: inline-block; max-width: 100%; }
+.magnetico-ancho { display: block; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bt, .bt-icono, .bt-oro::after { transition: none; }
+  .bt:not(:disabled):active { transform: none; }
+  .magnetico { transform: none !important; }
+}

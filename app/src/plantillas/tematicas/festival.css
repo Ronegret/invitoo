@@ -1,0 +1,366 @@
+/* ------------------------------------------------------------------
+   PASE VIP (festival) — K4 · docs/16b §1
+   Cartulina marfil (--papel), tinta noche (--tinta), coral magenta
+   (--acento). El foil holográfico y el sol (--acento2) son BRILLOS:
+   nunca fondo de texto. Una sola pieza que sorprende: el talón.
+   ------------------------------------------------------------------ */
+.lienzo[data-plantilla="festival"] {
+  --acento2: color-mix(in oklch, #e9a23b 85%, var(--acento));
+  --foil: conic-gradient(from var(--giro, 0deg) at var(--fx, 30%) var(--fy, 40%), #b9a6ff, #8fe3d6, #ffc9a3, #f7b3d4, #b9a6ff);
+  --acento-f: var(--p-acento), "Instrument Serif", Georgia, serif;
+  --ease-carta: cubic-bezier(.22,.61,.36,1);
+  --ease-velo: cubic-bezier(.65,0,.35,1);
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+.lienzo[data-plantilla="festival"] .display { font-weight: 800; letter-spacing: .01em; line-height: .95; }
+.lienzo[data-plantilla="festival"][data-ornamento] {
+  /* El ornamento de los títulos compartidos: el troquel (perforado). */
+  --orn-w: 160px; --orn-h: 14px;
+  --orn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 14'%3E%3Ccircle cx='4' cy='7' r='4'/%3E%3Cpath d='M16 7H144' stroke='%23000' stroke-width='2' stroke-dasharray='1.5 5' stroke-linecap='round'/%3E%3Ccircle cx='156' cy='7' r='4'/%3E%3C/svg%3E");
+}
+.lienzo[data-plantilla="festival"] .y-gesto,
+.lienzo[data-plantilla="festival"] .fe-y {
+  font-family: var(--acento-f); font-style: italic; font-weight: 400; text-transform: none;
+}
+
+/* —— cabecera —— */
+.fe-hero {
+  display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
+  padding: calc(env(safe-area-inset-top, 0px) + 5rem) 1.25rem calc(env(safe-area-inset-bottom, 0px) + 2rem);
+  text-align: center; color: #fff;
+}
+.grad-festival .kv-grad { filter: saturate(1.08) contrast(1.04) brightness(.92) sepia(.12); }
+.fe-tinte { position: absolute; inset: 0; pointer-events: none; }
+.fe-tinte::before {
+  /* El atardecer de marca, en el tercio de arriba. */
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, color-mix(in oklch, var(--acento) 26%, transparent), transparent 38%);
+  mix-blend-mode: soft-light;
+}
+.fe-tinte::after {
+  /* Velo común: blanco sobre el peor fotograma ≥ 5,6:1. */
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgb(16 10 22 / .74) 0 36%, rgb(16 10 22 / .2) 64%, transparent 80%);
+}
+.fe-rotulo { position: relative; z-index: 2; width: 100%; max-width: 30rem; }
+.fe-lineup { font-size: 1.0625rem; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; }
+.fe-nombres {
+  margin-top: .6rem; font-weight: 900; text-transform: uppercase; line-height: .9;
+  text-shadow: 0 2px 28px rgb(0 0 0 / .35);
+}
+.fe-nombres .fe-y { display: block; font-size: .42em; line-height: 1.15; color: #ffd9c4; margin-block: .1em; }
+.fe-cuando { margin-top: 1rem; font-size: 1.125rem; line-height: 1.45; }
+.fe-cuando .block { opacity: .92; }
+.fe-baja { margin-top: 1.4rem; color: #fff; }
+.lienzo[data-plantilla="festival"] .kv-play {
+  --kv-play-fondo: rgb(28 26 43 / .5);
+  --kv-play-borde: rgb(255 255 255 / .6);
+  font-weight: 500;
+}
+
+/* —— la acreditación, colgada de su cordón —— */
+.fe-pase-escena {
+  position: relative; display: grid; justify-items: center;
+  padding: 0 1.25rem 5rem; margin-top: -2rem; z-index: 3;
+}
+.fe-cordon {
+  width: 22px; height: 6.5rem;
+  background:
+    repeating-linear-gradient(180deg, color-mix(in oklch, var(--acento) 80%, #000) 0 3px, var(--acento) 3px 6px),
+    var(--acento);
+  -webkit-mask: linear-gradient(90deg, #000 0 3px, transparent 3px 4px, #000 4px 18px, transparent 18px 19px, #000 19px);
+  mask: linear-gradient(90deg, #000 0 3px, transparent 3px 4px, #000 4px 18px, transparent 18px 19px, #000 19px);
+  border-radius: 0 0 2px 2px;
+}
+.fe-foil-dedo { width: min(100%, 22rem); touch-action: pan-y; }
+.fe-pase {
+  position: relative; overflow: clip;
+  background: color-mix(in srgb, var(--papel) 70%, #fff);
+  color: var(--tinta);
+  border-radius: 14px;
+  padding: 2.4rem 1.4rem 1.2rem;
+  box-shadow: 0 1px 0 rgb(255 255 255 / .8) inset, 0 18px 40px -18px rgb(28 26 43 / .45), 0 2px 6px rgb(28 26 43 / .12);
+  transform-origin: 50% -6.5rem;
+}
+.fe-pase-ojal {
+  position: absolute; top: .7rem; left: 50%; width: 3.2rem; height: .7rem; margin-left: -1.6rem;
+  border-radius: 999px; background: var(--papel);
+  box-shadow: inset 0 1px 3px rgb(0 0 0 / .28);
+}
+.fe-foil {
+  /* La banda de foil: brillo puro, sin texto encima. */
+  height: 3.1rem; margin: .4rem -1.4rem 1.2rem;
+  background: var(--foil);
+  background-size: 160% 160%;
+  opacity: .9;
+  transition: background-position 400ms var(--ease-carta);
+}
+.fe-foil-dedo[data-dedo] .fe-foil { --giro: 40deg; }
+.fe-pase-cab {
+  display: flex; justify-content: space-between; gap: 1rem;
+  font-size: 1.0625rem; font-weight: 500; letter-spacing: .18em; text-transform: uppercase;
+}
+.fe-pase-cab span:last-child { color: var(--acento-texto); }
+.fe-pase-nombres {
+  margin-top: .8rem; font-family: var(--acento-f); font-style: italic;
+  font-size: clamp(2.1rem, 10vw, 2.8rem); line-height: 1.05; text-wrap: balance;
+}
+.fe-pase-nombres .fe-y { color: var(--acento-texto); }
+.fe-pase-frase { margin-top: .7rem; font-size: 1.0625rem; line-height: 1.5; opacity: .9; text-wrap: pretty; }
+.fe-pase-datos { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem 1rem; margin-top: 1.3rem; }
+.fe-pase-datos dt { font-size: 1.0625rem; letter-spacing: .14em; text-transform: uppercase; opacity: .8; }
+.fe-pase-datos dd { font-family: var(--display); font-weight: 800; font-size: 1.6rem; line-height: 1.05; }
+.fe-pase-ancho { grid-column: 1 / -1; }
+.fe-pase-ancho dd { font-family: var(--texto); font-weight: 500; font-size: 1.125rem; line-height: 1.35; }
+.fe-perforado { display: block; width: 100%; height: 14px; fill: var(--papel); stroke: color-mix(in srgb, var(--tinta) 45%, transparent); stroke-width: 2; }
+.fe-pase-troquel { margin: 1.3rem -1.4rem .9rem; width: calc(100% + 2.8rem); }
+.fe-pase-troquel circle { fill: var(--papel); stroke: none; }
+.fe-pase-pie { display: grid; gap: .3rem; justify-items: center; }
+.fe-barras { width: 100%; height: 2.4rem; fill: var(--tinta); }
+.fe-pase-pie p { font-size: 1.0625rem; letter-spacing: .3em; }
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .fe-pase-escena { view-timeline: --fe-pase block; }
+    .fe-pase {
+      animation: fe-cuelga linear both;
+      animation-timeline: --fe-pase;
+      animation-range: entry 0% cover 45%;
+    }
+    .fe-cordon {
+      animation: fe-cordon linear both;
+      animation-timeline: --fe-pase;
+      animation-range: entry 0% cover 45%;
+      transform-origin: 50% 0;
+    }
+    .fe-foil {
+      animation: fe-foil-barre linear both;
+      animation-timeline: --fe-pase;
+      animation-range: entry 0% exit 100%;
+    }
+  }
+}
+@keyframes fe-cuelga {
+  0% { transform: translateY(-3.5rem) rotate(-5deg); opacity: .4; }
+  60% { transform: translateY(.4rem) rotate(1.6deg); opacity: 1; }
+  80% { transform: translateY(0) rotate(-.6deg); }
+  100% { transform: none; }
+}
+@keyframes fe-cordon { from { transform: scaleY(.45); } to { transform: none; } }
+@keyframes fe-foil-barre { from { background-position: 0% 0%; } to { background-position: 100% 100%; } }
+
+/* —— títulos y secciones —— */
+.fe-seccion { padding: 5.5rem 1.25rem 4rem; }
+.fe-titulo { text-align: center; max-width: 30rem; margin-inline: auto; }
+.fe-antes { font-size: 1.0625rem; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; color: var(--acento-texto); text-align: center; }
+.fe-titulo h2 { margin-top: .5rem; font-size: clamp(2.8rem, 14vw, 4.2rem); text-transform: uppercase; text-wrap: balance; }
+.fe-titulo .fe-perforado { width: 10rem; margin: 1.1rem auto 0; }
+
+/* —— la cuenta: un cartel —— */
+.fe-cuenta { text-align: center; }
+.fe-cuenta .fe-antes { color: var(--hondo-acento, var(--acento-texto)); }
+.fe-cartel { margin-top: 1.4rem; }
+.fe-cartel-filas { text-transform: uppercase; display: grid; gap: .25rem; }
+.fe-cartel-filas li { display: flex; align-items: baseline; justify-content: center; gap: .3em; flex-wrap: wrap; }
+.fe-cartel-filas li[data-fila="0"] { font-weight: 900; font-size: clamp(4.5rem, 24vw, 8rem); line-height: .9; }
+.fe-cartel-filas li[data-fila="1"] { font-size: clamp(2.6rem, 13vw, 4.4rem); line-height: 1; }
+.fe-cartel-filas li[data-fila="2"] { font-size: clamp(2rem, 10vw, 3.2rem); line-height: 1.05; }
+.fe-cartel-filas li[data-fila="3"] { font-size: clamp(1.6rem, 8vw, 2.4rem); line-height: 1.1; color: var(--hondo-acento, var(--acento-texto)); }
+.fe-cartel-et { font-size: .5em; letter-spacing: .06em; }
+.fe-cartel-filas li[data-fila="0"] .fe-cartel-et { font-size: .34em; }
+.fe-cifra { display: inline-block; }
+@media (prefers-reduced-motion: no-preference) {
+  .fe-cifra { animation: fe-cifra-sube 240ms var(--ease-carta) both; }
+}
+@keyframes fe-cifra-sube { from { opacity: 0; transform: translateY(.3em); } }
+.fe-cartel-fecha { font-size: clamp(2.2rem, 10vw, 3.4rem); text-transform: uppercase; text-wrap: balance; }
+.fe-cartel-pie {
+  margin: 1.8rem auto 0; padding-top: 1rem; max-width: 22rem;
+  border-top: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+  font-size: 1.0625rem; letter-spacing: .14em; text-transform: uppercase;
+}
+
+/* —— el line-up de la historia —— */
+.fe-lineup-lista { margin-top: 3rem; text-align: center; display: grid; gap: 2.4rem; }
+.fe-lineup-lista h3 { font-size: clamp(2.2rem, 11vw, 3.2rem); text-transform: uppercase; text-wrap: balance; }
+.fe-lineup-lista li[data-cabeza] h3 { font-weight: 900; font-size: clamp(2.8rem, 15vw, 4.4rem); color: var(--acento-texto); }
+.fe-lineup-cuando { font-size: 1.0625rem; letter-spacing: .16em; text-transform: uppercase; opacity: .85; margin-bottom: .35rem; }
+.fe-lineup-texto { margin-top: .6rem; text-wrap: pretty; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .fe-lineup-lista h3 {
+      animation: fe-estira linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 30%;
+    }
+  }
+}
+@keyframes fe-estira { from { transform: scaleX(.86); opacity: .25; letter-spacing: -.02em; } to { transform: none; opacity: 1; } }
+
+/* —— el programa —— */
+.fe-programa { position: relative; margin-top: 3rem; padding-left: 2rem; display: grid; gap: 2.2rem; }
+.fe-programa::before {
+  content: ""; position: absolute; left: .45rem; top: .5rem; bottom: .5rem; width: 2px;
+  background: repeating-linear-gradient(180deg, color-mix(in srgb, var(--tinta) 40%, transparent) 0 4px, transparent 4px 9px);
+}
+.fe-programa li { display: flex; flex-direction: column; position: relative; }
+.fe-programa li::before {
+  content: ""; position: absolute; left: -1.85rem; top: .7rem; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--papel); border: 2px solid var(--acento);
+}
+.fe-hora { font-size: 2.6rem; line-height: 1; }
+.fe-que { font-size: 1.1875rem; font-weight: 500; margin-top: .2rem; }
+.fe-donde { font-size: 1.0625rem; opacity: .85; }
+.fe-programa::after {
+  content: "";
+  /* «Ahora suena»: el punto que recorre el programa con el scroll. */
+  position: absolute; left: .05rem; top: .3rem; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--acento); box-shadow: 0 0 0 6px color-mix(in srgb, var(--acento) 18%, transparent);
+  display: none;
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .fe-programa::after {
+      display: block;
+      animation: fe-ahora linear both;
+      animation-timeline: view();
+      animation-range: cover 15% cover 75%;
+    }
+  }
+}
+@keyframes fe-ahora { from { top: .3rem; } to { top: calc(100% - 1.6rem); } }
+
+/* —— código de pulsera —— */
+.fe-pulseras { display: grid; gap: 1rem; margin-top: 2.8rem; }
+.fe-pulseras li { position: relative; height: 2.6rem; }
+.fe-pulsera {
+  position: absolute; inset: 0 1.6rem 0 0; border-radius: 6px;
+  background:
+    repeating-linear-gradient(90deg, rgb(255 255 255 / .16) 0 2px, transparent 2px 5px),
+    repeating-linear-gradient(0deg, rgb(0 0 0 / .1) 0 1px, transparent 1px 4px),
+    var(--c);
+  box-shadow: inset 0 -2px 0 rgb(0 0 0 / .14), 0 1px 0 rgb(255 255 255 / .5);
+  transform-origin: 0 50%;
+}
+.fe-cierre {
+  position: absolute; right: 0; top: .35rem; width: 2.2rem; height: 1.9rem; border-radius: 4px;
+  background: linear-gradient(135deg, #f2f2f4, #a9adb6 55%, #e7e8ec);
+  box-shadow: 0 1px 2px rgb(0 0 0 / .25);
+}
+.fe-nota { margin-top: 2.2rem; text-align: center; text-wrap: pretty; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .fe-pulseras li .fe-pulsera {
+      animation: fe-cierra linear both;
+      animation-timeline: view();
+      animation-range: cover 10% cover 40%;
+    }
+  }
+}
+@keyframes fe-cierra { from { transform: scaleX(0); } to { transform: none; } }
+
+/* —— regalos: el reverso del pase —— */
+.fe-reverso {
+  position: relative; margin-block: 3.5rem;
+  border: 1.5px dashed color-mix(in srgb, var(--tinta) 30%, transparent);
+  border-radius: 14px; padding-top: 1.4rem;
+}
+.fe-reverso-cab { text-align: center; font-size: 1.0625rem; letter-spacing: .22em; text-transform: uppercase; color: var(--acento-texto); }
+.fe-reverso::before {
+  content: ""; position: absolute; left: 1.2rem; right: 1.2rem; top: -1px; height: 4px; border-radius: 0 0 4px 4px;
+  background: var(--foil); opacity: .8;
+}
+
+/* —— el talón (MOMENTO WOW) —— */
+.fe-talon-escena { width: min(100% - 2.5rem, 22rem); margin: 4rem auto -2rem; }
+.fe-talon-pase {
+  position: relative; padding: 1.2rem 1.2rem 1rem; text-align: center;
+  border-radius: 14px 14px 0 0;
+  background: color-mix(in srgb, var(--papel) 70%, #fff);
+  box-shadow: 0 10px 30px -18px rgb(28 26 43 / .5);
+}
+.fe-talon-pase::before { content: ""; position: absolute; inset: 0 0 auto; height: 6px; border-radius: 14px 14px 0 0; background: var(--foil); }
+.fe-talon-sello {
+  display: inline-block; padding: .25rem .8rem; border: 2px solid var(--acento-texto); border-radius: 6px;
+  font-family: var(--display); font-weight: 800; font-size: 1.25rem; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--acento-texto); transform: rotate(-4deg); opacity: .18;
+}
+.fe-talon-nombres { display: block; margin-top: .4rem; font-family: var(--acento-f); font-style: italic; font-size: 1.6rem; }
+.fe-talon-linea { background: color-mix(in srgb, var(--papel) 70%, #fff); }
+.fe-talon {
+  display: flex; justify-content: space-between; gap: 1rem; padding: .9rem 1.2rem 1.1rem;
+  border-radius: 0 0 14px 14px;
+  background: var(--acento); color: var(--sobre-acento);
+  font-size: 1.0625rem; letter-spacing: .1em; text-transform: uppercase;
+  transform-origin: 8% 0;
+  box-shadow: 0 10px 30px -18px rgb(28 26 43 / .5);
+}
+.mr-talon[data-confirmado] .fe-talon-sello { opacity: 1; transition: opacity 400ms var(--ease-carta) 500ms; }
+@media (prefers-reduced-motion: no-preference) {
+  .mr-talon[data-confirmado="recien"] .fe-talon { animation: fe-arranca 700ms var(--ease-velo) 120ms both; }
+  .mr-talon[data-confirmado="recien"] .fe-talon-sello { animation: fe-estampa 520ms cubic-bezier(.34,1.12,.64,1) 600ms both; }
+  .mr-talon[data-confirmado="recien"] .fe-talon-pase::before {
+    animation: fe-foil-gira 1600ms var(--ease-carta) 400ms both;
+  }
+}
+.mr-talon[data-confirmado="1"] .fe-talon { visibility: hidden; }
+.mr-talon[data-confirmado] .fe-talon-linea { opacity: .35; }
+@keyframes fe-arranca {
+  0% { transform: none; opacity: 1; }
+  30% { transform: rotate(3deg); }
+  100% { transform: translateY(40px) rotate(8deg); opacity: 0; visibility: hidden; }
+}
+@keyframes fe-estampa { from { opacity: 0; transform: rotate(-4deg) scale(1.3); } to { opacity: 1; transform: rotate(-4deg); } }
+@keyframes fe-foil-gira { from { --giro: 0deg; } to { --giro: 180deg; } }
+@property --giro { syntax: "<angle>"; inherits: true; initial-value: 0deg; }
+.lienzo[data-plantilla="festival"] .mr-frase { font-family: var(--acento-f); font-style: italic; font-weight: 400; color: var(--acento-texto); }
+
+/* —— «Bis»: de atardecer a noche —— */
+.fe-bis {
+  position: relative; overflow: clip; isolation: isolate;
+  min-height: 70svh; display: grid; place-content: center; text-align: center; padding: 5rem 1.5rem;
+  color: #fff;
+  background: linear-gradient(180deg, #1c1a2b 0%, #3a2440 55%, color-mix(in oklch, var(--acento) 60%, #1c1a2b) 100%);
+}
+.fe-bis-cielo { position: absolute; inset: 0; z-index: -1; }
+.fe-bis::before {
+  /* El atardecer que se va: una capa cálida que se apaga con el scroll. */
+  content: ""; position: absolute; inset: 0; z-index: -2; opacity: 0;
+  background: linear-gradient(180deg, #4b2a4a 0%, color-mix(in oklch, var(--acento) 70%, #e9a23b) 70%, #e9a23b 100%);
+}
+.fe-luz {
+  position: absolute; width: 6px; height: 6px; border-radius: 50%;
+  background: #fff6e0; box-shadow: 0 0 10px 3px rgb(255 236 200 / .55);
+}
+.fe-bis-t { font-size: clamp(4.5rem, 26vw, 8rem); font-weight: 900; text-transform: uppercase; }
+.fe-bis-sub { margin-top: .6rem; font-family: var(--acento-f); font-style: italic; font-size: 1.5rem; max-width: 18rem; margin-inline: auto; }
+@media (prefers-reduced-motion: no-preference) {
+  .fe-luz { animation: fe-mece 3.2s ease-in-out calc(var(--i) * -.37s) 36 alternate; }
+}
+@keyframes fe-mece { from { transform: translateX(-3px) rotate(-6deg); } to { transform: translateX(3px) rotate(6deg); } }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .fe-bis::before {
+      animation: fe-anochece linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 60%;
+    }
+    html.js .fe-luz {
+      animation: fe-enciende linear both, fe-mece 3.2s ease-in-out calc(var(--i) * -.37s) 36 alternate;
+      animation-timeline: view(), auto;
+      animation-range: cover calc(10% + var(--i) * 1.6%) cover calc(14% + var(--i) * 1.6%), normal;
+    }
+  }
+}
+@keyframes fe-anochece { from { opacity: 1; } to { opacity: 0; } }
+@keyframes fe-enciende { from { opacity: 0; transform: scale(.3); } to { opacity: 1; } }
+.fe-perforado-cierre { width: 10rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fe-programa::after { display: none; }
+}
+
+/* Pilas de reserva sans (GENERICA de tokens.ts no conoce estas familias). */
+.lienzo[data-plantilla="festival"] { font-family: var(--p-texto), "Space Grotesk", ui-sans-serif, system-ui, sans-serif; }
+.lienzo[data-plantilla="festival"] .display { font-family: var(--p-display), "Big Shoulders", "Arial Narrow", ui-sans-serif, system-ui, sans-serif; }

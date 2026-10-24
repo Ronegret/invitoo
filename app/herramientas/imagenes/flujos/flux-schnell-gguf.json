@@ -1,0 +1,16 @@
+{
+  "_comentario": "FLUX.1 schnell cuantizado GGUF para GPUs de 6-10 GB. Requiere el nodo ComfyUI-GGUF (city96) y: models/unet/flux1-schnell-Q5_K_S.gguf, models/clip/t5xxl_fp8_e4m3fn.safetensors, models/clip/clip_l.safetensors, models/vae/ae.safetensors.",
+  "1": { "class_type": "UnetLoaderGGUF", "inputs": { "unet_name": "flux1-schnell-Q5_K_S.gguf" } },
+  "8": { "class_type": "DualCLIPLoader", "inputs": { "clip_name1": "t5xxl_fp8_e4m3fn.safetensors", "clip_name2": "clip_l.safetensors", "type": "flux" } },
+  "9": { "class_type": "VAELoader", "inputs": { "vae_name": "ae.safetensors" } },
+  "2": { "class_type": "CLIPTextEncode", "inputs": { "text": "", "clip": ["8", 0] }, "_meta": { "title": "PROMPT" } },
+  "3": { "class_type": "CLIPTextEncode", "inputs": { "text": "", "clip": ["8", 0] } },
+  "4": { "class_type": "EmptySD3LatentImage", "inputs": { "width": 1024, "height": 1024, "batch_size": 1 }, "_meta": { "title": "LIENZO" } },
+  "5": {
+    "class_type": "KSampler",
+    "inputs": { "seed": 0, "steps": 4, "cfg": 1, "sampler_name": "euler", "scheduler": "simple", "denoise": 1, "model": ["1", 0], "positive": ["2", 0], "negative": ["3", 0], "latent_image": ["4", 0] },
+    "_meta": { "title": "MUESTREO" }
+  },
+  "6": { "class_type": "VAEDecode", "inputs": { "samples": ["5", 0], "vae": ["9", 0] } },
+  "7": { "class_type": "SaveImage", "inputs": { "filename_prefix": "invitoo", "images": ["6", 0] } }
+}

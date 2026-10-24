@@ -1,5 +1,135 @@
 @import "tailwindcss";
 
+/* SISTEMA ------------------------------------------------------------
+   Sistema de diseño de Invitoo (G2). Espejo en TS: src/lib/diseno/tokens.ts.
+   Muestra viva: /sistema (ruta interna, noindex).
+
+   SOMBRAS — cálidas y en capas. Nunca gris frío ni rgba(0,0,0,…): se tiñen
+   con la tinta de marca #12100E (--sombra-tinta, en canales RGB) a muy baja
+   opacidad. Cada nivel = contacto corto + difusa larga con spread negativo,
+   así nunca «ensucian» el papel (docs/04: nada de sombra tipo dashboard).
+     --sombra-1  reposo: chips, campos, tarjetas planas
+     --sombra-2  levantado: tarjeta al pasar el ratón, botón
+     --sombra-3  flotante: menús, popovers, marco de móvil
+     --sombra-4  destacado: hoja lateral, tarjeta que se arrastra
+     --sombra-5  modal: diálogos y la cartulina en primer plano
+     --sombra-papel   tarjetas y sobres: luz cenital, filo claro arriba
+     --sombra-lacre   el sello: volumen interior + sombra granate fuera
+     --sombra-dorada  brillo suave de los botones de oro
+   Sobre fondo oscuro, [data-cursor-tema="oscuro"] o .superficie-oscura
+   redefinen la escala con más densidad y un filo de luz (las sombras se
+   pierden en lo oscuro; lo que separa allí es la luz).
+   Tailwind: shadow-1 … shadow-5, shadow-papel, shadow-lacre, shadow-dorada.
+
+   RADIOS — --radio-s 6 px (chips, campos), --radio-m 12 px (tarjetas),
+   --radio-l 20 px (hojas, marcos), --radio-capsula (botones, etiquetas).
+   Anidados: radio exterior = radio interior + relleno.
+
+   FOCO — --foco: anillo doble papel + granate como box-shadow. Se ve sobre
+   claro y sobre oscuro. Uso: :focus-visible { outline: none; box-shadow: var(--foco) }
+   (o .foco-sistema). --foco-oscuro para superficies oscuras.
+
+   CURVAS — las MISMAS de src/lib/movimiento.ts (CURVAS). No se inventan aquí:
+     --ease-carta  entradas de papel, francas y que se posan   (CURVAS.carta)
+     --ease-velo   lo que ya está en pantalla y se desplaza     (CURVAS.velo)
+     --ease-sello  el estampado: único rebote, 3 %               (CURVAS.sello)
+     --ease-suave  hover y color                                (CURVAS.suave)
+   Dentro de una invitación, variablesMovimiento() vuelve a fijarlas.
+
+   DURACIONES — interfaz: --dur-instante 120, --dur-rapida 200;
+   invitación (DURACIONES de movimiento.ts): --dur-breve 320, --dur-media 900,
+   --dur-larga 1400, --dur-lenta 2200.
+
+   CAPAS (z-index) — escala fija; nunca 9999:
+     base 0 · elevada 10 · pegajosa 100 (cabeceras) · menu 200 · velo 300
+     (fondos de modal) · modal 400 · aviso 500 (toasts) · apertura 600
+     (sobre, telón) · cursor 900.
+   -------------------------------------------------------------------- */
+:root {
+  --sombra-tinta: 18 16 14;
+
+  --sombra-1: 0 1px 1px rgb(var(--sombra-tinta) / .04), 0 1px 2px rgb(var(--sombra-tinta) / .05);
+  --sombra-2: 0 1px 1px rgb(var(--sombra-tinta) / .04), 0 2px 4px -1px rgb(var(--sombra-tinta) / .06), 0 6px 12px -6px rgb(var(--sombra-tinta) / .08);
+  --sombra-3: 0 1px 1px rgb(var(--sombra-tinta) / .04), 0 4px 8px -3px rgb(var(--sombra-tinta) / .07), 0 14px 28px -12px rgb(var(--sombra-tinta) / .12);
+  --sombra-4: 0 1px 2px rgb(var(--sombra-tinta) / .05), 0 8px 16px -6px rgb(var(--sombra-tinta) / .08), 0 28px 52px -20px rgb(var(--sombra-tinta) / .16);
+  --sombra-5: 0 2px 4px rgb(var(--sombra-tinta) / .05), 0 14px 28px -10px rgb(var(--sombra-tinta) / .12), 0 48px 96px -32px rgb(var(--sombra-tinta) / .26);
+  --sombra-papel:
+    inset 0 1px 0 rgb(255 255 255 / .65),
+    0 1px 0 rgb(var(--sombra-tinta) / .04),
+    0 2px 3px -1px rgb(var(--sombra-tinta) / .07),
+    0 12px 24px -12px rgb(var(--sombra-tinta) / .14),
+    0 32px 64px -32px rgb(var(--sombra-tinta) / .2);
+  --sombra-lacre:
+    inset 0 1.5px 1px rgb(255 228 214 / .28),
+    inset 0 -3px 6px rgb(46 6 12 / .42),
+    0 1px 1px rgb(var(--sombra-tinta) / .22),
+    0 6px 14px -4px rgb(90 14 26 / .38);
+  --sombra-dorada:
+    inset 0 1px 0 rgb(255 246 222 / .55),
+    0 0 0 1px rgb(150 116 64 / .35),
+    0 2px 4px -1px rgb(var(--sombra-tinta) / .14),
+    0 8px 22px -8px rgb(176 141 87 / .6);
+
+  --radio-s: 6px;
+  --radio-m: 12px;
+  --radio-l: 20px;
+  --radio-capsula: 999px;
+
+  --foco: 0 0 0 2px var(--papel, #fbf8f3), 0 0 0 4px var(--acento, #8c1d2c);
+  --foco-oscuro: 0 0 0 2px #12100e, 0 0 0 4px #f3d9a8;
+
+  /* = CURVAS de src/lib/movimiento.ts */
+  --ease-carta: cubic-bezier(.22,.61,.36,1);
+  --ease-velo: cubic-bezier(.65,0,.35,1);
+  --ease-sello: cubic-bezier(.3,1.3,.56,1);
+  --ease-suave: cubic-bezier(.22,.61,.36,1);
+
+  --dur-instante: 120ms;
+  --dur-rapida: 200ms;
+  --dur-breve: 320ms;
+  --dur-media: 900ms;
+  --dur-larga: 1400ms;
+  --dur-lenta: 2200ms;
+
+  --capa-base: 0;
+  --capa-elevada: 10;
+  --capa-pegajosa: 100;
+  --capa-menu: 200;
+  --capa-velo: 300;
+  --capa-modal: 400;
+  --capa-aviso: 500;
+  --capa-apertura: 600;
+  --capa-cursor: 900;
+}
+
+/* Sobre oscuro: más densidad y un filo de luz arriba. */
+:where([data-cursor-tema="oscuro"], .superficie-oscura) {
+  --sombra-1: inset 0 1px 0 rgb(255 255 255 / .05), 0 1px 2px rgb(0 0 0 / .3);
+  --sombra-2: inset 0 1px 0 rgb(255 255 255 / .06), 0 2px 4px -1px rgb(0 0 0 / .32), 0 8px 16px -8px rgb(0 0 0 / .4);
+  --sombra-3: inset 0 1px 0 rgb(255 255 255 / .07), 0 4px 8px -3px rgb(0 0 0 / .36), 0 18px 34px -14px rgb(0 0 0 / .5);
+  --sombra-4: inset 0 1px 0 rgb(255 255 255 / .08), 0 8px 16px -6px rgb(0 0 0 / .4), 0 32px 56px -20px rgb(0 0 0 / .58);
+  --sombra-5: inset 0 1px 0 rgb(255 255 255 / .09), 0 14px 28px -10px rgb(0 0 0 / .45), 0 56px 100px -30px rgb(0 0 0 / .7);
+  --sombra-papel: inset 0 1px 0 rgb(255 255 255 / .1), 0 2px 3px -1px rgb(0 0 0 / .35), 0 20px 40px -18px rgb(0 0 0 / .55);
+  --foco: var(--foco-oscuro);
+}
+
+@theme inline {
+  --shadow-1: var(--sombra-1);
+  --shadow-2: var(--sombra-2);
+  --shadow-3: var(--sombra-3);
+  --shadow-4: var(--sombra-4);
+  --shadow-5: var(--sombra-5);
+  --shadow-papel: var(--sombra-papel);
+  --shadow-lacre: var(--sombra-lacre);
+  --shadow-dorada: var(--sombra-dorada);
+}
+
+.foco-sistema:focus-visible {
+  outline: none;
+  box-shadow: var(--foco);
+}
+/* FIN SISTEMA --------------------------------------------------------- */
+
 /* ------------------------------------------------------------------
    Invitoo — tokens
    El sitio comercial usa los valores de :root.
@@ -280,17 +410,18 @@ button:not(:disabled):active {
   to   { transform: scale(1.04); }
 }
 
-/* El titular de la portada entra con la letra abriéndose: es el gesto de
-   una invitación grabada, el texto se asienta.
-   Va en su propia clase y NO en `.display`: puesto ahí, los treinta
-   titulares de la página se animaban todos a la vez al cargar, la mayoría
-   fuera de pantalla, y el efecto se perdía entero. */
+/* El titular de la portada se asienta: llega desenfocado, como tinta
+   todavía húmeda, y se aclara. Antes abría la letra (letter-spacing), que
+   recalcula el layout en cada fotograma y además pisaba el interletrado
+   de cada plantilla (el de Velo, sobre todo); ahora solo opacity, filter
+   y transform. Va en su propia clase y NO en `.display`: puesto ahí, los
+   treinta titulares de la página se animaban todos a la vez al cargar. */
 .asienta {
-  animation: asienta 1400ms cubic-bezier(.19,1,.22,1) both;
+  animation: asienta calc(var(--mov-dur, 1100ms) * 1.4) var(--mov-curva, cubic-bezier(.25,.1,.12,1)) both;
 }
 @keyframes asienta {
-  from { letter-spacing: .08em; opacity: 0; }
-  to   { letter-spacing: -.02em; opacity: 1; }
+  from { opacity: 0; filter: blur(8px); transform: translateY(.06em) scale(.985); }
+  to   { opacity: 1; filter: none; transform: none; }
 }
 
 /* Las secciones de la invitación se separan con un hilo que crece desde
@@ -310,4 +441,405 @@ button:not(:disabled):active {
   .respira-lento { animation: none; }
   .asienta { animation: none; }
   .hilo { transform: none; transition: none; }
+}
+
+/* ------------------------------------------------------------------
+   Web comercial (invitoo.es)
+   ------------------------------------------------------------------ */
+
+/* El móvil con la invitación viva. La invitación se pinta a 390 × 844
+   —el ancho de un iPhone— y se escala al marco con transform, así que
+   dentro se ve exactamente como la verá un invitado. */
+.movil-vivo {
+  --ancho: 15.5rem; /* 248 px; la pantalla, sin los 9 px de bisel, 230 */
+  --escala: 0.5897; /* 230 / 390 */
+  width: var(--ancho);
+}
+@media (min-width: 640px) {
+  .movil-vivo { --ancho: 18.75rem; --escala: 0.7231; } /* (300 − 18) / 390 */
+}
+.movil-vivo .pantalla {
+  aspect-ratio: 390 / 844;
+}
+.movil-vivo iframe {
+  width: 390px;
+  height: 844px;
+  transform: scale(var(--escala));
+  transform-origin: 0 0;
+  border: 0;
+}
+/* En táctil, el dedo que baja por la página no se queda atrapado dentro
+   del móvil: la invitación se mira, y se abre a pantalla completa. */
+@media (hover: none), (pointer: coarse) {
+  .movil-vivo iframe { pointer-events: none; }
+}
+
+/* Barra de progreso del reproductor de la canción. Solo transform. */
+.progreso-cancion {
+  transform-origin: left;
+  transition: transform 250ms linear;
+}
+@media (prefers-reduced-motion: reduce) {
+  .progreso-cancion { transition: none; }
+}
+
+/* Filas que se desplazan en horizontal dentro de su caja (nunca la
+   página). Sin barra visible, con imán a cada ficha. */
+.carril {
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+.carril::-webkit-scrollbar { display: none; }
+.carril > * { scroll-snap-align: start; }
+
+/* ------------------------------------------------------------------
+   Plantillas de invitación (agente C)
+   Todo cuelga de `.lienzo[data-plantilla]` (src/plantillas/Lienzo.tsx),
+   que lleva los tokens como variables: --display, --texto, --papel,
+   --tinta, --acento, --acento-texto, --sobre-acento, --radio, --grano.
+   Aquí se tiñen también los bloques compartidos sin tocar sus archivos.
+   ------------------------------------------------------------------ */
+
+.lienzo {
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: var(--texto);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+.lienzo[data-modo="oscuro"] { color-scheme: dark; }
+/* La marca «Demo» de las muestras va arriba a la izquierda; en Registro ahí
+   está la cabecera («Boda civil» y la fecha), así que baja bajo su filete. */
+main:has(.lienzo[data-plantilla="registro"]) > .marca-demo {
+  top: calc(max(0.75rem, env(safe-area-inset-top)) + 4.1rem);
+}
+/* 17 px como mínimo en todo el texto de lectura de TODAS las invitaciones
+   (I1; antes solo en las temáticas): los bloques compartidos (RSVP, Copiar,
+   álbum, muro) traían etiquetas a 15–16 px. */
+.lienzo :is(.text-\[1rem\], .text-\[0\.95rem\], .text-sm, .text-base, label, legend) {
+  font-size: 1.0625rem;
+}
+.lienzo[data-modo="oscuro"].grano::after { mix-blend-mode: screen; }
+
+/* El acento como TEXTO es siempre su versión AA: un lima puro sobre
+   blanco no se lee. Red de seguridad para los bloques que aún pintan
+   texto con var(--acento). */
+.lienzo [class*="text-[var(--acento)]"] { color: var(--acento-texto); }
+.lienzo :where(a, button, input, select, textarea):focus-visible { outline-color: var(--acento-texto); }
+
+/* Las esquinas de los botones son de la plantilla, no de los bloques. */
+.lienzo :is(a, button, input, select, textarea).rounded-full,
+.lienzo :is(input, select, textarea) { border-radius: var(--radio); }
+
+/* Ornamento bajo los títulos de sección. En Floración son las ramas de
+   los propios bloques; en el resto se quita la guirnalda y se pone el
+   ornamento de la plantilla como máscara teñida con --acento-texto. */
+.lienzo:not([data-ornamento="rama"]) h2.display + svg[aria-hidden="true"] { display: none; }
+.lienzo:not([data-ornamento="rama"]) h2.display:not(.sin-orn)::after {
+  content: "";
+  display: block;
+  width: var(--orn-w);
+  height: var(--orn-h);
+  margin: 1.1rem auto 0;
+  background: var(--acento-texto);
+  -webkit-mask: var(--orn) center / contain no-repeat;
+  mask: var(--orn) center / contain no-repeat;
+}
+.lienzo[data-ornamento="lacre"] {
+  --orn-w: 150px; --orn-h: 12px;
+  --orn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 12'%3E%3Cpath d='M0 6h62M88 6h62' stroke='%23000' stroke-width='1.2'/%3E%3Ccircle cx='75' cy='6' r='5.5'/%3E%3C/svg%3E");
+}
+.lienzo[data-ornamento="filete"] {
+  --orn-w: 150px; --orn-h: 10px;
+  --orn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 10'%3E%3Cpath d='M0 3.5h64M86 3.5h64M0 6.5h64M86 6.5h64' stroke='%23000'/%3E%3Cpath d='M75 1l4 4-4 4-4-4z'/%3E%3C/svg%3E");
+}
+.lienzo[data-ornamento="ola"] {
+  --orn-w: 120px; --orn-h: 14px;
+  --orn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 14'%3E%3Cpath d='M2 9c8-7 16-7 24 0s16 7 24 0 16-7 24 0 16 7 24 0 16-7 20-3' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+.lienzo[data-ornamento="estrella"] {
+  --orn-w: 20px; --orn-h: 20px;
+  --orn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0c.6 6.6 5.4 11.4 12 12-6.6.6-11.4 5.4-12 12-.6-6.6-5.4-11.4-12-12C6.6 11.4 11.4 6.6 12 0Z'/%3E%3C/svg%3E");
+}
+.lienzo[data-ornamento="punto"] {
+  --orn-w: 9px; --orn-h: 9px;
+  --orn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Ccircle cx='5' cy='5' r='5'/%3E%3C/svg%3E");
+}
+.lienzo[data-ornamento="regla"] {
+  --orn-w: 56px; --orn-h: 6px;
+  --orn: linear-gradient(#000, #000);
+}
+.lienzo[data-ornamento="regla"] h2.display:not(.sin-orn)::after { background: var(--acento); margin-left: 0; }
+/* Composición lateral (TituloBloque): el ornamento pegado al margen. */
+.lienzo h2.display.orn-izq::after { margin-left: 0; }
+@media (min-width: 640px) { .lienzo h2.display.orn-lateral::after { margin-left: 0; } }
+.lienzo[data-ornamento="cenefa"] {
+  --orn-w: 168px; --orn-h: 14px;
+  --orn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 168 14'%3E%3Cg id='p'%3E%3Cpath d='M7 0l2.5 4.5L14 7l-4.5 2.5L7 14l-2.5-4.5L0 7l4.5-2.5z'/%3E%3C/g%3E%3Cuse href='%23p' x='14'/%3E%3Cuse href='%23p' x='28'/%3E%3Cuse href='%23p' x='42'/%3E%3Cuse href='%23p' x='56'/%3E%3Cuse href='%23p' x='70'/%3E%3Cuse href='%23p' x='84'/%3E%3Cuse href='%23p' x='98'/%3E%3Cuse href='%23p' x='112'/%3E%3Cuse href='%23p' x='126'/%3E%3Cuse href='%23p' x='140'/%3E%3Cuse href='%23p' x='154'/%3E%3C/svg%3E");
+}
+
+/* --- Sobre: cartulina con doble filete --- */
+.sobre-cartulina {
+  background: color-mix(in srgb, var(--papel) 55%, #fff);
+  border: 1px solid color-mix(in srgb, var(--tinta) 22%, transparent);
+  outline: 1px solid color-mix(in srgb, var(--tinta) 22%, transparent);
+  outline-offset: -10px;
+  box-shadow: 0 26px 50px -34px rgba(60, 30, 20, 0.45);
+}
+
+/* --- Floración: Fraunces blanda, foto en arco --- */
+.lienzo[data-plantilla="floracion"] .display { font-variation-settings: "SOFT" 100, "WONK" 0; letter-spacing: -0.015em; }
+.floracion-arco { border-radius: 999px 999px var(--radio) var(--radio); }
+
+/* --- Mar: didone abierta --- */
+.lienzo[data-plantilla="mar"] .display { letter-spacing: 0.01em; line-height: 1; }
+
+/* --- Velo: capitulares grabadas; el velo cae al entrar --- */
+.lienzo[data-plantilla="velo"] .display { letter-spacing: 0.06em; line-height: 1.12; }
+.velo-caida { animation: velo-cae calc(var(--mov-dur, 1800ms) * 1.4) var(--mov-curva, cubic-bezier(.25,.1,.12,1)) both; }
+@keyframes velo-cae { from { transform: translateY(-18%); } to { transform: none; } }
+
+/* --- Constelación: noche de verdad, con estrellas en CSS --- */
+.lienzo[data-plantilla="constelacion"] .display { letter-spacing: 0.01em; line-height: 1.04; }
+.cielo-estrellas,
+.cielo-estrellas::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.cielo-estrellas {
+  background-image:
+    radial-gradient(1px 1px at 23px 41px, var(--tinta) 50%, transparent 52%),
+    radial-gradient(1px 1px at 131px 97px, var(--tinta) 50%, transparent 52%),
+    radial-gradient(1.5px 1.5px at 77px 161px, var(--tinta) 50%, transparent 52%),
+    radial-gradient(1px 1px at 201px 13px, var(--tinta) 50%, transparent 52%),
+    radial-gradient(1px 1px at 267px 211px, var(--tinta) 50%, transparent 52%);
+  background-size: 290px 240px;
+  opacity: 0.4;
+}
+.cielo-estrellas::after {
+  content: "";
+  background-image:
+    radial-gradient(1.6px 1.6px at 53px 71px, var(--acento) 50%, transparent 52%),
+    radial-gradient(1.2px 1.2px at 311px 233px, var(--tinta) 50%, transparent 52%),
+    radial-gradient(1.8px 1.8px at 187px 389px, var(--acento) 50%, transparent 52%);
+  background-size: 430px 460px;
+  animation: titila 5s ease-in-out infinite alternate;
+}
+@keyframes titila { from { opacity: 0.35; } to { opacity: 1; } }
+.constelacion-alianzas .trazo {
+  fill: none;
+  stroke: var(--acento);
+  stroke-opacity: 0.55;
+  stroke-width: 0.8;
+  stroke-dasharray: 320;
+  animation: traza 2400ms 300ms cubic-bezier(.4,0,.2,1) both;
+}
+.constelacion-alianzas .trazo-2 { animation-delay: 900ms; }
+.constelacion-alianzas .astro { fill: var(--tinta); animation: titila 3.2s ease-in-out infinite alternate; }
+@keyframes traza { from { stroke-dashoffset: 320; } to { stroke-dashoffset: 0; } }
+
+/* --- Tinta: la gota cae y se asienta --- */
+.tinta-gota { animation: gota 1300ms 400ms cubic-bezier(.45,0,.55,1) both; }
+@keyframes gota {
+  0% { transform: translateY(-48px) scale(.55); opacity: 0; }
+  55% { transform: translateY(0) scale(1.18, .82); opacity: 1; }
+  100% { transform: none; }
+}
+
+/* --- Registro: suiza, a la izquierda, sin redondeos --- */
+.lienzo[data-plantilla="registro"] { --p-texto: var(--p-display); }
+.lienzo[data-plantilla="registro"] .display { font-weight: 650; letter-spacing: -0.04em; line-height: 0.92; }
+.lienzo[data-plantilla="registro"] section,
+.lienzo[data-plantilla="registro"] section .text-center { text-align: left; }
+.lienzo[data-plantilla="registro"] section .mx-auto { margin-left: 0; }
+.lienzo[data-plantilla="registro"] section .justify-center { justify-content: flex-start; }
+.lienzo[data-plantilla="registro"] section { max-width: 40rem; margin-inline: auto; }
+
+/* --- Azulejo: colores de la pieza --- */
+.lienzo[data-plantilla="azulejo"] { --azulejo-2: #d9a441; --azulejo-3: var(--tinta); }
+.lienzo[data-plantilla="azulejo"] .display { letter-spacing: -0.01em; line-height: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .velo-caida, .tinta-gota, .cielo-estrellas::after,
+  .constelacion-alianzas .trazo, .constelacion-alianzas .astro { animation: none; }
+}
+
+
+/* ------------------------------------------------------------------
+   Movimiento (agente M) — src/lib/movimiento.ts
+   El lienzo lleva --mov-dur, --mov-paso, --mov-dist, --mov-desenfoque,
+   --mov-desenfoque-foto, --mov-ornamento, --mov-curva… y los ganchos
+   data-mov-estilo / -entrada / -ornamentos / -particulas / -parallax.
+   El guion src/components/movimiento/programa.ts pone `html.js`, y
+   `data-espera` → `data-entrando` en cada [data-revelar] y [data-rama].
+   REGLA: sin `html.js` y `data-espera` no se esconde NADA, y con menos
+   movimiento tampoco. Solo opacity, transform y filter.
+   ------------------------------------------------------------------ */
+
+/* Tipografía: titulares equilibrados, párrafos sin viudas, rótulos con
+   su interletrado compensado (el último espacio no descentra la línea). */
+.lienzo { font-kerning: normal; }
+.lienzo :is(h1, h2, h3).display { text-wrap: balance; }
+.lienzo p { text-wrap: pretty; }
+.lienzo .text-center p.uppercase { letter-spacing: 0.26em; margin-inline-end: -0.26em; }
+
+/* --- Las secciones: entran pieza a pieza --- */
+.lienzo [data-revelar] { position: relative; }
+.lienzo [data-revelar] > * > :nth-child(2) { --i: 1; }
+.lienzo [data-revelar] > * > :nth-child(3) { --i: 2; }
+.lienzo [data-revelar] > * > :nth-child(4) { --i: 3; }
+.lienzo [data-revelar] > * > :nth-child(5) { --i: 4; }
+.lienzo [data-revelar] > * > :nth-child(6) { --i: 5; }
+.lienzo [data-revelar] > * > :nth-child(n + 7) { --i: 6; }
+
+@media (prefers-reduced-motion: no-preference) {
+  html.js .lienzo [data-revelar][data-espera] > * > * {
+    opacity: 0;
+    transform: translate3d(0, var(--mov-dist, 16px), 0);
+    filter: blur(var(--mov-desenfoque, 4px));
+  }
+  html.js .lienzo[data-mov-entrada="fundido"] [data-revelar][data-espera] > * > * { transform: none; filter: none; }
+  html.js .lienzo[data-mov-entrada="velo"] [data-revelar][data-espera] > * > * { filter: none; }
+
+  .lienzo [data-revelar][data-entrando] > * > * {
+    will-change: opacity, transform;
+    transition:
+      opacity var(--mov-dur) var(--mov-curva),
+      transform calc(var(--mov-dur) * 1.15) var(--mov-curva),
+      filter var(--mov-dur) var(--mov-curva);
+    transition-delay: calc(var(--d, 0ms) + var(--i, 0) * var(--mov-paso));
+  }
+
+  /* Fotos dentro de las secciones: de un desenfoque leve a nítidas, un
+     poco después que su pieza. (La galería lleva su propio velo.) */
+  html.js .lienzo [data-revelar][data-espera] img:not(.galeria *) {
+    filter: blur(var(--mov-desenfoque-foto, 6px)) saturate(.88);
+  }
+  .lienzo [data-revelar][data-entrando] img:not(.galeria *) {
+    transition: filter calc(var(--mov-dur) * 1.6) var(--mov-curva) calc(var(--d, 0ms) + var(--i, 0) * var(--mov-paso) + 140ms);
+  }
+
+  /* Entrada «velo»: una gasa del color del papel que se retira hacia
+     arriba, con el borde de abajo deshilachado. */
+  html.js .lienzo[data-mov-entrada="velo"] [data-revelar][data-espera]::after,
+  .lienzo[data-mov-entrada="velo"] [data-revelar][data-entrando]::after {
+    content: "";
+    position: absolute;
+    /* Tope de altura (I1): en una sección alta el velo cubría metros de
+       página y, con scroll rápido, se veía vacía. Ahora vela como mucho
+       una pantalla y su borde inferior se deshace en el contenido. */
+    inset: -1px 0 auto;
+    height: min(calc(100% + 2px), 85svh);
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(to bottom, var(--papel) 0%, var(--papel) 72%, color-mix(in srgb, var(--papel) 0%, transparent) 100%);
+    transform-origin: 50% 0;
+    transform: scaleY(1.15);
+  }
+  .lienzo[data-mov-entrada="velo"] [data-revelar][data-entrando]:not([data-espera])::after {
+    transform: scaleY(0);
+    transition: transform min(calc(var(--mov-dur) * 1.5), 1100ms) var(--mov-curva-vaiven, cubic-bezier(.65,.05,.36,1)) min(var(--d, 0ms), 240ms);
+  }
+}
+
+/* --- Separador fino entre secciones: un hilo que crece desde el centro --- */
+.lienzo:not([data-plantilla="registro"]) [data-revelar]:not(.respiro) + [data-revelar]:not(.respiro)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 3.5rem;
+  height: 1px;
+  margin-left: -1.75rem;
+  background: color-mix(in srgb, var(--acento-texto) 42%, transparent);
+  transform-origin: 50% 50%;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html.js .lienzo [data-revelar][data-espera]::before { transform: scaleX(0); opacity: 0; }
+  .lienzo [data-revelar][data-entrando]::before {
+    transition:
+      transform calc(var(--mov-dur) * 1.6) var(--mov-curva),
+      opacity var(--mov-dur) var(--mov-curva);
+  }
+}
+
+/* --- Ramas: el tallo se dibuja y las hojas brotan detrás --- */
+.rama-tallo { stroke-dasharray: 600; }
+.rama-hoja { stroke-dasharray: 90; }
+@media (prefers-reduced-motion: no-preference) {
+  html.js .lienzo [data-rama][data-espera] .rama-tallo { stroke-dashoffset: 600; }
+  html.js .lienzo [data-rama][data-espera] .rama-hoja { stroke-dashoffset: 90; opacity: 0; }
+  .lienzo [data-rama][data-entrando] .rama-tallo {
+    transition: stroke-dashoffset var(--mov-ornamento, 2000ms) var(--mov-curva-suave, ease-out) var(--r, 0ms);
+  }
+  .lienzo [data-rama][data-entrando] .rama-hoja {
+    --t: calc(var(--r, 0ms) + var(--mov-ornamento, 2000ms) * 0.24 + var(--h, 0) * var(--mov-ornamento, 2000ms) * 0.065);
+    transition:
+      stroke-dashoffset calc(var(--mov-ornamento, 2000ms) * 0.45) var(--mov-curva-suave, ease-out) var(--t),
+      opacity calc(var(--mov-ornamento, 2000ms) * 0.3) ease var(--t);
+  }
+}
+
+/* --- La portada: la foto se enfoca al entrar; si hay apertura delante,
+       espera a que se retire --- */
+.lienzo .foto-entra { animation: foto-entra calc(var(--mov-dur, 1100ms) * 2) var(--mov-curva, ease-out) 120ms both; }
+.lienzo .foto-entra.respira-lento {
+  animation:
+    foto-entra calc(var(--mov-dur, 1100ms) * 2) var(--mov-curva, ease-out) 120ms both,
+    respiraLento 24s ease-in-out infinite alternate;
+}
+@keyframes foto-entra {
+  from { filter: blur(var(--mov-desenfoque-foto, 6px)) saturate(.85) brightness(1.04); }
+}
+
+/* --- La «y» entre los nombres: un gesto, no una conjunción --- */
+.lienzo .y-gesto {
+  display: inline-block;
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--acento-texto);
+  animation: y-gesto calc(var(--mov-dur, 1100ms) * 1.3) var(--mov-curva, ease-out) calc(var(--mov-dur, 1100ms) * 0.55) both;
+}
+.lienzo .y-gesto:not([data-forma]) { padding-inline: 0.06em; }
+.lienzo .y-gesto[data-forma="bloque"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+}
+.lienzo .y-gesto[data-forma="bloque"]::before,
+.lienzo .y-gesto[data-forma="bloque"]::after {
+  content: "";
+  width: 1.5em;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.45;
+  transform-origin: 100% 50%;
+  animation: y-hilo calc(var(--mov-dur, 1100ms) * 1.6) var(--mov-curva, ease-out) calc(var(--mov-dur, 1100ms) * 0.8) both;
+}
+.lienzo .y-gesto[data-forma="bloque"]::after { transform-origin: 0 50%; }
+.lienzo[data-plantilla="registro"] .y-gesto,
+.lienzo[data-plantilla="tinta"] .y-gesto { font-style: normal; }
+@keyframes y-gesto {
+  from { opacity: 0; filter: blur(3px); transform: translateY(0.1em) scale(0.94); }
+}
+@keyframes y-hilo { from { transform: scaleX(0); opacity: 0; } }
+
+/* Mientras la apertura está delante, lo de la portada espera. */
+main:has(> .apertura[data-estado="dentro"]) .lienzo :is(.foto-entra, .y-gesto),
+main:has(> .apertura[data-estado="dentro"]) .lienzo .y-gesto::before,
+main:has(> .apertura[data-estado="dentro"]) .lienzo .y-gesto::after {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lienzo .foto-entra, .lienzo .y-gesto,
+  .lienzo .y-gesto::before, .lienzo .y-gesto::after { animation: none; }
+  .lienzo .foto-entra.respira-lento { animation: none; }
+  .particulas { display: none; }
 }

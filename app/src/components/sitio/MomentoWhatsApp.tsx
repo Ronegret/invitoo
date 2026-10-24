@@ -1,9 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Icono from "@/components/Iconos";
-import Rama from "@/components/Botanica";
-import Revelar from "@/components/Revelar";
 
 /**
  * El momento en que llega.
@@ -46,6 +44,8 @@ const CONVERSACION: Mensaje[] = [
   { de: "invitada", texto: "lo he puesto tres veces. Allí estaremos", en: 3400 },
 ];
 
+const nada = () => () => {};
+
 const CLAVES = [
   "Llega como un enlace, por WhatsApp. No hay nada que instalar.",
   "Se abre con vuestro vídeo, y suena vuestra canción si la quieren oír.",
@@ -57,16 +57,21 @@ export default function MomentoWhatsApp() {
   const caja = useRef<HTMLDivElement>(null);
   const [visibles, setVisibles] = useState(0);
   const [escribiendo, setEscribiendo] = useState(false);
+  // En el HTML del servidor (y sin JavaScript) la conversación sale entera:
+  // nada empieza invisible a la espera de hidratar.
+  const cliente = useSyncExternalStore(nada, () => true, () => false);
+  const quieto = useSyncExternalStore(
+    nada,
+    () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    () => false,
+  );
 
   useEffect(() => {
     const nodo = caja.current;
     if (!nodo) return;
 
-    const quieto = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (quieto) {
-      setVisibles(CONVERSACION.length);
-      return;
-    }
+    // Con menos movimiento la conversación ya está entera (ver `quieto`).
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const relojes: number[] = [];
     let arrancada = false;
@@ -131,54 +136,36 @@ export default function MomentoWhatsApp() {
   }, []);
 
   return (
-    <section className="grano relative bg-[var(--papel)] px-5 py-28 sm:py-32">
-      <div className="mx-auto grid max-w-[68rem] items-center gap-14 lg:grid-cols-[1fr_auto] lg:gap-20">
+    <section className="grano relative bg-[var(--bruma)]/45 px-4 py-24 sm:px-6 sm:py-32">
+      <div className="mx-auto grid max-w-[68rem] items-center gap-14 lg:grid-cols-[auto_1fr] lg:gap-24">
         <div>
-          <Revelar>
-            <div className="text-center lg:text-left">
-              <p className="text-[0.75rem] uppercase tracking-[0.42em] opacity-50">
-                Dónde ocurre
-              </p>
-              <h2 className="display mt-5 text-[clamp(2.2rem,6vw,3.4rem)] leading-[1.06]">
-                La emoción empieza
-                <br />
-                <em className="not-italic opacity-100">antes de abrirla</em>
-              </h2>
-              <Rama
-                forma="guirnalda"
-                ancho={160}
-                className="mx-auto mt-6 text-[var(--verde)] lg:mx-0"
-              />
-            </div>
-          </Revelar>
+          <p className="flex items-center gap-3 text-[1rem] text-[var(--acento)]">
+            <span aria-hidden className="h-px w-8 bg-current" />
+            Dónde ocurre
+          </p>
+          <h2 className="display mt-4 text-[clamp(2.4rem,6.4vw,4.2rem)] leading-[1.02]">
+            La emoción empieza antes de abrirla.
+          </h2>
+          <p className="mt-8 max-w-[34rem] text-[1.06rem] leading-[1.8] opacity-75">
+            Una invitación de papel se abre a solas, en la cocina, un martes.
+            Ésta se abre en el móvil, y se enseña. Ese momento, el de pasarle
+            el teléfono a alguien, es el que diseñamos.
+          </p>
 
-          <Revelar retraso={120}>
-            <p className="mx-auto mt-8 max-w-[34rem] text-center text-[1.02rem] leading-[1.85] opacity-72 lg:mx-0 lg:text-left">
-              Una invitación de papel se abre a solas, en la cocina, un martes.
-              Ésta se abre en el móvil, y se enseña. Ese momento —el de pasarle
-              el teléfono a alguien— es el que diseñamos.
-            </p>
-          </Revelar>
-
-          <ul className="mx-auto mt-9 flex max-w-[34rem] flex-col gap-3.5 lg:mx-0">
-            {CLAVES.map((c, i) => (
-              <Revelar as="li" key={c} retraso={200 + i * 80}>
-                <span className="flex gap-3.5 text-[0.97rem] leading-[1.65] opacity-75">
-                  <span
-                    aria-hidden
-                    className="mt-0.5 shrink-0 text-[var(--verde)]"
-                  >
-                    <Icono id="check" size={15} />
-                  </span>
-                  {c}
+          <ul className="mt-9 flex max-w-[34rem] flex-col gap-3.5">
+            {CLAVES.map((c) => (
+              <li key={c} className="flex gap-3.5 text-[1rem] leading-[1.65] opacity-80">
+                <span aria-hidden className="mt-0.5 shrink-0 text-[var(--acento)]">
+                  <Icono id="check" size={17} />
                 </span>
-              </Revelar>
+                {c}
+              </li>
             ))}
           </ul>
         </div>
 
         {/* ── El teléfono ───────────────────────────────────────────────── */}
-        <Revelar retraso={160}>
+        <div className="lg:order-first">
           <div
             ref={caja}
             role="img"
@@ -206,12 +193,12 @@ export default function MomentoWhatsApp() {
                   un palmo y el teléfono parecía vacío. */}
               <ol className="flex h-[24rem] flex-col justify-end gap-2 overflow-hidden p-3.5">
                 {CONVERSACION.map((m, i) => {
-                  const puesto = i < visibles;
+                  const puesto = !cliente || quieto || i < visibles;
                   const mio = m.de === "novios";
                   return (
                     <li
                       key={m.texto}
-                      className={`max-w-[85%] rounded-2xl px-3.5 py-2 text-[0.82rem] leading-[1.45] ${
+                      className={`max-w-[85%] rounded-2xl px-3.5 py-2 text-[0.95rem] leading-[1.45] ${
                         mio
                           ? "self-end rounded-br-sm bg-[#d6f2c4]"
                           : "self-start rounded-bl-sm bg-white"
@@ -249,7 +236,7 @@ export default function MomentoWhatsApp() {
               </ol>
             </div>
           </div>
-        </Revelar>
+        </div>
       </div>
 
       <style>{`

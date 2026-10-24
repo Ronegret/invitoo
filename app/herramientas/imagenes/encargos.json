@@ -1,0 +1,2158 @@
+{
+  "version": 1,
+  "generado": "2026-10-24",
+  "reglas": [
+    "Personas ficticias: nunca famosos ni gente real reconocible.",
+    "Sin logos, sin marcas y sin texto incrustado: los nombres van en HTML.",
+    "Fotografía editorial de boda con luz natural; paleta de cada plantilla.",
+    "La misma pareja en toda su plantilla: la portada es la referencia (Gemini y FLUX.2 klein la usan).",
+    "Lacres: «plain smooth wax seal, no letters, no text» (FLUX dibuja garabatos si no).",
+    "Todas las imágenes generadas se marcan como IA en el catálogo; las demos lo indican en la web."
+  ],
+  "campos": "id · grupo · uso · aspecto · prompt (inglés) · negativos · referencias (ids que se generan antes) · referencias_archivos (rutas) · sustituye (imagen actual) · salida",
+  "encargos": [
+    {
+      "id": "carta-portada",
+      "grupo": "carta",
+      "aspecto": "2:3",
+      "uso": "Carta · portada de la demo (Inés y Gonzalo) — sustituye fotos/p-jardin.avif. Es la referencia de la pareja para el resto.",
+      "sustituye": [
+        "fotos/p-jardin.avif"
+      ],
+      "prompt": "Editorial wedding portrait, three-quarter length: a Spanish couple in their early thirties: the bride has shoulder-length chestnut hair in soft loose waves, light olive skin and a few freckles, wearing an ivory long-sleeved crepe gown with a boat neckline; the groom has short dark-brown hair, a neatly trimmed beard and warm tan skin, wearing a deep forest-green suit with a white shirt. Setting: the granite village and pine forest of Valsaín near La Granja de San Ildefonso, Segovia, in mid-September. Palette: forest green, warm cream paper, muted antique gold, a touch of deep wine red. Light: late-afternoon sun filtering through tall Scots pines, soft haze. They stand close, relaxed and genuinely happy, looking at each other, not at the camera.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "salida": "public/generadas/carta-portada.png"
+    },
+    {
+      "id": "carta-album-1",
+      "grupo": "carta",
+      "aspecto": "3:2",
+      "uso": "Carta · galería/álbum 1 — sustituye fotos/bodas/terracota-1.avif",
+      "sustituye": [
+        "fotos/bodas/terracota-1.avif"
+      ],
+      "prompt": "walking hand in hand along a pine-needle path between tall Scots pines, seen from behind at a distance, golden haze. The same couple: a Spanish couple in their early thirties: the bride has shoulder-length chestnut hair in soft loose waves, light olive skin and a few freckles, wearing an ivory long-sleeved crepe gown with a boat neckline; the groom has short dark-brown hair, a neatly trimmed beard and warm tan skin, wearing a deep forest-green suit with a white shirt. Setting: the granite village and pine forest of Valsaín near La Granja de San Ildefonso, Segovia, in mid-September. Palette: forest green, warm cream paper, muted antique gold, a touch of deep wine red. Light: late-afternoon sun filtering through tall Scots pines, soft haze.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "carta-portada"
+      ],
+      "salida": "public/generadas/carta-album-1.png"
+    },
+    {
+      "id": "carta-album-2",
+      "grupo": "carta",
+      "aspecto": "2:3",
+      "uso": "Carta · galería/álbum 2 — sustituye fotos/bodas/jardin-1.avif",
+      "sustituye": [
+        "fotos/bodas/jardin-1.avif"
+      ],
+      "prompt": "close moment under the pines: she laughs with her forehead against his cheek, candid, shallow depth of field. The same couple: a Spanish couple in their early thirties: the bride has shoulder-length chestnut hair in soft loose waves, light olive skin and a few freckles, wearing an ivory long-sleeved crepe gown with a boat neckline; the groom has short dark-brown hair, a neatly trimmed beard and warm tan skin, wearing a deep forest-green suit with a white shirt. Setting: the granite village and pine forest of Valsaín near La Granja de San Ildefonso, Segovia, in mid-September. Palette: forest green, warm cream paper, muted antique gold, a touch of deep wine red. Light: late-afternoon sun filtering through tall Scots pines, soft haze.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "carta-portada"
+      ],
+      "salida": "public/generadas/carta-album-2.png"
+    },
+    {
+      "id": "carta-album-3",
+      "grupo": "carta",
+      "aspecto": "3:2",
+      "uso": "Carta · galería/álbum 3 — sustituye fotos/bodas/terracota-4.avif",
+      "sustituye": [
+        "fotos/bodas/terracota-4.avif"
+      ],
+      "prompt": "long rustic table set under the pines with cream linen, beeswax candles, green wine glasses, wild herbs and small white roses, guests arriving softly out of focus. The same couple: a Spanish couple in their early thirties: the bride has shoulder-length chestnut hair in soft loose waves, light olive skin and a few freckles, wearing an ivory long-sleeved crepe gown with a boat neckline; the groom has short dark-brown hair, a neatly trimmed beard and warm tan skin, wearing a deep forest-green suit with a white shirt. Setting: the granite village and pine forest of Valsaín near La Granja de San Ildefonso, Segovia, in mid-September. Palette: forest green, warm cream paper, muted antique gold, a touch of deep wine red. Light: late-afternoon sun filtering through tall Scots pines, soft haze.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "carta-portada"
+      ],
+      "salida": "public/generadas/carta-album-3.png"
+    },
+    {
+      "id": "carta-album-4",
+      "grupo": "carta",
+      "aspecto": "2:3",
+      "uso": "Carta · galería/álbum 4 — sustituye fotos/bodas/jardin-2.avif",
+      "sustituye": [
+        "fotos/bodas/jardin-2.avif"
+      ],
+      "prompt": "detail of their hands: she holds a small bouquet of white garden roses, eucalyptus, pine sprigs and olive leaves tied with cream silk ribbon. The same couple: a Spanish couple in their early thirties: the bride has shoulder-length chestnut hair in soft loose waves, light olive skin and a few freckles, wearing an ivory long-sleeved crepe gown with a boat neckline; the groom has short dark-brown hair, a neatly trimmed beard and warm tan skin, wearing a deep forest-green suit with a white shirt. Setting: the granite village and pine forest of Valsaín near La Granja de San Ildefonso, Segovia, in mid-September. Palette: forest green, warm cream paper, muted antique gold, a touch of deep wine red. Light: late-afternoon sun filtering through tall Scots pines, soft haze.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "carta-portada"
+      ],
+      "salida": "public/generadas/carta-album-4.png"
+    },
+    {
+      "id": "carta-capitulo-1",
+      "grupo": "carta",
+      "aspecto": "3:2",
+      "uso": "Carta · capítulo 1 «El autobús de las siete» (sustituye fotos/bodas/brasa-3.avif)",
+      "sustituye": [
+        "fotos/bodas/brasa-3.avif"
+      ],
+      "prompt": "years before the wedding: the same two people in casual autumn clothes, she with a sketchbook and pencils, he in running clothes, sitting two seats apart in an old mountain bus at dawn, window light, nostalgic 35mm film look. The same two people: a Spanish couple in their early thirties: the bride has shoulder-length chestnut hair in soft loose waves, light olive skin and a few freckles, ; the groom has short dark-brown hair, a neatly trimmed beard and warm tan skin, .",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "carta-portada"
+      ],
+      "salida": "public/generadas/carta-capitulo-1.png"
+    },
+    {
+      "id": "carta-capitulo-2",
+      "grupo": "carta",
+      "aspecto": "2:3",
+      "uso": "Carta · capítulo 2 «Cuarenta mapas y un coche viejo» (sustituye fotos/bodas/brasa-1.avif)",
+      "sustituye": [
+        "fotos/bodas/brasa-1.avif"
+      ],
+      "prompt": "road trip: the same couple in casual clothes leaning on an old pale-blue hatchback car with no badges at a dry Andalusian coastal road at sunset, paper road map unfolded on the bonnet, 35mm film look. The same two people: a Spanish couple in their early thirties: the bride has shoulder-length chestnut hair in soft loose waves, light olive skin and a few freckles, ; the groom has short dark-brown hair, a neatly trimmed beard and warm tan skin, .",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "carta-portada"
+      ],
+      "salida": "public/generadas/carta-capitulo-2.png"
+    },
+    {
+      "id": "carta-capitulo-3",
+      "grupo": "carta",
+      "aspecto": "2:3",
+      "uso": "Carta · capítulo 3 «La pregunta» (sustituye fotos/bodas/jardin-4.avif)",
+      "sustituye": [
+        "fotos/bodas/jardin-4.avif"
+      ],
+      "prompt": "the proposal at sunset on a granite viewpoint bench overlooking the Segovia plain, he kneels holding a small open ring box with a solitaire ring, she covers her mouth with both hands, seen from a respectful distance. The same two people: a Spanish couple in their early thirties: the bride has shoulder-length chestnut hair in soft loose waves, light olive skin and a few freckles, ; the groom has short dark-brown hair, a neatly trimmed beard and warm tan skin, .",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "carta-portada"
+      ],
+      "salida": "public/generadas/carta-capitulo-3.png"
+    },
+    {
+      "id": "carta-capitulo-4",
+      "grupo": "carta",
+      "aspecto": "3:2",
+      "uso": "Carta · capítulo 4 «Nos casamos entre pinos» (sustituye fotos/bodas/brasa-4.avif)",
+      "sustituye": [
+        "fotos/bodas/brasa-4.avif"
+      ],
+      "prompt": "the wedding exit from a small baroque stone church in La Granja, guests throwing dried olive leaves and rice, the couple laughing, motion in the confetti. The same two people: a Spanish couple in their early thirties: the bride has shoulder-length chestnut hair in soft loose waves, light olive skin and a few freckles, ; the groom has short dark-brown hair, a neatly trimmed beard and warm tan skin, .",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "carta-portada"
+      ],
+      "salida": "public/generadas/carta-capitulo-4.png"
+    },
+    {
+      "id": "sobre-portada",
+      "grupo": "sobre",
+      "aspecto": "2:3",
+      "uso": "Sobre · portada de la demo (Laura y Rubén) — sustituye fotos/p-sobre.avif. Es la referencia de la pareja para el resto.",
+      "sustituye": [
+        "fotos/p-sobre.avif"
+      ],
+      "prompt": "Editorial wedding portrait, three-quarter length: a classic Spanish couple in their late twenties: the bride has dark-blonde hair in a low chignon, fair skin, wearing a long-sleeved Chantilly lace gown and a long cathedral veil; the groom is clean-shaven with short black hair and light brown skin, wearing a charcoal three-piece suit with a burgundy tie. Setting: a neoclassical church in Madrid and the ivy-covered courtyard of an old stone country house with a garden. Palette: deep burgundy (wax-seal red), warm ivory, aged brass, dark green ivy. Light: soft bright overcast midday light, gentle and flattering. They stand close, relaxed and genuinely happy, looking at each other, not at the camera.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "salida": "public/generadas/sobre-portada.png"
+    },
+    {
+      "id": "sobre-album-1",
+      "grupo": "sobre",
+      "aspecto": "3:2",
+      "uso": "Sobre · galería/álbum 1 — sustituye fotos/bodas/sobre-1.avif",
+      "sustituye": [
+        "fotos/bodas/sobre-1.avif"
+      ],
+      "prompt": "walking down the central aisle of a neoclassical church just married, guests standing in pews out of focus, natural window light. The same couple: a classic Spanish couple in their late twenties: the bride has dark-blonde hair in a low chignon, fair skin, wearing a long-sleeved Chantilly lace gown and a long cathedral veil; the groom is clean-shaven with short black hair and light brown skin, wearing a charcoal three-piece suit with a burgundy tie. Setting: a neoclassical church in Madrid and the ivy-covered courtyard of an old stone country house with a garden. Palette: deep burgundy (wax-seal red), warm ivory, aged brass, dark green ivy. Light: soft bright overcast midday light, gentle and flattering.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "sobre-portada"
+      ],
+      "salida": "public/generadas/sobre-album-1.png"
+    },
+    {
+      "id": "sobre-album-2",
+      "grupo": "sobre",
+      "aspecto": "2:3",
+      "uso": "Sobre · galería/álbum 2 — sustituye fotos/bodas/sobre-2.avif",
+      "sustituye": [
+        "fotos/bodas/sobre-2.avif"
+      ],
+      "prompt": "portrait in an ivy-covered stone courtyard, she adjusts his burgundy tie, quiet complicity. The same couple: a classic Spanish couple in their late twenties: the bride has dark-blonde hair in a low chignon, fair skin, wearing a long-sleeved Chantilly lace gown and a long cathedral veil; the groom is clean-shaven with short black hair and light brown skin, wearing a charcoal three-piece suit with a burgundy tie. Setting: a neoclassical church in Madrid and the ivy-covered courtyard of an old stone country house with a garden. Palette: deep burgundy (wax-seal red), warm ivory, aged brass, dark green ivy. Light: soft bright overcast midday light, gentle and flattering.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "sobre-portada"
+      ],
+      "salida": "public/generadas/sobre-album-2.png"
+    },
+    {
+      "id": "sobre-album-3",
+      "grupo": "sobre",
+      "aspecto": "3:2",
+      "uso": "Sobre · galería/álbum 3 — sustituye fotos/bodas/sobre-3.avif",
+      "sustituye": [
+        "fotos/bodas/sobre-3.avif"
+      ],
+      "prompt": "dinner table in a garden under old plane trees, white linen, burgundy dahlias and ranunculus in low arrangements, brass candlesticks. The same couple: a classic Spanish couple in their late twenties: the bride has dark-blonde hair in a low chignon, fair skin, wearing a long-sleeved Chantilly lace gown and a long cathedral veil; the groom is clean-shaven with short black hair and light brown skin, wearing a charcoal three-piece suit with a burgundy tie. Setting: a neoclassical church in Madrid and the ivy-covered courtyard of an old stone country house with a garden. Palette: deep burgundy (wax-seal red), warm ivory, aged brass, dark green ivy. Light: soft bright overcast midday light, gentle and flattering.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "sobre-portada"
+      ],
+      "salida": "public/generadas/sobre-album-3.png"
+    },
+    {
+      "id": "sobre-album-4",
+      "grupo": "sobre",
+      "aspecto": "2:3",
+      "uso": "Sobre · galería/álbum 4 — sustituye fotos/bodas/sobre-4.avif",
+      "sustituye": [
+        "fotos/bodas/sobre-4.avif"
+      ],
+      "prompt": "bride's bouquet of burgundy dahlias, deep red ranunculus, ivory garden roses and trailing ivy held against the lace of her gown. The same couple: a classic Spanish couple in their late twenties: the bride has dark-blonde hair in a low chignon, fair skin, wearing a long-sleeved Chantilly lace gown and a long cathedral veil; the groom is clean-shaven with short black hair and light brown skin, wearing a charcoal three-piece suit with a burgundy tie. Setting: a neoclassical church in Madrid and the ivy-covered courtyard of an old stone country house with a garden. Palette: deep burgundy (wax-seal red), warm ivory, aged brass, dark green ivy. Light: soft bright overcast midday light, gentle and flattering.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "sobre-portada"
+      ],
+      "salida": "public/generadas/sobre-album-4.png"
+    },
+    {
+      "id": "floracion-portada",
+      "grupo": "floracion",
+      "aspecto": "2:3",
+      "uso": "Floración · portada de la demo (Nora y Sebas) — sustituye fotos/p-floracion.avif. Es la referencia de la pareja para el resto.",
+      "sustituye": [
+        "fotos/p-floracion.avif"
+      ],
+      "prompt": "Editorial wedding portrait, three-quarter length: an Afro-Spanish bride in her early thirties with natural curly hair worn loose with a few small white flowers, deep brown skin, wearing a flowing ivory chiffon gown with thin straps; and a groom of Argentine origin, early thirties, wavy light-brown hair, short beard, wearing a sand-coloured linen suit with an open collar. Setting: a centuries-old olive grove on a finca near Chinchón, Madrid, with red earth and a white pergola. Palette: olive green, terracotta, sun-bleached sand, cream. Light: golden hour, low warm sun through olive leaves, dust in the air. They stand close, relaxed and genuinely happy, looking at each other, not at the camera.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "salida": "public/generadas/floracion-portada.png"
+    },
+    {
+      "id": "floracion-album-1",
+      "grupo": "floracion",
+      "aspecto": "3:2",
+      "uso": "Floración · galería/álbum 1 — sustituye fotos/bodas/floracion-1.avif",
+      "sustituye": [
+        "fotos/bodas/floracion-1.avif"
+      ],
+      "prompt": "ceremony under an ancient olive tree, guests on simple wooden chairs, the couple holding hands, wide shot. The same couple: an Afro-Spanish bride in her early thirties with natural curly hair worn loose with a few small white flowers, deep brown skin, wearing a flowing ivory chiffon gown with thin straps; and a groom of Argentine origin, early thirties, wavy light-brown hair, short beard, wearing a sand-coloured linen suit with an open collar. Setting: a centuries-old olive grove on a finca near Chinchón, Madrid, with red earth and a white pergola. Palette: olive green, terracotta, sun-bleached sand, cream. Light: golden hour, low warm sun through olive leaves, dust in the air.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "floracion-portada"
+      ],
+      "salida": "public/generadas/floracion-album-1.png"
+    },
+    {
+      "id": "floracion-album-2",
+      "grupo": "floracion",
+      "aspecto": "2:3",
+      "uso": "Floración · galería/álbum 2 — sustituye fotos/bodas/floracion-2.avif",
+      "sustituye": [
+        "fotos/bodas/floracion-2.avif"
+      ],
+      "prompt": "he twirls her between olive trees, the chiffon skirt flying, candid laughter. The same couple: an Afro-Spanish bride in her early thirties with natural curly hair worn loose with a few small white flowers, deep brown skin, wearing a flowing ivory chiffon gown with thin straps; and a groom of Argentine origin, early thirties, wavy light-brown hair, short beard, wearing a sand-coloured linen suit with an open collar. Setting: a centuries-old olive grove on a finca near Chinchón, Madrid, with red earth and a white pergola. Palette: olive green, terracotta, sun-bleached sand, cream. Light: golden hour, low warm sun through olive leaves, dust in the air.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "floracion-portada"
+      ],
+      "salida": "public/generadas/floracion-album-2.png"
+    },
+    {
+      "id": "floracion-album-3",
+      "grupo": "floracion",
+      "aspecto": "3:2",
+      "uso": "Floración · galería/álbum 3 — sustituye fotos/bodas/floracion-3.avif",
+      "sustituye": [
+        "fotos/bodas/floracion-3.avif"
+      ],
+      "prompt": "long table under a white pergola with festoon bulbs, terracotta linen runners, olive branches, small clay vases with wildflowers. The same couple: an Afro-Spanish bride in her early thirties with natural curly hair worn loose with a few small white flowers, deep brown skin, wearing a flowing ivory chiffon gown with thin straps; and a groom of Argentine origin, early thirties, wavy light-brown hair, short beard, wearing a sand-coloured linen suit with an open collar. Setting: a centuries-old olive grove on a finca near Chinchón, Madrid, with red earth and a white pergola. Palette: olive green, terracotta, sun-bleached sand, cream. Light: golden hour, low warm sun through olive leaves, dust in the air.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "floracion-portada"
+      ],
+      "salida": "public/generadas/floracion-album-3.png"
+    },
+    {
+      "id": "floracion-album-4",
+      "grupo": "floracion",
+      "aspecto": "2:3",
+      "uso": "Floración · galería/álbum 4 — sustituye fotos/bodas/floracion-4.avif",
+      "sustituye": [
+        "fotos/bodas/floracion-4.avif"
+      ],
+      "prompt": "close-up of the bouquet: olive branches, white cosmos, dried grasses and terracotta roses, held at her waist. The same couple: an Afro-Spanish bride in her early thirties with natural curly hair worn loose with a few small white flowers, deep brown skin, wearing a flowing ivory chiffon gown with thin straps; and a groom of Argentine origin, early thirties, wavy light-brown hair, short beard, wearing a sand-coloured linen suit with an open collar. Setting: a centuries-old olive grove on a finca near Chinchón, Madrid, with red earth and a white pergola. Palette: olive green, terracotta, sun-bleached sand, cream. Light: golden hour, low warm sun through olive leaves, dust in the air.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "floracion-portada"
+      ],
+      "salida": "public/generadas/floracion-album-4.png"
+    },
+    {
+      "id": "mar-portada",
+      "grupo": "mar",
+      "aspecto": "2:3",
+      "uso": "Mar · portada de la demo (Sara y Marcos) — sustituye fotos/p-cielo.avif. Es la referencia de la pareja para el resto.",
+      "sustituye": [
+        "fotos/p-cielo.avif"
+      ],
+      "prompt": "Editorial wedding portrait, three-quarter length: a sun-kissed couple in their early thirties: the bride has long sun-lightened brown hair, light tan skin, wearing a simple silk slip dress, barefoot; the groom has curly dark hair, olive skin, wearing a white linen shirt with rolled sleeves and light sand trousers. Setting: a small rocky cove (cala) in Ibiza with turquoise water, pines on the cliffs and a whitewashed beach house. Palette: deep indigo, sea turquoise, sand, white. Light: sunset, warm side light, sea breeze. They stand close, relaxed and genuinely happy, looking at each other, not at the camera.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "salida": "public/generadas/mar-portada.png"
+    },
+    {
+      "id": "mar-album-1",
+      "grupo": "mar",
+      "aspecto": "2:3",
+      "uso": "Mar · galería/álbum 1 — sustituye fotos/bodas/cielo-1.avif",
+      "sustituye": [
+        "fotos/bodas/cielo-1.avif"
+      ],
+      "prompt": "barefoot on the wet sand at the water's edge, her dress moving in the wind, sunset behind. The same couple: a sun-kissed couple in their early thirties: the bride has long sun-lightened brown hair, light tan skin, wearing a simple silk slip dress, barefoot; the groom has curly dark hair, olive skin, wearing a white linen shirt with rolled sleeves and light sand trousers. Setting: a small rocky cove (cala) in Ibiza with turquoise water, pines on the cliffs and a whitewashed beach house. Palette: deep indigo, sea turquoise, sand, white. Light: sunset, warm side light, sea breeze.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "mar-portada"
+      ],
+      "salida": "public/generadas/mar-album-1.png"
+    },
+    {
+      "id": "mar-album-2",
+      "grupo": "mar",
+      "aspecto": "3:2",
+      "uso": "Mar · galería/álbum 2 — sustituye fotos/bodas/cielo-2.avif",
+      "sustituye": [
+        "fotos/bodas/cielo-2.avif"
+      ],
+      "prompt": "ceremony on a rock terrace above the cove, simple arch of driftwood and white flowers, guests in light clothes. The same couple: a sun-kissed couple in their early thirties: the bride has long sun-lightened brown hair, light tan skin, wearing a simple silk slip dress, barefoot; the groom has curly dark hair, olive skin, wearing a white linen shirt with rolled sleeves and light sand trousers. Setting: a small rocky cove (cala) in Ibiza with turquoise water, pines on the cliffs and a whitewashed beach house. Palette: deep indigo, sea turquoise, sand, white. Light: sunset, warm side light, sea breeze.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "mar-portada"
+      ],
+      "salida": "public/generadas/mar-album-2.png"
+    },
+    {
+      "id": "mar-album-3",
+      "grupo": "mar",
+      "aspecto": "2:3",
+      "uso": "Mar · galería/álbum 3 — sustituye fotos/bodas/marea-1.avif",
+      "sustituye": [
+        "fotos/bodas/marea-1.avif"
+      ],
+      "prompt": "beach dinner table on the sand with white linen, hurricane lanterns, glass bottles with olive branches, blue hour. The same couple: a sun-kissed couple in their early thirties: the bride has long sun-lightened brown hair, light tan skin, wearing a simple silk slip dress, barefoot; the groom has curly dark hair, olive skin, wearing a white linen shirt with rolled sleeves and light sand trousers. Setting: a small rocky cove (cala) in Ibiza with turquoise water, pines on the cliffs and a whitewashed beach house. Palette: deep indigo, sea turquoise, sand, white. Light: sunset, warm side light, sea breeze.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "mar-portada"
+      ],
+      "salida": "public/generadas/mar-album-3.png"
+    },
+    {
+      "id": "mar-album-4",
+      "grupo": "mar",
+      "aspecto": "3:2",
+      "uso": "Mar · galería/álbum 4 — sustituye fotos/bodas/marea-2.avif",
+      "sustituye": [
+        "fotos/bodas/marea-2.avif"
+      ],
+      "prompt": "fiesta descalzos: guests dancing barefoot on a terrace under string lights, motion blur, joy. The same couple: a sun-kissed couple in their early thirties: the bride has long sun-lightened brown hair, light tan skin, wearing a simple silk slip dress, barefoot; the groom has curly dark hair, olive skin, wearing a white linen shirt with rolled sleeves and light sand trousers. Setting: a small rocky cove (cala) in Ibiza with turquoise water, pines on the cliffs and a whitewashed beach house. Palette: deep indigo, sea turquoise, sand, white. Light: sunset, warm side light, sea breeze.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "mar-portada"
+      ],
+      "salida": "public/generadas/mar-album-4.png"
+    },
+    {
+      "id": "velo-portada",
+      "grupo": "velo",
+      "aspecto": "2:3",
+      "uso": "Velo · portada de la demo (Claudia y Jorge) — sustituye fotos/p-velo.avif. Es la referencia de la pareja para el resto.",
+      "sustituye": [
+        "fotos/p-velo.avif"
+      ],
+      "prompt": "Editorial wedding portrait, three-quarter length: an elegant urban couple around forty, together for twelve years: the bride has a sleek dark bob, light skin, wearing a minimalist ivory crepe column gown and a long sheer tulle veil; the groom has short salt-and-pepper hair and medium brown skin, wearing a classic black tuxedo. Setting: a 19th-century palatial club in central Madrid: marble staircase, tall windows, stone and gilded mouldings. Palette: stone grey, champagne, warm white, soft black. Light: window light in a grand interior, calm and luminous. They stand close, relaxed and genuinely happy, looking at each other, not at the camera.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "salida": "public/generadas/velo-portada.png"
+    },
+    {
+      "id": "velo-album-1",
+      "grupo": "velo",
+      "aspecto": "2:3",
+      "uso": "Velo · galería/álbum 1 — sustituye fotos/bodas/velo-1.avif",
+      "sustituye": [
+        "fotos/bodas/velo-1.avif"
+      ],
+      "prompt": "she descends a white marble staircase, the long veil trailing, he waits at the bottom, symmetrical composition. The same couple: an elegant urban couple around forty, together for twelve years: the bride has a sleek dark bob, light skin, wearing a minimalist ivory crepe column gown and a long sheer tulle veil; the groom has short salt-and-pepper hair and medium brown skin, wearing a classic black tuxedo. Setting: a 19th-century palatial club in central Madrid: marble staircase, tall windows, stone and gilded mouldings. Palette: stone grey, champagne, warm white, soft black. Light: window light in a grand interior, calm and luminous.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "velo-portada"
+      ],
+      "salida": "public/generadas/velo-album-1.png"
+    },
+    {
+      "id": "velo-album-2",
+      "grupo": "velo",
+      "aspecto": "3:2",
+      "uso": "Velo · galería/álbum 2 — sustituye fotos/bodas/velo-2.avif",
+      "sustituye": [
+        "fotos/bodas/velo-2.avif"
+      ],
+      "prompt": "the sheer veil lifted by a draught of air in front of a tall window, silhouettes, poetic. The same couple: an elegant urban couple around forty, together for twelve years: the bride has a sleek dark bob, light skin, wearing a minimalist ivory crepe column gown and a long sheer tulle veil; the groom has short salt-and-pepper hair and medium brown skin, wearing a classic black tuxedo. Setting: a 19th-century palatial club in central Madrid: marble staircase, tall windows, stone and gilded mouldings. Palette: stone grey, champagne, warm white, soft black. Light: window light in a grand interior, calm and luminous.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "velo-portada"
+      ],
+      "salida": "public/generadas/velo-album-2.png"
+    },
+    {
+      "id": "velo-album-3",
+      "grupo": "velo",
+      "aspecto": "2:3",
+      "uso": "Velo · galería/álbum 3 — sustituye fotos/bodas/velo-3.avif",
+      "sustituye": [
+        "fotos/bodas/velo-3.avif"
+      ],
+      "prompt": "cocktail in a stone courtyard: champagne coupes, waiters in white jackets out of focus, the couple laughing with friends. The same couple: an elegant urban couple around forty, together for twelve years: the bride has a sleek dark bob, light skin, wearing a minimalist ivory crepe column gown and a long sheer tulle veil; the groom has short salt-and-pepper hair and medium brown skin, wearing a classic black tuxedo. Setting: a 19th-century palatial club in central Madrid: marble staircase, tall windows, stone and gilded mouldings. Palette: stone grey, champagne, warm white, soft black. Light: window light in a grand interior, calm and luminous.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "velo-portada"
+      ],
+      "salida": "public/generadas/velo-album-3.png"
+    },
+    {
+      "id": "velo-album-4",
+      "grupo": "velo",
+      "aspecto": "3:2",
+      "uso": "Velo · galería/álbum 4 — sustituye fotos/bodas/velo-4.avif",
+      "sustituye": [
+        "fotos/bodas/velo-4.avif"
+      ],
+      "prompt": "banquet hall with long tables, white flowers in low arrangements, candlelight, crystal chandeliers, no people. Setting: a 19th-century palatial club in central Madrid: marble staircase, tall windows, stone and gilded mouldings. Palette: stone grey, champagne, warm white, soft black. Light: window light in a grand interior, calm and luminous.",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "referencias": [],
+      "salida": "public/generadas/velo-album-4.png"
+    },
+    {
+      "id": "constelacion-portada",
+      "grupo": "constelacion",
+      "aspecto": "2:3",
+      "uso": "Constelación · portada de la demo (Yone y Noe) — sustituye fotos/p-constelacion.avif. Es la referencia de la pareja para el resto.",
+      "sustituye": [
+        "fotos/p-constelacion.avif"
+      ],
+      "prompt": "Editorial wedding portrait, three-quarter length: two brides in their early thirties: Yone, from the Canary Islands, tall, short dark curly hair, warm brown skin, wearing a tailored ivory jumpsuit with a deep V; Noe, fair skin, long copper-red hair, wearing a midnight-blue velvet slip gown. Setting: a rooftop terrace in central Madrid at night with the city lights and domes below. Palette: midnight navy, antique gold, warm string-light amber, soft cream. Light: blue hour turning into night, warm festoon bulbs, city bokeh. They stand close, relaxed and genuinely happy, looking at each other, not at the camera.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "salida": "public/generadas/constelacion-portada.png"
+    },
+    {
+      "id": "constelacion-album-1",
+      "grupo": "constelacion",
+      "aspecto": "3:2",
+      "uso": "Constelación · galería/álbum 1 — sustituye fotos/bodas/constelacion-1.avif",
+      "sustituye": [
+        "fotos/bodas/constelacion-1.avif"
+      ],
+      "prompt": "on the rooftop at blue hour, the two brides kiss with the illuminated city skyline and domes behind them. The same couple: two brides in their early thirties: Yone, from the Canary Islands, tall, short dark curly hair, warm brown skin, wearing a tailored ivory jumpsuit with a deep V; Noe, fair skin, long copper-red hair, wearing a midnight-blue velvet slip gown. Setting: a rooftop terrace in central Madrid at night with the city lights and domes below. Palette: midnight navy, antique gold, warm string-light amber, soft cream. Light: blue hour turning into night, warm festoon bulbs, city bokeh.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "constelacion-portada"
+      ],
+      "salida": "public/generadas/constelacion-album-1.png"
+    },
+    {
+      "id": "constelacion-album-2",
+      "grupo": "constelacion",
+      "aspecto": "2:3",
+      "uso": "Constelación · galería/álbum 2 — sustituye fotos/bodas/constelacion-2.avif",
+      "sustituye": [
+        "fotos/bodas/constelacion-2.avif"
+      ],
+      "prompt": "sparklers at midnight held by guests forming a tunnel, the brides running through, golden sparks. The same couple: two brides in their early thirties: Yone, from the Canary Islands, tall, short dark curly hair, warm brown skin, wearing a tailored ivory jumpsuit with a deep V; Noe, fair skin, long copper-red hair, wearing a midnight-blue velvet slip gown. Setting: a rooftop terrace in central Madrid at night with the city lights and domes below. Palette: midnight navy, antique gold, warm string-light amber, soft cream. Light: blue hour turning into night, warm festoon bulbs, city bokeh.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "constelacion-portada"
+      ],
+      "salida": "public/generadas/constelacion-album-2.png"
+    },
+    {
+      "id": "constelacion-album-3",
+      "grupo": "constelacion",
+      "aspecto": "3:2",
+      "uso": "Constelación · galería/álbum 3 — sustituye fotos/bodas/constelacion-3.avif",
+      "sustituye": [
+        "fotos/bodas/constelacion-3.avif"
+      ],
+      "prompt": "an old courtyard dinner with festoon bulbs crossing overhead, long tables, candles, navy linen. The same couple: two brides in their early thirties: Yone, from the Canary Islands, tall, short dark curly hair, warm brown skin, wearing a tailored ivory jumpsuit with a deep V; Noe, fair skin, long copper-red hair, wearing a midnight-blue velvet slip gown. Setting: a rooftop terrace in central Madrid at night with the city lights and domes below. Palette: midnight navy, antique gold, warm string-light amber, soft cream. Light: blue hour turning into night, warm festoon bulbs, city bokeh.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "constelacion-portada"
+      ],
+      "salida": "public/generadas/constelacion-album-3.png"
+    },
+    {
+      "id": "constelacion-album-4",
+      "grupo": "constelacion",
+      "aspecto": "2:3",
+      "uso": "Constelación · galería/álbum 4 — sustituye fotos/bodas/constelacion-4.avif",
+      "sustituye": [
+        "fotos/bodas/constelacion-4.avif"
+      ],
+      "prompt": "their hands with gold wedding bands resting on navy velvet, a single string light reflected. The same couple: two brides in their early thirties: Yone, from the Canary Islands, tall, short dark curly hair, warm brown skin, wearing a tailored ivory jumpsuit with a deep V; Noe, fair skin, long copper-red hair, wearing a midnight-blue velvet slip gown. Setting: a rooftop terrace in central Madrid at night with the city lights and domes below. Palette: midnight navy, antique gold, warm string-light amber, soft cream. Light: blue hour turning into night, warm festoon bulbs, city bokeh.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "constelacion-portada"
+      ],
+      "salida": "public/generadas/constelacion-album-4.png"
+    },
+    {
+      "id": "tinta-portada",
+      "grupo": "tinta",
+      "aspecto": "2:3",
+      "uso": "Tinta · portada de la demo (Marta y Álvaro) — sustituye fotos/p-tinta.avif. Es la referencia de la pareja para el resto.",
+      "sustituye": [
+        "fotos/p-tinta.avif"
+      ],
+      "prompt": "Editorial wedding portrait, three-quarter length: a minimalist couple in their mid-thirties: the bride has a short platinum pixie cut, wearing a white tailored trouser suit; the groom has black-rimmed glasses, short dark hair and a black slim suit with a black knit tie. Setting: Madrid: the steps of a civil registry building and a classic old tavern with tiled walls and a zinc bar. Palette: black and white, high-contrast monochrome, warm paper grey. Light: documentary black-and-white photography, natural light, fine grain. They stand close, relaxed and genuinely happy, looking at each other, not at the camera.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "salida": "public/generadas/tinta-portada.png"
+    },
+    {
+      "id": "tinta-album-1",
+      "grupo": "tinta",
+      "aspecto": "3:2",
+      "uso": "Tinta · galería/álbum 1 — sustituye fotos/bodas/tinta-1.avif",
+      "sustituye": [
+        "fotos/bodas/tinta-1.avif"
+      ],
+      "prompt": "black and white: the couple signing at a plain wooden table in a civil registry, two friends as witnesses, candid. The same couple: a minimalist couple in their mid-thirties: the bride has a short platinum pixie cut, wearing a white tailored trouser suit; the groom has black-rimmed glasses, short dark hair and a black slim suit with a black knit tie. Setting: Madrid: the steps of a civil registry building and a classic old tavern with tiled walls and a zinc bar. Palette: black and white, high-contrast monochrome, warm paper grey. Light: documentary black-and-white photography, natural light, fine grain.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "tinta-portada"
+      ],
+      "salida": "public/generadas/tinta-album-1.png"
+    },
+    {
+      "id": "tinta-album-2",
+      "grupo": "tinta",
+      "aspecto": "2:3",
+      "uso": "Tinta · galería/álbum 2 — sustituye fotos/bodas/tinta-2.avif",
+      "sustituye": [
+        "fotos/bodas/tinta-2.avif"
+      ],
+      "prompt": "black and white: walking down a narrow Madrid street, laughing, he holds her hand, wide documentary frame. The same couple: a minimalist couple in their mid-thirties: the bride has a short platinum pixie cut, wearing a white tailored trouser suit; the groom has black-rimmed glasses, short dark hair and a black slim suit with a black knit tie. Setting: Madrid: the steps of a civil registry building and a classic old tavern with tiled walls and a zinc bar. Palette: black and white, high-contrast monochrome, warm paper grey. Light: documentary black-and-white photography, natural light, fine grain.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "tinta-portada"
+      ],
+      "salida": "public/generadas/tinta-album-2.png"
+    },
+    {
+      "id": "tinta-album-3",
+      "grupo": "tinta",
+      "aspecto": "3:2",
+      "uso": "Tinta · galería/álbum 3 — sustituye fotos/bodas/tinta-3.avif",
+      "sustituye": [
+        "fotos/bodas/tinta-3.avif"
+      ],
+      "prompt": "black and white: long lunch in an old tavern, friends raising glasses of vermouth, motion, laughter. The same couple: a minimalist couple in their mid-thirties: the bride has a short platinum pixie cut, wearing a white tailored trouser suit; the groom has black-rimmed glasses, short dark hair and a black slim suit with a black knit tie. Setting: Madrid: the steps of a civil registry building and a classic old tavern with tiled walls and a zinc bar. Palette: black and white, high-contrast monochrome, warm paper grey. Light: documentary black-and-white photography, natural light, fine grain.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "tinta-portada"
+      ],
+      "salida": "public/generadas/tinta-album-3.png"
+    },
+    {
+      "id": "tinta-album-4",
+      "grupo": "tinta",
+      "aspecto": "2:3",
+      "uso": "Tinta · galería/álbum 4 — sustituye fotos/bodas/tinta-4.avif",
+      "sustituye": [
+        "fotos/bodas/tinta-4.avif"
+      ],
+      "prompt": "black and white: close-up of hands with simple gold bands holding a small coffee cup. The same couple: a minimalist couple in their mid-thirties: the bride has a short platinum pixie cut, wearing a white tailored trouser suit; the groom has black-rimmed glasses, short dark hair and a black slim suit with a black knit tie. Setting: Madrid: the steps of a civil registry building and a classic old tavern with tiled walls and a zinc bar. Palette: black and white, high-contrast monochrome, warm paper grey. Light: documentary black-and-white photography, natural light, fine grain.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "tinta-portada"
+      ],
+      "salida": "public/generadas/tinta-album-4.png"
+    },
+    {
+      "id": "registro-portada",
+      "grupo": "registro",
+      "aspecto": "2:3",
+      "uso": "Registro · portada de la demo (Àlex y Bruno). Es la referencia de la pareja para el resto.",
+      "sustituye": [],
+      "prompt": "Editorial wedding portrait, three-quarter length: two grooms in their early thirties: Àlex, Catalan, slim, light-brown hair and a light beard, wearing a sand-coloured suit with no tie; Bruno, broad-shouldered, curly black hair, olive skin, wearing a navy suit with a white shirt open at the collar. Setting: Barcelona's Gothic Quarter: a medieval stone square, the town-hall stairs and a sunny terrace in El Born. Palette: bright white, warm stone, one electric accent colour (lime or cobalt), crisp shadows. Light: bright Mediterranean midday sun, crisp editorial light with gentle fill flash. They stand close, relaxed and genuinely happy, looking at each other, not at the camera.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "salida": "public/generadas/registro-portada.png"
+    },
+    {
+      "id": "registro-album-1",
+      "grupo": "registro",
+      "aspecto": "2:3",
+      "uso": "Registro · galería/álbum 1 — sustituye fotos/bodas/bruma-1.avif",
+      "sustituye": [
+        "fotos/bodas/bruma-1.avif"
+      ],
+      "prompt": "coming down the stone stairs of a Gothic town hall just married, friends clapping, confetti in the air. The same couple: two grooms in their early thirties: Àlex, Catalan, slim, light-brown hair and a light beard, wearing a sand-coloured suit with no tie; Bruno, broad-shouldered, curly black hair, olive skin, wearing a navy suit with a white shirt open at the collar. Setting: Barcelona's Gothic Quarter: a medieval stone square, the town-hall stairs and a sunny terrace in El Born. Palette: bright white, warm stone, one electric accent colour (lime or cobalt), crisp shadows. Light: bright Mediterranean midday sun, crisp editorial light with gentle fill flash.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "registro-portada"
+      ],
+      "salida": "public/generadas/registro-album-1.png"
+    },
+    {
+      "id": "registro-album-2",
+      "grupo": "registro",
+      "aspecto": "3:2",
+      "uso": "Registro · galería/álbum 2 — sustituye fotos/bodas/bruma-2.avif",
+      "sustituye": [
+        "fotos/bodas/bruma-2.avif"
+      ],
+      "prompt": "vermouth in a medieval stone square: small glasses, olives, friends toasting, candid editorial. The same couple: two grooms in their early thirties: Àlex, Catalan, slim, light-brown hair and a light beard, wearing a sand-coloured suit with no tie; Bruno, broad-shouldered, curly black hair, olive skin, wearing a navy suit with a white shirt open at the collar. Setting: Barcelona's Gothic Quarter: a medieval stone square, the town-hall stairs and a sunny terrace in El Born. Palette: bright white, warm stone, one electric accent colour (lime or cobalt), crisp shadows. Light: bright Mediterranean midday sun, crisp editorial light with gentle fill flash.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "registro-portada"
+      ],
+      "salida": "public/generadas/registro-album-2.png"
+    },
+    {
+      "id": "registro-album-3",
+      "grupo": "registro",
+      "aspecto": "2:3",
+      "uso": "Registro · galería/álbum 3 — sustituye fotos/bodas/bruma-3.avif",
+      "sustituye": [
+        "fotos/bodas/bruma-3.avif"
+      ],
+      "prompt": "portrait against a warm stone wall with strong midday shadows, relaxed, one leaning on the other. The same couple: two grooms in their early thirties: Àlex, Catalan, slim, light-brown hair and a light beard, wearing a sand-coloured suit with no tie; Bruno, broad-shouldered, curly black hair, olive skin, wearing a navy suit with a white shirt open at the collar. Setting: Barcelona's Gothic Quarter: a medieval stone square, the town-hall stairs and a sunny terrace in El Born. Palette: bright white, warm stone, one electric accent colour (lime or cobalt), crisp shadows. Light: bright Mediterranean midday sun, crisp editorial light with gentle fill flash.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "registro-portada"
+      ],
+      "salida": "public/generadas/registro-album-3.png"
+    },
+    {
+      "id": "registro-album-4",
+      "grupo": "registro",
+      "aspecto": "3:2",
+      "uso": "Registro · galería/álbum 4 — sustituye fotos/bodas/bruma-4.avif",
+      "sustituye": [
+        "fotos/bodas/bruma-4.avif"
+      ],
+      "prompt": "long lunch on a sunny terrace, white tablecloth, ceramic plates, lemons and green olives, friends laughing. The same couple: two grooms in their early thirties: Àlex, Catalan, slim, light-brown hair and a light beard, wearing a sand-coloured suit with no tie; Bruno, broad-shouldered, curly black hair, olive skin, wearing a navy suit with a white shirt open at the collar. Setting: Barcelona's Gothic Quarter: a medieval stone square, the town-hall stairs and a sunny terrace in El Born. Palette: bright white, warm stone, one electric accent colour (lime or cobalt), crisp shadows. Light: bright Mediterranean midday sun, crisp editorial light with gentle fill flash.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "registro-portada"
+      ],
+      "salida": "public/generadas/registro-album-4.png"
+    },
+    {
+      "id": "azulejo-portada",
+      "grupo": "azulejo",
+      "aspecto": "2:3",
+      "uso": "Azulejo · portada de la demo (Rocío y Javier). Es la referencia de la pareja para el resto.",
+      "sustituye": [],
+      "prompt": "Editorial wedding portrait, three-quarter length: an Andalusian couple in their late twenties: the bride has long dark hair in a low bun with a white lace mantilla, light olive skin, wearing an off-the-shoulder ivory silk gown; the groom has short black hair, a trimmed beard, wearing a light grey suit. Setting: a family house patio in Seville with blue-and-white azulejo tiles, orange trees, a marble fountain and magenta bougainvillea. Palette: cobalt blue, whitewash, ochre, bougainvillea magenta, orange-tree green. Light: evening light as the heat goes down, warm and soft, then lantern light. They stand close, relaxed and genuinely happy, looking at each other, not at the camera.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "salida": "public/generadas/azulejo-portada.png"
+    },
+    {
+      "id": "azulejo-album-1",
+      "grupo": "azulejo",
+      "aspecto": "2:3",
+      "uso": "Azulejo · galería/álbum 1 — sustituye fotos/bodas/tinta-1.avif",
+      "sustituye": [
+        "fotos/bodas/tinta-1.avif"
+      ],
+      "prompt": "ceremony in the tiled patio under an orange tree, family on wooden chairs, a grandmother watching from a balcony window. The same couple: an Andalusian couple in their late twenties: the bride has long dark hair in a low bun with a white lace mantilla, light olive skin, wearing an off-the-shoulder ivory silk gown; the groom has short black hair, a trimmed beard, wearing a light grey suit. Setting: a family house patio in Seville with blue-and-white azulejo tiles, orange trees, a marble fountain and magenta bougainvillea. Palette: cobalt blue, whitewash, ochre, bougainvillea magenta, orange-tree green. Light: evening light as the heat goes down, warm and soft, then lantern light.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "azulejo-portada"
+      ],
+      "salida": "public/generadas/azulejo-album-1.png"
+    },
+    {
+      "id": "azulejo-album-2",
+      "grupo": "azulejo",
+      "aspecto": "3:2",
+      "uso": "Azulejo · galería/álbum 2 — sustituye fotos/bodas/lino-3.avif",
+      "sustituye": [
+        "fotos/bodas/lino-3.avif"
+      ],
+      "prompt": "the couple at the marble fountain surrounded by azulejo walls and bougainvillea, candid. The same couple: an Andalusian couple in their late twenties: the bride has long dark hair in a low bun with a white lace mantilla, light olive skin, wearing an off-the-shoulder ivory silk gown; the groom has short black hair, a trimmed beard, wearing a light grey suit. Setting: a family house patio in Seville with blue-and-white azulejo tiles, orange trees, a marble fountain and magenta bougainvillea. Palette: cobalt blue, whitewash, ochre, bougainvillea magenta, orange-tree green. Light: evening light as the heat goes down, warm and soft, then lantern light.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "azulejo-portada"
+      ],
+      "salida": "public/generadas/azulejo-album-2.png"
+    },
+    {
+      "id": "azulejo-album-3",
+      "grupo": "azulejo",
+      "aspecto": "2:3",
+      "uso": "Azulejo · galería/álbum 3 — sustituye fotos/bodas/lino-1.avif",
+      "sustituye": [
+        "fotos/bodas/lino-1.avif"
+      ],
+      "prompt": "dinner in an upstairs gallery with arches, white linen, blue ceramic jugs, oranges and lemons, lanterns. The same couple: an Andalusian couple in their late twenties: the bride has long dark hair in a low bun with a white lace mantilla, light olive skin, wearing an off-the-shoulder ivory silk gown; the groom has short black hair, a trimmed beard, wearing a light grey suit. Setting: a family house patio in Seville with blue-and-white azulejo tiles, orange trees, a marble fountain and magenta bougainvillea. Palette: cobalt blue, whitewash, ochre, bougainvillea magenta, orange-tree green. Light: evening light as the heat goes down, warm and soft, then lantern light.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "azulejo-portada"
+      ],
+      "salida": "public/generadas/azulejo-album-3.png"
+    },
+    {
+      "id": "azulejo-album-4",
+      "grupo": "azulejo",
+      "aspecto": "3:2",
+      "uso": "Azulejo · galería/álbum 4 — sustituye fotos/bodas/lino-2.avif",
+      "sustituye": [
+        "fotos/bodas/lino-2.avif"
+      ],
+      "prompt": "guests dancing sevillanas in the patio late at night, flamenco skirts in motion, lanterns, joy. The same couple: an Andalusian couple in their late twenties: the bride has long dark hair in a low bun with a white lace mantilla, light olive skin, wearing an off-the-shoulder ivory silk gown; the groom has short black hair, a trimmed beard, wearing a light grey suit. Setting: a family house patio in Seville with blue-and-white azulejo tiles, orange trees, a marble fountain and magenta bougainvillea. Palette: cobalt blue, whitewash, ochre, bougainvillea magenta, orange-tree green. Light: evening light as the heat goes down, warm and soft, then lantern light.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "azulejo-portada"
+      ],
+      "salida": "public/generadas/azulejo-album-4.png"
+    },
+    {
+      "id": "regencia-portada",
+      "grupo": "regencia",
+      "aspecto": "2:3",
+      "uso": "Alta sociedad · portada de la demo (Olivia y Edmundo) — sustituye tematicas/regencia/poster-v.avif. Es la referencia de la pareja para el resto.",
+      "sustituye": [
+        "tematicas/regencia/poster-v.avif"
+      ],
+      "prompt": "Editorial wedding portrait, three-quarter length: a romantic couple in their late twenties in Regency-inspired wedding attire: the bride has auburn hair in a soft updo with tendrils, fair skin, wearing an empire-waist gown in pale Wedgwood blue silk with delicate embroidery and short puffed sleeves; the groom has dark wavy hair and light brown skin, wearing a midnight tailcoat with a high-collared shirt and cream waistcoat. Setting: the formal gardens of a royal palace in Aranjuez with wisteria, clipped hedges, fountains and gravel paths. Palette: Wedgwood blue, wisteria lilac, tea rose, cream, gilt. Light: soft spring afternoon light, painterly. They stand close, relaxed and genuinely happy, looking at each other, not at the camera.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "salida": "public/generadas/regencia-portada.png"
+    },
+    {
+      "id": "regencia-album-1",
+      "grupo": "regencia",
+      "aspecto": "3:2",
+      "uso": "Alta sociedad · galería/álbum 1",
+      "sustituye": [],
+      "prompt": "walking along a gravel path under a wisteria pergola in full bloom, palace façade in the distance. The same couple: a romantic couple in their late twenties in Regency-inspired wedding attire: the bride has auburn hair in a soft updo with tendrils, fair skin, wearing an empire-waist gown in pale Wedgwood blue silk with delicate embroidery and short puffed sleeves; the groom has dark wavy hair and light brown skin, wearing a midnight tailcoat with a high-collared shirt and cream waistcoat. Setting: the formal gardens of a royal palace in Aranjuez with wisteria, clipped hedges, fountains and gravel paths. Palette: Wedgwood blue, wisteria lilac, tea rose, cream, gilt. Light: soft spring afternoon light, painterly.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "regencia-portada"
+      ],
+      "salida": "public/generadas/regencia-album-1.png"
+    },
+    {
+      "id": "regencia-album-2",
+      "grupo": "regencia",
+      "aspecto": "2:3",
+      "uso": "Alta sociedad · galería/álbum 2",
+      "sustituye": [],
+      "prompt": "tea and champagne in the gardens: porcelain teacups, petit fours, a silver tray, the couple in conversation. The same couple: a romantic couple in their late twenties in Regency-inspired wedding attire: the bride has auburn hair in a soft updo with tendrils, fair skin, wearing an empire-waist gown in pale Wedgwood blue silk with delicate embroidery and short puffed sleeves; the groom has dark wavy hair and light brown skin, wearing a midnight tailcoat with a high-collared shirt and cream waistcoat. Setting: the formal gardens of a royal palace in Aranjuez with wisteria, clipped hedges, fountains and gravel paths. Palette: Wedgwood blue, wisteria lilac, tea rose, cream, gilt. Light: soft spring afternoon light, painterly.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "regencia-portada"
+      ],
+      "salida": "public/generadas/regencia-album-2.png"
+    },
+    {
+      "id": "regencia-album-3",
+      "grupo": "regencia",
+      "aspecto": "3:2",
+      "uso": "Alta sociedad · galería/álbum 3",
+      "sustituye": [],
+      "prompt": "gala dinner in a palace salon with gilded mirrors, candelabra and tall arrangements of wisteria and roses, no people. Setting: the formal gardens of a royal palace in Aranjuez with wisteria, clipped hedges, fountains and gravel paths. Palette: Wedgwood blue, wisteria lilac, tea rose, cream, gilt. Light: soft spring afternoon light, painterly.",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "referencias": [],
+      "salida": "public/generadas/regencia-album-3.png"
+    },
+    {
+      "id": "regencia-album-4",
+      "grupo": "regencia",
+      "aspecto": "2:3",
+      "uso": "Alta sociedad · galería/álbum 4",
+      "sustituye": [],
+      "prompt": "the first waltz in a ballroom, her skirt in motion, candlelight, other dancers out of focus. The same couple: a romantic couple in their late twenties in Regency-inspired wedding attire: the bride has auburn hair in a soft updo with tendrils, fair skin, wearing an empire-waist gown in pale Wedgwood blue silk with delicate embroidery and short puffed sleeves; the groom has dark wavy hair and light brown skin, wearing a midnight tailcoat with a high-collared shirt and cream waistcoat. Setting: the formal gardens of a royal palace in Aranjuez with wisteria, clipped hedges, fountains and gravel paths. Palette: Wedgwood blue, wisteria lilac, tea rose, cream, gilt. Light: soft spring afternoon light, painterly.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "regencia-portada"
+      ],
+      "salida": "public/generadas/regencia-album-4.png"
+    },
+    {
+      "id": "aire-portada",
+      "grupo": "aire",
+      "aspecto": "2:3",
+      "uso": "Aire · portada de la demo (Blanca y Alonso) — sustituye tematicas/aire/poster-v.avif. Es la referencia de la pareja para el resto.",
+      "sustituye": [
+        "tematicas/aire/poster-v.avif"
+      ],
+      "prompt": "Editorial wedding portrait, three-quarter length: a serene couple in their late thirties: the bride has a platinum short bob, fair skin, wearing a weightless white tulle gown with a long flowing train; the groom is of Filipino-Spanish descent, black hair swept back, wearing an ivory dinner jacket and black trousers. Setting: a white palace salon in Madrid with tall windows, mirrors and polished wooden floors, curtains moving in the wind. Palette: white on white, oyster, pale gold, airy light grey. Light: high-key, airy, diffused window light, very soft shadows. They stand close, relaxed and genuinely happy, looking at each other, not at the camera.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "salida": "public/generadas/aire-portada.png"
+    },
+    {
+      "id": "aire-album-1",
+      "grupo": "aire",
+      "aspecto": "2:3",
+      "uso": "Aire · galería/álbum 1",
+      "sustituye": [],
+      "prompt": "the tulle train lifted by the wind in a white salon, she turns, motion, high-key. The same couple: a serene couple in their late thirties: the bride has a platinum short bob, fair skin, wearing a weightless white tulle gown with a long flowing train; the groom is of Filipino-Spanish descent, black hair swept back, wearing an ivory dinner jacket and black trousers. Setting: a white palace salon in Madrid with tall windows, mirrors and polished wooden floors, curtains moving in the wind. Palette: white on white, oyster, pale gold, airy light grey. Light: high-key, airy, diffused window light, very soft shadows.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "aire-portada"
+      ],
+      "salida": "public/generadas/aire-album-1.png"
+    },
+    {
+      "id": "aire-album-2",
+      "grupo": "aire",
+      "aspecto": "3:2",
+      "uso": "Aire · galería/álbum 2",
+      "sustituye": [],
+      "prompt": "the couple at a tall open window, sheer white curtains billowing around them. The same couple: a serene couple in their late thirties: the bride has a platinum short bob, fair skin, wearing a weightless white tulle gown with a long flowing train; the groom is of Filipino-Spanish descent, black hair swept back, wearing an ivory dinner jacket and black trousers. Setting: a white palace salon in Madrid with tall windows, mirrors and polished wooden floors, curtains moving in the wind. Palette: white on white, oyster, pale gold, airy light grey. Light: high-key, airy, diffused window light, very soft shadows.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "aire-portada"
+      ],
+      "salida": "public/generadas/aire-album-2.png"
+    },
+    {
+      "id": "aire-album-3",
+      "grupo": "aire",
+      "aspecto": "2:3",
+      "uso": "Aire · galería/álbum 3",
+      "sustituye": [],
+      "prompt": "a single white phalaenopsis orchid stem and a crystal glass on a white marble side table, minimal still life. The same couple: a serene couple in their late thirties: the bride has a platinum short bob, fair skin, wearing a weightless white tulle gown with a long flowing train; the groom is of Filipino-Spanish descent, black hair swept back, wearing an ivory dinner jacket and black trousers. Setting: a white palace salon in Madrid with tall windows, mirrors and polished wooden floors, curtains moving in the wind. Palette: white on white, oyster, pale gold, airy light grey. Light: high-key, airy, diffused window light, very soft shadows.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "aire-portada"
+      ],
+      "salida": "public/generadas/aire-album-3.png"
+    },
+    {
+      "id": "aire-album-4",
+      "grupo": "aire",
+      "aspecto": "3:2",
+      "uso": "Aire · galería/álbum 4",
+      "sustituye": [],
+      "prompt": "lunch in a hall of mirrors: long white table, white flowers, glassware, reflections, no people. Setting: a white palace salon in Madrid with tall windows, mirrors and polished wooden floors, curtains moving in the wind. Palette: white on white, oyster, pale gold, airy light grey. Light: high-key, airy, diffused window light, very soft shadows.",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "referencias": [],
+      "salida": "public/generadas/aire-album-4.png"
+    },
+    {
+      "id": "cuento-portada",
+      "grupo": "cuento",
+      "aspecto": "2:3",
+      "uso": "Érase una vez · portada de la demo (Aurora y Leo) — sustituye tematicas/cuento/poster-v.avif. Es la referencia de la pareja para el resto.",
+      "sustituye": [
+        "tematicas/cuento/poster-v.avif"
+      ],
+      "prompt": "Editorial wedding portrait, three-quarter length: a fairytale couple in their late twenties: the bride has long dark-blonde hair in loose waves with a delicate gold leaf tiara, light skin, wearing a ballgown of layered tulle with tiny embroidered gold stars; the groom has short brown hair, light skin, wearing a midnight-blue velvet tuxedo. Setting: a romantic modernist castle on the Catalan coast (Maresme) with towers, terraced gardens and stone balustrades. Palette: amethyst, midnight blue, warm gold, rose. Light: blue hour with thousands of warm fairy lights, a hint of mist. They stand close, relaxed and genuinely happy, looking at each other, not at the camera.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "salida": "public/generadas/cuento-portada.png"
+    },
+    {
+      "id": "cuento-album-1",
+      "grupo": "cuento",
+      "aspecto": "2:3",
+      "uso": "Érase una vez · galería/álbum 1",
+      "sustituye": [],
+      "prompt": "the couple on castle steps at blue hour, fairy lights in the trees, soft mist, magical but realistic. The same couple: a fairytale couple in their late twenties: the bride has long dark-blonde hair in loose waves with a delicate gold leaf tiara, light skin, wearing a ballgown of layered tulle with tiny embroidered gold stars; the groom has short brown hair, light skin, wearing a midnight-blue velvet tuxedo. Setting: a romantic modernist castle on the Catalan coast (Maresme) with towers, terraced gardens and stone balustrades. Palette: amethyst, midnight blue, warm gold, rose. Light: blue hour with thousands of warm fairy lights, a hint of mist.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "cuento-portada"
+      ],
+      "salida": "public/generadas/cuento-album-1.png"
+    },
+    {
+      "id": "cuento-album-2",
+      "grupo": "cuento",
+      "aspecto": "3:2",
+      "uso": "Érase una vez · galería/álbum 2",
+      "sustituye": [],
+      "prompt": "cocktail in the castle gardens: lanterns hanging from trees, guests out of focus, glowing. The same couple: a fairytale couple in their late twenties: the bride has long dark-blonde hair in loose waves with a delicate gold leaf tiara, light skin, wearing a ballgown of layered tulle with tiny embroidered gold stars; the groom has short brown hair, light skin, wearing a midnight-blue velvet tuxedo. Setting: a romantic modernist castle on the Catalan coast (Maresme) with towers, terraced gardens and stone balustrades. Palette: amethyst, midnight blue, warm gold, rose. Light: blue hour with thousands of warm fairy lights, a hint of mist.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "cuento-portada"
+      ],
+      "salida": "public/generadas/cuento-album-2.png"
+    },
+    {
+      "id": "cuento-album-3",
+      "grupo": "cuento",
+      "aspecto": "2:3",
+      "uso": "Érase una vez · galería/álbum 3",
+      "sustituye": [],
+      "prompt": "close-up of the tulle skirt with tiny gold stars catching the light, her hand holding a small bouquet of blush roses. The same couple: a fairytale couple in their late twenties: the bride has long dark-blonde hair in loose waves with a delicate gold leaf tiara, light skin, wearing a ballgown of layered tulle with tiny embroidered gold stars; the groom has short brown hair, light skin, wearing a midnight-blue velvet tuxedo. Setting: a romantic modernist castle on the Catalan coast (Maresme) with towers, terraced gardens and stone balustrades. Palette: amethyst, midnight blue, warm gold, rose. Light: blue hour with thousands of warm fairy lights, a hint of mist.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "cuento-portada"
+      ],
+      "salida": "public/generadas/cuento-album-3.png"
+    },
+    {
+      "id": "cuento-album-4",
+      "grupo": "cuento",
+      "aspecto": "3:2",
+      "uso": "Érase una vez · galería/álbum 4",
+      "sustituye": [],
+      "prompt": "great hall banquet with candelabra, long tables, garlands of roses and ivy, warm candlelight, no people. Setting: a romantic modernist castle on the Catalan coast (Maresme) with towers, terraced gardens and stone balustrades. Palette: amethyst, midnight blue, warm gold, rose. Light: blue hour with thousands of warm fairy lights, a hint of mist.",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "referencias": [],
+      "salida": "public/generadas/cuento-album-4.png"
+    },
+    {
+      "id": "apertura-sobre",
+      "grupo": "aperturas",
+      "aspecto": "9:16",
+      "uso": "Apertura «sobre»: primer fotograma del máster de vídeo y base del póster (sustituye aperturas/sobre/poster.avif y su vídeo, ver plan de animaciones)",
+      "sustituye": [
+        "aperturas/sobre/poster.avif"
+      ],
+      "prompt": "Cinematic vertical still: a cream cotton-paper envelope lying on natural linen, closed with a plain smooth burgundy wax seal embossed with two interlocking rings, soft window light from the left, shallow depth of field. Calm composition with empty space in the upper third for names added later in HTML. Photographic, natural light. The wax seal is plain and smooth: no letters, no text, no scribbles.",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/apertura-sobre.png"
+    },
+    {
+      "id": "apertura-floracion",
+      "grupo": "aperturas",
+      "aspecto": "9:16",
+      "uso": "Apertura «floracion»: primer fotograma del máster de vídeo y base del póster (sustituye aperturas/floracion/poster.avif y su vídeo, ver plan de animaciones)",
+      "sustituye": [
+        "aperturas/floracion/poster.avif"
+      ],
+      "prompt": "Cinematic vertical still: extreme macro of a closed pale peony bud with dew drops, olive leaves behind, soft morning light, the bud about to open. Calm composition with empty space in the upper third for names added later in HTML. Photographic, natural light.",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/apertura-floracion.png"
+    },
+    {
+      "id": "apertura-cielo",
+      "grupo": "aperturas",
+      "aspecto": "9:16",
+      "uso": "Apertura «cielo»: primer fotograma del máster de vídeo y base del póster (sustituye aperturas/cielo/poster.avif y su vídeo, ver plan de animaciones)",
+      "sustituye": [
+        "aperturas/cielo/poster.avif"
+      ],
+      "prompt": "Cinematic vertical still: flying slowly up through soft layers of clouds at dawn, grey turning to gold, sea far below. Calm composition with empty space in the upper third for names added later in HTML. Photographic, natural light.",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/apertura-cielo.png"
+    },
+    {
+      "id": "apertura-velo",
+      "grupo": "aperturas",
+      "aspecto": "9:16",
+      "uso": "Apertura «velo»: primer fotograma del máster de vídeo y base del póster (sustituye aperturas/velo/poster.avif y su vídeo, ver plan de animaciones)",
+      "sustituye": [
+        "aperturas/velo/poster.avif"
+      ],
+      "prompt": "Cinematic vertical still: a sheer ivory silk tulle veil hanging in the air in front of a tall window, light passing through the folds, ethereal. Calm composition with empty space in the upper third for names added later in HTML. Photographic, natural light.",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/apertura-velo.png"
+    },
+    {
+      "id": "apertura-constelacion",
+      "grupo": "aperturas",
+      "aspecto": "9:16",
+      "uso": "Apertura «constelacion»: primer fotograma del máster de vídeo y base del póster (sustituye aperturas/constelacion/poster.avif y su vídeo, ver plan de animaciones)",
+      "sustituye": [
+        "aperturas/constelacion/poster.avif"
+      ],
+      "prompt": "Cinematic vertical still: deep navy night sky full of stars above dark silhouettes of pine trees, a few brighter stars, subtle Milky Way. Calm composition with empty space in the upper third for names added later in HTML. Photographic, natural light.",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/apertura-constelacion.png"
+    },
+    {
+      "id": "apertura-tinta",
+      "grupo": "aperturas",
+      "aspecto": "9:16",
+      "uso": "Apertura «tinta»: primer fotograma del máster de vídeo y base del póster (sustituye aperturas/tinta/poster.avif y su vídeo, ver plan de animaciones)",
+      "sustituye": [
+        "aperturas/tinta/poster.avif"
+      ],
+      "prompt": "Cinematic vertical still: a drop of black ink blooming in clear water against white, macro, elegant swirls, monochrome. Calm composition with empty space in the upper third for names added later in HTML. Photographic, natural light.",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/apertura-tinta.png"
+    },
+    {
+      "id": "apertura-brasa",
+      "grupo": "aperturas",
+      "aspecto": "9:16",
+      "uso": "Apertura «brasa»: primer fotograma del máster de vídeo y base del póster (sustituye aperturas/brasa/poster.avif y su vídeo, ver plan de animaciones)",
+      "sustituye": [
+        "aperturas/brasa/poster.avif"
+      ],
+      "prompt": "Cinematic vertical still: a field of dry golden grasses at sunset with glowing embers of light, warm haze, terracotta sky. Calm composition with empty space in the upper third for names added later in HTML. Photographic, natural light.",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/apertura-brasa.png"
+    },
+    {
+      "id": "apertura-bruma",
+      "grupo": "aperturas",
+      "aspecto": "9:16",
+      "uso": "Apertura «bruma»: primer fotograma del máster de vídeo y base del póster (sustituye aperturas/bruma/poster.avif y su vídeo, ver plan de animaciones)",
+      "sustituye": [
+        "aperturas/bruma/poster.avif"
+      ],
+      "prompt": "Cinematic vertical still: a fogged window pane with soft winter light, droplets, a blurred garden behind, intimate and quiet. Calm composition with empty space in the upper third for names added later in HTML. Photographic, natural light.",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/apertura-bruma.png"
+    },
+    {
+      "id": "apertura-jardin",
+      "grupo": "aperturas",
+      "aspecto": "9:16",
+      "uso": "Apertura «jardin»: primer fotograma del máster de vídeo y base del póster (sustituye aperturas/jardin/poster.avif y su vídeo, ver plan de animaciones)",
+      "sustituye": [
+        "aperturas/jardin/poster.avif"
+      ],
+      "prompt": "Cinematic vertical still: a romantic formal garden at dawn with wisteria and roses, dew, soft focus. Calm composition with empty space in the upper third for names added later in HTML. Photographic, natural light.",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/apertura-jardin.png"
+    },
+    {
+      "id": "apertura-lino",
+      "grupo": "aperturas",
+      "aspecto": "9:16",
+      "uso": "Apertura «lino»: primer fotograma del máster de vídeo y base del póster (sustituye aperturas/lino/poster.avif y su vídeo, ver plan de animaciones)",
+      "sustituye": [
+        "aperturas/lino/poster.avif"
+      ],
+      "prompt": "Cinematic vertical still: close-up of natural linen fabric gently moving in a breeze, warm daylight, folds and texture. Calm composition with empty space in the upper third for names added later in HTML. Photographic, natural light.",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/apertura-lino.png"
+    },
+    {
+      "id": "apertura-marea",
+      "grupo": "aperturas",
+      "aspecto": "9:16",
+      "uso": "Apertura «marea»: primer fotograma del máster de vídeo y base del póster (sustituye aperturas/marea/poster.avif y su vídeo, ver plan de animaciones)",
+      "sustituye": [
+        "aperturas/marea/poster.avif"
+      ],
+      "prompt": "Cinematic vertical still: calm turquoise Mediterranean water over white sand seen from above, gentle wave lines, sunlight caustics. Calm composition with empty space in the upper third for names added later in HTML. Photographic, natural light.",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/apertura-marea.png"
+    },
+    {
+      "id": "apertura-terracota",
+      "grupo": "aperturas",
+      "aspecto": "9:16",
+      "uso": "Apertura «terracota»: primer fotograma del máster de vídeo y base del póster (sustituye aperturas/terracota/poster.avif y su vídeo, ver plan de animaciones)",
+      "sustituye": [
+        "aperturas/terracota/poster.avif"
+      ],
+      "prompt": "Cinematic vertical still: sunlit terracotta wall with the shadow of an olive branch moving softly, warm Mediterranean afternoon. Calm composition with empty space in the upper third for names added later in HTML. Photographic, natural light.",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/apertura-terracota.png"
+    },
+    {
+      "id": "regencia-poster-h",
+      "grupo": "regencia",
+      "aspecto": "16:9",
+      "uso": "Alta sociedad · póster horizontal del hero (sustituye tematicas/regencia/poster-h.avif)",
+      "sustituye": [
+        "tematicas/regencia/poster-h.avif"
+      ],
+      "prompt": "walking along a gravel path under a wisteria pergola in full bloom, palace façade in the distance. The same couple: a romantic couple in their late twenties in Regency-inspired wedding attire: the bride has auburn hair in a soft updo with tendrils, fair skin, wearing an empire-waist gown in pale Wedgwood blue silk with delicate embroidery and short puffed sleeves; the groom has dark wavy hair and light brown skin, wearing a midnight tailcoat with a high-collared shirt and cream waistcoat. Setting: the formal gardens of a royal palace in Aranjuez with wisteria, clipped hedges, fountains and gravel paths. Palette: Wedgwood blue, wisteria lilac, tea rose, cream, gilt. Light: soft spring afternoon light, painterly. Wide cinematic frame, space on one side for the title.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "regencia-portada"
+      ],
+      "salida": "public/generadas/regencia-poster-h.png"
+    },
+    {
+      "id": "aire-poster-h",
+      "grupo": "aire",
+      "aspecto": "16:9",
+      "uso": "Aire · póster horizontal del hero (sustituye tematicas/aire/poster-h.avif)",
+      "sustituye": [
+        "tematicas/aire/poster-h.avif"
+      ],
+      "prompt": "the tulle train lifted by the wind in a white salon, she turns, motion, high-key. The same couple: a serene couple in their late thirties: the bride has a platinum short bob, fair skin, wearing a weightless white tulle gown with a long flowing train; the groom is of Filipino-Spanish descent, black hair swept back, wearing an ivory dinner jacket and black trousers. Setting: a white palace salon in Madrid with tall windows, mirrors and polished wooden floors, curtains moving in the wind. Palette: white on white, oyster, pale gold, airy light grey. Light: high-key, airy, diffused window light, very soft shadows. Wide cinematic frame, space on one side for the title.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "aire-portada"
+      ],
+      "salida": "public/generadas/aire-poster-h.png"
+    },
+    {
+      "id": "aire-apertura",
+      "grupo": "aire",
+      "aspecto": "9:16",
+      "uso": "Aire · imagen de apertura (sustituye tematicas/aire/apertura.avif)",
+      "sustituye": [
+        "tematicas/aire/apertura.avif"
+      ],
+      "prompt": "Vertical: a long white tulle veil floating in the air in an empty white salon with tall windows, high-key, airy, poetic, no people visible",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/aire-apertura.png"
+    },
+    {
+      "id": "cuento-poster-h",
+      "grupo": "cuento",
+      "aspecto": "16:9",
+      "uso": "Érase una vez · póster horizontal del hero (sustituye tematicas/cuento/poster-h.avif)",
+      "sustituye": [
+        "tematicas/cuento/poster-h.avif"
+      ],
+      "prompt": "the couple on castle steps at blue hour, fairy lights in the trees, soft mist, magical but realistic. The same couple: a fairytale couple in their late twenties: the bride has long dark-blonde hair in loose waves with a delicate gold leaf tiara, light skin, wearing a ballgown of layered tulle with tiny embroidered gold stars; the groom has short brown hair, light skin, wearing a midnight-blue velvet tuxedo. Setting: a romantic modernist castle on the Catalan coast (Maresme) with towers, terraced gardens and stone balustrades. Palette: amethyst, midnight blue, warm gold, rose. Light: blue hour with thousands of warm fairy lights, a hint of mist. Wide cinematic frame, space on one side for the title.",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "referencias": [
+        "cuento-portada"
+      ],
+      "salida": "public/generadas/cuento-poster-h.png"
+    },
+    {
+      "id": "cuento-apertura",
+      "grupo": "cuento",
+      "aspecto": "9:16",
+      "uso": "Érase una vez · imagen de apertura (sustituye tematicas/cuento/apertura.avif)",
+      "sustituye": [
+        "tematicas/cuento/apertura.avif"
+      ],
+      "prompt": "Vertical: a castle garden path at blue hour lined with thousands of warm fairy lights and blush roses, soft mist, magical but photographic, no people",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/cuento-apertura.png"
+    },
+    {
+      "id": "marca-alianzas-lino",
+      "grupo": "marca",
+      "aspecto": "4:5",
+      "uso": "Alianzas Invitoo sobre lino: web, redes, bloque de regalos (sustituye fotos/alianzas.avif)",
+      "sustituye": [
+        "fotos/alianzas.avif"
+      ],
+      "prompt": "Still life: two interlocking yellow-gold wedding bands lying on natural cream linen, exactly like the reference drawing: one plain band and one band with a single round brilliant-cut diamond set high in a classic four-prong solitaire setting, the two rings overlapping; soft window light from the left, gentle shadows, macro lens, editorial jewellery photography",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "referencias_archivos": [
+        "public/marca/referencias/alianzas-dibujo.png"
+      ],
+      "salida": "public/generadas/marca-alianzas-lino.png"
+    },
+    {
+      "id": "marca-alianzas-mano",
+      "grupo": "marca",
+      "aspecto": "4:5",
+      "uso": "Alianzas en la mano de la novia (campañas)",
+      "prompt": "Close-up of a bride's hand with a thin yellow-gold solitaire ring with one round brilliant diamond and a plain gold band, resting on ivory silk, natural light, editorial, no nail art",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "referencias_archivos": [
+        "public/marca/referencias/alianzas-dibujo.png"
+      ],
+      "salida": "public/generadas/marca-alianzas-mano.png"
+    },
+    {
+      "id": "marca-alianzas-terciopelo",
+      "grupo": "marca",
+      "aspecto": "1:1",
+      "uso": "Alianzas sobre terciopelo granate (fondo de RSVP / redes)",
+      "prompt": "Two interlocking gold wedding rings, one with a single round brilliant diamond solitaire, lying on deep burgundy velvet (#7A1826), low-key lighting, a soft highlight on the gold, luxurious and minimal",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "referencias_archivos": [
+        "public/marca/referencias/alianzas-dibujo.png"
+      ],
+      "salida": "public/generadas/marca-alianzas-terciopelo.png"
+    },
+    {
+      "id": "marca-lacre-alianzas",
+      "grupo": "marca",
+      "aspecto": "1:1",
+      "uso": "Lacre de cera granate con el monograma de las alianzas (aperturas, redes, póster Sobre)",
+      "prompt": "Macro of a plain smooth deep burgundy wax seal on a cream cotton-paper envelope, the seal embossed only with two interlocking rings and a small diamond like the reference drawing, no letters, no text, irregular organic wax edge, soft raking window light revealing the relief",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "referencias_archivos": [
+        "public/marca/referencias/alianzas-dibujo.png"
+      ],
+      "salida": "public/generadas/marca-lacre-alianzas.png"
+    },
+    {
+      "id": "marca-lacre-roto",
+      "grupo": "marca",
+      "aspecto": "4:5",
+      "uso": "Lacre partido (momento firma «el lacre se rompe»)",
+      "prompt": "A plain smooth burgundy wax seal cracked cleanly in two on an opened cream cotton envelope flap, small wax fragments, no letters, no text, soft side light, macro",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/marca-lacre-roto.png"
+    },
+    {
+      "id": "marca-lacre-oro",
+      "grupo": "marca",
+      "aspecto": "1:1",
+      "uso": "Lacre en oro viejo y crema (variante Velo/Aire)",
+      "prompt": "A plain smooth antique-gold wax seal with a subtle relief of two interlocking rings, no letters, no text, on a white deckled-edge cotton envelope, airy high-key light",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/marca-lacre-oro.png"
+    },
+    {
+      "id": "marca-sobre-algodon",
+      "grupo": "marca",
+      "aspecto": "4:5",
+      "uso": "Sobres de algodón con forro (catálogo de sobres y forros)",
+      "prompt": "Flat lay of three cream cotton-paper envelopes with deckled edges, one open showing a liner printed with a delicate olive-branch pattern, a burgundy wax seal, natural linen underneath, silk ribbon, soft daylight The wax seal is plain and smooth: no letters, no text, no scribbles.",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/marca-sobre-algodon.png"
+    },
+    {
+      "id": "marca-letterpress",
+      "grupo": "marca",
+      "aspecto": "4:5",
+      "uso": "Cartulina con letterpress en relieve seco (sin texto): fondo de portadas",
+      "prompt": "Raking-light close-up of a thick white cotton card with a blind letterpress impression of a botanical border of olive leaves and small flowers, deep tactile relief, no ink, no letters, no text",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/marca-letterpress.png"
+    },
+    {
+      "id": "marca-bodegon-papeleria",
+      "grupo": "marca",
+      "aspecto": "4:5",
+      "uso": "Bodegón de papelería con lino y flores (hero de la web, Instagram)",
+      "prompt": "Editorial flat lay of wedding stationery: blank cream cotton cards and envelopes, a burgundy wax seal, silk ribbon, a sprig of olive, white garden roses and eucalyptus on natural linen, soft morning light, generous negative space, all cards blank The wax seal is plain and smooth: no letters, no text, no scribbles.",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/marca-bodegon-papeleria.png"
+    },
+    {
+      "id": "marca-bodegon-movil",
+      "grupo": "marca",
+      "aspecto": "4:5",
+      "uso": "Bodegón papel + móvil: la invitación digital como objeto de papelería (web)",
+      "prompt": "Flat lay on natural linen: a modern smartphone lying next to a cream cotton envelope with a burgundy wax seal, olive branch and white roses; the phone screen shows a plain uniform warm-cream screen, empty, for compositing later; soft daylight The wax seal is plain and smooth: no letters, no text, no scribbles.",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/marca-bodegon-movil.png"
+    },
+    {
+      "id": "marca-ramo-olivo",
+      "grupo": "marca",
+      "aspecto": "2:3",
+      "uso": "Ramo de olivo y blanco (Floración, Carta)",
+      "prompt": "A loose bridal bouquet of olive branches, white garden roses, white cosmos and dried grasses tied with cream silk ribbon, held against a soft cream background, natural light",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/marca-ramo-olivo.png"
+    },
+    {
+      "id": "marca-ramo-peonias",
+      "grupo": "marca",
+      "aspecto": "2:3",
+      "uso": "Ramo de peonías (estilo romántico floral)",
+      "prompt": "A romantic bouquet of blush and white peonies, garden roses and sweet peas with trailing ribbon, soft pink and cream, against a plaster wall, natural window light",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/marca-ramo-peonias.png"
+    },
+    {
+      "id": "marca-ramo-azahar",
+      "grupo": "marca",
+      "aspecto": "2:3",
+      "uso": "Ramo de azahar y limón (Azulejo)",
+      "prompt": "A small bridal bouquet of orange blossom, white jasmine and a few small green lemons with leaves, against a blue-and-white tiled wall, warm evening light",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/marca-ramo-azahar.png"
+    },
+    {
+      "id": "marca-mesa-finca",
+      "grupo": "marca",
+      "aspecto": "3:2",
+      "uso": "Mesa montada en finca (web: servicios/colaboradores)",
+      "prompt": "A long banquet table in an olive grove at golden hour: linen tablecloth, olive branches, terracotta pots, beeswax candles, amber glassware, wooden chairs, no people",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/marca-mesa-finca.png"
+    },
+    {
+      "id": "marca-mesa-palacio",
+      "grupo": "marca",
+      "aspecto": "3:2",
+      "uso": "Mesa de gala en palacio (Velo, Alta sociedad)",
+      "prompt": "A gala table in a palace salon: white linen, gilded chargers, crystal, tall white flower arrangements, candelabra, mirrors and chandeliers, no people",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/marca-mesa-palacio.png"
+    },
+    {
+      "id": "marca-lugar-masia",
+      "grupo": "lugares",
+      "aspecto": "3:2",
+      "uso": "Lugar: masía del Empordà (web colaboradores, SEO local Girona)",
+      "prompt": "An old stone masia farmhouse in the Empordà countryside, Catalonia, with cypress trees, a gravel courtyard set for a wedding cocktail, golden hour, no people",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/marca-lugar-masia.png"
+    },
+    {
+      "id": "marca-lugar-olivar",
+      "grupo": "lugares",
+      "aspecto": "3:2",
+      "uso": "Lugar: olivar centenario (SEO Madrid / Andalucía)",
+      "prompt": "A centuries-old olive grove with twisted trunks and red earth, rows of wooden chairs for a ceremony, golden hour, no people",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/marca-lugar-olivar.png"
+    },
+    {
+      "id": "marca-lugar-cala",
+      "grupo": "lugares",
+      "aspecto": "3:2",
+      "uso": "Lugar: cala de Ibiza (SEO Baleares)",
+      "prompt": "A small turquoise cove in Ibiza with pines on the cliffs and a whitewashed terrace prepared for a wedding dinner at sunset, no people",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/marca-lugar-cala.png"
+    },
+    {
+      "id": "marca-lugar-patio-sevilla",
+      "grupo": "lugares",
+      "aspecto": "3:2",
+      "uso": "Lugar: patio sevillano (SEO Sevilla)",
+      "prompt": "A Seville courtyard with blue-and-white azulejos, an orange tree, a marble fountain and bougainvillea, lanterns lit at dusk, chairs set for a ceremony, no people",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/marca-lugar-patio-sevilla.png"
+    },
+    {
+      "id": "marca-lugar-segovia",
+      "grupo": "lugares",
+      "aspecto": "3:2",
+      "uso": "Lugar: pinar y granito de Segovia (SEO Castilla y León)",
+      "prompt": "A pine forest clearing in the Guadarrama mountains near Segovia with granite rocks, a simple ceremony setup with wooden benches and white flowers, warm afternoon haze, no people",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/marca-lugar-segovia.png"
+    },
+    {
+      "id": "marca-lugar-barcelona",
+      "grupo": "lugares",
+      "aspecto": "3:2",
+      "uso": "Lugar: plaza gótica de Barcelona (SEO Barcelona)",
+      "prompt": "A quiet medieval stone square in Barcelona's Gothic Quarter in soft morning light, a few café tables set with white cloths and flowers, no people, no signs",
+      "negativos": "text, engraved letters, monogram letters, scribbles, logos, brand marks, price tags, plastic, cheap glitter",
+      "salida": "public/generadas/marca-lugar-barcelona.png"
+    },
+    {
+      "id": "textura-papel-algodon",
+      "grupo": "texturas",
+      "aspecto": "1:1",
+      "uso": "Textura fotográfica (fondos de plantillas, redes). Alternativa IA a public/marca/texturas/*",
+      "prompt": "Macro texture of handmade cream cotton paper with visible fibres and a deckled edge, even soft light, seamless",
+      "negativos": "objects, text, people",
+      "salida": "public/generadas/textura-papel-algodon.png"
+    },
+    {
+      "id": "textura-lino",
+      "grupo": "texturas",
+      "aspecto": "1:1",
+      "uso": "Textura fotográfica (fondos de plantillas, redes). Alternativa IA a public/marca/texturas/*",
+      "prompt": "Macro texture of natural oatmeal linen fabric with slub irregular threads, even soft light, flat, seamless",
+      "negativos": "objects, text, people",
+      "salida": "public/generadas/textura-lino.png"
+    },
+    {
+      "id": "textura-acuarela",
+      "grupo": "texturas",
+      "aspecto": "1:1",
+      "uso": "Textura fotográfica (fondos de plantillas, redes). Alternativa IA a public/marca/texturas/*",
+      "prompt": "Abstract soft watercolour wash in olive green and sand on cold-press cotton paper, lots of white space, gentle blooms",
+      "negativos": "objects, text, people",
+      "salida": "public/generadas/textura-acuarela.png"
+    },
+    {
+      "id": "textura-marmol",
+      "grupo": "texturas",
+      "aspecto": "1:1",
+      "uso": "Textura fotográfica (fondos de plantillas, redes). Alternativa IA a public/marca/texturas/*",
+      "prompt": "Close-up of white Carrara marble with fine soft grey veins, matte, even light, seamless",
+      "negativos": "objects, text, people",
+      "salida": "public/generadas/textura-marmol.png"
+    },
+    {
+      "id": "textura-terciopelo",
+      "grupo": "texturas",
+      "aspecto": "1:1",
+      "uso": "Textura fotográfica (fondos de plantillas, redes). Alternativa IA a public/marca/texturas/*",
+      "prompt": "Close-up of deep burgundy velvet fabric with a soft sheen and gentle folds, low-key lighting",
+      "negativos": "objects, text, people",
+      "salida": "public/generadas/textura-terciopelo.png"
+    },
+    {
+      "id": "mk-movil-invitada",
+      "aspecto": "4:5",
+      "uso": "Marketing: la invitación en el móvil, en manos de una invitada (home, anuncios)",
+      "prompt": "Over-the-shoulder shot of a woman in her forties in a sunlit Spanish living room holding a smartphone with both hands, smiling softly; the phone screen is plain uniform warm cream, empty, for compositing later; shallow depth of field, natural light",
+      "grupo": "marketing",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people, readable screen content, app interface",
+      "salida": "public/generadas/mk-movil-invitada.png"
+    },
+    {
+      "id": "mk-abuela",
+      "aspecto": "4:5",
+      "uso": "Marketing: la abuela abre la invitación sola («La abuela la abre sin ayuda»)",
+      "prompt": "A Spanish grandmother in her late seventies with short white hair and reading glasses, sitting in an armchair by a window with lace curtains, holding a smartphone at arm's length and smiling with emotion; the screen is plain uniform cream, empty; warm afternoon light, tender and dignified",
+      "grupo": "marketing",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people, readable screen content, app interface",
+      "salida": "public/generadas/mk-abuela.png"
+    },
+    {
+      "id": "mk-tv-salon",
+      "aspecto": "16:9",
+      "uso": "Marketing: la TV del salón con las fotos de los invitados («En directo»)",
+      "prompt": "A wedding reception room at night with warm lights; a large flat TV on a stand shows a plain uniform dark screen, empty, for compositing later; guests in the foreground out of focus raising glasses; festoon lights, candles",
+      "grupo": "marketing",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people, readable screen content, app interface",
+      "salida": "public/generadas/mk-tv-salon.png"
+    },
+    {
+      "id": "mk-invitados-qr",
+      "aspecto": "4:5",
+      "uso": "Marketing: un invitado escanea el QR de la mesa para subir fotos",
+      "prompt": "A wedding guest in his thirties holding a smartphone over a small blank cream card on a dinner table, as if scanning a code; the card is plain and blank; candlelight, glasses and flowers around",
+      "grupo": "marketing",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people, readable screen content, app interface",
+      "salida": "public/generadas/mk-invitados-qr.png"
+    },
+    {
+      "id": "mk-novios-sofa",
+      "aspecto": "3:2",
+      "uso": "Marketing: los novios miran las confirmaciones en el sofá (panel)",
+      "prompt": "A young couple at home sitting on a linen sofa, sharing a laptop and laughing, cups of coffee, plants, morning light; the laptop screen faces away from the camera",
+      "grupo": "marketing",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people, readable screen content, app interface",
+      "salida": "public/generadas/mk-novios-sofa.png"
+    },
+    {
+      "id": "mk-whatsapp",
+      "aspecto": "9:16",
+      "uso": "Reels/stories: la invitación llega por mensaje y se abre (fondo vertical)",
+      "prompt": "Vertical close-up of hands holding a smartphone above a café table with a cortado and a croissant, Spanish street café, morning light; the screen is plain uniform cream, empty",
+      "grupo": "marketing",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people, readable screen content, app interface",
+      "salida": "public/generadas/mk-whatsapp.png"
+    },
+    {
+      "id": "mk-libro-deseos",
+      "aspecto": "4:5",
+      "uso": "Marketing: el Libro de buenos deseos impreso, abierto sobre lino",
+      "prompt": "An open A5 linen-bound book with cream pages on a wooden table, pages blank, a pressed olive leaf, a fountain pen, warm window light",
+      "grupo": "marketing",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people, readable screen content, app interface",
+      "salida": "public/generadas/mk-libro-deseos.png"
+    },
+    {
+      "id": "mk-equipo-estudio",
+      "aspecto": "3:2",
+      "uso": "Web «Qué hacemos»: mesa de estudio de diseño (sin personas reconocibles)",
+      "prompt": "A designer's desk in a bright Barcelona studio: paper swatches, envelopes, wax sticks, a laptop seen from behind, colour chips in olive, burgundy and gold, hands of a person sketching, face not visible",
+      "grupo": "marketing",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people, readable screen content, app interface",
+      "salida": "public/generadas/mk-equipo-estudio.png"
+    },
+    {
+      "id": "directo-brindis",
+      "grupo": "directo",
+      "aspecto": "3:2",
+      "uso": "Pantalla y pestaña «En directo» y momentos de muestra (sustituye las fotos reutilizadas de fotos/bodas en lib/momentos/muestra.ts y components/sitio/EnDirecto.tsx)",
+      "prompt": "Fictional people. guests at a Spanish wedding dinner raising glasses in a toast, candid smartphone-style photo, warm light. Slightly imperfect framing like a real guest photo, natural colours",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "salida": "public/generadas/directo-brindis.png"
+    },
+    {
+      "id": "directo-abuelos-bailando",
+      "grupo": "directo",
+      "aspecto": "2:3",
+      "uso": "Pantalla y pestaña «En directo» y momentos de muestra (sustituye las fotos reutilizadas de fotos/bodas en lib/momentos/muestra.ts y components/sitio/EnDirecto.tsx)",
+      "prompt": "Fictional people. an elderly couple dancing at a wedding, smiling, candid smartphone-style photo, festoon lights. Slightly imperfect framing like a real guest photo, natural colours",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "salida": "public/generadas/directo-abuelos-bailando.png"
+    },
+    {
+      "id": "directo-ninos",
+      "grupo": "directo",
+      "aspecto": "3:2",
+      "uso": "Pantalla y pestaña «En directo» y momentos de muestra (sustituye las fotos reutilizadas de fotos/bodas en lib/momentos/muestra.ts y components/sitio/EnDirecto.tsx)",
+      "prompt": "Fictional people. two children running with paper fans across a garden at a wedding, motion, candid. Slightly imperfect framing like a real guest photo, natural colours",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "salida": "public/generadas/directo-ninos.png"
+    },
+    {
+      "id": "directo-tarta",
+      "grupo": "directo",
+      "aspecto": "2:3",
+      "uso": "Pantalla y pestaña «En directo» y momentos de muestra (sustituye las fotos reutilizadas de fotos/bodas en lib/momentos/muestra.ts y components/sitio/EnDirecto.tsx)",
+      "prompt": "Fictional people. a simple white naked cake with figs and olive leaves on a wooden stand at a wedding, guests out of focus. Slightly imperfect framing like a real guest photo, natural colours",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "salida": "public/generadas/directo-tarta.png"
+    },
+    {
+      "id": "directo-amigas",
+      "grupo": "directo",
+      "aspecto": "2:3",
+      "uso": "Pantalla y pestaña «En directo» y momentos de muestra (sustituye las fotos reutilizadas de fotos/bodas en lib/momentos/muestra.ts y components/sitio/EnDirecto.tsx)",
+      "prompt": "Fictional people. three friends taking a selfie at a wedding cocktail, laughing, dressed elegantly, candid. Slightly imperfect framing like a real guest photo, natural colours",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "salida": "public/generadas/directo-amigas.png"
+    },
+    {
+      "id": "directo-pista",
+      "grupo": "directo",
+      "aspecto": "3:2",
+      "uso": "Pantalla y pestaña «En directo» y momentos de muestra (sustituye las fotos reutilizadas de fotos/bodas en lib/momentos/muestra.ts y components/sitio/EnDirecto.tsx)",
+      "prompt": "Fictional people. a crowded dance floor at night with confetti and coloured lights, motion blur, joy. Slightly imperfect framing like a real guest photo, natural colours",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "salida": "public/generadas/directo-pista.png"
+    },
+    {
+      "id": "directo-mesa-detalle",
+      "grupo": "directo",
+      "aspecto": "3:2",
+      "uso": "Pantalla y pestaña «En directo» y momentos de muestra (sustituye las fotos reutilizadas de fotos/bodas en lib/momentos/muestra.ts y components/sitio/EnDirecto.tsx)",
+      "prompt": "Fictional people. a wedding guest table seen from above with plates, wine glasses, flowers and hands reaching, candid. Slightly imperfect framing like a real guest photo, natural colours",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "salida": "public/generadas/directo-mesa-detalle.png"
+    },
+    {
+      "id": "directo-salida",
+      "grupo": "directo",
+      "aspecto": "2:3",
+      "uso": "Pantalla y pestaña «En directo» y momentos de muestra (sustituye las fotos reutilizadas de fotos/bodas en lib/momentos/muestra.ts y components/sitio/EnDirecto.tsx)",
+      "prompt": "Fictional people. guests throwing petals at a couple leaving under string lights at night, seen from behind the guests. Slightly imperfect framing like a real guest photo, natural colours",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "salida": "public/generadas/directo-salida.png"
+    },
+    {
+      "id": "web-hero",
+      "aspecto": "3:2",
+      "uso": "Web: imagen principal (sustituye fotos/hero.avif, hoy sin uso en src)",
+      "sustituye": [
+        "fotos/hero.avif"
+      ],
+      "prompt": "A bride and groom seen from behind walking between olive trees at golden hour, her veil catching the light, far from the camera, editorial, generous negative space on the left for headline",
+      "grupo": "web",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "salida": "public/generadas/web-hero.png"
+    },
+    {
+      "id": "web-corte-1",
+      "aspecto": "2:3",
+      "uso": "Web: corte editorial 1 (sustituye fotos/sitio/corte-1.avif)",
+      "sustituye": [
+        "fotos/sitio/corte-1.avif"
+      ],
+      "prompt": "Vertical editorial detail: a cream cotton envelope with a burgundy wax seal tucked into a bouquet of white roses and olive, natural light The wax seal is plain and smooth: no letters, no text, no scribbles.",
+      "grupo": "web",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "salida": "public/generadas/web-corte-1.png"
+    },
+    {
+      "id": "web-corte-2",
+      "aspecto": "2:3",
+      "uso": "Web: corte editorial 2 (sustituye fotos/sitio/corte-2.avif)",
+      "sustituye": [
+        "fotos/sitio/corte-2.avif"
+      ],
+      "prompt": "Vertical candid: a couple embracing on a Mediterranean terrace at sunset, wind in the dress, seen from a distance",
+      "grupo": "web",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "salida": "public/generadas/web-corte-2.png"
+    },
+    {
+      "id": "web-corte-3",
+      "aspecto": "3:2",
+      "uso": "Web: corte editorial 3 (sustituye fotos/sitio/corte-3.avif)",
+      "sustituye": [
+        "fotos/sitio/corte-3.avif"
+      ],
+      "prompt": "Close-up of two hands exchanging gold wedding rings during a ceremony, soft background of white flowers",
+      "grupo": "web",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "salida": "public/generadas/web-corte-3.png"
+    },
+    {
+      "id": "web-portada",
+      "aspecto": "16:9",
+      "uso": "Web: póster del vídeo de portada (sustituye fotos/sitio/portada.avif y portada-2.avif)",
+      "sustituye": [
+        "fotos/sitio/portada.avif",
+        "fotos/sitio/portada-2.avif"
+      ],
+      "prompt": "Wide still life on natural linen: a cream envelope with a burgundy wax seal, a smartphone with a plain cream screen, olive branches and white roses, soft morning light, lots of negative space on the right The wax seal is plain and smooth: no letters, no text, no scribbles.",
+      "grupo": "web",
+      "negativos": "bridal-shop posing, forced smiles looking at camera, heavy contouring makeup, plastic skin, extra fingers, distorted hands, duplicated people",
+      "salida": "public/generadas/web-portada.png"
+    }
+  ],
+  "sustitucion": [
+    {
+      "actual": "public/fotos/p-jardin.avif",
+      "nueva": "public/generadas/carta-portada-1080.avif",
+      "encargo": "carta-portada"
+    },
+    {
+      "actual": "public/fotos/bodas/terracota-1.avif",
+      "nueva": "public/generadas/carta-album-1-1080.avif",
+      "encargo": "carta-album-1"
+    },
+    {
+      "actual": "public/fotos/bodas/jardin-1.avif",
+      "nueva": "public/generadas/carta-album-2-1080.avif",
+      "encargo": "carta-album-2"
+    },
+    {
+      "actual": "public/fotos/bodas/terracota-4.avif",
+      "nueva": "public/generadas/carta-album-3-1080.avif",
+      "encargo": "carta-album-3"
+    },
+    {
+      "actual": "public/fotos/bodas/jardin-2.avif",
+      "nueva": "public/generadas/carta-album-4-1080.avif",
+      "encargo": "carta-album-4"
+    },
+    {
+      "actual": "public/fotos/bodas/brasa-3.avif",
+      "nueva": "public/generadas/carta-capitulo-1-1080.avif",
+      "encargo": "carta-capitulo-1"
+    },
+    {
+      "actual": "public/fotos/bodas/brasa-1.avif",
+      "nueva": "public/generadas/carta-capitulo-2-1080.avif",
+      "encargo": "carta-capitulo-2"
+    },
+    {
+      "actual": "public/fotos/bodas/jardin-4.avif",
+      "nueva": "public/generadas/carta-capitulo-3-1080.avif",
+      "encargo": "carta-capitulo-3"
+    },
+    {
+      "actual": "public/fotos/bodas/brasa-4.avif",
+      "nueva": "public/generadas/carta-capitulo-4-1080.avif",
+      "encargo": "carta-capitulo-4"
+    },
+    {
+      "actual": "public/fotos/p-sobre.avif",
+      "nueva": "public/generadas/sobre-portada-1080.avif",
+      "encargo": "sobre-portada"
+    },
+    {
+      "actual": "public/fotos/bodas/sobre-1.avif",
+      "nueva": "public/generadas/sobre-album-1-1080.avif",
+      "encargo": "sobre-album-1"
+    },
+    {
+      "actual": "public/fotos/bodas/sobre-2.avif",
+      "nueva": "public/generadas/sobre-album-2-1080.avif",
+      "encargo": "sobre-album-2"
+    },
+    {
+      "actual": "public/fotos/bodas/sobre-3.avif",
+      "nueva": "public/generadas/sobre-album-3-1080.avif",
+      "encargo": "sobre-album-3"
+    },
+    {
+      "actual": "public/fotos/bodas/sobre-4.avif",
+      "nueva": "public/generadas/sobre-album-4-1080.avif",
+      "encargo": "sobre-album-4"
+    },
+    {
+      "actual": "public/fotos/p-floracion.avif",
+      "nueva": "public/generadas/floracion-portada-1080.avif",
+      "encargo": "floracion-portada"
+    },
+    {
+      "actual": "public/fotos/bodas/floracion-1.avif",
+      "nueva": "public/generadas/floracion-album-1-1080.avif",
+      "encargo": "floracion-album-1"
+    },
+    {
+      "actual": "public/fotos/bodas/floracion-2.avif",
+      "nueva": "public/generadas/floracion-album-2-1080.avif",
+      "encargo": "floracion-album-2"
+    },
+    {
+      "actual": "public/fotos/bodas/floracion-3.avif",
+      "nueva": "public/generadas/floracion-album-3-1080.avif",
+      "encargo": "floracion-album-3"
+    },
+    {
+      "actual": "public/fotos/bodas/floracion-4.avif",
+      "nueva": "public/generadas/floracion-album-4-1080.avif",
+      "encargo": "floracion-album-4"
+    },
+    {
+      "actual": "public/fotos/p-cielo.avif",
+      "nueva": "public/generadas/mar-portada-1080.avif",
+      "encargo": "mar-portada"
+    },
+    {
+      "actual": "public/fotos/bodas/cielo-1.avif",
+      "nueva": "public/generadas/mar-album-1-1080.avif",
+      "encargo": "mar-album-1"
+    },
+    {
+      "actual": "public/fotos/bodas/cielo-2.avif",
+      "nueva": "public/generadas/mar-album-2-1080.avif",
+      "encargo": "mar-album-2"
+    },
+    {
+      "actual": "public/fotos/bodas/marea-1.avif",
+      "nueva": "public/generadas/mar-album-3-1080.avif",
+      "encargo": "mar-album-3"
+    },
+    {
+      "actual": "public/fotos/bodas/marea-2.avif",
+      "nueva": "public/generadas/mar-album-4-1080.avif",
+      "encargo": "mar-album-4"
+    },
+    {
+      "actual": "public/fotos/p-velo.avif",
+      "nueva": "public/generadas/velo-portada-1080.avif",
+      "encargo": "velo-portada"
+    },
+    {
+      "actual": "public/fotos/bodas/velo-1.avif",
+      "nueva": "public/generadas/velo-album-1-1080.avif",
+      "encargo": "velo-album-1"
+    },
+    {
+      "actual": "public/fotos/bodas/velo-2.avif",
+      "nueva": "public/generadas/velo-album-2-1080.avif",
+      "encargo": "velo-album-2"
+    },
+    {
+      "actual": "public/fotos/bodas/velo-3.avif",
+      "nueva": "public/generadas/velo-album-3-1080.avif",
+      "encargo": "velo-album-3"
+    },
+    {
+      "actual": "public/fotos/bodas/velo-4.avif",
+      "nueva": "public/generadas/velo-album-4-1080.avif",
+      "encargo": "velo-album-4"
+    },
+    {
+      "actual": "public/fotos/p-constelacion.avif",
+      "nueva": "public/generadas/constelacion-portada-1080.avif",
+      "encargo": "constelacion-portada"
+    },
+    {
+      "actual": "public/fotos/bodas/constelacion-1.avif",
+      "nueva": "public/generadas/constelacion-album-1-1080.avif",
+      "encargo": "constelacion-album-1"
+    },
+    {
+      "actual": "public/fotos/bodas/constelacion-2.avif",
+      "nueva": "public/generadas/constelacion-album-2-1080.avif",
+      "encargo": "constelacion-album-2"
+    },
+    {
+      "actual": "public/fotos/bodas/constelacion-3.avif",
+      "nueva": "public/generadas/constelacion-album-3-1080.avif",
+      "encargo": "constelacion-album-3"
+    },
+    {
+      "actual": "public/fotos/bodas/constelacion-4.avif",
+      "nueva": "public/generadas/constelacion-album-4-1080.avif",
+      "encargo": "constelacion-album-4"
+    },
+    {
+      "actual": "public/fotos/p-tinta.avif",
+      "nueva": "public/generadas/tinta-portada-1080.avif",
+      "encargo": "tinta-portada"
+    },
+    {
+      "actual": "public/fotos/bodas/tinta-1.avif",
+      "nueva": "public/generadas/tinta-album-1-1080.avif",
+      "encargo": "tinta-album-1"
+    },
+    {
+      "actual": "public/fotos/bodas/tinta-2.avif",
+      "nueva": "public/generadas/tinta-album-2-1080.avif",
+      "encargo": "tinta-album-2"
+    },
+    {
+      "actual": "public/fotos/bodas/tinta-3.avif",
+      "nueva": "public/generadas/tinta-album-3-1080.avif",
+      "encargo": "tinta-album-3"
+    },
+    {
+      "actual": "public/fotos/bodas/tinta-4.avif",
+      "nueva": "public/generadas/tinta-album-4-1080.avif",
+      "encargo": "tinta-album-4"
+    },
+    {
+      "actual": "public/fotos/bodas/bruma-1.avif",
+      "nueva": "public/generadas/registro-album-1-1080.avif",
+      "encargo": "registro-album-1"
+    },
+    {
+      "actual": "public/fotos/bodas/bruma-2.avif",
+      "nueva": "public/generadas/registro-album-2-1080.avif",
+      "encargo": "registro-album-2"
+    },
+    {
+      "actual": "public/fotos/bodas/bruma-3.avif",
+      "nueva": "public/generadas/registro-album-3-1080.avif",
+      "encargo": "registro-album-3"
+    },
+    {
+      "actual": "public/fotos/bodas/bruma-4.avif",
+      "nueva": "public/generadas/registro-album-4-1080.avif",
+      "encargo": "registro-album-4"
+    },
+    {
+      "actual": "public/fotos/bodas/tinta-1.avif",
+      "nueva": "public/generadas/azulejo-album-1-1080.avif",
+      "encargo": "azulejo-album-1"
+    },
+    {
+      "actual": "public/fotos/bodas/lino-3.avif",
+      "nueva": "public/generadas/azulejo-album-2-1080.avif",
+      "encargo": "azulejo-album-2"
+    },
+    {
+      "actual": "public/fotos/bodas/lino-1.avif",
+      "nueva": "public/generadas/azulejo-album-3-1080.avif",
+      "encargo": "azulejo-album-3"
+    },
+    {
+      "actual": "public/fotos/bodas/lino-2.avif",
+      "nueva": "public/generadas/azulejo-album-4-1080.avif",
+      "encargo": "azulejo-album-4"
+    },
+    {
+      "actual": "public/tematicas/regencia/poster-v.avif",
+      "nueva": "public/generadas/regencia-portada-1080.avif",
+      "encargo": "regencia-portada"
+    },
+    {
+      "actual": "public/tematicas/aire/poster-v.avif",
+      "nueva": "public/generadas/aire-portada-1080.avif",
+      "encargo": "aire-portada"
+    },
+    {
+      "actual": "public/tematicas/cuento/poster-v.avif",
+      "nueva": "public/generadas/cuento-portada-1080.avif",
+      "encargo": "cuento-portada"
+    },
+    {
+      "actual": "public/aperturas/sobre/poster.avif",
+      "nueva": "public/generadas/apertura-sobre-1080.avif",
+      "encargo": "apertura-sobre"
+    },
+    {
+      "actual": "public/aperturas/floracion/poster.avif",
+      "nueva": "public/generadas/apertura-floracion-1080.avif",
+      "encargo": "apertura-floracion"
+    },
+    {
+      "actual": "public/aperturas/cielo/poster.avif",
+      "nueva": "public/generadas/apertura-cielo-1080.avif",
+      "encargo": "apertura-cielo"
+    },
+    {
+      "actual": "public/aperturas/velo/poster.avif",
+      "nueva": "public/generadas/apertura-velo-1080.avif",
+      "encargo": "apertura-velo"
+    },
+    {
+      "actual": "public/aperturas/constelacion/poster.avif",
+      "nueva": "public/generadas/apertura-constelacion-1080.avif",
+      "encargo": "apertura-constelacion"
+    },
+    {
+      "actual": "public/aperturas/tinta/poster.avif",
+      "nueva": "public/generadas/apertura-tinta-1080.avif",
+      "encargo": "apertura-tinta"
+    },
+    {
+      "actual": "public/aperturas/brasa/poster.avif",
+      "nueva": "public/generadas/apertura-brasa-1080.avif",
+      "encargo": "apertura-brasa"
+    },
+    {
+      "actual": "public/aperturas/bruma/poster.avif",
+      "nueva": "public/generadas/apertura-bruma-1080.avif",
+      "encargo": "apertura-bruma"
+    },
+    {
+      "actual": "public/aperturas/jardin/poster.avif",
+      "nueva": "public/generadas/apertura-jardin-1080.avif",
+      "encargo": "apertura-jardin"
+    },
+    {
+      "actual": "public/aperturas/lino/poster.avif",
+      "nueva": "public/generadas/apertura-lino-1080.avif",
+      "encargo": "apertura-lino"
+    },
+    {
+      "actual": "public/aperturas/marea/poster.avif",
+      "nueva": "public/generadas/apertura-marea-1080.avif",
+      "encargo": "apertura-marea"
+    },
+    {
+      "actual": "public/aperturas/terracota/poster.avif",
+      "nueva": "public/generadas/apertura-terracota-1080.avif",
+      "encargo": "apertura-terracota"
+    },
+    {
+      "actual": "public/tematicas/regencia/poster-h.avif",
+      "nueva": "public/generadas/regencia-poster-h-1080.avif",
+      "encargo": "regencia-poster-h"
+    },
+    {
+      "actual": "public/tematicas/aire/poster-h.avif",
+      "nueva": "public/generadas/aire-poster-h-1080.avif",
+      "encargo": "aire-poster-h"
+    },
+    {
+      "actual": "public/tematicas/aire/apertura.avif",
+      "nueva": "public/generadas/aire-apertura-1080.avif",
+      "encargo": "aire-apertura"
+    },
+    {
+      "actual": "public/tematicas/cuento/poster-h.avif",
+      "nueva": "public/generadas/cuento-poster-h-1080.avif",
+      "encargo": "cuento-poster-h"
+    },
+    {
+      "actual": "public/tematicas/cuento/apertura.avif",
+      "nueva": "public/generadas/cuento-apertura-1080.avif",
+      "encargo": "cuento-apertura"
+    },
+    {
+      "actual": "public/fotos/alianzas.avif",
+      "nueva": "public/generadas/marca-alianzas-lino-1080.avif",
+      "encargo": "marca-alianzas-lino"
+    },
+    {
+      "actual": "public/fotos/hero.avif",
+      "nueva": "public/generadas/web-hero-1080.avif",
+      "encargo": "web-hero"
+    },
+    {
+      "actual": "public/fotos/sitio/corte-1.avif",
+      "nueva": "public/generadas/web-corte-1-1080.avif",
+      "encargo": "web-corte-1"
+    },
+    {
+      "actual": "public/fotos/sitio/corte-2.avif",
+      "nueva": "public/generadas/web-corte-2-1080.avif",
+      "encargo": "web-corte-2"
+    },
+    {
+      "actual": "public/fotos/sitio/corte-3.avif",
+      "nueva": "public/generadas/web-corte-3-1080.avif",
+      "encargo": "web-corte-3"
+    },
+    {
+      "actual": "public/fotos/sitio/portada.avif",
+      "nueva": "public/generadas/web-portada-1080.avif",
+      "encargo": "web-portada"
+    },
+    {
+      "actual": "public/fotos/sitio/portada-2.avif",
+      "nueva": "public/generadas/web-portada-1080.avif",
+      "encargo": "web-portada"
+    }
+  ],
+  "animaciones": [
+    {
+      "pieza": "El aro que se dibuja",
+      "tecnica": "SVG animado (stroke-dashoffset) con los trazados de SelloAlianzas",
+      "porque": "Pesa < 2 KB, se tiñe con currentColor, nítido a cualquier tamaño y respeta reduced-motion",
+      "duracion": "1,2 s, --ease-carta",
+      "estado": "Listo para montar: ALIANZAS_FINO / BRILLANTE_FINO"
+    },
+    {
+      "pieza": "El brillante que destella",
+      "tecnica": "SVG + CSS: destello de 600 ms (gradiente lineal que cruza el polígono del brillante y 4 rayos que escalan)",
+      "porque": "Microinteracción sobre el logo y el sello de confirmación; nada que descargar",
+      "duracion": "600 ms, una vez"
+    },
+    {
+      "pieza": "El lacre que se rompe",
+      "tecnica": "Vídeo corto (alfa WebM VP9 + HEVC con alfa para Safari) generado con IA a partir de marca-lacre-alianzas, o Lottie si se dibuja a mano",
+      "porque": "La rotura de cera tiene física (fragmentos, brillo) que en SVG queda pobre; el 3D de X1 cubre la versión interactiva",
+      "duracion": "1,4 s",
+      "video_prompt": "Macro shot, static camera: a burgundy wax seal embossed with two interlocking rings on a cream cotton envelope cracks cleanly in two as the flap is lifted from below, small wax fragments fall, soft window light, 24 fps, realistic, no text"
+    },
+    {
+      "pieza": "Las flores que florecen",
+      "tecnica": "SVG animado (ya existe <Florecer> de F1) para la invitación; vídeo IA solo para el máster de Floración",
+      "porque": "Las flores de línea comparten trazo con las alianzas y se tiñen con la paleta de la pareja",
+      "duracion": "1,8 s escalonado"
+    },
+    {
+      "pieza": "Logo: entrada de marca (telón)",
+      "tecnica": "Lottie exportado desde los SVG de marca (o CSS puro): aros que se dibujan → brillante encaja → palabra aparece",
+      "porque": "Un solo JSON de ~15 KB reutilizable en web, vídeo de redes y pantalla En directo",
+      "duracion": "2,4 s"
+    }
+  ],
+  "videos": [
+    {
+      "id": "video-apertura-sobre",
+      "primer_fotograma": "public/generadas/apertura-sobre.png",
+      "duracion": "8 s",
+      "formatos": [
+        "9:16 1080×1920",
+        "16:9 1920×1080"
+      ],
+      "prompt": "Slow, elegant camera move. a cream cotton-paper envelope lying on natural linen, closed with a plain smooth burgundy wax seal embossed with two interlocking rings, soft window light from the left, shallow depth of field. The camera pushes in slowly; at 2 s the wax seal cracks, the flap opens and a cream card slides out towards the camera. Photorealistic, 24 fps, no text, no people unless stated, seamless last frame for a loop.",
+      "motores_sugeridos": [
+        "Veo (Gemini API, imagen→vídeo con el primer fotograma)",
+        "Higgsfield (Kling / Seedance, imagen→vídeo)"
+      ],
+      "receta": "ffmpeg: ver docs/04-diseno.md §3 (≤ 2,5 MB, -movflags +faststart, póster AVIF)"
+    },
+    {
+      "id": "video-apertura-floracion",
+      "primer_fotograma": "public/generadas/apertura-floracion.png",
+      "duracion": "8 s",
+      "formatos": [
+        "9:16 1080×1920",
+        "16:9 1920×1080"
+      ],
+      "prompt": "Slow, elegant camera move. extreme macro of a closed pale peony bud with dew drops, olive leaves behind, soft morning light, the bud about to open. Time-lapse: the peony bud opens fully in 6 seconds, the camera drifts between the petals towards the light. Photorealistic, 24 fps, no text, no people unless stated, seamless last frame for a loop.",
+      "motores_sugeridos": [
+        "Veo (Gemini API, imagen→vídeo con el primer fotograma)",
+        "Higgsfield (Kling / Seedance, imagen→vídeo)"
+      ],
+      "receta": "ffmpeg: ver docs/04-diseno.md §3 (≤ 2,5 MB, -movflags +faststart, póster AVIF)"
+    },
+    {
+      "id": "video-apertura-cielo",
+      "primer_fotograma": "public/generadas/apertura-cielo.png",
+      "duracion": "8 s",
+      "formatos": [
+        "9:16 1080×1920",
+        "16:9 1920×1080"
+      ],
+      "prompt": "Slow, elegant camera move. flying slowly up through soft layers of clouds at dawn, grey turning to gold, sea far below. The camera rises through the clouds, they part in layers and reveal a golden sunrise over the sea. Photorealistic, 24 fps, no text, no people unless stated, seamless last frame for a loop.",
+      "motores_sugeridos": [
+        "Veo (Gemini API, imagen→vídeo con el primer fotograma)",
+        "Higgsfield (Kling / Seedance, imagen→vídeo)"
+      ],
+      "receta": "ffmpeg: ver docs/04-diseno.md §3 (≤ 2,5 MB, -movflags +faststart, póster AVIF)"
+    },
+    {
+      "id": "video-apertura-velo",
+      "primer_fotograma": "public/generadas/apertura-velo.png",
+      "duracion": "8 s",
+      "formatos": [
+        "9:16 1080×1920",
+        "16:9 1920×1080"
+      ],
+      "prompt": "Slow, elegant camera move. a sheer ivory silk tulle veil hanging in the air in front of a tall window, light passing through the folds, ethereal. The veil is lifted slowly upwards in slow motion, revealing warm light behind it. Photorealistic, 24 fps, no text, no people unless stated, seamless last frame for a loop.",
+      "motores_sugeridos": [
+        "Veo (Gemini API, imagen→vídeo con el primer fotograma)",
+        "Higgsfield (Kling / Seedance, imagen→vídeo)"
+      ],
+      "receta": "ffmpeg: ver docs/04-diseno.md §3 (≤ 2,5 MB, -movflags +faststart, póster AVIF)"
+    },
+    {
+      "id": "video-apertura-constelacion",
+      "primer_fotograma": "public/generadas/apertura-constelacion.png",
+      "duracion": "8 s",
+      "formatos": [
+        "9:16 1080×1920",
+        "16:9 1920×1080"
+      ],
+      "prompt": "Slow, elegant camera move. deep navy night sky full of stars above dark silhouettes of pine trees, a few brighter stars, subtle Milky Way. Points of light connect with thin golden lines forming two interlocking rings, then dissolve into the sky. Photorealistic, 24 fps, no text, no people unless stated, seamless last frame for a loop.",
+      "motores_sugeridos": [
+        "Veo (Gemini API, imagen→vídeo con el primer fotograma)",
+        "Higgsfield (Kling / Seedance, imagen→vídeo)"
+      ],
+      "receta": "ffmpeg: ver docs/04-diseno.md §3 (≤ 2,5 MB, -movflags +faststart, póster AVIF)"
+    },
+    {
+      "id": "video-apertura-tinta",
+      "primer_fotograma": "public/generadas/apertura-tinta.png",
+      "duracion": "8 s",
+      "formatos": [
+        "9:16 1080×1920",
+        "16:9 1920×1080"
+      ],
+      "prompt": "Slow, elegant camera move. a drop of black ink blooming in clear water against white, macro, elegant swirls, monochrome. The ink blooms and swirls in slow motion and settles into soft calligraphic shapes, no letters. Photorealistic, 24 fps, no text, no people unless stated, seamless last frame for a loop.",
+      "motores_sugeridos": [
+        "Veo (Gemini API, imagen→vídeo con el primer fotograma)",
+        "Higgsfield (Kling / Seedance, imagen→vídeo)"
+      ],
+      "receta": "ffmpeg: ver docs/04-diseno.md §3 (≤ 2,5 MB, -movflags +faststart, póster AVIF)"
+    },
+    {
+      "id": "video-apertura-brasa",
+      "primer_fotograma": "public/generadas/apertura-brasa.png",
+      "duracion": "8 s",
+      "formatos": [
+        "9:16 1080×1920",
+        "16:9 1920×1080"
+      ],
+      "prompt": "Slow, elegant camera move. a field of dry golden grasses at sunset with glowing embers of light, warm haze, terracotta sky. Embers drift upwards in slow motion while the sun sets over the grass. Photorealistic, 24 fps, no text, no people unless stated, seamless last frame for a loop.",
+      "motores_sugeridos": [
+        "Veo (Gemini API, imagen→vídeo con el primer fotograma)",
+        "Higgsfield (Kling / Seedance, imagen→vídeo)"
+      ],
+      "receta": "ffmpeg: ver docs/04-diseno.md §3 (≤ 2,5 MB, -movflags +faststart, póster AVIF)"
+    },
+    {
+      "id": "video-apertura-bruma",
+      "primer_fotograma": "public/generadas/apertura-bruma.png",
+      "duracion": "8 s",
+      "formatos": [
+        "9:16 1080×1920",
+        "16:9 1920×1080"
+      ],
+      "prompt": "Slow, elegant camera move. a fogged window pane with soft winter light, droplets, a blurred garden behind, intimate and quiet. An invisible hand wipes the fog from the glass, revealing a soft winter garden. Photorealistic, 24 fps, no text, no people unless stated, seamless last frame for a loop.",
+      "motores_sugeridos": [
+        "Veo (Gemini API, imagen→vídeo con el primer fotograma)",
+        "Higgsfield (Kling / Seedance, imagen→vídeo)"
+      ],
+      "receta": "ffmpeg: ver docs/04-diseno.md §3 (≤ 2,5 MB, -movflags +faststart, póster AVIF)"
+    },
+    {
+      "id": "video-apertura-jardin",
+      "primer_fotograma": "public/generadas/apertura-jardin.png",
+      "duracion": "8 s",
+      "formatos": [
+        "9:16 1080×1920",
+        "16:9 1920×1080"
+      ],
+      "prompt": "Slow, elegant camera move. a romantic formal garden at dawn with wisteria and roses, dew, soft focus. Slow dolly through wisteria and roses, petals falling. Photorealistic, 24 fps, no text, no people unless stated, seamless last frame for a loop.",
+      "motores_sugeridos": [
+        "Veo (Gemini API, imagen→vídeo con el primer fotograma)",
+        "Higgsfield (Kling / Seedance, imagen→vídeo)"
+      ],
+      "receta": "ffmpeg: ver docs/04-diseno.md §3 (≤ 2,5 MB, -movflags +faststart, póster AVIF)"
+    },
+    {
+      "id": "video-apertura-lino",
+      "primer_fotograma": "public/generadas/apertura-lino.png",
+      "duracion": "8 s",
+      "formatos": [
+        "9:16 1080×1920",
+        "16:9 1920×1080"
+      ],
+      "prompt": "Slow, elegant camera move. close-up of natural linen fabric gently moving in a breeze, warm daylight, folds and texture. The linen ripples in the wind in slow motion, light passing through. Photorealistic, 24 fps, no text, no people unless stated, seamless last frame for a loop.",
+      "motores_sugeridos": [
+        "Veo (Gemini API, imagen→vídeo con el primer fotograma)",
+        "Higgsfield (Kling / Seedance, imagen→vídeo)"
+      ],
+      "receta": "ffmpeg: ver docs/04-diseno.md §3 (≤ 2,5 MB, -movflags +faststart, póster AVIF)"
+    },
+    {
+      "id": "video-apertura-marea",
+      "primer_fotograma": "public/generadas/apertura-marea.png",
+      "duracion": "8 s",
+      "formatos": [
+        "9:16 1080×1920",
+        "16:9 1920×1080"
+      ],
+      "prompt": "Slow, elegant camera move. calm turquoise Mediterranean water over white sand seen from above, gentle wave lines, sunlight caustics. Gentle waves roll in and out in slow motion, aerial view. Photorealistic, 24 fps, no text, no people unless stated, seamless last frame for a loop.",
+      "motores_sugeridos": [
+        "Veo (Gemini API, imagen→vídeo con el primer fotograma)",
+        "Higgsfield (Kling / Seedance, imagen→vídeo)"
+      ],
+      "receta": "ffmpeg: ver docs/04-diseno.md §3 (≤ 2,5 MB, -movflags +faststart, póster AVIF)"
+    },
+    {
+      "id": "video-apertura-terracota",
+      "primer_fotograma": "public/generadas/apertura-terracota.png",
+      "duracion": "8 s",
+      "formatos": [
+        "9:16 1080×1920",
+        "16:9 1920×1080"
+      ],
+      "prompt": "Slow, elegant camera move. sunlit terracotta wall with the shadow of an olive branch moving softly, warm Mediterranean afternoon. The shadow of the olive branch sways while the light turns golden. Photorealistic, 24 fps, no text, no people unless stated, seamless last frame for a loop.",
+      "motores_sugeridos": [
+        "Veo (Gemini API, imagen→vídeo con el primer fotograma)",
+        "Higgsfield (Kling / Seedance, imagen→vídeo)"
+      ],
+      "receta": "ffmpeg: ver docs/04-diseno.md §3 (≤ 2,5 MB, -movflags +faststart, póster AVIF)"
+    }
+  ]
+}

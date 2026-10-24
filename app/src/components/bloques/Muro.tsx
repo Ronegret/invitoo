@@ -18,30 +18,30 @@ export default function Muro({ slug }: { slug: string }) {
   );
 
   const campo =
-    "mt-2 w-full border-b border-current/25 bg-transparent py-3 text-[1.05rem] outline-none placeholder:opacity-35 focus:border-[var(--acento)]";
+    "mt-2 w-full rounded-none border-b-2 border-current/30 bg-transparent py-3 text-[1.125rem] outline-none focus:border-[var(--acento-texto,var(--acento))]";
 
   return (
     <section className="px-6 py-24">
       <div className="mx-auto max-w-[30rem] text-center">
-        <Icono id="mensaje" size={26} className="mx-auto text-[var(--acento)]" />
+        <Icono id="mensaje" size={26} className="mx-auto text-[var(--acento-texto,var(--acento))]" />
         <h2 className="display mt-4 text-[clamp(2.1rem,9vw,3.1rem)]">
           Escríbenos algo
         </h2>
 
         {estado?.ok ? (
-          <p className="mt-8 text-[1.05rem] leading-relaxed opacity-80">
+          <p role="status" className="mt-8 text-[1.0625rem] leading-relaxed">
             {estado.mensaje}
           </p>
         ) : (
           <>
-            <p className="mt-6 text-[1.02rem] leading-relaxed opacity-75">
+            <p className="mt-6 text-[1.0625rem] leading-relaxed opacity-85">
               Un consejo, una anécdota, una tontería. Lo recopilamos todo y se lo
               damos a los novios el día de la boda.
             </p>
 
             <form action={enviar} className="mt-10 text-left">
               <input type="hidden" name="invitacion" value={slug} />
-              <label htmlFor="muro-nombre" className="block text-[0.78rem] uppercase tracking-[0.26em] opacity-55">
+              <label htmlFor="muro-nombre" className="block text-[1rem] font-medium">
                 Tu nombre
               </label>
               <input
@@ -54,7 +54,7 @@ export default function Muro({ slug }: { slug: string }) {
 
               <label
                 htmlFor="muro-mensaje"
-                className="mt-8 block text-[0.78rem] uppercase tracking-[0.26em] opacity-55"
+                className="mt-8 block text-[1rem] font-medium"
               >
                 Tu mensaje
               </label>
@@ -67,7 +67,7 @@ export default function Muro({ slug }: { slug: string }) {
               />
 
               {estado && !estado.ok && (
-                <p role="alert" className="mt-4 text-[0.95rem] text-[var(--acento)]">
+                <p role="alert" className="mt-4 text-[1rem] font-medium text-[var(--acento-texto,var(--acento))]">
                   {estado.error}
                 </p>
               )}
@@ -75,7 +75,7 @@ export default function Muro({ slug }: { slug: string }) {
               <button
                 type="submit"
                 disabled={pendiente}
-                className="mt-9 min-h-14 w-full rounded-full border border-current/25 px-8 text-[0.82rem] uppercase tracking-[0.18em] disabled:opacity-55"
+                className="mt-9 min-h-14 w-full rounded-full border border-current/30 px-8 text-[1.0625rem] font-medium disabled:opacity-60 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[var(--acento-texto,var(--acento))]"
               >
                 {pendiente ? "Un segundo…" : "Enviar"}
               </button>

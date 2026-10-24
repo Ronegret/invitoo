@@ -3,6 +3,8 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import Caducidad from "@/components/estudio/Caducidad";
 import SelloAlianzas from "@/components/SelloAlianzas";
+import { contarReservasAbiertas } from "@/lib/pagos/pedidos";
+import { contarAbiertas } from "@/lib/solicitudes/datos";
 import { salir } from "./acciones";
 import { claveConfigurada, sesionValida } from "./sesion";
 
@@ -35,16 +37,50 @@ export default async function EstudioLayout({
   }
 
   if (!(await sesionValida())) redirect("/entrar");
+  // Las reservas pagadas sin atender cuentan como abiertas: la pareja espera.
+  const [cambios, reservas] = await Promise.all([contarAbiertas(), contarReservasAbiertas()]);
+  const abiertas = cambios + reservas;
 
   return (
     <div className="grano relative min-h-dvh">
       <Caducidad salir={salir} />
-      <header className="flex items-center justify-between gap-4 border-b border-[var(--tinta)]/12 px-5 py-4">
+      <header className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-[var(--tinta)]/12 px-5 py-4">
         <Link href="/estudio" className="flex items-center gap-3">
           <SelloAlianzas size={26} className="opacity-70" />
           <span className="text-[0.78rem] uppercase tracking-[0.28em] opacity-60">
             Estudio
           </span>
+        </Link>
+        <div className="-mr-2 flex flex-wrap items-center gap-x-1">
+        <Link
+          href="/estudio/solicitudes"
+          className="inline-flex min-h-11 items-center gap-2 rounded-full px-3 text-[0.79rem] uppercase tracking-[0.16em]"
+        >
+          Solicitudes
+          {abiertas > 0 && (
+            <span className="min-w-6 rounded-full bg-[var(--acento)] px-1.5 text-center text-[0.72rem] font-semibold leading-6 tracking-normal text-white">
+              {abiertas}
+              <span className="sr-only"> abiertas</span>
+            </span>
+          )}
+        </Link>
+        <Link
+          href="/estudio/visitas"
+          className="inline-flex min-h-11 items-center rounded-full px-3 text-[0.79rem] uppercase tracking-[0.16em]"
+        >
+          Visitas
+        </Link>
+        <Link
+          href="/estudio/cobros"
+          className="inline-flex min-h-11 items-center rounded-full px-3 text-[0.79rem] uppercase tracking-[0.16em]"
+        >
+          Cobros
+        </Link>
+        <Link
+          href="/estudio/correos"
+          className="inline-flex min-h-11 items-center rounded-full px-3 text-[0.79rem] uppercase tracking-[0.16em]"
+        >
+          Correos
         </Link>
         <form action={salir}>
           <button
@@ -54,6 +90,7 @@ export default async function EstudioLayout({
             Salir
           </button>
         </form>
+        </div>
       </header>
       {children}
     </div>

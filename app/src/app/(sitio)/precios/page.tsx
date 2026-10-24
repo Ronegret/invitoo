@@ -1,166 +1,158 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Rama from "@/components/Botanica";
-import Revelar from "@/components/Revelar";
+import Anadidos from "@/components/sitio/Anadidos";
+import DatosEstructurados from "@/components/sitio/DatosEstructurados";
 import Encabezado from "@/components/sitio/Encabezado";
 import LlamadaFinal from "@/components/sitio/LlamadaFinal";
 import Planes from "@/components/sitio/Planes";
 import Preguntas from "@/components/sitio/Preguntas";
 import Rotulo from "@/components/sitio/Rotulo";
-import { PLANES } from "@/data/plantillas";
-import { ANADIDOS } from "@/data/sitio";
+import TablaDirecto from "@/components/sitio/TablaDirecto";
+import { DESCUENTO_INVITADO, DIRECTO, PLANES, PROCESO, enLetra } from "@/data/sitio";
 
 const DESDE = Math.min(...PLANES.map((p) => p.precio));
 
 export const metadata: Metadata = {
-  title: `Precios · Invitaciones de boda desde ${DESDE} € · Invitoo`,
-  description:
-    "Cuatro planes, pago único. Sin suscripción, sin comisión por invitado y sin coste por confirmación. Alojamiento del primer año incluido.",
+  title: `Precios: invitaciones de boda desde ${DESDE} €`,
+  description: `${enLetra(PLANES.length, true)} planes con IVA incluido y pago único: Invitoo ${PLANES[0].precio} €, con canción ${PLANES[1].precio} € y Estudio desde ${PLANES[2].precio} €. Cambios ilimitados hasta publicarla y lista en 5 días laborables. Fotos de los invitados en directo en la TV del salón por ${DIRECTO.precio} €.`,
+  alternates: { canonical: "/precios" },
 };
 
 /**
  * Los precios.
  *
- * Es la página que más se busca y la que antes estaba más escondida: en la
- * home había que bajar nueve pantallas para llegar. Ahora tiene su URL, su
- * título y su descripción, que es lo que se lee en Google antes de entrar.
- *
- * El bloque de «lo que no cobramos» no es relleno. Quien llega aquí viene de
- * comparar con plataformas que anuncian 29 € y luego cobran por invitado o
- * por año; decir en voz alta qué NO hay es más convincente que repetir qué
- * sí, porque es lo que el otro no puede decir.
+ * Arriba, el número; luego los planes con lo que incluyen y lo que no; la
+ * garantía; los plazos; los añadidos como una carta; y las dudas de dinero.
+ * Todo sale de `data/sitio.ts`, igual que los datos estructurados.
  */
 export default function Precios() {
   return (
     <>
+      <DatosEstructurados tipo="negocio" />
+
       <Encabezado
         sobre="Lo que cuesta"
-        titulo={`Desde ${DESDE} €, pago único`}
-        bajo="Hay plataformas a veintinueve euros donde la montáis vosotros, y estudios a seiscientos. Estamos en medio y a propósito: con una persona montándola de principio a fin y sin que vosotros toquéis un editor."
-        foto="/fotos/sitio/corte-3.avif"
+        titulo={`Desde ${DESDE} €, en un solo pago`}
+        bajo="Hay plataformas a veintinueve euros donde la montáis vosotros, y estudios a seiscientos. Estamos en medio y a propósito: una persona la monta de principio a fin y vosotros no tocáis un editor."
+        aparte={
+          <p className="text-[1.04rem] leading-[1.7] opacity-75">
+            IVA incluido. Sin suscripción, sin comisión por invitado y sin
+            coste por confirmación.
+          </p>
+        }
       />
 
-      <section className="grano relative bg-[var(--papel)] px-5 py-24 sm:py-28">
+      <section className="bg-[var(--papel)] px-4 py-20 sm:px-6 sm:py-24">
         <div className="mx-auto max-w-[72rem]">
-          <Planes />
-
-          <Revelar>
-            <p className="mx-auto mt-12 max-w-[40rem] text-center text-[0.88rem] leading-relaxed opacity-55">
-              Los pagos van por Stripe; también aceptamos PayPal y Klarna.
-              Antes de cobrar hablamos: si lo que queréis no encaja con lo que
-              hacemos, os lo decimos.
-            </p>
-          </Revelar>
+          <Planes titulos="h2" />
         </div>
       </section>
 
-      {/* ---------------- Lo que no cobramos ---------------- */}
-      <section className="grano relative bg-[var(--bruma)]/55 px-5 py-28 sm:py-32">
-        <div className="mx-auto max-w-[46rem]">
-          <Revelar>
-            <Rotulo
-              sobre="Letra pequeña"
-              titulo="Lo que no se paga"
-              bajo="Porque es justo lo que en otras se paga después."
-            />
-          </Revelar>
-
-          <ul className="mt-14 flex flex-col gap-6">
-            {[
-              [
-                "Ninguna cuota mensual",
-                "Se paga una vez. No hay renovación, ni tarjeta guardada, ni cargo al año siguiente.",
-              ],
-              [
-                "Ninguna comisión por invitado",
-                "Da igual que seáis sesenta o trescientos: el precio es el mismo.",
-              ],
-              [
-                "Ningún coste por confirmación",
-                "Las confirmaciones son ilimitadas, con su panel para vosotros.",
-              ],
-              [
-                "Ningún extra por cambiar cosas",
-                "Cambios ilimitados hasta el día de la boda. Si llueve y movéis el cóctel dentro, lo tocamos esa misma mañana.",
-              ],
-              [
-                "El primer año de alojamiento va dentro",
-                "Un año desde la boda. Después decidís si la mantenéis o la convertís en Libro de la Boda.",
-              ],
-            ].map(([titulo, texto], i) => (
-              <Revelar key={titulo} retraso={i * 70}>
-                <div className="flex gap-5 border-b border-[var(--tinta)]/10 pb-6">
-                  <span className="mt-1 shrink-0 text-[var(--verde)]">
-                    <Rama forma="brote" ancho={22} retraso={i * 50} />
-                  </span>
-                  <div>
-                    <h3 className="display text-[1.3rem]">{titulo}</h3>
-                    <p className="mt-2 text-[0.96rem] leading-[1.7] opacity-68">
-                      {texto}
-                    </p>
-                  </div>
-                </div>
-              </Revelar>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* ---------------- Añadidos ---------------- */}
-      <section className="grano relative bg-[var(--papel)] px-5 py-28 sm:py-32">
-        <div className="mx-auto max-w-[62rem]">
-          <Revelar>
-            <Rotulo
-              sobre="Si hace falta"
-              titulo="Añadidos"
-              bajo="Se pueden pedir con cualquier plan, antes o después."
-            />
-          </Revelar>
-
-          <ul className="mt-16 grid gap-5 sm:grid-cols-3">
-            {ANADIDOS.map((a, i) => (
-              <Revelar
-                as="li"
-                key={a.nombre}
-                retraso={i * 90}
-                className="flex flex-col border border-[var(--tinta)]/12 bg-[var(--bruma)]/35 p-8 text-center"
-              >
-                <h3 className="display text-[1.5rem]">{a.nombre}</h3>
-                <p className="display mt-3 text-[2rem] leading-none text-[var(--acento)]">
-                  {a.precio} €
-                </p>
-                <p className="mt-5 text-[0.94rem] leading-[1.7] opacity-68">
-                  {a.nota}
-                </p>
-              </Revelar>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* ---------------- Dudas de dinero ---------------- */}
-      <section className="grano relative bg-[var(--bruma)]/55 px-5 py-28 sm:py-32">
-        <div className="mx-auto max-w-[46rem]">
-          <Revelar>
-            <Rotulo sobre="Antes de decidir" titulo="Preguntas" />
-          </Revelar>
+      {/* ───────────── El día de la boda ───────────── */}
+      <section
+        id="en-directo"
+        className="scroll-mt-24 border-t border-[var(--tinta)]/10 bg-[var(--papel)] px-4 py-20 sm:px-6 sm:py-28"
+      >
+        <div className="mx-auto max-w-[72rem]">
+          <Rotulo
+            sobre="El día de la boda"
+            titulo="Las fotos de vuestros invitados, en directo"
+            bajo="Todas las invitaciones llevan su álbum. Si además queréis verlo pasar en la TV del salón mientras ocurre, es un añadido. En el Estudio va incluido."
+          />
           <div className="mt-14">
-            <Preguntas de="precio" />
+            <TablaDirecto />
           </div>
-          <Revelar>
-            <p className="mt-12 text-center text-[0.9rem] opacity-55">
-              <Link href="/preguntas" className="enlace-sub">
+          <p className="mt-10">
+            <Link
+              href="/en-directo"
+              className="enlace-sub inline-flex min-h-12 items-center text-[1rem] underline decoration-[var(--tinta)]/30 underline-offset-4"
+            >
+              Cómo se ve En directo en el salón
+            </Link>
+          </p>
+        </div>
+      </section>
+
+      {/* ───────────── Plazos ───────────── */}
+      <section className="border-t border-[var(--tinta)]/10 bg-[var(--bruma)]/45 px-4 py-20 sm:px-6 sm:py-28">
+        <div className="mx-auto max-w-[72rem]">
+          <Rotulo
+            sobre="Plazos"
+            titulo="Cinco días laborables desde la videollamada"
+            bajo="Con prisa, 48 horas por 49 € más; en el Estudio va incluido. El save the date conviene mandarlo entre seis y doce meses antes, y la invitación unos tres meses antes."
+          />
+          <ol className="mt-14 grid gap-px border border-[var(--tinta)]/15 bg-[var(--tinta)]/15 sm:grid-cols-2 lg:grid-cols-5">
+            {PROCESO.map((p, i) => (
+              <li key={p.titulo} className="bg-[var(--papel)] p-6">
+                <span className="display text-[1.3rem] text-[var(--acento)] tabular-nums">
+                  {i + 1}
+                </span>
+                <h3 className="display mt-2 text-[1.5rem] leading-tight">{p.titulo}</h3>
+                <p className="mt-2 text-[1rem] leading-[1.6] opacity-75">{p.texto}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* ───────────── Añadidos ───────────── */}
+      <section className="bg-[var(--papel)] px-4 py-20 sm:px-6 sm:py-28">
+        <div className="mx-auto grid max-w-[72rem] gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <p className="flex items-center gap-3 text-[1rem] text-[var(--acento)]">
+              <span aria-hidden className="h-px w-8 bg-current" />
+              Si hace falta
+            </p>
+            <h2 className="display mt-4 text-[clamp(2.4rem,6vw,3.8rem)] leading-[1.02]">
+              Añadidos
+            </h2>
+            <p className="mt-6 max-w-[26rem] text-[1.04rem] leading-[1.75] opacity-75">
+              Se piden con cualquier plan, antes o después. Precios con IVA.
+            </p>
+            <p className="mt-6 max-w-[26rem] text-[1.04rem] leading-[1.75] opacity-75">
+              ¿Venís de una boda nuestra?{" "}
+              <Link href="/para-invitados" className="underline decoration-[var(--tinta)]/30 underline-offset-4">
+                {DESCUENTO_INVITADO} € menos en la vuestra
+              </Link>
+              . ¿Sois wedding planner, finca u hotel?{" "}
+              <Link href="/colaboradores" className="underline decoration-[var(--tinta)]/30 underline-offset-4">
+                Condiciones de colaborador
+              </Link>
+              .
+            </p>
+          </div>
+          <div className="lg:col-span-8">
+            <Anadidos />
+          </div>
+        </div>
+      </section>
+
+      {/* ───────────── Dudas de dinero ───────────── */}
+      <section className="border-t border-[var(--tinta)]/10 bg-[var(--papel)] px-4 py-20 sm:px-6 sm:py-28">
+        <div className="mx-auto grid max-w-[72rem] gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <h2 className="display text-[clamp(2.4rem,6vw,3.8rem)] leading-[1.02]">
+              Antes de decidir
+            </h2>
+            <p className="mt-6">
+              <Link
+                href="/preguntas"
+                className="inline-flex min-h-12 items-center text-[1rem] underline decoration-[var(--tinta)]/30 underline-offset-4"
+              >
                 Todas las preguntas
               </Link>
             </p>
-          </Revelar>
+          </div>
+          <div className="lg:col-span-8">
+            <Preguntas de="precio" />
+          </div>
         </div>
       </section>
 
       <LlamadaFinal
         sobre="Sin compromiso"
         titulo="Hablamos antes"
-        texto="No hace falta decidir el plan hoy. Reservad veinte minutos, contadnos vuestra boda y os decimos cuál encaja y cuál no. Si ninguno os sirve, os lo diremos también."
+        texto="No hace falta decidir el plan hoy. Reservad veinte minutos, contadnos vuestra boda y os decimos cuál encaja. Si ninguno os sirve, os lo diremos también."
       />
     </>
   );

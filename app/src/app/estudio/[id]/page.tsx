@@ -1,6 +1,9 @@
 import { notFound } from "next/navigation";
+import AjustesEstudio from "@/components/estudio/AjustesEstudio";
 import Editor from "@/components/estudio/Editor";
-import { obtenerPorId } from "@/lib/datos";
+import { onlineHasta } from "@/components/panel/util";
+import { obtenerContrato, obtenerExtras, obtenerPorId } from "@/lib/datos";
+import { obtenerConfig } from "@/lib/momentos/datos";
 
 export default async function EditarBoda({
   params,
@@ -15,5 +18,25 @@ export default async function EditarBoda({
   const inv = await obtenerPorId(id);
   if (!inv) notFound();
 
-  return <Editor inv={inv} id={id} />;
+  const [extras, config, contrato] = await Promise.all([
+    obtenerExtras(id),
+    obtenerConfig({ inv, id }).catch(() => null),
+    obtenerContrato(id),
+  ]);
+  const porDefecto = onlineHasta(inv.pareja.fecha, null).toISOString().slice(0, 10);
+
+  return (
+    <>
+      <Editor inv={inv} id={id} />
+      <AjustesEstudio
+        id={id}
+        slug={inv.slug}
+        onlineHasta={extras.online_hasta}
+        porDefecto={porDefecto}
+        plan={config?.plan ?? null}
+        anosExtra={config?.anos_extra ?? 0}
+        contrato={contrato}
+      />
+    </>
+  );
 }

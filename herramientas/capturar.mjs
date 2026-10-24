@@ -1,9 +1,19 @@
 /**
- * Prueba de extremo a extremo y capturas.
- * Abre la web con un navegador de verdad, rellena el RSVP y el muro contra
- * Supabase, y guarda las pantallas para poder mirarlas.
+ * Prueba rápida de extremo a extremo y capturas.
+ *
+ * Abre las OCHO invitaciones de muestra (las de `app/src/data/demo.ts`) con
+ * un navegador de verdad, confirma asistencia con el RSVP nuevo (dos
+ * personas, menú y alérgenos por persona, autobús) y deja el muro escrito.
+ * Las capturas van a `_research/capturas/`.
+ *
+ *   BASE=http://localhost:3000 PANEL=/novios/<token> node herramientas/capturar.mjs
+ *
+ * Sin Supabase (`next dev` o `INVITOO_MEMORIA=1 next start`) el panel de
+ * prueba es `/novios/demo-laura-y-ruben`. La batería completa de QA
+ * (scroll horizontal, sin JS, OG, CSV, seguridad) está en `qa/qa.mjs`.
  */
-// playwright vive en app/node_modules.
+import { execFileSync } from "node:child_process";
+import { mkdirSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -11,126 +21,127 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..");
 // playwright vive en app/node_modules.
 const { chromium } = createRequire(pathToFileURL(join(RAIZ, "app/package.json")).href)("playwright");
-import { createHash } from "node:crypto";
 
-const BASE = "http://localhost:3000";
+const BASE = process.env.BASE ?? "http://localhost:3000";
 const SALIDA = join(RAIZ, "_research/capturas");
-const PANEL = "/novios/229c0acc9a2af0c770";
+mkdirSync(SALIDA, { recursive: true });
 
-const { nav, motor } = await abrirNavegador();
-console.log(`  (navegador: ${motor})`);
+/** Las bodas de muestra, sin compilar: demo.ts solo importa tipos. */
+const BODAS = JSON.parse(
+  execFileSync(
+    process.execPath,
+    [
+      "--experimental-strip-types",
+      "--no-warnings",
+      "--input-type=module",
+      "-e",
+      `const d = await import(${JSON.stringify(pathToFileURL(join(RAIZ, "app/src/data/demo.ts")).href)});
+       process.stdout.write(JSON.stringify(Object.values(d.DEMO).map((b) => ({ slug: b.slug, plantilla: b.plantilla }))));`,
+    ],
+    { encoding: "utf8" },
+  ),
+);
+const PRIMERA = BODAS[0].slug;
+const PANEL = process.env.PANEL ?? `/novios/demo-${PRIMERA}`;
 
-async function foto(ruta, nombre, { movil = false, completa = true, antes } = {}) {
-  const ctx = await nav.newContext(
-    movil
-      ? { viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true }
-      : { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 },
-  );
+const nav = await chromium.launch();
+const MOVIL = { viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true };
+const ESCRITORIO = { viewport: { width: 1440, height: 900 } };
+
+/** Contexto con la apertura dada por vista: se entra directo a la portada. */
+async function contexto(perfil, conApertura = false) {
+  const ctx = await nav.newContext(perfil);
+  if (!conApertura) {
+    await ctx.addInitScript((slugs) => {
+      try {
+        for (const s of slugs) localStorage.setItem(`invitoo:abierta:${s}`, "1");
+      } catch {}
+    }, BODAS.map((b) => b.slug));
+  }
+  return ctx;
+}
+
+async function foto(ruta, nombre, perfil = ESCRITORIO, completa = true) {
+  const ctx = await contexto(perfil);
   const pag = await ctx.newPage();
   await pag.goto(BASE + ruta, { waitUntil: "load" });
-  if (antes) await antes(pag);
-  // Las imágenes van con loading="lazy": sin recorrer la página, una captura
-  // de página completa las pilla sin cargar y sale medio vacía.
   if (completa) {
+    // Las imágenes van con loading="lazy": se recorre la página antes.
     await pag.evaluate(async () => {
-      const paso = window.innerHeight * 0.8;
-      for (let y = 0; y < document.body.scrollHeight; y += paso) {
-        window.scrollTo(0, y);
+      for (let y = 0; y < document.documentElement.scrollHeight; y += innerHeight * 0.8) {
+        scrollTo(0, y);
         await new Promise((r) => setTimeout(r, 180));
       }
-      window.scrollTo(0, 0);
+      scrollTo(0, 0);
     });
-    await pag.waitForTimeout(900);
   }
-  await pag.waitForTimeout(700);
+  await pag.waitForTimeout(900);
   await pag.screenshot({ path: `${SALIDA}/${nombre}.png`, fullPage: completa });
   console.log("·", nombre);
   await ctx.close();
 }
 
-// ── Prueba real del RSVP ────────────────────────────────────────────────────
+// ── RSVP nuevo: dos personas, menú y alérgenos por persona, autobús ─────────
 {
-  const ctx = await nav.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  const ctx = await contexto(MOVIL);
   const pag = await ctx.newPage();
-  await pag.goto(`${BASE}/i/laura-y-ruben`, { waitUntil: "load" });
-
-  // La apertura tapa la página: se salta, como haría cualquiera.
-  const saltar = pag.getByRole("button", { name: "Saltar" });
-  if (await saltar.count()) await saltar.click();
-  await pag.waitForTimeout(900);
-  await pag.screenshot({ path: `${SALIDA}/movil-portada.png` });
-
-  await pag.getByRole("link", { name: /Confirmar asistencia/i }).click();
-  await pag.waitForTimeout(600);
-
-  // OJO: en la página hay DOS campos llamados "nombre" — el del muro y el del
-  // RSVP. Hay que acotar al formulario o se rellena el que no es.
-  const rsvp = pag.locator('form:has(input[name="asiste"])');
-  await rsvp.locator('input[name="nombre"]').fill("Marta Ibáñez");
-  // Se pulsa como pulsaría una persona: sobre la etiqueta, no sobre el input.
-  await rsvp.getByText("Sí, allí estaré").click();
-  await pag.waitForTimeout(400);
-  await rsvp.locator('input[name="acompanantes"]').fill("2");
-  await rsvp.getByText("Vegetariano", { exact: true }).click();
-  await rsvp.locator('textarea[name="alergias"]').fill("Alérgica a los frutos secos");
-  await rsvp.getByText("Cogeré el autobús que ponéis").click();
+  await pag.goto(`${BASE}/i/${PRIMERA}#confirmar`, { waitUntil: "load" });
+  const f = pag.locator("#confirmar form");
+  await f.getByText("Sí, allí estaré").click();
+  await pag.getByRole("button", { name: "Uno más" }).click();
+  await f.locator('input[name="p0_nombre"]').fill("Marta Ibáñez");
+  await f.locator('input[name="p1_nombre"]').fill("Pablo Ibáñez");
+  await f.locator('label:has(input[name="p0_menu"][value="vegetariano"])').click();
+  await f.locator('label:has(input[name="p1_menu"][value="infantil"])').click();
+  const det = f.locator("details");
+  await det.nth(0).locator("summary").click();
+  await det.nth(0).locator('label:has(input[value="frutos_cascara"])').click();
+  await det.nth(0).locator("textarea").fill("Celiaquía estricta");
+  await det.nth(1).locator("summary").click();
+  await det.nth(1).locator('label:has(input[value="lacteos"])').click();
+  const bus = f.locator('label:has(input[name="bus"][value="ida_vuelta"])');
+  if (await bus.count()) await bus.click();
+  const parada = f.locator('input[name="parada"]');
+  if (await parada.count()) await parada.fill("Plaza de España");
   await pag.screenshot({ path: `${SALIDA}/movil-rsvp.png`, fullPage: true });
-
-  await rsvp.getByRole("button", { name: /^Confirmar$/ }).click();
+  await f.locator('button[type="submit"]').click();
   await pag.waitForTimeout(2500);
-  const texto = await pag.locator("body").innerText();
-  console.log("RSVP →", texto.includes("Contamos contigo") ? "GUARDADO" : "FALLÓ: " + texto.slice(0, 160));
+  const titulo = await pag.locator("#confirmar h2").innerText();
+  console.log("RSVP →", /Contamos con|Gracias/.test(titulo) ? "GUARDADO" : `FALLÓ: ${titulo}`);
   await pag.screenshot({ path: `${SALIDA}/movil-rsvp-ok.png` });
 
   // Muro
-  await pag.goto(`${BASE}/i/laura-y-ruben`, { waitUntil: "load" });
   await pag.fill("#muro-nombre", "Los primos de Cuenca");
-  await pag.fill("#muro-mensaje", "Que no se os acabe nunca la paciencia ni la música. Nos vemos en la pista.");
+  await pag.fill("#muro-mensaje", "Que no se os acabe nunca la paciencia ni la música.");
   await pag.getByRole("button", { name: "Enviar" }).click();
   await pag.waitForTimeout(2500);
-  const t2 = await pag.locator("body").innerText();
-  console.log("Muro →", t2.includes("Escrito") ? "GUARDADO" : "FALLÓ");
+  console.log("Muro →", (await pag.locator("body").innerText()).includes("Escrito") ? "GUARDADO" : "revisar");
   await ctx.close();
 }
 
 // ── Capturas ────────────────────────────────────────────────────────────────
 await foto("/", "home");
-await foto("/", "home-movil", { movil: true });
+await foto("/", "home-movil", MOVIL);
+await foto("/plantillas", "plantillas");
 await foto("/para-invitados", "para-invitados");
 await foto(PANEL, "panel-novios");
-await foto(PANEL, "panel-novios-movil", { movil: true });
+await foto(PANEL, "panel-novios-movil", { ...MOVIL, deviceScaleFactor: 1 });
+for (const b of BODAS) {
+  await foto(`/i/${b.slug}`, `invitacion-${b.plantilla}`, MOVIL, false);
+  await foto(`/i/${b.slug}`, `invitacion-${b.plantilla}-completa`, ESCRITORIO);
+}
 
-// La invitación, sin la capa de apertura por encima.
-await foto("/i/laura-y-ruben", "invitacion", {
-  antes: async (p) => {
-    const b = p.getByRole("button", { name: "Saltar" });
-    if (await b.count()) await b.click();
-    await p.waitForTimeout(800);
-  },
-});
-
-// La apertura en marcha.
-await foto("/i/laura-y-ruben", "apertura", {
-  movil: true, completa: false,
-  antes: async (p) => await p.waitForTimeout(3800),
-});
-
-// El estudio, con su cookie.
-{
-  const huella = createHash("sha256").update("invitoo-estudio-2026-cambiar-esto").digest("hex");
-  const ctx = await nav.newContext({ viewport: { width: 1440, height: 900 } });
-  await ctx.addCookies([{ name: "invitoo_estudio", value: huella, url: BASE + "/estudio" }]);
+// Las aperturas en marcha (Sobre con vídeo, Registro y Azulejo sin vídeo).
+for (const b of BODAS.filter((x) => ["sobre", "registro", "azulejo"].includes(x.plantilla))) {
+  const ctx = await contexto(MOVIL, true);
   const pag = await ctx.newPage();
-  await pag.goto(`${BASE}/estudio`, { waitUntil: "load" });
-  await pag.screenshot({ path: `${SALIDA}/estudio.png`, fullPage: true });
-  console.log("· estudio");
-  const id = await pag.getByRole("link", { name: "Editar" }).first().getAttribute("href");
-  await pag.goto(BASE + id, { waitUntil: "load" });
-  await pag.screenshot({ path: `${SALIDA}/estudio-editor.png`, fullPage: true });
-  console.log("· estudio-editor");
+  await pag.goto(`${BASE}/i/${b.slug}`, { waitUntil: "load" });
+  await pag.waitForTimeout(1400);
+  await pag.screenshot({ path: `${SALIDA}/apertura-${b.plantilla}.png` });
+  console.log("· apertura", b.plantilla);
   await ctx.close();
 }
 
-await foto("/entrar", "entrar", { completa: false });
+await foto("/entrar", "entrar", ESCRITORIO, false);
 await nav.close();
 console.log("listo");

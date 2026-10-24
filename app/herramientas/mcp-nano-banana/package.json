@@ -1,0 +1,13 @@
+{
+  "name": "invitoo-mcp-nano-banana",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Servidor MCP (stdio) de Invitoo para generar y editar imágenes con Nano Banana (Gemini), Cloudflare Workers AI (FLUX) o ComfyUI local.",
+  "type": "module",
+  "bin": { "invitoo-imagenes": "servidor.mjs" },
+  "scripts": { "start": "node servidor.mjs", "probar": "node probar.mjs" },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "zod": "^3.25.0"
+  }
+}

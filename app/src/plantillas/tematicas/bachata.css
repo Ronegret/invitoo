@@ -1,0 +1,303 @@
+/* ------------------------------------------------------------------
+   LUNA DE BACHATA — K4 · docs/16b §5
+   Berenjena (--papel), lino (--tinta), lila de luna (--acento), rosa de
+   vela (--acento2) y oro rosa (--oro-rosa) en las cuerdas y filetes.
+   La luz de la vela oscila un 6 % en 4 s: no es un destello.
+   ------------------------------------------------------------------ */
+@property --ba-p { syntax: "<number>"; inherits: true; initial-value: 1; }
+
+.lienzo[data-plantilla="bachata"] {
+  --acento2: color-mix(in oklch, #e6b0a1 85%, var(--acento));
+  --oro-rosa: #d9a28c;
+  --cuerda-g: linear-gradient(180deg, #f3d3c3, #c98d76 60%, #8f5a48);
+  --caligrafia: var(--p-acento), "Allura", cursive;
+  --ease-carta: cubic-bezier(.22,.61,.36,1);
+  font-size: 1.125rem;
+  line-height: 1.7;
+  background-image: radial-gradient(110% 50% at 50% 0%, color-mix(in srgb, var(--acento) 10%, transparent), transparent 60%);
+}
+.lienzo[data-plantilla="bachata"] .display { font-weight: 400; letter-spacing: .01em; line-height: 1.12; }
+.lienzo[data-plantilla="bachata"][data-ornamento] {
+  --orn-w: 140px; --orn-h: 16px;
+  --orn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 16'%3E%3Cpath d='M0 3.5H140M0 6.5H140M0 9.5H140M0 12.5H140' stroke='%23000' stroke-width='.8'/%3E%3Crect x='68' width='4' height='16' rx='1'/%3E%3C/svg%3E");
+}
+.lienzo[data-plantilla="bachata"] .y-gesto,
+.lienzo[data-plantilla="bachata"] .ba-y { font-family: var(--caligrafia); font-style: normal; color: var(--acento2); }
+
+/* —— cabecera —— */
+.ba-hero {
+  display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
+  padding: calc(env(safe-area-inset-top, 0px) + 5rem) 1.25rem calc(env(safe-area-inset-bottom, 0px) + 2rem);
+  text-align: center; color: var(--tinta);
+}
+.grad-bachata .kv-grad { filter: grayscale(.6) brightness(.66) contrast(1.08); }
+.ba-tinte { position: absolute; inset: 0; pointer-events: none; }
+.ba-tinte::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(170deg, #6b4a9a, #2b1c3c 60%, #d9a28c);
+  mix-blend-mode: color; opacity: .7;
+}
+.ba-tinte::after {
+  /* Velo teñido de berenjena. */
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgb(27 19 36 / .9) 0 34%, rgb(27 19 36 / .4) 62%, rgb(27 19 36 / .15) 85%);
+}
+.ba-rotulo { position: relative; z-index: 2; width: 100%; max-width: 30rem; }
+.ba-despacio { font-size: 1.375rem; letter-spacing: .06em; font-style: italic; color: var(--acento2); }
+.ba-nombres { margin-top: .9rem; font-family: var(--caligrafia); font-weight: 400; line-height: 1; text-shadow: 0 2px 26px rgb(0 0 0 / .45); }
+.ba-nombres .ba-y { display: block; font-size: .5em; line-height: 1.05; }
+.ba-cuando { margin-top: 1rem; font-size: 1.125rem; font-weight: 600; line-height: 1.45; }
+.ba-cuando .block { font-weight: 400; }
+.ba-baja { margin-top: 1.1rem; color: inherit; }
+.lienzo[data-plantilla="bachata"] .kv-play { --kv-play-fondo: rgb(27 19 36 / .55); --kv-play-borde: color-mix(in srgb, var(--oro-rosa) 70%, transparent); }
+
+/* —— la luna sube —— */
+.ba-luna-escena { position: relative; height: 140svh; }
+.ba-luna-fijo {
+  position: sticky; top: 0; min-height: 100svh; overflow: clip;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 3rem 1.5rem; text-align: center; isolation: isolate;
+}
+.ba-luna {
+  position: relative; display: block; z-index: -1; flex: none;
+  width: min(46vw, 12rem); aspect-ratio: 1; margin: 0 auto 2.2rem;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 36% 34%, rgb(255 255 255 / .55), transparent 40%),
+    radial-gradient(circle at 62% 60%, rgb(150 110 170 / .25) 0 12%, transparent 13%),
+    radial-gradient(circle at 40% 70%, rgb(150 110 170 / .18) 0 8%, transparent 9%),
+    radial-gradient(circle, #f4e6f3, #d7bfe0 70%, #b897c6);
+  box-shadow: 0 0 60px 10px color-mix(in srgb, var(--acento) 30%, transparent), 0 0 140px 40px color-mix(in srgb, var(--acento) 12%, transparent);
+  opacity: .9;
+  transform: translateY(calc((1 - var(--ba-p)) * 55vh));
+}
+.ba-frase { position: relative; max-width: 22rem; font-size: clamp(1.9rem, 8.5vw, 2.6rem); line-height: 1.2; text-wrap: balance; text-shadow: 0 2px 22px rgb(27 19 36 / .9); }
+.ba-firma-luna { margin-top: 1.2rem; font-family: var(--caligrafia); font-size: 2.4rem; line-height: 1; color: var(--acento2); }
+.ba-firma-luna span { font-size: .8em; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .ba-luna-escena {
+      view-timeline: --ba-luna block;
+      animation: ba-sube linear both;
+      animation-timeline: --ba-luna;
+      animation-range: entry 20% cover 55%;
+    }
+  }
+}
+@keyframes ba-sube { from { --ba-p: 0; } to { --ba-p: 1; } }
+@media (max-height: 560px) { .ba-luna-escena { height: auto; } .ba-luna-fijo { position: relative; } }
+
+/* —— títulos y secciones —— */
+.ba-seccion { padding: 5.5rem 1.25rem 4rem; }
+.ba-titulo { text-align: center; max-width: 30rem; margin-inline: auto; }
+.ba-antes { font-size: 1.0625rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--acento-texto); text-align: center; }
+.ba-titulo h2 { margin-top: .5rem; font-size: clamp(2.3rem, 10.5vw, 3.3rem); text-wrap: balance; }
+.ba-orn { display: block; width: 8.5rem; height: 1rem; margin: 1.1rem auto 0; }
+.ba-orn path { stroke: var(--oro-rosa); stroke-width: .8; }
+.ba-orn rect { fill: var(--oro-rosa); }
+
+/* —— nuestra canción —— */
+.ba-estrofas { position: relative; margin-top: 2.8rem; padding-left: 1.6rem; display: grid; gap: 2.6rem; }
+.ba-estrofas::before {
+  content: ""; position: absolute; left: 0; top: .4rem; bottom: .4rem; width: 2px; border-radius: 2px;
+  background: var(--cuerda-g); transform-origin: 50% 0;
+}
+.ba-estrofa-n { font-family: var(--display); font-style: italic; font-size: 1.25rem; color: var(--acento2); }
+.ba-estrofas h3 { margin-top: .2rem; font-size: clamp(1.8rem, 8vw, 2.3rem); }
+.ba-estrofa-cuando { margin-top: .2rem; font-size: 1.0625rem; opacity: .85; }
+.ba-estrofa-texto { margin-top: .5rem; text-wrap: pretty; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .ba-estrofas::before {
+      animation: ba-crece linear both;
+      animation-timeline: view();
+      animation-range: cover 5% cover 70%;
+    }
+    .ba-estrofas li {
+      animation: ba-enfoca linear both;
+      animation-timeline: view();
+      animation-range: cover 5% cover 35%;
+    }
+  }
+}
+@keyframes ba-crece { from { transform: scaleY(0); } to { transform: none; } }
+@keyframes ba-enfoca { from { filter: blur(5px); opacity: .35; } to { filter: none; opacity: 1; } }
+
+/* —— la vela —— */
+.ba-vela { position: relative; display: block; width: 2.4rem; height: 6rem; margin: 0 auto 1.4rem; }
+.ba-cera {
+  position: absolute; left: 50%; bottom: 0; width: 1.5rem; height: 3.6rem; margin-left: -.75rem; border-radius: 4px 4px 3px 3px;
+  background: linear-gradient(90deg, #d9c9c6, #f6ece8 45%, #c9b5b2);
+}
+.ba-cera::before { content: ""; position: absolute; left: 50%; top: -.45rem; width: 2px; height: .55rem; margin-left: -1px; background: #3a2a2a; }
+.ba-llama {
+  position: absolute; left: 50%; bottom: 3.9rem; width: .9rem; height: 1.7rem; margin-left: -.45rem;
+  border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%;
+  background: radial-gradient(ellipse at 50% 72%, #fff 0 18%, #ffe6b3 30%, #f3a65c 65%, transparent 72%);
+  transform-origin: 50% 100%;
+}
+.ba-halo {
+  position: absolute; left: 50%; bottom: 3rem; width: 7rem; height: 7rem; margin-left: -3.5rem; border-radius: 50%;
+  background: radial-gradient(circle, rgb(255 200 140 / .35), transparent 65%);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ba-llama { animation: ba-titila 4s ease-in-out 30 alternate; }
+  .ba-halo { animation: ba-luz 4s ease-in-out 30 alternate; }
+}
+@keyframes ba-titila { 0% { transform: rotate(-2deg) scaleY(1); } 50% { transform: rotate(1.5deg) scaleY(1.05); } 100% { transform: rotate(-1deg) scaleY(.97); } }
+@keyframes ba-luz { from { opacity: .94; } to { opacity: 1; } }
+.ba-velada {
+  text-align: center; padding: 2.4rem 1.4rem 2.2rem; border-radius: 24px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--acento2) 8%, transparent), transparent);
+  border: 1px solid color-mix(in srgb, var(--oro-rosa) 35%, transparent);
+}
+.ba-velada-fecha { margin-top: .6rem; font-size: clamp(1.8rem, 8vw, 2.4rem); text-wrap: balance; }
+.ba-velada-lugar { margin-top: .6rem; font-size: 1.125rem; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    html.js .ba-velada .ba-llama, html.js .ba-velada .ba-halo {
+      animation: ba-enciende linear both, ba-titila 4s ease-in-out 30 alternate;
+      animation-timeline: view(), auto;
+      animation-range: cover 15% cover 35%, normal;
+    }
+  }
+}
+@keyframes ba-enciende { from { transform: scale(0); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* —— el ritmo de la noche —— */
+.ba-ritmo { position: relative; margin-top: 2.8rem; padding-left: 3.4rem; display: grid; gap: 2.2rem; }
+.ba-ritmo-filete { display: none; }
+.ba-ritmo::before {
+  content: ""; position: absolute; left: 1.15rem; top: .8rem; bottom: .8rem; width: 1px;
+  background: var(--oro-rosa); transform-origin: 50% 0;
+}
+.ba-ritmo li { position: relative; display: grid; }
+.ba-paso {
+  position: absolute; left: -3.4rem; top: .1rem; width: 2.4rem; height: 2.4rem; border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: 1.0625rem; font-weight: 600; font-style: italic;
+  background: var(--papel); border: 1px solid var(--oro-rosa); color: var(--acento2);
+}
+.ba-ritmo-hora { font-size: 2.2rem; line-height: 1.05; color: var(--acento-texto); }
+.ba-ritmo-que { font-size: 1.1875rem; font-weight: 600; margin-top: .2rem; }
+.ba-ritmo-donde { font-size: 1.0625rem; opacity: .85; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .ba-ritmo::before {
+      animation: ba-crece linear both;
+      animation-timeline: view();
+      animation-range: cover 5% cover 80%;
+    }
+  }
+}
+
+/* —— las cuatro cuerdas (MOMENTO WOW) —— */
+.ba-cuenta .ba-antes { color: var(--hondo-acento, var(--acento-texto)); }
+.ba-cuerdas { max-width: 32rem; margin: 2.4rem auto 0; }
+.ba-mastil { display: grid; gap: .6rem; touch-action: pan-y; }
+.ba-cuerda { position: relative; display: grid; grid-template-columns: 1fr; }
+.ba-cuerda-toque {
+  position: relative; display: block; width: 100%; height: 48px; padding: 0; border: 0; background: none;
+  cursor: pointer; touch-action: pan-y; -webkit-tap-highlight-color: transparent;
+  border-radius: 8px;
+}
+.ba-cuerda-toque:focus-visible { outline: 2px solid var(--acento-texto); outline-offset: 2px; }
+.ba-hilo {
+  position: absolute; left: 0; right: 0; top: 50%; height: 2px; margin-top: -1px;
+  background: var(--cuerda-g); border-radius: 2px; opacity: .95;
+}
+.ba-cuerda[data-grosor="0"] .ba-hilo { height: 3px; }
+.ba-cuerda[data-grosor="3"] .ba-hilo { height: 1.5px; }
+.ba-onda {
+  position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible;
+  fill: none; stroke: var(--oro-rosa); stroke-width: 1.6; vector-effect: non-scaling-stroke;
+  opacity: 0; transform-origin: 50% 50%;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ba-onda { animation: ba-vibra 600ms var(--ease-carta) both; }
+  .ba-tocada .ba-onda { animation: ba-vibra-fuerte 900ms var(--ease-carta) both; }
+  .ba-tocada .ba-hilo { animation: ba-hilo 900ms var(--ease-carta) both; }
+}
+@keyframes ba-vibra { 0% { opacity: .9; transform: scaleY(1.4); } 100% { opacity: 0; transform: scaleY(0); } }
+@keyframes ba-vibra-fuerte { 0% { opacity: 1; transform: scaleY(2.4); } 30% { transform: scaleY(-1.6); } 60% { transform: scaleY(.8); } 100% { opacity: 0; transform: scaleY(0); } }
+@keyframes ba-hilo { 0% { opacity: .2; } 100% { opacity: .95; } }
+.ba-cifra {
+  justify-self: end; margin-top: -.4rem; padding-right: .2rem; pointer-events: none;
+  display: flex; align-items: baseline; gap: .5rem;
+}
+.ba-cifra .display { font-size: 2.6rem; line-height: 1; }
+.ba-et { font-size: 1.0625rem; letter-spacing: .1em; opacity: .9; min-width: 3.4rem; }
+.ba-fecha { margin-top: 1.2rem; text-align: center; font-size: clamp(1.8rem, 8vw, 2.4rem); text-wrap: balance; }
+.ba-acorde {
+  display: flex; margin: 1.8rem auto 0; min-height: 52px; align-items: center; padding: 0 1.8rem;
+  border-radius: 999px; border: 1px solid var(--oro-rosa); background: none; color: inherit;
+  font-size: 1.0625rem; letter-spacing: .06em; cursor: pointer;
+}
+.ba-acorde:focus-visible { outline: 2px solid var(--acento-texto); outline-offset: 3px; }
+.ba-acorde:active { transform: scale(.97); }
+
+/* —— cintas de seda —— */
+.ba-cintas { display: grid; gap: .8rem; margin-top: 2.6rem; }
+.ba-cintas li {
+  height: 2.6rem; border-radius: 3px 40px 40px 3px / 3px 50% 50% 3px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--c) 70%, #fff), var(--c) 40%, color-mix(in srgb, var(--c) 82%, #000));
+  box-shadow: 0 6px 14px -8px rgb(0 0 0 / .6);
+  width: calc(100% - var(--i) * 8%);
+}
+.ba-nota { margin-top: 2.2rem; text-align: center; text-wrap: pretty; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .ba-cintas li {
+      animation: ba-despliega linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 40%;
+    }
+  }
+}
+@keyframes ba-despliega { from { clip-path: inset(0 100% 0 0 round 3px); } to { clip-path: inset(0 0 0 0 round 3px); } }
+
+/* —— regalos —— */
+.ba-detalle {
+  margin-block: 3.5rem; padding-top: .5rem; border-radius: 24px;
+  background: radial-gradient(120% 80% at 30% 0%, color-mix(in srgb, var(--acento) 12%, transparent), transparent 70%);
+  border: 1px solid color-mix(in srgb, var(--oro-rosa) 30%, transparent);
+}
+
+/* —— RSVP: la boca de la guitarra —— */
+.ba-boca-escena { display: grid; place-items: center; padding-top: 4.5rem; margin-bottom: -2.5rem; }
+.ba-boca {
+  position: relative; width: 6.5rem; height: 6.5rem; border-radius: 50%;
+  background: radial-gradient(circle, #0d0812 0 52%, transparent 53%), repeating-radial-gradient(circle, #c98d76 0 1px, #6b3f2f 1px 3px);
+  box-shadow: 0 0 0 6px #a8714f, 0 8px 22px rgb(0 0 0 / .5);
+}
+.ba-roseta { position: absolute; inset: 22%; border-radius: 50%; box-shadow: 0 0 0 1px rgb(255 220 200 / .2); }
+.ba-boca-cuerdas { position: absolute; inset: -18% 30%; display: flex; justify-content: space-between; }
+.ba-boca-cuerdas i { width: 1.5px; background: var(--cuerda-g); }
+@media (prefers-reduced-motion: no-preference) {
+  .mr-bachata[data-confirmado="recien"] .ba-boca-cuerdas i { animation: ba-boca 900ms var(--ease-carta) both; }
+  .mr-bachata[data-confirmado="recien"] .ba-boca-cuerdas i:nth-child(2) { animation-delay: 70ms; }
+  .mr-bachata[data-confirmado="recien"] .ba-boca-cuerdas i:nth-child(3) { animation-delay: 140ms; }
+  .mr-bachata[data-confirmado="recien"] .ba-boca-cuerdas i:nth-child(4) { animation-delay: 210ms; }
+}
+@keyframes ba-boca { 0% { transform: translateX(2px); } 20% { transform: translateX(-2px); } 40% { transform: translateX(1.5px); } 60% { transform: translateX(-1px); } 100% { transform: none; } }
+.lienzo[data-plantilla="bachata"] .mr-frase { font-family: var(--caligrafia); font-size: clamp(2.6rem, 12vw, 3.4rem); color: var(--acento2); }
+
+/* —— queda la vela —— */
+.ba-final { position: relative; overflow: clip; isolation: isolate; padding: 6rem 1.5rem 2rem; text-align: center; }
+.ba-luna-baja { position: absolute; left: 50%; top: 1rem; width: 7rem; margin: 0 0 0 -3.5rem; opacity: .55; transform: translateY(4rem); }
+.ba-vela-final { margin-top: 6rem; }
+.ba-final-t { max-width: 16ch; margin-inline: auto; font-size: clamp(1.9rem, 8.5vw, 2.6rem); text-wrap: balance; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .ba-luna-baja {
+      animation: ba-baja linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 60%;
+    }
+  }
+}
+@keyframes ba-baja { from { transform: none; opacity: .9; } to { transform: translateY(4rem); opacity: .25; } }
+.ba-orn-cierre { width: 9rem; }
+
+/* Pilas de reserva sans (GENERICA de tokens.ts no conoce estas familias). */
+.lienzo[data-plantilla="bachata"] { font-family: var(--p-texto), "Mulish", ui-sans-serif, system-ui, sans-serif; }

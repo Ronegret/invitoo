@@ -1,0 +1,305 @@
+/* ------------------------------------------------------------------
+   CARA A (rock & roll) — K4 · docs/16b §2
+   Negro vinilo (--papel), marfil de funda (--tinta), rojo de escenario
+   (--acento; como texto, --acento-texto ya corregido) y cromo (--brillo)
+   en filetes. Estampación en seco, cuero y surcos: nada de calaveras.
+   ------------------------------------------------------------------ */
+.lienzo[data-plantilla="vinilo"] {
+  --brillo: #c7cbd1;
+  --cuero: color-mix(in oklch, #8c7b6b 70%, var(--acento));
+  --ease-carta: cubic-bezier(.22,.61,.36,1);
+  --ease-velo: cubic-bezier(.65,0,.35,1);
+  --gotica: var(--p-acento), "UnifrakturCook", serif;
+  font-size: 1.125rem;
+  line-height: 1.65;
+  background-image:
+    radial-gradient(120% 50% at 50% 0%, color-mix(in srgb, var(--acento) 9%, transparent), transparent 60%);
+}
+.lienzo[data-plantilla="vinilo"] .display {
+  font-weight: 400; letter-spacing: .005em;
+  /* Estampación en seco. */
+  text-shadow: 0 1px 0 rgb(255 255 255 / .06), 0 -1px 0 rgb(0 0 0 / .6);
+}
+.lienzo[data-plantilla="vinilo"][data-ornamento] {
+  --orn-w: 120px; --orn-h: 24px;
+  --orn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 24' fill='none' stroke='%23000' stroke-width='1.4'%3E%3Cpath d='M8 22a52 52 0 0 1 104 0M22 22a38 38 0 0 1 76 0M36 22a24 24 0 0 1 48 0'/%3E%3Ccircle cx='60' cy='22' r='3' fill='%23000'/%3E%3C/svg%3E");
+}
+.lienzo[data-plantilla="vinilo"] .y-gesto,
+.lienzo[data-plantilla="vinilo"] .vi-y { font-family: var(--display); font-style: italic; color: var(--acento-texto); }
+
+/* —— cabecera —— */
+.vi-hero {
+  display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
+  padding: calc(env(safe-area-inset-top, 0px) + 5rem) 1.25rem calc(env(safe-area-inset-bottom, 0px) + 2.2rem);
+  text-align: center; color: #f3eee6;
+}
+.grad-vinilo .kv-grad { filter: grayscale(1) contrast(1.25) brightness(.62); }
+.vi-tinte { position: absolute; inset: 0; pointer-events: none; }
+.vi-tinte::before {
+  /* El contraluz rojo de escenario. */
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(70% 45% at 50% 22%, color-mix(in srgb, var(--acento) 70%, transparent), transparent 70%);
+  mix-blend-mode: screen; opacity: .55;
+}
+.vi-tinte::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(transparent 55%, rgb(0 0 0 / .5)),
+    linear-gradient(to bottom, rgb(10 8 9 / .5), transparent 32%),
+    linear-gradient(to top, rgb(10 8 9 / .82) 0 34%, transparent 70%);
+}
+.vi-rotulo { position: relative; z-index: 2; width: 100%; max-width: 30rem; }
+.vi-cara { font-size: 1.0625rem; font-weight: 500; letter-spacing: .3em; text-transform: uppercase; }
+.vi-nombres { margin-top: .5rem; font-style: italic; line-height: 1; }
+.vi-nombres .vi-y { display: block; font-size: .45em; line-height: 1.2; }
+.vi-directo { margin-top: 1rem; font-size: 1.125rem; line-height: 1.45; }
+.vi-directo > span:first-child { font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: #ff9b93; }
+.vi-baja { margin-top: 1.2rem; color: inherit; }
+.lienzo[data-plantilla="vinilo"] .kv-play { border-radius: 0; --kv-play-fondo: rgb(17 16 17 / .55); }
+
+/* —— la funda y el disco —— */
+.vi-funda-escena { padding: 4.5rem 1.25rem 3rem; display: grid; justify-items: center; overflow: clip; }
+.vi-funda-marco {
+  --lado: min(62vw, 18rem);
+  position: relative; width: var(--lado); height: var(--lado);
+  margin-right: calc(var(--lado) * .34);
+}
+.vi-funda {
+  position: absolute; inset: 0; z-index: 2; pointer-events: none; /* un toque en la funda también toca el disco */
+  display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1.2rem;
+  background:
+    radial-gradient(circle at 30% 20%, rgb(255 255 255 / .06), transparent 50%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E"),
+    linear-gradient(160deg, #2a2523, #171415);
+  box-shadow: 0 24px 50px -20px rgb(0 0 0 / .9), inset 0 0 0 1px rgb(255 255 255 / .07);
+}
+.vi-funda-aro {
+  /* Cerco de desgaste (ring wear). */
+  position: absolute; inset: 9%; border-radius: 50%;
+  box-shadow: 0 0 0 2px rgb(255 255 255 / .05);
+}
+.vi-funda-mono {
+  /* Las iniciales estampadas en seco sobre el cuero. */
+  position: relative; font-family: var(--gotica); font-size: 2.6rem; line-height: 1;
+  color: transparent; text-shadow: 0 1px 0 rgb(255 255 255 / .08), 0 -1px 0 rgb(0 0 0 / .7);
+  -webkit-text-stroke: 1px rgb(255 255 255 / .08);
+}
+.vi-funda-t { margin-top: 2rem; text-align: center; font-size: clamp(2rem, 9vw, 2.6rem); font-style: italic; line-height: 1.05; color: var(--tinta); }
+.vi-funda-sub { text-align: center; margin-top: .4rem; font-size: 1.0625rem; letter-spacing: .16em; text-transform: uppercase; color: var(--brillo); }
+.vi-disco-carril {
+  position: absolute; inset: 2%; z-index: 1;
+  transform: translateX(38%);
+}
+.vi-disco {
+  position: relative; display: block; width: 100%; height: 100%; border-radius: 50%;
+  border: 0; padding: 0; cursor: pointer;
+  background:
+    radial-gradient(circle, transparent 0 31%, rgb(255 255 255 / .06) 31.5%, transparent 32.5%),
+    repeating-radial-gradient(circle, #0c0b0c 0 1.5px, #1b191a 1.5px 3px),
+    #111;
+  box-shadow: 0 10px 30px rgb(0 0 0 / .7), inset 0 0 0 2px #000;
+  -webkit-tap-highlight-color: transparent;
+}
+.vi-disco:focus-visible { outline: 3px solid var(--acento-texto); outline-offset: 4px; }
+.vi-surcos { position: absolute; inset: 6%; border-radius: 50%; box-shadow: inset 0 0 0 1px rgb(255 255 255 / .05); }
+.vi-galleta {
+  position: absolute; inset: 32%; border-radius: 50%;
+  display: grid; place-content: center; text-align: center;
+  background: radial-gradient(circle, #111 0 5%, transparent 5.5%), var(--acento);
+  color: #fff; box-shadow: inset 0 0 0 3px rgb(0 0 0 / .18);
+}
+.vi-galleta-l { font-family: var(--gotica); font-size: clamp(1.4rem, 7vw, 1.9rem); line-height: 1; letter-spacing: .04em; }
+.vi-galleta-t { font-size: .55rem; letter-spacing: .14em; text-transform: uppercase; margin-top: .3rem; opacity: .85; }
+.vi-brillo {
+  position: absolute; inset: 0; border-radius: 50%; pointer-events: none;
+  background: conic-gradient(from 20deg, transparent 0 10%, rgb(255 255 255 / .1) 14%, transparent 20% 60%, rgb(255 255 255 / .07) 64%, transparent 70%);
+}
+.vi-toca {
+  margin-top: 1.6rem; font-size: 1.0625rem; letter-spacing: .18em; text-transform: uppercase; color: var(--acento-texto);
+}
+.vi-frase { margin-top: 3.4rem; max-width: 24rem; text-align: center; font-size: clamp(1.7rem, 7.5vw, 2.3rem); font-style: italic; line-height: 1.2; text-wrap: balance; }
+@media (prefers-reduced-motion: no-preference) {
+  /* La galleta gira (el brillo del vinilo se queda: así se nota el giro). */
+  .vi-disco > .vi-surcos, .vi-disco > .vi-galleta { transition: rotate 600ms var(--ease-carta); }
+  .vi-disco[data-gira="1"] > .vi-galleta,
+  .vi-disco[data-gira="1"] > .vi-surcos { animation: vi-gira 1.8s linear 33; }
+  .vi-disco[data-gira="1"] { animation: vi-arranca 600ms var(--ease-carta) both; }
+}
+@keyframes vi-gira { to { rotate: 360deg; } }
+@keyframes vi-arranca { from { transform: scale(.98); } to { transform: none; } }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .vi-funda-escena { view-timeline: --vi-funda block; }
+    .vi-disco-carril {
+      animation: vi-sale linear both;
+      animation-timeline: --vi-funda;
+      animation-range: entry 10% cover 45%;
+    }
+  }
+}
+@keyframes vi-sale { from { transform: translateX(0) rotate(-40deg); } to { transform: translateX(38%) rotate(0deg); } }
+
+/* —— títulos y secciones —— */
+.vi-seccion { padding: 5.5rem 1.25rem 4rem; }
+.vi-titulo { text-align: center; max-width: 30rem; margin-inline: auto; }
+.vi-antes { font-size: 1.0625rem; font-weight: 500; letter-spacing: .3em; text-transform: uppercase; color: var(--acento-texto); }
+.vi-titulo h2 { margin-top: .5rem; font-size: clamp(2.6rem, 12vw, 3.8rem); font-style: italic; line-height: 1.05; text-wrap: balance; }
+.vi-surco { display: block; width: 6rem; height: 1.2rem; margin: 1rem auto 0; fill: none; stroke: var(--brillo); stroke-width: 1.2; opacity: .8; }
+.vi-surco circle { fill: var(--acento); stroke: none; }
+
+/* —— tracklist —— */
+.vi-tracks { margin-top: 2.8rem; display: grid; gap: 2rem; }
+.vi-tracks li { display: grid; grid-template-columns: 2.6rem 1fr; gap: .9rem; padding-bottom: 1.6rem; border-bottom: 1px solid rgb(255 255 255 / .1); }
+.vi-track-n { font-family: var(--display); font-size: 1.6rem; color: var(--brillo); line-height: 1.2; }
+.vi-tracks h3 { font-size: clamp(1.7rem, 7.5vw, 2.2rem); line-height: 1.1; display: flex; align-items: center; gap: .6rem; }
+.vi-track-cuando { margin-top: .25rem; font-size: 1.0625rem; letter-spacing: .08em; color: var(--acento-texto); }
+.vi-track-texto { margin-top: .5rem; text-wrap: pretty; }
+.vi-eq { display: inline-flex; gap: 3px; align-items: flex-end; height: 1rem; opacity: 0; flex: none; }
+.vi-eq i { width: 3px; height: 100%; background: var(--acento-texto); transform-origin: 50% 100%; transform: scaleY(.4); }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .vi-tracks li {
+      animation: vi-centro linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+    html.js .vi-eq {
+      animation: vi-eq-ve linear both;
+      animation-timeline: view();
+      animation-range: cover 25% cover 75%;
+    }
+    .vi-eq i { animation: vi-eq .83s ease-in-out 140 alternate; }
+    .vi-eq i:nth-child(2) { animation-delay: -.3s; }
+    .vi-eq i:nth-child(3) { animation-delay: -.55s; }
+  }
+}
+/* La pista del centro, entera; las de fuera, al 70 % (nunca menos: se leen). */
+@keyframes vi-centro { 0%, 100% { opacity: .7; } 35%, 65% { opacity: 1; } }
+@keyframes vi-eq-ve { 0%, 100% { opacity: 0; } 20%, 80% { opacity: 1; } }
+@keyframes vi-eq { from { transform: scaleY(.3); } to { transform: scaleY(1); } }
+
+/* —— la contraportada (cuenta atrás) —— */
+.vi-cuenta .vi-antes { color: var(--hondo-acento, var(--acento-texto)); }
+.vi-contra { max-width: 30rem; margin: 2.6rem auto 0; }
+.vi-contra-disco { position: relative; width: 9rem; height: 9rem; margin: 0 auto 2rem; }
+.vi-mini {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: repeating-radial-gradient(circle, #0c0b0c 0 1.5px, #1d1b1c 1.5px 3px);
+  box-shadow: 0 8px 24px rgb(0 0 0 / .6);
+  rotate: var(--giro);
+}
+.vi-mini::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 10deg, transparent 0 12%, rgb(255 255 255 / .12) 15%, transparent 20%); }
+.vi-mini-galleta { position: absolute; inset: 33%; border-radius: 50%; background: radial-gradient(circle, #111 0 9%, transparent 10%), var(--acento); }
+.vi-brazo {
+  position: absolute; right: -1.6rem; top: -.4rem; width: 6px; height: 6.6rem; border-radius: 3px;
+  background: linear-gradient(90deg, #8d9299, #eef0f3, #8d9299);
+  transform-origin: 50% .4rem; rotate: 22deg;
+  box-shadow: 0 2px 6px rgb(0 0 0 / .5);
+}
+.vi-brazo::before { content: ""; position: absolute; top: -.6rem; left: -.65rem; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: radial-gradient(circle, #ccd0d6 0 35%, #6f747b 36% 100%); }
+.vi-brazo::after { content: ""; position: absolute; bottom: -.5rem; left: -.35rem; width: 1rem; height: 1.2rem; border-radius: 2px; background: #c7cbd1; rotate: -18deg; }
+@media (prefers-reduced-motion: no-preference) {
+  .vi-mini { transition: rotate 1s linear; }
+}
+.vi-pistas { display: grid; gap: .3rem; }
+.vi-pistas li { display: flex; align-items: baseline; gap: .7rem; }
+.vi-num { font-size: 1.0625rem; color: var(--brillo); opacity: .85; }
+.vi-guia { flex: 1; display: flex; gap: .5rem; align-items: baseline; font-size: 1.125rem; }
+.vi-guia::after { content: ""; flex: 1; border-bottom: 2px dotted color-mix(in srgb, currentColor 40%, transparent); transform: translateY(-.25rem); }
+.vi-valor { font-size: 2.6rem; line-height: 1.1; min-width: 3.2ch; text-align: right; }
+.vi-contra-fecha { text-align: center; font-size: clamp(1.8rem, 8vw, 2.6rem); font-style: italic; text-wrap: balance; }
+
+/* —— el setlist —— */
+.vi-setlist {
+  position: relative; max-width: 26rem; margin: 3rem auto 0; padding: 2rem 1.5rem 1.6rem;
+  background: #f1ebe0; color: #1b1716;
+  transform: rotate(-1deg);
+  box-shadow: 0 18px 40px -16px rgb(0 0 0 / .8);
+}
+.vi-cinta { position: absolute; top: -.7rem; width: 4.6rem; height: 1.5rem; background: rgb(160 160 160 / .55); }
+.vi-cinta.a { left: -.8rem; rotate: -28deg; }
+.vi-cinta.b { right: -.8rem; rotate: 24deg; }
+.vi-setlist ol { display: grid; gap: 1.5rem; }
+.vi-setlist li { display: grid; }
+.vi-set-hora { position: relative; justify-self: start; font-size: 2.3rem; line-height: 1.05; text-shadow: none !important; }
+.vi-set-hora svg { position: absolute; left: -4%; bottom: -.15rem; width: 108%; height: .5rem; fill: none; stroke: #b2271f; stroke-width: 2.4; stroke-linecap: round; stroke-dasharray: 1; }
+.vi-set-que { font-size: 1.1875rem; font-weight: 500; margin-top: .3rem; }
+.vi-set-donde { font-size: 1.0625rem; color: #4a4240; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .vi-set-hora svg path {
+      animation: vi-subraya linear both;
+      animation-timeline: view();
+      animation-range: cover 15% cover 45%;
+    }
+  }
+}
+@keyframes vi-subraya { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+
+/* —— rock elegante: púas —— */
+.vi-puas { display: flex; justify-content: center; flex-wrap: wrap; gap: 1.2rem; margin-top: 2.6rem; }
+.vi-puas li { width: 3.6rem; }
+.vi-puas svg { width: 100%; height: auto; overflow: visible; filter: drop-shadow(0 6px 10px rgb(0 0 0 / .55)); }
+.vi-puas path:first-child { fill: var(--c); stroke: rgb(255 255 255 / .22); stroke-width: 1; }
+.vi-pua-brillo { fill: none; stroke: rgb(255 255 255 / .35); stroke-width: 1.5; stroke-linecap: round; }
+.vi-nota { margin-top: 2.2rem; text-align: center; text-wrap: pretty; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .vi-puas li {
+      animation: vi-pua linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 35%;
+    }
+  }
+}
+@keyframes vi-pua { from { transform: rotate(calc(25deg - var(--i) * 12deg)) translateY(12px); opacity: .3; } to { transform: none; opacity: 1; } }
+
+/* —— cara B: los créditos (regalos) —— */
+.vi-carab { margin-block: 3.5rem; padding-top: 1.4rem; border-top: 2px solid var(--acento); border-bottom: 1px solid rgb(255 255 255 / .12); }
+.vi-carab-cab { text-align: center; font-size: 1.0625rem; letter-spacing: .26em; text-transform: uppercase; color: var(--brillo); }
+
+/* —— RSVP: el matasellos «Lleno absoluto» —— */
+.vi-lleno-escena { display: grid; place-items: center; padding-top: 4rem; margin-bottom: -2rem; }
+.vi-lleno {
+  display: grid; justify-items: center; gap: .1rem; padding: .7rem 1.2rem;
+  border: 3px double var(--acento-texto); border-radius: 8px; color: var(--acento-texto);
+  font-family: var(--display); font-size: 1.8rem; font-style: italic; line-height: 1.05;
+  rotate: -6deg; opacity: .16;
+}
+.vi-lleno-sub { font-family: var(--texto); font-style: normal; font-size: 1.0625rem; letter-spacing: .12em; text-transform: uppercase; }
+.mr-vinilo[data-confirmado] .vi-lleno { opacity: 1; }
+@media (prefers-reduced-motion: no-preference) {
+  .mr-vinilo[data-confirmado="recien"] .vi-lleno { animation: vi-estampa 520ms cubic-bezier(.34,1.12,.64,1) 200ms both; }
+}
+@keyframes vi-estampa { from { opacity: 0; scale: 1.25; } to { opacity: 1; scale: 1; } }
+.lienzo[data-plantilla="vinilo"] .mr-frase { font-style: italic; color: var(--acento-texto); }
+
+/* —— se apagan las luces —— */
+.vi-foco {
+  position: relative; overflow: clip; isolation: isolate;
+  min-height: 72svh; display: grid; place-content: center; text-align: center; padding: 5rem 1.5rem;
+  background: #050505;
+}
+.vi-foco-luz {
+  position: absolute; inset: -20% -40%; z-index: -1; pointer-events: none;
+  background: radial-gradient(34% 26% at 50% var(--foco-y, 50%), rgb(255 244 230 / .2), rgb(255 244 230 / .06) 45%, transparent 70%);
+}
+.vi-foco-t { font-size: clamp(2.4rem, 11vw, 3.6rem); font-style: italic; }
+.vi-foco-sub { margin-top: .8rem; max-width: 20rem; margin-inline: auto; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .vi-foco-luz {
+      animation: vi-foco linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 70%;
+    }
+  }
+}
+@keyframes vi-foco { from { transform: translateY(-22%); opacity: .3; } to { transform: none; opacity: 1; } }
+.vi-surco-cierre { width: 7rem; height: 1.4rem; }
+
+/* La galería en blanco y negro, de libreto de disco. */
+.lienzo[data-plantilla="vinilo"] img:not(.kv-poster) { filter: grayscale(1) contrast(1.08); }
+
+/* Pilas de reserva sans (GENERICA de tokens.ts no conoce estas familias). */
+.lienzo[data-plantilla="vinilo"] { font-family: var(--p-texto), "Karla", ui-sans-serif, system-ui, sans-serif; }

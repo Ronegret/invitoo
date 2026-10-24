@@ -1,0 +1,14 @@
+{
+  "_comentario": "FLUX.1 schnell (Apache-2.0) en un solo checkpoint fp8 de Comfy-Org: models/checkpoints/flux1-schnell-fp8.safetensors (~17 GB, funciona con 8-12 GB de VRAM gracias al offload de ComfyUI). Los nodos PROMPT, LIENZO y MUESTREO los rellena local-comfyui.mjs.",
+  "1": { "class_type": "CheckpointLoaderSimple", "inputs": { "ckpt_name": "flux1-schnell-fp8.safetensors" } },
+  "2": { "class_type": "CLIPTextEncode", "inputs": { "text": "", "clip": ["1", 1] }, "_meta": { "title": "PROMPT" } },
+  "3": { "class_type": "CLIPTextEncode", "inputs": { "text": "", "clip": ["1", 1] }, "_meta": { "title": "NEGATIVO (FLUX lo ignora con cfg 1)" } },
+  "4": { "class_type": "EmptySD3LatentImage", "inputs": { "width": 1024, "height": 1024, "batch_size": 1 }, "_meta": { "title": "LIENZO" } },
+  "5": {
+    "class_type": "KSampler",
+    "inputs": { "seed": 0, "steps": 4, "cfg": 1, "sampler_name": "euler", "scheduler": "simple", "denoise": 1, "model": ["1", 0], "positive": ["2", 0], "negative": ["3", 0], "latent_image": ["4", 0] },
+    "_meta": { "title": "MUESTREO" }
+  },
+  "6": { "class_type": "VAEDecode", "inputs": { "samples": ["5", 0], "vae": ["1", 2] } },
+  "7": { "class_type": "SaveImage", "inputs": { "filename_prefix": "invitoo", "images": ["6", 0] } }
+}

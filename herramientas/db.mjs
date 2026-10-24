@@ -6,6 +6,7 @@
  * contraseña aquí: este archivo sí se versiona.
  *
  *   node herramientas/db.mjs esquema
+ *   node herramientas/db.mjs migrar     (aplica supabase/migraciones/*.sql en orden)
  *   node herramientas/db.mjs sembrar
  *   node herramientas/db.mjs ver
  */
@@ -40,6 +41,15 @@ const orden = process.argv[2] ?? "ver";
 if (orden === "esquema") {
   await cli.query(readFileSync(join(RAIZ, "supabase/schema.sql"), "utf8"));
   console.log("esquema aplicado");
+}
+
+if (orden === "migrar") {
+  const { readdirSync } = await import("node:fs");
+  const dir = join(RAIZ, "supabase/migraciones");
+  for (const f of readdirSync(dir).filter((x) => x.endsWith(".sql")).sort()) {
+    await cli.query(readFileSync(join(dir, f), "utf8"));
+    console.log("migración aplicada:", f);
+  }
 }
 
 if (orden === "sembrar") {
@@ -77,7 +87,7 @@ if (orden === "sembrar") {
 }
 
 if (orden === "ver") {
-  for (const t of ["invitaciones", "rsvp", "muro", "leads"]) {
+  for (const t of ["invitaciones", "invitados", "rsvp", "muro", "leads"]) {
     const { rows } = await cli.query(`select count(*)::int c from ${t}`);
     console.log(`${t.padEnd(14)} ${rows[0].c}`);
   }

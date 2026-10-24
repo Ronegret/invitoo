@@ -1,0 +1,21 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "crons": [
+    {
+      "path": "/api/momentos/limpieza",
+      "schedule": "17 4 * * *"
+    },
+    {
+      "path": "/api/avisos/resumen",
+      "schedule": "3 7 * * *"
+    },
+    {
+      "path": "/api/correos/estudio",
+      "schedule": "37 5 * * *"
+    },
+    {
+      "path": "/api/correos/novios",
+      "schedule": "13 8 * * *"
+    }
+  ]
+}

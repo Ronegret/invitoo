@@ -1,0 +1,323 @@
+/* ------------------------------------------------------------------
+   CARTA — la insignia (E3). Todo cuelga de .lienzo[data-plantilla="carta"].
+   El oro es decoración: filetes de 1 px, la «&», los iconos y el botón.
+   Texto pequeño de acento → --acento-texto (bosque/granate/noche, AA).
+   Motion: solo opacity y transform; nada se mueve con menos movimiento.
+   ------------------------------------------------------------------ */
+
+.lienzo[data-plantilla="carta"] {
+  --oro: #b08d57;
+  --oro-claro: #e9d3a2;
+  --oro-hilo: color-mix(in srgb, #b08d57 62%, transparent);
+  /* La «&» en cobre: 3,8:1 sobre el crema, y siempre a más de 40 px. */
+  --cobre: #94683a;
+  /* Las flores: peonía empolvada, que casa con el oro y con las tres tintas. */
+  --carta-flor: #c48c84;
+  --ease-carta: cubic-bezier(.22, .61, .36, 1);
+  font-size: 1.125rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  /* El ornamento de los títulos: un filete de oro con un rombo diminuto. */
+  --orn-w: 132px;
+  --orn-h: 9px;
+  --orn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 132 9'%3E%3Cpath d='M0 4.5h56M76 4.5h56' stroke='%23000' stroke-width='1'/%3E%3Cpath d='M66 1l3.5 3.5L66 8l-3.5-3.5z'/%3E%3C/svg%3E");
+}
+.lienzo[data-plantilla="carta"] h2.display:not(.sin-orn)::after { background: var(--oro); }
+.lienzo[data-plantilla="carta"] .display { font-weight: 400; letter-spacing: -0.005em; line-height: 1.06; }
+.lienzo[data-plantilla="carta"] :is(h1, h2, h3).display { font-style: italic; }
+/* El hilo entre secciones, en oro. */
+.lienzo[data-plantilla="carta"] [data-revelar]:not(.respiro) + [data-revelar]:not(.respiro)::before {
+  background: var(--oro-hilo);
+  width: 5rem;
+  margin-left: -2.5rem;
+}
+
+/* --- Portada: la cartulina con doble filete de oro --- */
+.carta-marco {
+  border: 1px solid var(--oro-hilo);
+  outline: 1px solid color-mix(in srgb, var(--oro) 34%, transparent);
+  outline-offset: -8px;
+}
+.carta-marco::before,
+.carta-marco::after {
+  /* Dos esquinas grabadas, arriba y abajo: un rombo en el filete. */
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  margin-left: -4.5px;
+  background: var(--papel);
+  border: 1px solid var(--oro);
+  transform: rotate(45deg);
+}
+.carta-marco::before { top: -5px; }
+.carta-marco::after { bottom: -5px; }
+.carta-lema {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.3rem;
+  line-height: 1.35;
+  max-width: 19rem;
+  opacity: 0.92;
+}
+.carta-nombres {
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.015em;
+}
+.lienzo[data-plantilla="carta"] .carta-y {
+  color: var(--cobre);
+  font-size: 0.5em;
+  font-weight: 400;
+  line-height: 1.25;
+}
+.lienzo[data-plantilla="carta"] .carta-y::before,
+.lienzo[data-plantilla="carta"] .carta-y::after {
+  width: 2.2em;
+  background: var(--oro);
+  opacity: 0.8;
+}
+.carta-filete {
+  display: block;
+  width: 9rem;
+  height: 9px;
+  margin-inline: auto;
+  background: var(--oro);
+  -webkit-mask: var(--orn) center / contain no-repeat;
+  mask: var(--orn) center / contain no-repeat;
+}
+.carta-fecha { font-family: var(--display); }
+.carta-fecha-mes {
+  font-weight: 600;
+  font-size: 1.0625rem;
+  letter-spacing: 0.34em;
+  margin-inline-end: -0.34em;
+  text-transform: uppercase;
+  color: var(--acento-texto);
+}
+.carta-fecha-fila {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  column-gap: 1.1rem;
+}
+.carta-fecha-lado {
+  min-width: 5.5rem;
+  padding-block: 0.55rem;
+  border-block: 1px solid var(--oro-hilo);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.carta-fecha-lado:first-child { text-align: right; padding-right: .2em; }
+.carta-fecha-lado:last-child { text-align: left; }
+.carta-fecha-dia {
+  font-size: clamp(3.6rem, 17vw, 4.75rem);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 0.9;
+  color: var(--cobre);
+}
+.carta-sitio {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--acento-texto);
+}
+.carta-rotulo {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.0625rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--acento-texto);
+}
+.lienzo .text-center .carta-rotulo { margin-inline-end: -0.22em; }
+.carta-frontis img { outline: 1px solid rgba(0, 0, 0, 0.06); outline-offset: -1px; }
+@media (min-width: 768px) {
+  .carta-portada { display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; }
+  .carta-portada .carta-marco { margin: 1.25rem; max-width: none; }
+  .carta-frontis { margin: 0; height: 100svh; position: sticky; top: 0; }
+  .carta-frontis img { height: 100%; aspect-ratio: auto; }
+}
+
+/* --- El botón: degradado dorado sutil, texto oscuro (≥ 5,5:1) --- */
+.lienzo .boton-oro {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  color: #1f1a14;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #efdfb6 0%, #dcc08a 42%, #c49a5c 100%);
+  border: 1px solid color-mix(in srgb, #8a6436 45%, transparent);
+  transition: transform 180ms var(--ease-carta, ease-out);
+}
+.lienzo .boton-oro::after {
+  /* El reflejo: cruza una vez al pasar el ratón (600 ms). */
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 250, 235, 0.65) 50%, transparent 70%);
+  transform: translateX(-110%);
+}
+.lienzo .boton-oro:active { transform: scale(0.97); }
+.lienzo .boton-oro:focus-visible { outline: 3px solid var(--acento-texto); outline-offset: 3px; }
+@media (prefers-reduced-motion: no-preference) {
+  /* En el móvil no hay «hover»: el brillo cruza solo, cada pocos segundos. */
+  .lienzo .boton-oro::after { animation: oro-brillo 6s var(--ease-carta, ease-out) 2.4s infinite; }
+}
+@keyframes oro-brillo { 0% { transform: translateX(-110%); } 14%, 100% { transform: translateX(110%); } }
+
+/* --- Dedicatoria --- */
+.carta-comilla {
+  display: block;
+  font-family: var(--display);
+  font-size: 6rem;
+  line-height: 1;
+  color: var(--oro);
+}
+.carta-cita {
+  max-width: 20ch;
+  font-style: italic;
+  font-size: clamp(1.9rem, 7.6vw, 2.75rem);
+  line-height: 1.22;
+  text-wrap: balance;
+}
+
+/* --- Capítulos: carrusel a sangre --- */
+.carta-carril {
+  padding-inline: 8vw;
+  scroll-padding-inline: 8vw;
+  scroll-snap-type: x mandatory;
+}
+.carta-carril > * { scroll-snap-align: center; }
+.carta-carril:focus-visible { outline: 3px solid var(--acento-texto); outline-offset: -3px; }
+.carta-capitulo { width: 84vw; max-width: 26rem; }
+.carta-foto { outline: 1px solid rgba(0, 0, 0, 0.06); outline-offset: -1px; background: color-mix(in srgb, var(--acento) 12%, var(--papel)); }
+.carta-pie {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.3rem;
+  line-height: 1.45;
+  opacity: 0.92;
+}
+.carta-desliza { font-style: italic; }
+.carta-flecha {
+  display: inline-grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 999px;
+  border: 1px solid var(--oro-hilo);
+  color: var(--tinta);
+  transition: opacity 200ms var(--ease-carta), transform 180ms var(--ease-carta);
+}
+.carta-flecha:active { transform: scale(0.94); }
+.carta-flecha:disabled { opacity: 0.35; }
+.carta-flecha:focus-visible { outline: 3px solid var(--acento-texto); outline-offset: 2px; }
+@media (min-width: 768px) {
+  .carta-carril { padding-inline: max(2rem, calc((100vw - 60rem) / 2)); }
+  .carta-capitulo { width: 24rem; }
+  .carta-desliza { display: none; }
+}
+
+/* --- El gran día: tarjetas con icono fino, filete de oro, sin sombra --- */
+.carta-tarjeta {
+  position: relative;
+  padding: 2.5rem 1.75rem 2.25rem;
+  text-align: center;
+  background: color-mix(in srgb, var(--papel) 55%, #fff);
+  border: 1px solid var(--oro-hilo);
+  border-radius: 2px;
+}
+.carta-icono {
+  display: inline-grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--oro-hilo);
+  color: var(--oro);
+}
+.carta-hora {
+  display: inline-block;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--oro-hilo);
+  min-width: 8rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- El programa: línea de tiempo con hilo de oro --- */
+.carta-linea { position: relative; }
+.carta-linea::before {
+  content: "";
+  position: absolute;
+  top: 0.6rem;
+  bottom: 0.6rem;
+  left: 5.6rem;
+  width: 1px;
+  background: var(--oro-hilo);
+}
+.carta-parada {
+  position: relative;
+  display: grid;
+  grid-template-columns: 4.6rem 1fr;
+  column-gap: 2rem;
+  padding-block: 1.25rem;
+}
+.carta-parada::before {
+  content: "";
+  position: absolute;
+  left: calc(5.6rem - 4px);
+  top: 1.95rem;
+  width: 9px;
+  height: 9px;
+  background: var(--papel);
+  border: 1px solid var(--oro);
+  transform: rotate(45deg);
+}
+.carta-parada-hora {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.75rem;
+  line-height: 1.1;
+  text-align: right;
+}
+
+/* --- El negativo: verde bosque (o granate, o noche) --- */
+.lienzo .carta-negativo {
+  --tinta-negativo: #f6f0e4;
+  background: var(--acento);
+  color: var(--tinta-negativo);
+  --acento-texto: #e3c991;
+  padding-block: 1.5rem;
+}
+.carta-negativo-marco {
+  border-block: 1px solid color-mix(in srgb, var(--oro-claro) 35%, transparent);
+}
+.carta-negativo .carta-filete { background: var(--oro-claro); }
+.carta-negativo h2.display:not(.sin-orn)::after { background: var(--oro-claro) !important; }
+.carta-negativo .display { color: #fbf6ea; }
+.carta-color {
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 999px;
+  box-shadow: 0 0 0 1px var(--acento), 0 0 0 2px color-mix(in srgb, var(--oro-claro) 70%, transparent);
+}
+
+/* El separador de sección no se pinta encima del negativo ni justo debajo. */
+.lienzo[data-plantilla="carta"] [data-revelar]:has(> .carta-negativo)::before,
+.lienzo[data-plantilla="carta"] [data-revelar]:has(> .carta-negativo) + [data-revelar]::before { display: none; }
+
+/* --- Cómo llegar en Carta: el selector con filete de oro --- */
+.lienzo[data-plantilla="carta"] .como-selector { border-color: var(--oro-hilo); }
+
+@media (prefers-reduced-motion: reduce) {
+  .lienzo .boton-oro, .carta-flecha { transition: none; }
+  .lienzo .boton-oro::after { display: none; }
+}

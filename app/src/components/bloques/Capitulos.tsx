@@ -27,7 +27,7 @@ export default function Capitulos({
       <Rama
         forma="guirnalda"
         ancho={170}
-        className="mx-auto mt-5 text-[var(--acento)] opacity-45"
+        className="mx-auto mt-5 text-[var(--acento-texto,var(--acento))] opacity-45"
       />
 
       <ol className="mt-16 flex flex-col">
@@ -58,14 +58,14 @@ export default function Capitulos({
             </span>
 
             {c.cuando && (
-              <p className="text-[0.75rem] uppercase tracking-[0.34em] text-[var(--acento)] opacity-80">
+              <p className="text-[1rem] uppercase tracking-[0.28em] text-[var(--acento-texto,var(--acento))]">
                 {c.cuando}
               </p>
             )}
             <h3 className="display mt-2 text-[1.6rem] leading-tight">
               {c.titulo}
             </h3>
-            <p className="mt-3 text-[1.02rem] leading-[1.8] opacity-75">
+            <p className="mt-3 text-[1.0625rem] leading-[1.8] opacity-85">
               {c.texto}
             </p>
             {c.foto && (
@@ -75,9 +75,10 @@ export default function Capitulos({
                 alt=""
                 width={900}
                 height={1125}
+                sizes="(min-width: 600px) 36rem, 100vw"
                 loading="lazy"
                 decoding="async"
-                className="mt-7 h-72 w-full object-cover sm:h-96"
+                className="revela-foto mt-7 h-72 w-full object-cover sm:h-96"
               />
             )}
           </li>

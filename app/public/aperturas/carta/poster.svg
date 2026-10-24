@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920">
+  <rect width="1080" height="1920" fill="#1f3a2e"/>
+  <g transform="translate(140 640)">
+    <rect width="800" height="560" fill="#f6f0e4"/>
+    <path d="M0 0 400 300 800 0" fill="#ece3d1" stroke="#b08d57" stroke-width="2"/>
+    <path d="M0 560 330 290M800 560 470 290" fill="none" stroke="#d8ccb4" stroke-width="2"/>
+    <circle cx="400" cy="300" r="62" fill="#b08d57"/>
+    <circle cx="400" cy="300" r="48" fill="none" stroke="#e9d3a2" stroke-width="2"/>
+    <text x="400" y="318" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="48" fill="#3b2a12">I&amp;G</text>
+  </g>
+</svg>

@@ -23,9 +23,10 @@ const AVISO = 2 * 60 * 1000;
 
 export default function Caducidad({ salir }: { salir: () => Promise<void> }) {
   const [quedan, setQuedan] = useState<number | null>(null);
-  const ultimo = useRef(Date.now());
+  const ultimo = useRef(0);
 
   useEffect(() => {
+    ultimo.current = Date.now();
     const tocar = () => {
       ultimo.current = Date.now();
       setQuedan(null);

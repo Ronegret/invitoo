@@ -1,0 +1,28 @@
+/*
+ * El revelado de la web comercial.
+ *
+ * `Revelar` solo marca con `data-revelar`; el guion es el mismo de las
+ * invitaciones (`components/movimiento/programa.ts`), arrancado por
+ * `RevelarSitio`. Aquí va SOLO la parte de la web, más sobria que la de una
+ * invitación: un fundido con un ascenso corto, sin desenfoque.
+ *
+ * REGLA: sin `html.js` y `data-espera` no se esconde nada (sin JavaScript
+ * todo sale visible), y con menos movimiento tampoco.
+ */
+.sitio {
+  --mov-dur: 900ms;
+  --mov-paso: 90ms;
+  --mov-curva: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :global(html.js) .sitio :global([data-revelar][data-espera]) {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  .sitio :global([data-revelar][data-entrando]) {
+    transition:
+      opacity var(--mov-dur) var(--mov-curva) var(--d, 0ms),
+      transform calc(var(--mov-dur) * 1.2) var(--mov-curva) var(--d, 0ms);
+  }
+}

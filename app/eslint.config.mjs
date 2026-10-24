@@ -9,6 +9,10 @@ const eslintConfig = defineConfig([
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
+    // Carpetas de compilación propias de cada agente/servidor (NEXT_DIST_DIR).
+    ".next-*/**",
+    // Fotos retiradas (no es código).
+    "archivo-fotos-antiguas/**",
     "out/**",
     "build/**",
     "next-env.d.ts",

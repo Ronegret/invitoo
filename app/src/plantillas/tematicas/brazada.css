@@ -1,0 +1,335 @@
+/* ------------------------------------------------------------------
+   BRAZADA (`brazada`) — K3 · docs/16a §10
+   Azulejo (--papel), fondo de piscina (--tinta), cian profundo (--acento).
+   Materiales fijos: el cian iluminado (--cian-luz: cáusticas, burbujas)
+   y el cromo (--metal). Ninguno de los dos es texto sobre el papel.
+   ------------------------------------------------------------------ */
+.lienzo[data-plantilla="brazada"] {
+  --cian-luz: #6fd3e0;
+  --metal: #a9c1c8;
+  --script: var(--p-script), "Yellowtail", cursive;
+  --br-display: var(--p-display), "Archivo", "Arial Narrow", ui-sans-serif, sans-serif;
+  font-family: var(--p-texto), "Lexend", ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.7;
+  /* El azulejo: una retícula de 1 px al 6 %. */
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--acento) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--acento) 6%, transparent) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+.lienzo[data-plantilla="brazada"] .display {
+  font-family: var(--br-display); font-style: italic; font-weight: 700; font-stretch: 118%; letter-spacing: -.005em;
+}
+.lienzo[data-plantilla="brazada"] :is(.text-\[1rem\], .text-\[0\.95rem\], .text-sm, .text-base, label, legend) { font-size: 1.0625rem; }
+
+/* —— la corchera —— */
+.br-corchera {
+  display: block; height: 10px; border-radius: 5px;
+  background: repeating-linear-gradient(90deg, var(--acento) 0 18px, #fff 18px 36px);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--acento) 35%, transparent), 0 2px 4px -2px rgb(0 0 0 / .25);
+}
+.br-corchera-corta { width: 7.5rem; margin: 1.1rem auto 0; }
+
+/* —— cabecera —— */
+.br-hero {
+  display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
+  padding: calc(env(safe-area-inset-top, 0px) + 12svh + 2rem) 1.5rem calc(env(safe-area-inset-bottom, 0px) + 6.5rem);
+  text-align: center; color: #fff;
+}
+/* El tul blanco, virado a agua. */
+.grad-brazada .kv-grad { filter: sepia(.35) hue-rotate(150deg) saturate(1.4) brightness(.72) contrast(1.06); }
+.br-causticas { position: absolute; inset: 0; overflow: clip; pointer-events: none; mix-blend-mode: screen; opacity: .2; }
+.br-causticas::before, .br-causticas::after {
+  content: ""; position: absolute; inset: 0 -256px -256px 0;
+  background: url(/tematicas/brazada/causticas.avif) 0 0 / 256px 256px;
+}
+.br-causticas::after { opacity: .6; background-size: 256px 256px; transform: scale(1.4); transform-origin: 0 0; }
+@media (prefers-reduced-motion: no-preference) {
+  /* Se desplazan en sentidos opuestos; unos 2 min y se quedan quietas (WCAG 2.2.2). */
+  .br-causticas::before { animation: br-causticas 14s linear 8; }
+  .br-causticas::after { animation: br-causticas2 19s linear 6 reverse; }
+}
+@keyframes br-causticas { to { transform: translate(-256px, -256px); } }
+@keyframes br-causticas2 { from { transform: scale(1.4); } to { transform: scale(1.4) translate(-256px, -256px); } }
+.br-velo {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(to top,
+      color-mix(in srgb, var(--tinta) 76%, transparent) 0 46%,
+      color-mix(in srgb, var(--tinta) 40%, transparent) 68%,
+      color-mix(in srgb, var(--tinta) 10%, transparent));
+}
+.br-velo::after { content: ""; position: absolute; inset: 0; background: var(--tinta); opacity: 0; }
+
+.br-borde {
+  position: absolute; z-index: 3; left: 0; right: 0; top: 0;
+  height: calc(env(safe-area-inset-top, 0px) + 12svh);
+  display: flex; align-items: flex-end; justify-content: center; padding-bottom: .5rem;
+  background: var(--papel); color: var(--tinta);
+}
+.br-salida {
+  font-family: var(--br-display); font-style: italic; font-weight: 700; font-stretch: 120%;
+  font-size: 1.0625rem; letter-spacing: .16em; text-transform: uppercase;
+}
+.br-superficie { position: absolute; left: -5%; top: 100%; width: 110%; height: 22px; margin-top: -1px; overflow: visible; }
+.br-agua-arriba { fill: var(--papel); }
+.br-linea { fill: none; stroke: #fff; stroke-width: 2; vector-effect: non-scaling-stroke; }
+@media (prefers-reduced-motion: no-preference) {
+  .br-superficie { animation: br-vaiven 4.5s ease-in-out 12 alternate; }
+}
+@keyframes br-vaiven { from { transform: translateX(-2%); } to { transform: translateX(2%); } }
+
+.br-rotulo { position: relative; z-index: 2; max-width: 30rem; text-shadow: 0 1px 18px rgb(0 0 0 / .3); }
+.br-nombres { font-family: var(--br-display); font-style: italic; font-weight: 700; font-stretch: 120%; line-height: 1; letter-spacing: -.01em; }
+.br-y { display: block; font-family: var(--script); font-style: normal; font-weight: 400; font-stretch: 100%; font-size: max(2rem, .55em); line-height: 1.15; color: #bdf0f6; }
+.br-fecha { margin-top: 1rem; font-size: 1.125rem; font-weight: 500; }
+.br-lugar { font-size: 1.0625rem; opacity: .95; }
+.br-baja { margin-top: .9rem; color: #fff; font-family: var(--br-display); font-style: italic; font-weight: 700; font-stretch: 115%; letter-spacing: .12em; text-transform: uppercase; }
+@media (prefers-reduced-motion: no-preference) {
+  /* Los nombres entran de izquierda a derecha, como una brazada. */
+  .br-nombres > * { animation: br-brazada 700ms var(--ease-carta) both; }
+  .br-nombres > :nth-child(2) { animation-delay: 160ms; }
+  .br-nombres > :nth-child(3) { animation-delay: 320ms; }
+  .br-rotulo > :not(h1) { animation: br-aparece 900ms var(--ease-carta) 600ms both; }
+  main:has(> .apertura[data-estado="dentro"]) :is(.br-nombres > *, .br-rotulo > *) { animation-play-state: paused; }
+}
+@keyframes br-brazada { from { opacity: 0; transform: translateX(-24px) skewX(-6deg); } }
+@keyframes br-aparece { from { opacity: 0; transform: translateY(8px); } }
+
+/* EL WOW, «la zambullida»: la superficie sube y sale; el agua se oscurece. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .br-hero .br-borde { animation: br-superficie-sube linear both; animation-timeline: --k-hero; animation-range: exit 0% exit 50%; }
+    .br-hero .br-velo::after { animation: br-hondo linear both; animation-timeline: --k-hero; animation-range: exit 0% exit 70%; }
+  }
+}
+@keyframes br-superficie-sube { to { transform: translateY(-110%); } }
+@keyframes br-hondo { to { opacity: .45; } }
+
+/* El botón «Ver el vídeo»: una burbuja, abajo a la derecha (arriba está la superficie). */
+.lienzo[data-plantilla="brazada"] .kv-play {
+  top: auto; left: auto;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 1rem); right: 1rem;
+  --kv-play-fondo: color-mix(in srgb, var(--tinta) 55%, transparent);
+  min-height: 56px; padding-left: .5rem;
+}
+.lienzo[data-plantilla="brazada"] .kv-play::before {
+  content: ""; width: 40px; height: 40px; flex: none; border-radius: 50%;
+  background: radial-gradient(circle at 32% 30%, #fff 0 4px, transparent 5px), radial-gradient(circle, rgb(111 211 224 / .25), rgb(111 211 224 / .55));
+  box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / .85);
+  transition: transform 300ms var(--ease-sello);
+}
+.lienzo[data-plantilla="brazada"] .kv-play:active::before { transform: translateY(-4px); }
+.lienzo[data-plantilla="brazada"] .kv-play svg { margin-left: -2.55rem; margin-right: 1rem; position: relative; }
+
+/* —— títulos y secciones —— */
+.br-seccion { padding: 5.5rem 1.25rem 4rem; }
+.br-titulo { text-align: center; padding-inline: 1rem; }
+.br-antes {
+  font-family: var(--br-display); font-style: italic; font-weight: 700; font-stretch: 120%;
+  font-size: 1.0625rem; letter-spacing: .18em; text-transform: uppercase; color: var(--acento-texto);
+}
+.br-titulo h2 { margin-top: .35rem; font-size: clamp(2.1rem, 9.6vw, 3.1rem); line-height: 1.05; text-wrap: balance; }
+
+/* —— bajo el agua —— */
+.br-agua {
+  position: relative; isolation: isolate; overflow: clip;
+  padding: 6rem 1.25rem 5rem;
+  background: var(--tinta); color: var(--papel);
+  --acento-texto: #8fe3ee;
+}
+.br-agua .br-titulo h2 { color: var(--papel); }
+.br-causticas-fondo { z-index: -1; opacity: .09; }
+.br-agua-dentro { position: relative; z-index: 1; }
+.br-burbujas { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.br-burbujas > i {
+  position: absolute; border-radius: 50%; border: 1px solid rgb(255 255 255 / .5);
+  background: radial-gradient(circle at 32% 30%, rgb(255 255 255 / .6) 0 18%, transparent 24%);
+  opacity: .7;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .br-burbujas > i { animation: br-sube 9s linear var(--d) 6; }
+}
+@keyframes br-sube {
+  0% { transform: translate(0, 40svh); opacity: 0; }
+  15% { opacity: .75; }
+  50% { transform: translate(6px, 0); }
+  85% { opacity: .6; }
+  100% { transform: translate(-4px, -40svh); opacity: 0; }
+}
+.br-largos { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 2.75rem; }
+.br-largo {
+  position: relative; padding: 1.6rem 1.4rem 1.5rem; border-radius: 14px; overflow: clip;
+  background: color-mix(in srgb, var(--tinta) 78%, var(--acento));
+  border-left: 3px solid var(--cian-luz);
+}
+.br-largo-n {
+  position: absolute; right: .9rem; top: .3rem;
+  font-family: var(--br-display); font-style: italic; font-weight: 800; font-stretch: 125%; font-size: 3rem; line-height: 1;
+  color: transparent; -webkit-text-stroke: 1px rgb(111 211 224 / .45);
+}
+.br-cuando { font-size: 1.0625rem; font-weight: 500; color: var(--acento-texto); padding-right: 3.5rem; }
+.br-cap { margin-top: .3rem; font-family: var(--br-display); font-style: italic; font-weight: 700; font-stretch: 112%; font-size: 1.55rem; line-height: 1.2; }
+.br-foto { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; margin-top: 1rem; border-radius: 10px; }
+.lienzo .br-foto { outline: none; }
+.br-texto { margin-top: .8rem; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    html.js .br-largo { animation: br-nada linear both; animation-timeline: view(); animation-range: entry 0% cover 35%; }
+  }
+}
+@keyframes br-nada { from { opacity: 0; transform: translateX(calc(var(--s, 1) * 32px)); } }
+
+/* —— emergemos —— */
+.br-emerge {
+  display: flex; flex-direction: column; align-items: center; gap: 2rem;
+  padding: 26svh 1.25rem 4rem; overflow: clip;
+  background: linear-gradient(180deg, var(--tinta), color-mix(in srgb, var(--tinta) 30%, var(--papel)) 14svh, var(--papel) 26svh);
+}
+.br-corchera-larga { width: 130%; margin-left: -15%; align-self: stretch; }
+.br-emerge-frase { max-width: 16ch; text-align: center; font-family: var(--script); font-size: clamp(2.3rem, 10vw, 3.2rem); line-height: 1.15; color: var(--tinta); }
+.br-emerge-foto { width: min(100%, 30rem); height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 18px; }
+.lienzo .br-emerge-foto { outline: none; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .br-corchera-larga { animation: br-cruza linear both; animation-timeline: view(); animation-range: cover 0% cover 60%; }
+  }
+}
+@keyframes br-cruza { from { transform: translateX(-30%); } to { transform: translateX(8%); } }
+
+/* —— salida —— */
+.br-salida-s { position: relative; overflow: clip; text-align: center; }
+.br-cruz {
+  position: absolute; left: 50%; top: 2rem; bottom: 2rem; width: 26px; margin-left: -13px; z-index: 0;
+  background: color-mix(in srgb, var(--acento) 10%, transparent);
+}
+.br-cruz::before {
+  content: ""; position: absolute; left: 50%; top: 4.5rem; width: 140px; height: 26px; margin-left: -70px;
+  background: inherit;
+}
+.br-salida-dentro { position: relative; z-index: 1; }
+.br-dia {
+  margin-top: 1.75rem;
+  font-family: var(--br-display); font-style: italic; font-weight: 800; font-stretch: 125%;
+  font-size: clamp(3rem, 16vw, 5.5rem); line-height: 1; letter-spacing: -.02em; color: var(--acento-texto);
+}
+.br-dia-largo { margin-top: .9rem; font-size: 1.25rem; font-weight: 500; text-wrap: balance; }
+.br-dia-hora { font-size: 1.125rem; }
+.br-dia-lugar { margin-top: 1.25rem; font-family: var(--br-display); font-style: italic; font-weight: 700; font-stretch: 110%; font-size: 1.4rem; line-height: 1.25; }
+.br-dia-dir { font-size: 1.0625rem; opacity: .9; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    html.js .br-dia { animation: br-enfoca linear both; animation-timeline: view(); animation-range: entry 20% cover 40%; }
+  }
+}
+@keyframes br-enfoca { from { opacity: 0; filter: blur(10px); transform: translateX(-20px) skewX(-8deg); } }
+
+/* —— el reloj de ritmo —— */
+.br-ritmo-caja { display: flex; flex-direction: column; align-items: center; margin-top: 2.25rem; }
+.br-ritmo { width: min(76vw, 18rem); height: auto; overflow: visible; filter: drop-shadow(0 10px 16px rgb(6 48 58 / .2)); }
+.br-esfera { fill: #fff; stroke: var(--tinta); stroke-width: 4; }
+.br-marca { stroke: var(--tinta); stroke-width: 1; transform-box: view-box; transform-origin: 100px 100px; }
+.br-marca-5 { stroke-width: 2.5; }
+.br-marca-0 { stroke: var(--acento); stroke-width: 3.5; }
+.br-num { font: 700 13px var(--br-display); fill: var(--tinta); text-anchor: middle; }
+.br-aguja { stroke: var(--acento); stroke-width: 2.5; stroke-linecap: round; transform-box: view-box; transform-origin: 100px 100px; transition: rotate 1s linear; }
+.br-eje { fill: var(--tinta); }
+.br-destello circle { fill: var(--cian-luz); opacity: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .br-destello circle { animation: br-destello 1.1s ease-out both; }
+}
+@keyframes br-destello { 0% { opacity: .9; transform: scale(.4); } 100% { opacity: 0; transform: scale(2); } }
+.br-destello circle { transform-box: fill-box; transform-origin: center; }
+.br-marcador {
+  margin-top: 1.5rem; padding: .5rem 1.1rem; border-radius: 8px;
+  background: var(--tinta); color: var(--papel);
+  font-family: var(--br-display); font-weight: 600; font-stretch: 75%; font-size: 2.25rem; line-height: 1.1; letter-spacing: .02em;
+}
+.br-ritmo-pie { margin-top: 1rem; text-align: center; font-size: 1.125rem; text-wrap: balance; }
+@media (prefers-reduced-motion: reduce) { .br-aguja { transition: none; } }
+
+/* —— calles de piscina —— */
+.br-calles { display: flex; flex-direction: column; margin-top: 2.75rem; width: min(100%, 34rem); margin-inline: auto; }
+.br-calle {
+  display: grid; grid-template-columns: 3.2rem 1fr; gap: .25rem .75rem; padding: 1.1rem .9rem .4rem;
+  background: color-mix(in srgb, var(--acento) 5%, var(--papel));
+}
+.br-calle:nth-child(even) { background: color-mix(in srgb, var(--acento) 10%, var(--papel)); }
+.br-calle-n {
+  align-self: start; font-family: var(--br-display); font-style: italic; font-weight: 800; font-stretch: 125%;
+  font-size: 2.4rem; line-height: 1; color: var(--acento-texto);
+}
+.br-calle-dentro { display: flex; flex-direction: column; }
+.br-calle-hora { font-family: var(--br-display); font-weight: 700; font-stretch: 85%; font-size: 1.6rem; line-height: 1.15; }
+.br-calle-que { font-size: 1.2rem; font-weight: 500; line-height: 1.35; }
+.br-calle-donde { font-size: 1.0625rem; opacity: .9; }
+.br-calle-cuerda { grid-column: 1 / -1; margin-top: .9rem; height: 6px; transform-origin: 0 50%; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .br-calle-cuerda { animation: br-tensa linear both; animation-timeline: view(); animation-range: entry 0% cover 30%; }
+    html.js .br-calle { animation: br-nada linear both; animation-timeline: view(); animation-range: entry 0% cover 25%; --s: -1; }
+  }
+}
+@keyframes br-tensa { from { transform: scaleX(.6); opacity: .4; } }
+
+/* —— gorros de natación —— */
+.br-gorros { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.6rem 1.4rem; margin-top: 2.75rem; }
+.br-gorros li { position: relative; width: 4rem; height: 2.6rem; }
+.br-gorro {
+  position: absolute; left: 0; right: 0; top: 0; height: 2rem; border-radius: 2rem 2rem .4rem .4rem;
+  background: radial-gradient(60% 70% at 35% 25%, rgb(255 255 255 / .45), transparent 60%), var(--c);
+  box-shadow: inset 0 -3px 0 rgb(0 0 0 / .15), 0 0 0 1px rgb(0 0 0 / .12);
+}
+.br-gota {
+  position: absolute; left: 10%; right: 10%; bottom: 0; height: .6rem; border-radius: 50%;
+  border: 1.5px solid color-mix(in srgb, var(--cian-luz) 80%, var(--acento)); opacity: .7;
+}
+.br-nota { margin-top: 2.25rem; text-align: center; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .br-gorros li { view-timeline: --br-gorro block; }
+    .br-gorro { animation: br-cae-gorro linear both; animation-timeline: --br-gorro; animation-range: entry 20% cover 40%; }
+    .br-gota { animation: br-salpica linear both; animation-timeline: --br-gorro; animation-range: entry 30% cover 45%; }
+  }
+}
+@keyframes br-cae-gorro { from { transform: translateY(-40px) scale(.9); opacity: 0; } 70% { opacity: 1; } }
+@keyframes br-salpica { from { transform: scale(.2); opacity: 0; } 50% { opacity: 1; } }
+
+/* —— regalos: para el próximo viaje —— */
+.br-viaje {
+  position: relative; margin-block: 4rem; border-radius: 1.25rem;
+  border: 2px solid color-mix(in srgb, var(--acento) 35%, transparent);
+}
+.br-viaje-gota {
+  position: absolute; top: -14px; left: 50%; width: 24px; height: 24px; margin-left: -12px;
+  border-radius: 50% 50% 50% 0; rotate: -45deg; background: var(--acento);
+  box-shadow: 0 0 0 5px var(--papel);
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    html.js .br-viaje-gota { animation: br-gota-cae linear both; animation-timeline: view(); animation-range: entry 30% cover 40%; }
+  }
+}
+@keyframes br-gota-cae { from { translate: 0 -50px; opacity: 0; } }
+
+/* —— al tocar: burbujas —— */
+.br-toque { position: fixed; inset: 0; z-index: 40; pointer-events: none; overflow: clip; }
+.br-burbuja {
+  position: fixed; margin: -5px 0 0 -5px; border-radius: 50%;
+  border: 1.5px solid color-mix(in srgb, var(--acento) 70%, #fff);
+  background: radial-gradient(circle at 32% 30%, #fff 0 20%, rgb(111 211 224 / .25) 30%);
+  animation: br-burbuja 1.2s var(--ease-carta) var(--d) both;
+}
+@keyframes br-burbuja {
+  0% { opacity: 0; transform: translate(0, 0) scale(.5); }
+  15% { opacity: 1; }
+  85% { opacity: 1; transform: translate(var(--dx), -110px) scale(1); }
+  100% { opacity: 0; transform: translate(var(--dx), -118px) scale(1.5); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .br-nombres > *, .br-rotulo > *, .br-superficie, .br-burbujas > i,
+  .br-causticas::before, .br-causticas::after { animation: none !important; }
+  .br-burbujas { display: none; }
+}

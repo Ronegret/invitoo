@@ -4,6 +4,10 @@
 -- Se ejecuta entero en el editor SQL de Supabase. Es idempotente: se puede
 -- volver a lanzar sin romper nada.
 --
+-- Es el esquema COMPLETO para una base nueva. Si la base ya existía, lanzad
+-- también las migraciones de `supabase/migraciones/` en orden: `create table
+-- if not exists` no añade columnas a una tabla que ya está.
+--
 -- Dos ideas mandan aquí:
 --
 --   1. La invitación publicada es PÚBLICA: la abre cualquiera con el enlace,
@@ -35,10 +39,10 @@ create table if not exists public.invitaciones (
                  check (slug ~ '^[a-z0-9]+(-[a-z0-9]+)*$'),
   pareja_id    uuid references public.parejas (id) on delete cascade,
   plantilla    text not null
-                 check (plantilla in ('sobre','floracion','cielo','velo',
-                                      'constelacion','bruma','marea',
-                                      'terracota','tinta','jardin',
-                                      'lino','brasa')),
+                 check (plantilla in ('sobre','floracion','mar','velo',
+                                      'constelacion','tinta','registro',
+                                      'azulejo','cielo','marea','bruma',
+                                      'lino','jardin','terracota','brasa')),
   estado       text not null default 'borrador'
                  check (estado in ('borrador','publicada','archivada')),
   -- Los nombres y la fecha van en columnas y no dentro del jsonb porque se
@@ -56,12 +60,15 @@ create table if not exists public.invitaciones (
   actualizado_en timestamptz not null default now()
 );
 
--- La tabla ya existía con seis plantillas. `create table if not exists` no
+-- La tabla ya existía con otras plantillas. `create table if not exists` no
 -- la toca, así que la restricción se rehace aquí a mano.
 alter table public.invitaciones drop constraint if exists invitaciones_plantilla_check;
 alter table public.invitaciones add constraint invitaciones_plantilla_check
-  check (plantilla in ('sobre','floracion','cielo','velo','constelacion',
-                       'bruma','marea','terracota','tinta','jardin','lino','brasa'));
+  check (plantilla in (
+    -- catálogo actual
+    'sobre','floracion','mar','velo','constelacion','tinta','registro','azulejo',
+    -- ids antiguos: siguen resolviendo por alias
+    'cielo','marea','bruma','lino','jardin','terracota','brasa'));
 
 create index if not exists invitaciones_pareja_idx on public.invitaciones (pareja_id);
 create index if not exists invitaciones_estado_idx on public.invitaciones (estado);
@@ -96,37 +103,62 @@ create trigger invitaciones_crear_panel
   for each row execute function public.crear_panel();
 
 -- ──────────────────────────────────────────────────────────────────  invitados
--- Opcional: solo para bodas con lista cerrada. Si no hay lista, el invitado
--- escribe su nombre y ya está.
+-- La lista de la pareja. Opcional: sin lista, el invitado escribe su nombre al
+-- confirmar. Con lista, cada uno recibe su enlace personal `/i/<slug>?n=<token>`:
+-- la invitación le saluda por su nombre y el RSVP no deja pasar de su `cupo`.
 create table if not exists public.invitados (
-  id              uuid primary key default gen_random_uuid(),
-  invitacion_id   uuid not null references public.invitaciones (id) on delete cascade,
-  nombre          text not null,
-  grupo           text,
+  id               uuid primary key default gen_random_uuid(),
+  invitacion_id    uuid not null references public.invitaciones (id) on delete cascade,
+  nombre           text not null,
+  grupo            text,
+  -- Plazas totales de este enlace, el invitado incluido (1 = va solo).
+  cupo             int not null default 1 check (cupo between 1 and 12),
+  telefono         text,
+  -- Cómo saluda la invitación: «Querida Carmen». Null = solo el nombre.
+  trato            text check (trato in ('querida','querido','queridos')),
+  token            text unique not null default encode(gen_random_bytes(8), 'hex'),
+  -- Obsoleto (antes de `cupo`); se conserva para no romper bases antiguas.
   acompanantes_max int not null default 0,
-  token           text unique default encode(gen_random_bytes(6), 'hex'),
-  creado_en       timestamptz not null default now()
+  creado_en        timestamptz not null default now()
 );
 
 create index if not exists invitados_invitacion_idx on public.invitados (invitacion_id);
+create index if not exists invitados_grupo_idx on public.invitados (invitacion_id, grupo);
 
 -- ───────────────────────────────────────────────────────────────────────  rsvp
+-- Una fila por RESPUESTA (un enlace o un nombre), con el detalle por persona
+-- en `personas`: [{ nombre, menu, alergenos: [...], alergias_texto, consentimiento_salud }].
+-- `consentimiento_salud` (bool): permiso expreso art. 9.2.a RGPD para compartir las alergias.
+-- `clave` deduplica: 'invitado:<uuid>' con token, 'nombre:<normalizado>' sin
+-- él. La escritura es un upsert sobre (invitacion_id, clave): el invitado
+-- puede volver y corregir sin crear filas repetidas.
 create table if not exists public.rsvp (
-  id            uuid primary key default gen_random_uuid(),
-  invitacion_id uuid not null references public.invitaciones (id) on delete cascade,
-  invitado_id   uuid references public.invitados (id) on delete set null,
-  nombre        text not null,
-  asiste        boolean not null,
-  acompanantes  int not null default 0 check (acompanantes between 0 and 8),
-  menu          text,
-  alergias      text,
-  bus           boolean not null default false,
-  creado_en     timestamptz not null default now()
+  id             uuid primary key default gen_random_uuid(),
+  invitacion_id  uuid not null references public.invitaciones (id) on delete cascade,
+  invitado_id    uuid references public.invitados (id) on delete set null,
+  clave          text not null,
+  nombre         text not null,
+  asiste         boolean not null,
+  personas       jsonb not null default '[]'::jsonb,
+  bus            text not null default 'no'
+                   check (bus in ('no','ida','vuelta','ida_vuelta')),
+  parada         text,
+  mensaje        text,
+  telefono       text,
+  -- Resumen y compatibilidad con el formato anterior.
+  acompanantes   int not null default 0 check (acompanantes between 0 and 19),
+  menu           text,
+  alergias       text,
+  creado_en      timestamptz not null default now(),
+  actualizado_en timestamptz not null default now(),
+  constraint rsvp_invitacion_clave_key unique (invitacion_id, clave)
 );
 
-create index if not exists rsvp_invitacion_idx on public.rsvp (invitacion_id, creado_en desc);
+create index if not exists rsvp_invitacion_idx on public.rsvp (invitacion_id, actualizado_en desc);
 
 -- ───────────────────────────────────────────────────────────────────────  muro
+-- `aprobado`: se publica directamente y la pareja oculta desde el panel lo
+-- que no quiera (moderación a posteriori: nadie espera a que le aprueben).
 create table if not exists public.muro (
   id            uuid primary key default gen_random_uuid(),
   invitacion_id uuid not null references public.invitaciones (id) on delete cascade,
@@ -173,6 +205,11 @@ end $$;
 drop trigger if exists invitaciones_tocar on public.invitaciones;
 create trigger invitaciones_tocar
   before update on public.invitaciones
+  for each row execute function public.tocar_actualizado();
+
+drop trigger if exists rsvp_tocar on public.rsvp;
+create trigger rsvp_tocar
+  before update on public.rsvp
   for each row execute function public.tocar_actualizado();
 
 -- ============================================================================

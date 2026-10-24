@@ -1,0 +1,675 @@
+/*
+ * La portada v2 de invitoo.es: el sobre, la cartulina que se hace móvil
+ * y el titular que entra línea a línea.
+ *
+ * Todo se mide en unidades del escenario (container queries: cqw, cqh), así
+ * que el mismo dibujo vale para el móvil a sangre y para la columna derecha
+ * del escritorio. Las curvas son las de la casa (docs/09 §4, Motion): si E1
+ * las publica en `lib/movimiento.ts`, éstas valen lo mismo.
+ *
+ * Solo se anima transform, opacity y clip-path. Nada mueve el layout.
+ */
+
+.escenario {
+  --ease-carta: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-velo: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-sello: cubic-bezier(0.34, 1.12, 0.64, 1);
+
+  /* El sobre (3:2) y la pantalla del móvil (390 × 844), en el escenario. */
+  --sw: 84cqw;
+  --sh: calc(var(--sw) * 2 / 3);
+  --H: 88cqh;
+  --W: calc(var(--H) * 0.4621);
+  --b: 8px;
+  /* La cartulina, dentro del sobre: tumbada y un poco más pequeña. */
+  --s: 0.92;
+  --dy: 1.5cqw;
+  --caida: 0px;
+
+  position: relative;
+  width: 100%;
+  aspect-ratio: 390 / 520;
+  container-type: size;
+  overflow: hidden;
+  isolation: isolate;
+  touch-action: manipulation;
+  /* Lino: dos tramas de un píxel y la luz de una ventana a la izquierda. */
+  background:
+    radial-gradient(110% 70% at 22% 12%, rgb(255 255 255 / 0.6), transparent 62%),
+    radial-gradient(90% 60% at 80% 100%, rgb(120 90 60 / 0.1), transparent 70%),
+    repeating-linear-gradient(0deg, rgb(90 70 50 / 0.035) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgb(90 70 50 / 0.03) 0 1px, transparent 1px 4px),
+    #ebe3d6;
+}
+
+@media (min-width: 1024px) {
+  .escenario {
+    aspect-ratio: 520 / 640;
+    border-radius: 2px;
+    box-shadow: inset 0 0 0 1px rgb(26 21 18 / 0.06);
+  }
+}
+
+[data-fase="abierto"].escenario {
+  --dy: -25cqw;
+  --caida: 7cqw;
+}
+[data-fase="movil"].escenario {
+  --caida: 62cqw;
+}
+
+/* ───────────── Las piezas del sobre: todas con la misma caja ───────────── */
+
+.pieza {
+  position: absolute;
+  left: calc(50cqw - var(--sw) / 2);
+  top: calc(50cqh - var(--sh) / 2);
+  width: var(--sw);
+  height: var(--sh);
+  transform: translate3d(0, var(--caida), 0);
+  transition:
+    transform 1000ms var(--ease-carta) 900ms,
+    opacity 700ms var(--ease-velo);
+  animation: llega 700ms var(--ease-carta) backwards;
+}
+
+[data-fase="movil"] .pieza {
+  opacity: 0;
+  transition:
+    transform 800ms var(--ease-velo),
+    opacity 600ms var(--ease-velo) 120ms;
+}
+
+@keyframes llega {
+  from {
+    transform: translate3d(0, calc(var(--caida) + 3cqw), 0) scale(0.985);
+  }
+}
+
+.dorso {
+  z-index: 1;
+  display: block;
+  border-radius: 3px;
+  box-shadow:
+    0 1px 0 rgb(0 0 0 / 0.04),
+    0 26px 40px -20px rgb(60 40 20 / 0.42),
+    0 6px 14px -6px rgb(60 40 20 / 0.2);
+}
+
+/* La solapa: dos caras, la de papel y la del forro. Gira sobre su borde
+   de arriba y, pasada la mitad, se va detrás de la cartulina. */
+.solapaCaja {
+  z-index: 5;
+  height: calc(var(--sh) * 0.59);
+  perspective: 1400px;
+  transition:
+    transform 1000ms var(--ease-carta) 900ms,
+    opacity 700ms var(--ease-velo),
+    z-index 0s linear 0s;
+}
+[data-fase="abierto"] .solapaCaja,
+[data-fase="movil"] .solapaCaja {
+  z-index: 2;
+  transition:
+    transform 1000ms var(--ease-carta) 900ms,
+    opacity 700ms var(--ease-velo),
+    z-index 0s linear 640ms;
+}
+[data-fase="movil"] .solapaCaja {
+  transition:
+    transform 800ms var(--ease-velo),
+    opacity 600ms var(--ease-velo) 120ms;
+}
+
+.solapa {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 0;
+  transform-style: preserve-3d;
+  transition: transform 820ms var(--ease-velo) 240ms;
+}
+[data-fase="abierto"] .solapa,
+[data-fase="movil"] .solapa {
+  transform: rotateX(180deg);
+}
+
+.cara,
+.dorsoSolapa {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  filter: drop-shadow(0 2px 2px rgb(60 40 20 / 0.12));
+}
+/* Mira hacia atrás sin darse la vuelta de arriba abajo: al girar la
+   solapa, el pico del forro queda arriba, como en un sobre de verdad. */
+.dorsoSolapa {
+  transform: rotateX(180deg) scaleY(-1);
+}
+
+.bolsillo {
+  z-index: 4;
+  filter: drop-shadow(0 -1px 1px rgb(60 40 20 / 0.06));
+}
+
+/* «Para vosotros», escrito a mano: se descubre de izquierda a derecha,
+   como avanza la pluma. */
+.escrito {
+  z-index: 4;
+  margin: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0 0 calc(var(--sh) * 0.1) 14%;
+  font-family: var(--font-mano), cursive;
+  font-size: calc(var(--sw) * 0.115);
+  line-height: 1;
+  color: #2a1f19;
+  pointer-events: none;
+}
+.escrito > span {
+  display: block;
+  padding: 0.1em 0.3em 0.25em;
+  transform: rotate(-4deg);
+  clip-path: inset(0 0 0 0);
+  animation: escribe 1100ms cubic-bezier(0.45, 0.05, 0.4, 1) 600ms backwards;
+}
+@keyframes escribe {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+}
+
+.matasellos {
+  z-index: 4;
+  left: calc(50cqw - var(--sw) / 2 + var(--sw) * 0.05);
+  top: calc(50cqh + var(--sh) * 0.06);
+  width: calc(var(--sw) * 0.3);
+  height: auto;
+  aspect-ratio: 176 / 120;
+  color: rgb(42 31 25 / 0.42);
+  rotate: -9deg;
+  pointer-events: none;
+}
+.matasellosIni {
+  font-family: var(--font-italica), var(--display);
+  font-style: italic;
+}
+
+/* El lacre, en el pico de la solapa. Se parte en dos por una grieta. */
+.lacreCaja {
+  z-index: 7;
+  left: calc(50cqw - var(--sw) * 0.085);
+  top: calc(50cqh - var(--sh) / 2 + var(--sh) * 0.565 - var(--sw) * 0.085);
+  width: calc(var(--sw) * 0.17);
+  height: calc(var(--sw) * 0.17);
+  pointer-events: none;
+}
+.lacre {
+  position: absolute;
+  inset: 0;
+  filter: drop-shadow(0 3px 3px rgb(60 15 20 / 0.35));
+  transition:
+    transform 460ms var(--ease-sello),
+    opacity 300ms ease-out 180ms;
+}
+.lacre svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.lacreIzq {
+  clip-path: polygon(0 0, 53% 0, 47% 21%, 55% 39%, 46% 58%, 54% 78%, 49% 100%, 0 100%);
+}
+.lacreDer {
+  clip-path: polygon(53% 0, 100% 0, 100% 100%, 49% 100%, 54% 78%, 46% 58%, 55% 39%, 47% 21%);
+}
+[data-fase="abierto"] .lacreIzq,
+[data-fase="movil"] .lacreIzq {
+  transform: translate(-22%, 26%) rotate(-16deg);
+  opacity: 0;
+}
+[data-fase="abierto"] .lacreDer,
+[data-fase="movil"] .lacreDer {
+  transform: translate(22%, 30%) rotate(14deg);
+  opacity: 0;
+}
+
+/* El reflejo de oro: cruza el lacre una vez, en 600 ms. */
+.reflejo {
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  overflow: hidden;
+  mix-blend-mode: screen;
+}
+.reflejo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 30%, rgb(240 214 160 / 0.7) 50%, transparent 70%);
+  transform: translateX(-130%);
+  animation: reflejo 600ms var(--ease-velo) 1000ms;
+}
+@keyframes reflejo {
+  to {
+    transform: translateX(130%);
+  }
+}
+
+/* ───────────── La cartulina, que es la pantalla ───────────── */
+
+.pantalla {
+  position: absolute;
+  z-index: 3;
+  left: calc(50cqw - var(--W) / 2);
+  top: calc(50cqh - var(--H) / 2);
+  width: var(--W);
+  height: var(--H);
+  overflow: hidden;
+  background:
+    radial-gradient(80% 50% at 50% 50%, #fffdf8, transparent),
+    #f8f2e7;
+  transform: translate3d(0, var(--dy), 0) rotate(-90deg) scale(var(--s));
+  /* 5:7 dentro de una pantalla de 390 × 844. */
+  clip-path: inset(17.6% 0 round 3px);
+  transition:
+    transform 1000ms var(--ease-carta) 900ms,
+    clip-path 900ms var(--ease-velo);
+  animation: llega 700ms var(--ease-carta) backwards;
+}
+[data-fase="movil"] .pantalla {
+  z-index: 8;
+  transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  clip-path: inset(0 round calc(var(--W) * 0.13));
+  transition:
+    transform 1050ms var(--ease-velo),
+    clip-path 950ms var(--ease-velo) 150ms;
+}
+
+.cartulina {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--W) * 0.045);
+  padding: 0 8%;
+  text-align: center;
+  color: #241a16;
+  transform: rotate(90deg);
+  transition: transform 1050ms var(--ease-velo);
+}
+[data-fase="movil"] .cartulina {
+  transform: rotate(0deg);
+}
+[data-fase="movil"][data-cargado="1"] .cartulina {
+  opacity: 0;
+  transition:
+    transform 1050ms var(--ease-velo),
+    opacity 600ms ease-out 900ms;
+}
+
+.cartulinaSobre {
+  margin: 0;
+  font-size: max(12px, calc(var(--W) * 0.062));
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.cartulinaNombres {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--font-italica), var(--display);
+  font-style: italic;
+  font-size: calc(var(--W) * 0.165);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+}
+.y {
+  color: var(--acento);
+  font-size: 0.72em;
+  margin: 0.08em 0;
+}
+.cartulinaFecha {
+  margin: 0;
+  font-size: max(11px, calc(var(--W) * 0.055));
+  letter-spacing: 0.28em;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.75;
+}
+
+.isla {
+  position: absolute;
+  z-index: 3;
+  top: calc(var(--W) * 0.035);
+  left: 50%;
+  width: 30%;
+  height: calc(var(--W) * 0.075);
+  border-radius: 999px;
+  background: var(--tinta);
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 300ms ease-out;
+}
+[data-fase="movil"] .isla {
+  opacity: 1;
+  transition-delay: 1000ms;
+}
+
+.iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 390px;
+  height: 844px;
+  border: 0;
+  transform: scale(var(--escala, 0.5));
+  transform-origin: 0 0;
+  opacity: 0;
+  transition: opacity 700ms ease-out;
+}
+[data-fase="movil"][data-cargado="1"] .iframe {
+  opacity: 1;
+  transition-delay: 900ms;
+}
+@media (hover: none), (pointer: coarse) {
+  .iframe {
+    pointer-events: none;
+  }
+}
+
+/* En táctil, el móvil entero abre la invitación a pantalla completa (el
+   dedo que baja por la web no se queda atrapado dentro del iframe). */
+.tocarMovil {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: none;
+}
+@media (hover: none), (pointer: coarse) {
+  .tocarMovil {
+    display: block;
+  }
+}
+
+/* El marco del móvil: crece alrededor de la cartulina cuando ya es pantalla. */
+.marco {
+  position: absolute;
+  z-index: 7;
+  left: calc(50cqw - var(--W) / 2 - var(--b));
+  top: calc(50cqh - var(--H) / 2 - var(--b));
+  width: calc(var(--W) + var(--b) * 2);
+  height: calc(var(--H) + var(--b) * 2);
+  border-radius: calc(var(--W) * 0.13 + var(--b));
+  background: var(--tinta);
+  box-shadow: 0 40px 70px -40px rgb(18 16 14 / 0.6);
+  opacity: 0;
+  transform: scale(0.95);
+  pointer-events: none;
+}
+[data-fase="movil"] .marco {
+  opacity: 1;
+  transform: scale(1);
+  transition:
+    opacity 500ms ease-out 650ms,
+    transform 800ms var(--ease-carta) 550ms;
+}
+
+/* El sobre es el botón (un enlace sin JS). */
+.toque {
+  position: absolute;
+  z-index: 9;
+  left: calc(50cqw - var(--sw) / 2);
+  top: calc(50cqh - var(--sh) / 2);
+  width: var(--sw);
+  height: var(--sh);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.toque:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 6px;
+}
+[data-fase="movil"] .toque {
+  display: none;
+}
+
+.pista {
+  position: absolute;
+  z-index: 9;
+  left: 0;
+  right: 0;
+  bottom: 4.5cqh;
+  margin: 0;
+  text-align: center;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  color: rgb(42 31 25 / 0.7);
+  animation: aparece 600ms ease-out 2200ms backwards;
+  transition: opacity 300ms ease-out;
+  pointer-events: none;
+}
+[data-fase="abierto"] .pista,
+[data-fase="movil"] .pista {
+  opacity: 0;
+}
+@keyframes aparece {
+  from {
+    opacity: 0;
+  }
+}
+
+/* ───────────── El titular, línea a línea ───────────── */
+
+.titular {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(3rem, 12.4vw, 5rem);
+  line-height: 0.94;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+@media (min-width: 1024px) {
+  .titular {
+    font-size: clamp(4rem, 5.6vw, 6rem);
+  }
+}
+/* BlurText: cada letra llega desenfocada y algo baja, y se enfoca. */
+.enfoque {
+  display: block;
+}
+.palabra {
+  display: inline-block;
+  white-space: nowrap;
+}
+.letra {
+  display: inline-block;
+  animation: enfoca 900ms var(--ease-carta, cubic-bezier(0.22, 0.61, 0.36, 1)) backwards;
+  animation-delay: calc(450ms + var(--l, 0) * 22ms);
+}
+@media (min-width: 1024px) {
+  .letra {
+    animation-delay: calc(250ms + var(--l, 0) * 22ms);
+  }
+}
+@keyframes enfoca {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(0.18em);
+  }
+  60% {
+    filter: blur(1px);
+  }
+}
+
+/* ShinyText: «Desde 149 €» en tinta, con un brillo de oro que la cruza. */
+.precio {
+  margin: 1.6rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.9rem;
+}
+.brilloOro {
+  font-family: var(--display);
+  font-size: clamp(1.9rem, 6vw, 2.4rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--tinta);
+  background: linear-gradient(
+      100deg,
+      var(--tinta) 0%,
+      var(--tinta) 38%,
+      #b08d57 46%,
+      #f0d9a6 50%,
+      #b08d57 54%,
+      var(--tinta) 62%,
+      var(--tinta) 100%
+    )
+    0 0 / 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* Dos pasadas y quieto: un brillo que no para deja de ser un detalle. */
+  animation: brilla 5.5s var(--ease-velo, cubic-bezier(0.65, 0, 0.35, 1)) 2.4s 2;
+  background-position: 100% 0;
+}
+@keyframes brilla {
+  0% {
+    background-position: 100% 0;
+  }
+  28%,
+  100% {
+    background-position: 0% 0;
+  }
+}
+.precioBajo {
+  font-size: 1rem;
+  color: color-mix(in srgb, var(--tinta) 68%, transparent);
+}
+
+/* Aurora: tres luces muy desenfocadas que derivan despacio, granate y oro. */
+.aurora {
+  position: absolute;
+  inset: -10% -20% auto;
+  height: 120%;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.9;
+}
+.aurora i {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  will-change: transform;
+}
+.aurora i:nth-child(1) {
+  width: 46vmax;
+  height: 30vmax;
+  left: 2%;
+  top: 48%;
+  background: radial-gradient(closest-side, rgb(140 29 44 / 0.12), transparent);
+  animation: deriva 22s ease-in-out infinite alternate;
+}
+.aurora i:nth-child(2) {
+  width: 40vmax;
+  height: 28vmax;
+  right: 6%;
+  top: 4%;
+  background: radial-gradient(closest-side, rgb(201 165 106 / 0.24), transparent);
+  animation: deriva 26s ease-in-out -8s infinite alternate-reverse;
+}
+.aurora i:nth-child(3) {
+  width: 34vmax;
+  height: 22vmax;
+  left: 38%;
+  top: 70%;
+  background: radial-gradient(closest-side, rgb(231 183 189 / 0.22), transparent);
+  animation: deriva 30s ease-in-out -14s infinite alternate;
+}
+@keyframes deriva {
+  to {
+    transform: translate3d(8vmax, -5vmax, 0) scale(1.15) rotate(12deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pieza,
+  .pantalla,
+  .solapa,
+  .solapaCaja,
+  .cartulina,
+  .lacre,
+  .marco,
+  .iframe,
+  .isla,
+  .pista {
+    transition: none;
+    animation: none;
+  }
+  .escrito > span,
+  .letra,
+  .brilloOro,
+  .aurora i,
+  .reflejo::after {
+    animation: none;
+  }
+}
+
+/* ───────────── 3D (X1): póster, canvas y relevo con lo CSS ───────────── */
+
+/* El póster: la foto del render 3D, a sangre en el escenario. Tapa el sobre
+   CSS mientras está cerrado; al abrir sin 3D, se funde y queda el CSS. */
+.poster {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  transition: opacity 320ms var(--ease-velo);
+}
+.poster img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+[data-fase="abierto"]:not([data-tresd="1"]) .poster,
+[data-fase="movil"] .poster {
+  opacity: 0;
+}
+/* Quien ya escribió sus nombres ve el sobre CSS (dice sus nombres) hasta
+   que el 3D, que también los dice, esté listo. */
+[data-nombres="1"]:not([data-tresd="1"]) .poster {
+  display: none;
+}
+
+.capa3d {
+  z-index: 7;
+}
+[data-fase="movil"] .capa3d {
+  opacity: 0 !important;
+  transition: opacity 520ms var(--ease-velo) 120ms !important;
+}
+
+/* Con el 3D en pantalla, las piezas CSS no se pintan; la cartulina CSS
+   solo aparece para hacerse móvil, desde donde la deja la 3D. */
+[data-tresd="1"] .pieza {
+  visibility: hidden;
+}
+[data-tresd="1"]:not([data-fase="movil"]) .pantalla {
+  visibility: hidden;
+}
+[data-tresd="1"].escenario {
+  --s: 1.15;
+}
+[data-tresd="1"][data-fase="abierto"].escenario {
+  --dy: -20cqw;
+}

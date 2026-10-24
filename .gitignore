@@ -1,7 +1,6 @@
 node_modules/
-.env
-.env.*
-*.local
 .next/
-dist/
-build/
+_research/
+.env*
+!.env.example
+marca-origen/

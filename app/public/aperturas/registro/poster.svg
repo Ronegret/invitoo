@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 1280" width="720" height="1280">
+  <rect width="720" height="1280" fill="#ffffff"/>
+  <g font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" fill="#1f2124">
+    <rect x="60" y="120" width="600" height="4"/>
+    <text x="60" y="100" font-size="34" font-weight="500">Boda civil</text>
+    <text x="660" y="100" font-size="34" font-weight="500" text-anchor="end">19.06.27</text>
+    <text x="56" y="330" font-size="168" font-weight="650" letter-spacing="-7">Àlex</text>
+    <text x="56" y="480" font-size="168" font-weight="650" letter-spacing="-7">y Bruno</text>
+    <rect x="60" y="560" width="600" height="2" opacity=".3"/>
+    <rect x="60" y="640" width="600" height="2" opacity=".3"/>
+    <rect x="60" y="720" width="400" height="2" opacity=".3"/>
+  </g>
+  <g transform="translate(360 930) rotate(-12)" fill="none" stroke="#c2410c">
+    <circle r="190" stroke-width="7"/>
+    <circle r="174" stroke-width="2.4"/>
+    <circle r="116" stroke-width="2.4"/>
+    <g fill="#c2410c" stroke="none" font-family="Inter Tight, Helvetica Neue, Arial, sans-serif" font-weight="700" text-anchor="middle">
+      <text y="2" font-size="44">19.06.2027</text>
+      <rect x="-84" y="18" width="168" height="3"/>
+      <text y="66" font-size="40">12:00 h</text>
+    </g>
+  </g>
+  <rect x="60" y="1170" width="600" height="80" fill="#ff5b1f"/>
+</svg>

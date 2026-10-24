@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { haySupabase, listarTodas, tokenDelPanel } from "@/lib/datos";
+import { formatearFecha } from "@/lib/fecha";
 
 const ETIQUETA: Record<string, string> = {
   borrador: "Borrador",
@@ -31,8 +32,8 @@ export default async function Estudio() {
 
       {!haySupabase() && (
         <p className="mt-8 border-l-2 border-[var(--acento)] pl-4 text-[0.95rem] leading-relaxed opacity-75">
-          Sin Supabase configurado. Lo que ves son los datos de ejemplo y no se
-          puede guardar. Copia <code>.env.example</code> a{" "}
+          Sin Supabase configurado. Lo que ves son los datos de ejemplo, en
+          memoria: se puede editar y probar, pero se pierde al reiniciar. Copia <code>.env.example</code> a{" "}
           <code>.env.local</code> con las claves del proyecto.
         </p>
       )}
@@ -48,9 +49,7 @@ export default async function Estudio() {
                 {inv.pareja.a} &amp; {inv.pareja.b}
               </p>
               <p className="mt-1 text-[0.85rem] opacity-55">
-                {new Intl.DateTimeFormat("es-ES", { dateStyle: "long" }).format(
-                  new Date(inv.pareja.fecha),
-                )}{" "}
+                {formatearFecha(inv.pareja.fecha)}{" "}
                 · {inv.plantilla} ·{" "}
                 <span
                   style={

@@ -1,0 +1,167 @@
+/* El campo de nombres de la portada y /plantillas. Las letras se escriben
+   en la cursiva de Bodoni, como saldrán en la cartulina; la línea de abajo
+   es un filete, no una caja. */
+
+.campo {
+  width: 100%;
+}
+
+.grupo {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.leyenda {
+  padding: 0;
+  font-size: 1rem;
+  color: rgb(26 21 18 / 0.72);
+}
+
+.fila {
+  margin-top: 0.4rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: end;
+  gap: 0.75rem;
+  max-width: 30rem;
+}
+
+.etiqueta {
+  display: block;
+  min-width: 0;
+}
+
+.entrada {
+  display: block;
+  width: 100%;
+  min-height: 3.5rem;
+  padding: 0.35rem 0 0.25rem;
+  border: 0;
+  border-bottom: 1px solid rgb(26 21 18 / 0.35);
+  border-radius: 0;
+  background: transparent;
+  color: var(--tinta);
+  font-family: var(--font-italica), var(--display);
+  font-style: italic;
+  font-size: 1.85rem;
+  line-height: 1.2;
+  transition: border-color 200ms ease;
+}
+.entrada::placeholder {
+  color: rgb(26 21 18 / 0.38);
+}
+.entrada:focus {
+  outline: none;
+  border-bottom-color: var(--tinta);
+}
+.entrada:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.y {
+  padding-bottom: 0.55rem;
+  font-family: var(--font-italica), var(--display);
+  font-style: italic;
+  font-size: 1.75rem;
+  color: var(--acento);
+}
+
+.fechaFila {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 10px;
+}
+.fechaEtiqueta {
+  flex: none;
+  font-size: 1rem;
+  color: color-mix(in srgb, var(--tinta) 72%, transparent);
+}
+.fecha {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 16rem;
+  min-height: 48px;
+  padding: 4px 2px;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--tinta) 30%, transparent);
+  border-radius: 0;
+  background: transparent;
+  color: var(--tinta);
+  font: inherit;
+  font-size: 1.06rem;
+  font-variant-numeric: tabular-nums;
+}
+.fecha:focus-visible {
+  outline: none;
+  border-bottom-color: var(--acento);
+  box-shadow: 0 2px 0 0 var(--acento);
+}
+.ayuda {
+  margin: 0.6rem 0 0;
+  min-height: 3rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgb(26 21 18 / 0.62);
+}
+
+.borrar {
+  min-height: 2.75rem;
+  padding: 0 0.25rem;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgb(26 21 18 / 0.3);
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+.botones {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+@media (min-width: 640px) {
+  .botones {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.principal,
+.secundario {
+  display: inline-flex;
+  min-height: 3.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0 2rem;
+  font-size: 1rem;
+}
+.principal {
+  background: var(--tinta);
+  color: var(--papel);
+}
+.secundario {
+  border: 1px solid rgb(26 21 18 / 0.3);
+}
+
+/* El imán (G2) no debe romper el ancho del botón en móvil. */
+.magnetico {
+  display: flex;
+}
+@media (min-width: 640px) {
+  .magnetico {
+    display: inline-flex;
+  }
+}
+.magnetico > a {
+  flex: 1;
+}

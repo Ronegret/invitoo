@@ -1,0 +1,131 @@
+/* Efectos con criterio: FlipCard y PulseHeart. Curvas de la casa. */
+
+/* ───────────── FlipCard ───────────── */
+
+.flip {
+  --e-velo: var(--ease-velo, cubic-bezier(0.65, 0, 0.35, 1));
+  display: grid;
+  gap: 22px;
+}
+
+.conmutador {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  justify-self: center;
+  width: min(100%, 30rem);
+  padding: 4px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--tinta) 6%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tinta) 8%, transparent);
+}
+.deslizador {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  border-radius: 999px;
+  background: var(--papel);
+  box-shadow: var(--sombra-2);
+  transition: transform 520ms var(--e-velo);
+}
+.deslizador[data-cara="1"] {
+  transform: translateX(100%);
+}
+.opcion {
+  position: relative;
+  min-height: 48px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 1rem;
+  line-height: 1.2;
+  color: color-mix(in srgb, var(--tinta) 66%, transparent);
+  transition: color 220ms ease;
+}
+.opcion[aria-pressed="true"] {
+  color: var(--tinta);
+}
+.opcion:focus-visible {
+  outline: none;
+  box-shadow: var(--foco, 0 0 0 2px var(--papel), 0 0 0 4px var(--acento));
+}
+
+.escena {
+  perspective: 1800px;
+}
+.interior {
+  display: grid;
+  transform-style: preserve-3d;
+  transition: transform 900ms var(--e-velo);
+}
+.escena[data-cara="1"] .interior {
+  transform: rotateY(180deg);
+}
+.cara {
+  grid-area: 1 / 1;
+  min-width: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.atras {
+  transform: rotateY(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interior,
+  .escena[data-cara="1"] .interior {
+    transform: none;
+    transition: none;
+  }
+  .atras {
+    transform: none;
+  }
+  .cara {
+    transition: opacity 200ms ease;
+  }
+  .escena[data-cara="0"] .atras,
+  .escena[data-cara="1"] .cara:not(.atras) {
+    opacity: 0;
+    visibility: hidden;
+  }
+  .deslizador {
+    transition: none;
+  }
+}
+
+/* ───────────── PulseHeart ───────────── */
+
+.corazon {
+  display: inline-block;
+  flex: none;
+  fill: var(--acento);
+  transform-origin: 50% 60%;
+  overflow: visible;
+}
+.corazon[data-late] {
+  animation: latido 1100ms var(--ease-carta, cubic-bezier(0.22, 0.61, 0.36, 1));
+}
+@keyframes latido {
+  0% {
+    transform: scale(1);
+  }
+  14% {
+    transform: scale(1.22);
+  }
+  28% {
+    transform: scale(1);
+  }
+  42% {
+    transform: scale(1.14);
+  }
+  70%,
+  100% {
+    transform: scale(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .corazon[data-late] {
+    animation: none;
+  }
+}

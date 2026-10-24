@@ -13,7 +13,21 @@ Diez minutos. No hace falta CLI.
 
 SQL Editor → pega [`schema.sql`](schema.sql) entero → **Run**.
 
-Crea las tablas, los índices, las políticas de RLS, el bucket del álbum y los dos triggers. Es idempotente: se puede volver a lanzar sin romper nada.
+Crea las tablas, los índices, las políticas de RLS, el bucket del álbum y los triggers. Es idempotente: se puede volver a lanzar sin romper nada.
+
+### Si la base ya existía: las migraciones
+
+`schema.sql` es el esquema completo para una base **nueva**. `create table if not exists` no añade columnas a una tabla que ya está, así que en una base anterior hay que lanzar además, en orden, los archivos de [`migraciones/`](migraciones/) (también idempotentes):
+
+```bash
+node herramientas/db.mjs migrar
+```
+
+o pegándolos en el SQL Editor. La de octubre de 2026 ([`2026-10-mejora.sql`](migraciones/2026-10-mejora.sql)):
+
+- `invitados`: `cupo` (plazas totales, el invitado incluido) y `telefono`; tokens de 16 caracteres.
+- `rsvp`: una fila por respuesta con el detalle **por persona** en `personas` (menú, alérgenos, alergias), `bus` como `no|ida|vuelta|ida_vuelta` y `parada`. Clave única `(invitacion_id, clave)` para el upsert. **Borra los duplicados** que dejaba el insert antiguo (se queda la respuesta más reciente de cada persona).
+- `invitaciones`: la restricción de plantillas admite el catálogo nuevo y los ids antiguos.
 
 ## 3. Las claves
 
@@ -39,7 +53,9 @@ cd app && npm run dev
 - `/estudio` → pide la clave → «Nueva boda» → guardar → la invitación existe en `/i/<slug>`.
 - En `/estudio`, el botón **Panel** de cada boda abre el enlace privado de la pareja.
 
-Sin `.env.local` la aplicación **también arranca**: tira de `src/data/demo.ts`. Es a propósito — el prototipo tiene que funcionar en cualquier máquina sin credenciales.
+Sin `.env.local` la aplicación **también arranca**: tira de `src/data/demo.ts` y, en `next dev`, guarda en un **almacén en memoria** del proceso (se pierde al reiniciar). Así se puede probar todo sin credenciales: confirmar, el panel en `/novios/demo-<slug>` y los enlaces personales de prueba (`/i/laura-y-ruben?n=demo-carmen`).
+
+**En producción sin Supabase**, las invitaciones de muestra se siguen viendo, pero **toda escritura falla con un error visible**: el RSVP nunca dice «confirmado» si no se ha guardado.
 
 ---
 
@@ -51,13 +67,20 @@ Sin `.env.local` la aplicación **también arranca**: tira de `src/data/demo.ts`
 |---|---|---|---|
 | `invitaciones` | solo `estado = 'publicada'` | las suyas | estudio (service role) |
 | `rsvp` · `muro` · `album` · `invitados` | **nunca** | las suyas | service role, desde acciones validadas |
+
+Las fronteras de confianza, en el código:
+
+- `src/app/acciones.ts` — acciones públicas del invitado (RSVP, muro). Validan todo.
+- `src/app/estudio/acciones.ts` — cada acción comprueba la cookie del estudio **dentro** (una server action se puede invocar por POST desde cualquier ruta; el proxy no basta).
+- `src/app/novios/[token]/acciones.ts` y `/novios/[token]/exportar` — cada acción vuelve a resolver el token del panel y opera solo sobre esa invitación.
+- `GET /api/invitado?slug=&n=` — devuelve solo `{ nombre, cupo }` de un enlace personal.
 | `paneles` · `leads` | **nunca** | **nunca** | service role |
 
 ### Por qué las escrituras van con service role
 
 El invitado no tiene cuenta —y no la va a tener, porque pedirle a la tía Mari que se registre es el mayor generador de fricción posible en este producto—. Sin cuenta no hay `auth.uid()`, así que no hay forma de darle permiso bajo RLS.
 
-La alternativa sería abrir un `insert` público en `rsvp`, y entonces cualquiera con el enlace puede meter mil filas. Se hace al revés: las tablas quedan cerradas y solo escriben las acciones de servidor de `src/app/acciones.ts`, que validan antes. Esa es la frontera de confianza.
+La alternativa sería abrir un `insert` público en `rsvp`, y entonces cualquiera con el enlace puede meter mil filas. Se hace al revés: las tablas quedan cerradas y solo escriben las acciones de servidor, que validan antes. Esa es la frontera de confianza.
 
 ### Por qué el token del panel está en su propia tabla
 

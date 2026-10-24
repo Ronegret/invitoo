@@ -1,31 +1,25 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Rama from "@/components/Botanica";
-import Revelar from "@/components/Revelar";
-import Corte from "@/components/sitio/Corte";
+import Cancion from "@/components/sitio/Cancion";
 import Encabezado from "@/components/sitio/Encabezado";
 import LlamadaFinal from "@/components/sitio/LlamadaFinal";
 import Preguntas from "@/components/sitio/Preguntas";
+import Revelar from "@/components/Revelar";
 import Rotulo from "@/components/sitio/Rotulo";
-import { PROCESO } from "@/data/plantillas";
-import { DENTRO } from "@/data/sitio";
+import { ListaPanel } from "@/components/sitio/VuestroPanel";
+import { DENTRO, DIRECTO, DIRECTO_PASOS, DIRECTO_PRIVACIDAD, ENTRADA_PANEL, PROCESO, enLetra } from "@/data/sitio";
 
 export const metadata: Metadata = {
-  title: "Qué hacemos · Invitoo",
-  description:
-    "Qué lleva dentro una invitación de Invitoo, cómo trabajamos y qué tenéis que hacer vosotros: contárnoslo una vez. Quince cosas resueltas y un enlace terminado en cinco días.",
+  title: "Qué hacemos y cómo trabajamos",
+  description: `Qué lleva una invitación de Invitoo y cómo se hace: nos contáis vuestra boda una vez, por vídeo, y en cinco días laborables tenéis el enlace. ${enLetra(DENTRO.length, true)} cosas resueltas, sin tocar un editor. Y el día de la boda, las fotos de los invitados en directo en la TV del salón.`,
+  alternates: { canonical: "/servicios" },
 };
 
 /**
- * Los servicios.
- *
- * Responde a una sola pregunta —«¿qué me estáis vendiendo exactamente?»— y
- * la responde en tres tramos: qué lleva dentro, cómo se hace, y qué tenéis
- * que hacer vosotros (nada).
- *
- * El tercero es el que vende. La competencia entera vende editores: te dan
- * una herramienta y el trabajo es tuyo. Esto es lo contrario, y si no se
- * dice claro parece lo mismo pero más caro.
+ * Los servicios: qué lleva dentro, cómo se hace y qué tenéis que hacer
+ * vosotros (contarlo una vez). Lo tercero es lo que vende: la competencia
+ * entera vende editores, y si no se dice claro parece lo mismo pero más
+ * caro.
  */
 export default function Servicios() {
   return (
@@ -34,161 +28,203 @@ export default function Servicios() {
         sobre="Qué hacemos"
         titulo="Vosotros lo contáis, nosotros lo montamos"
         bajo="No os damos un editor: os damos una invitación terminada. Nos contáis vuestra boda una vez, por vídeo, y unos días después os llega el enlace."
-        foto="/fotos/sitio/corte-2.avif"
       />
 
-      {/* ---------------- Las quince cosas ---------------- */}
-      <section className="grano relative bg-[var(--papel)] px-5 py-28 sm:py-32">
-        <div className="mx-auto max-w-[62rem]">
-          <Revelar>
-            <Rotulo
-              sobre="Por dentro"
-              titulo="Quince cosas resueltas"
-              bajo="Todo lo que, si no está en la invitación, acaba en un grupo de WhatsApp de ochenta personas preguntando a qué hora es la misa."
-            />
-          </Revelar>
-
-          <dl className="mt-16 grid gap-x-14 gap-y-10 sm:grid-cols-2">
-            {DENTRO.map((d, i) => (
-              <Revelar key={d.titulo} retraso={(i % 2) * 90}>
-                <div className="flex gap-5">
-                  <span className="mt-1 shrink-0 text-[var(--verde)]">
-                    <Rama forma="brote" ancho={22} retraso={i * 40} />
-                  </span>
-                  <div>
-                    <dt className="display text-[1.35rem]">{d.titulo}</dt>
-                    <dd className="mt-2 text-[0.96rem] leading-[1.7] opacity-65">
-                      {d.texto}
-                    </dd>
-                  </div>
-                </div>
-              </Revelar>
+      {/* ───────────── Lo que lleva ───────────── */}
+      <section className="bg-[var(--papel)] px-4 py-20 sm:px-6 sm:py-28">
+        <div className="mx-auto max-w-[72rem]">
+          <Rotulo
+            sobre="Por dentro"
+            titulo={`${enLetra(DENTRO.length, true)} cosas resueltas`}
+            bajo="Todo lo que, si no está en la invitación, acaba en un grupo de WhatsApp de ochenta personas preguntando a qué hora es la ceremonia."
+          />
+          <dl className="mt-14 grid border-t border-[var(--tinta)]/15 sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-3">
+            {DENTRO.map((d) => (
+              <div key={d.titulo} className="border-b border-[var(--tinta)]/15 py-6">
+                <dt className="display text-[1.5rem] leading-tight">{d.titulo}</dt>
+                {d.plan && (
+                  <dd className="mt-1 text-[1rem] text-[var(--acento)]">Plan {d.plan}</dd>
+                )}
+                <dd className="mt-2 text-[1rem] leading-[1.65] opacity-75">{d.texto}</dd>
+              </div>
             ))}
           </dl>
-
-          <Revelar>
-            <p className="mt-16 text-center text-[0.9rem] opacity-55">
-              No todas las plantillas llevan las quince: una boda de treinta
-              personas no necesita hashtag.{" "}
-              <Link href="/plantillas" className="enlace-sub">
-                Cada plantilla decide cuáles
-              </Link>
-              .
-            </p>
-          </Revelar>
+          <p className="mt-10 max-w-[40rem] text-[1rem] leading-[1.7] opacity-70">
+            No todas las bodas necesitan todo: una de treinta personas no
+            necesita autobús.{" "}
+            <Link href="/plantillas" className="underline decoration-[var(--tinta)]/30 underline-offset-4">
+              Cada plantilla ordena las secciones a su manera
+            </Link>
+            .
+          </p>
         </div>
       </section>
 
-      <Corte
-        foto="/fotos/sitio/corte-3.avif"
-        frase="Vosotros no tocáis ningún editor. Contádnoslo una vez y ya está."
-        pie="Cómo trabajamos"
-        alto="58svh"
-      />
-
-      {/* ---------------- El proceso ---------------- */}
+      {/* ───────────── El proceso ───────────── */}
       <section
         id="proceso"
-        className="grano relative scroll-mt-24 bg-[var(--bruma)]/55 px-5 py-28 sm:py-32"
+        className="scroll-mt-24 border-t border-[var(--tinta)]/10 bg-[var(--bruma)]/45 px-4 py-20 sm:px-6 sm:py-28"
       >
-        <div className="mx-auto max-w-[44rem]">
-          <Revelar>
-            <Rotulo
-              sobre="El proceso"
-              titulo="Cómo va"
-              bajo="De la videollamada al enlace terminado, entre cinco y siete días."
-            />
-          </Revelar>
-
-          <ol className="mt-16 flex flex-col gap-14">
+        <div className="mx-auto grid max-w-[72rem] gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <div className="lg:sticky lg:top-28">
+              <Rotulo
+                sobre="El proceso"
+                titulo="Cómo va"
+              />
+              <p className="mt-6 max-w-[28rem] text-[1.06rem] leading-[1.8] opacity-75">
+                De la videollamada al enlace terminado, cinco días laborables.
+                Cambios ilimitados hasta que la publiquéis.
+              </p>
+            </div>
+          </div>
+          <ol className="lg:col-span-7">
             {PROCESO.map((p, i) => (
-              <Revelar as="li" key={p.n} retraso={i * 90}>
-                <div className="text-center">
-                  <span className="display block text-[2.6rem] leading-none text-[var(--acento)] opacity-80">
-                    {String(p.n).padStart(2, "0")}
-                  </span>
-                  <h3 className="display mt-4 text-[1.9rem]">{p.titulo}</h3>
-                  <p className="mx-auto mt-3 max-w-[30rem] text-[1rem] leading-[1.8] opacity-70">
+              <li
+                key={p.titulo}
+                className="grid grid-cols-[3rem_1fr] gap-4 border-b border-[var(--tinta)]/15 py-8 first:pt-0"
+              >
+                <span className="display text-[2rem] leading-none text-[var(--acento)] tabular-nums">
+                  {i + 1}
+                </span>
+                <div>
+                  <h3 className="display text-[1.9rem] leading-tight">{p.titulo}</h3>
+                  <p className="mt-2 max-w-[32rem] text-[1.04rem] leading-[1.7] opacity-75">
                     {p.texto}
                   </p>
-                  {i < PROCESO.length - 1 && (
-                    <Rama
-                      forma="espiga"
-                      ancho={20}
-                      retraso={i * 90 + 200}
-                      className="mx-auto mt-10 text-[var(--verde)] opacity-60"
-                    />
-                  )}
                 </div>
-              </Revelar>
+              </li>
             ))}
           </ol>
         </div>
       </section>
 
-      {/* ---------------- La canción ---------------- */}
-      <section className="grano relative bg-[var(--papel)] px-5 py-28 sm:py-32">
-        <div className="mx-auto max-w-[40rem] text-center">
-          <Revelar>
-            <Rotulo
-              sobre="Lo que no tiene nadie más"
-              titulo="Una canción vuestra"
-            />
-          </Revelar>
-          <Revelar retraso={120}>
-            <div className="mt-12 flex flex-col gap-6 text-[1.04rem] leading-[1.88] opacity-78">
-              <p>
-                Una canción original, compuesta para vuestra boda y con
-                vuestra historia dentro, por Dedícalo. Suena cuando alguien
-                abre la invitación —si quiere: siempre se pregunta antes— y os
-                la lleváis en archivo para ponerla el día de la ceremonia.
-              </p>
-              <p className="display text-[clamp(1.4rem,4.2vw,1.9rem)] leading-[1.45] opacity-100">
-                No la tiene ninguna otra plataforma de invitaciones en España.
-              </p>
-              <p>
-                Va incluida desde el plan Esencial. En Premium son dos: una
-                para la invitación y otra para el día.
-              </p>
-            </div>
-          </Revelar>
-          <Revelar retraso={200}>
-            <p className="mt-12">
-              <Link
-                href="/precios"
-                className="boton-lleno inline-flex min-h-14 items-center justify-center rounded-full px-10 text-[0.78rem] uppercase tracking-[0.18em]"
-                style={{ background: "var(--tinta)", color: "var(--papel)" }}
-              >
-                Ver los precios
-              </Link>
-            </p>
-          </Revelar>
+      {/* ───────────── Vuestro panel ───────────── */}
+      <section
+        id="panel"
+        className="scroll-mt-24 border-t border-[var(--tinta)]/10 bg-[var(--papel)] px-4 py-20 sm:px-6 sm:py-28"
+      >
+        <div className="mx-auto max-w-[72rem]">
+          <Rotulo
+            sobre="Después de publicarla"
+            titulo="Vuestro panel"
+            bajo="Lo que necesitáis mientras llegan las respuestas, y nada más: no os pedimos que hagáis de wedding planner, así que no hay mesas ni horarios que mantener."
+          />
+          <p className="mt-6 max-w-[38rem] text-[1rem] leading-[1.7] opacity-70">{ENTRADA_PANEL}</p>
+          <ListaPanel className="mt-12" />
         </div>
       </section>
 
-      {/* ---------------- Dudas de producto ---------------- */}
-      <section className="grano relative bg-[var(--bruma)]/55 px-5 py-28 sm:py-32">
-        <div className="mx-auto max-w-[46rem]">
-          <Revelar>
-            <Rotulo sobre="Lo que se pregunta siempre" titulo="Dudas" />
-          </Revelar>
-          <div className="mt-14">
-            <Preguntas de="producto" />
+      {/* ───────────── El día de la boda, en directo ───────────── */}
+      <section
+        id="en-directo"
+        className="scroll-mt-24 border-t border-[var(--tinta)]/10 bg-[var(--papel)] px-4 py-20 sm:px-6 sm:py-28"
+      >
+        <div className="mx-auto grid max-w-[72rem] gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <div className="lg:sticky lg:top-28">
+              <Rotulo sobre="El día de la boda" titulo="En directo" />
+              <p className="mt-6 max-w-[28rem] text-[1.06rem] leading-[1.8] opacity-75">
+                Un QR en cada mesa. Los invitados suben fotos, vídeos y
+                mensajes desde su móvil, sin app ni registro, y todo va
+                saliendo en la TV del salón con fundidos lentos. Al día
+                siguiente os lo descargáis entero.
+              </p>
+              <p className="mt-6 text-[1rem] opacity-60">
+                {DIRECTO.precio} € · {DIRECTO.precioGestionado} € gestionado · incluido en Estudio
+              </p>
+              <p className="mt-6 flex flex-wrap gap-x-8 gap-y-2">
+                <Link
+                  href="/precios#en-directo"
+                  className="enlace-sub inline-flex min-h-12 items-center text-[1rem] underline decoration-[var(--tinta)]/30 underline-offset-4"
+                >
+                  Qué incluye cada opción
+                </Link>
+                <Link
+                  href="/preguntas#el-dia-de-la-boda"
+                  className="enlace-sub inline-flex min-h-12 items-center text-[1rem] underline decoration-[var(--tinta)]/30 underline-offset-4"
+                >
+                  Privacidad, wifi y menores
+                </Link>
+              </p>
+            </div>
           </div>
-          <Revelar>
-            <p className="mt-12 text-center text-[0.9rem] opacity-55">
-              <Link href="/preguntas" className="enlace-sub">
+
+          <div className="lg:col-span-7">
+            <ol>
+              {DIRECTO_PASOS.map((p, i) => (
+                <Revelar
+                  as="li"
+                  key={p.titulo}
+                  retraso={i * 80}
+                  className="grid grid-cols-[3rem_1fr] gap-4 border-b border-[var(--tinta)]/15 py-8 first:pt-0"
+                >
+                  <span className="display text-[2rem] leading-none text-[var(--acento)] tabular-nums">
+                    {i + 1}
+                  </span>
+                  <div>
+                    <h3 className="display text-[1.9rem] leading-tight">{p.titulo}</h3>
+                    <p className="mt-2 max-w-[32rem] text-[1.04rem] leading-[1.7] opacity-75">
+                      {p.texto}
+                    </p>
+                  </div>
+                </Revelar>
+              ))}
+            </ol>
+
+            {/* Lo que hace falta en el local: la pregunta del maître. */}
+            <div className="mt-12 bg-[var(--bruma)]/45 p-7 sm:p-9">
+              <h3 className="display text-[1.7rem] leading-tight">Qué hace falta en el salón</h3>
+              <p className="mt-3 text-[1.1rem] leading-[1.6]">{DIRECTO.local}.</p>
+              <p className="mt-3 max-w-[34rem] text-[1rem] leading-[1.7] opacity-70">
+                La pantalla es una página web a pantalla completa con su clave:
+                se abre y empieza. Los invitados suben con sus propios datos,
+                así que el wifi del salón ayuda pero no es imprescindible. Con
+                el Gestionado lo configuramos y lo probamos antes con el local;
+                si no hay TV, el alquiler se presupuesta aparte.
+              </p>
+            </div>
+
+            <dl className="mt-12 grid gap-px border border-[var(--tinta)]/15 bg-[var(--tinta)]/15 sm:grid-cols-3">
+              {DIRECTO_PRIVACIDAD.map((p) => (
+                <div key={p.titulo} className="bg-[var(--papel)] p-6">
+                  <dt className="display text-[1.4rem] leading-tight">{p.titulo}</dt>
+                  <dd className="mt-2 text-[1rem] leading-[1.6] opacity-70">{p.texto}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <Cancion />
+
+      {/* ───────────── Dudas ───────────── */}
+      <section className="bg-[var(--papel)] px-4 py-20 sm:px-6 sm:py-28">
+        <div className="mx-auto grid max-w-[72rem] gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <h2 className="display text-[clamp(2.4rem,6vw,3.8rem)] leading-[1.02]">
+              Lo que se pregunta siempre
+            </h2>
+            <p className="mt-6">
+              <Link
+                href="/preguntas"
+                className="inline-flex min-h-12 items-center text-[1rem] underline decoration-[var(--tinta)]/30 underline-offset-4"
+              >
                 Todas las preguntas
               </Link>
             </p>
-          </Revelar>
+          </div>
+          <div className="lg:col-span-8">
+            <Preguntas de={["producto", "invitados", "directo"]} />
+          </div>
         </div>
       </section>
 
       <LlamadaFinal
         sobre="El primer paso"
         titulo="Contádnoslo"
-        texto="Veinte minutos por Meet, sin presupuesto por delante y sin compromiso. Nos contáis cómo es vuestra boda y os decimos qué haríamos con ella."
+        texto="Veinte minutos por vídeo, sin presupuesto por delante y sin compromiso. Nos contáis cómo es vuestra boda y os decimos qué haríamos con ella."
       />
     </>
   );

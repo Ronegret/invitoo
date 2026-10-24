@@ -41,3 +41,50 @@ export async function sesionValida() {
   if (!cookie) return false;
   return iguales(cookie, huella(esperada));
 }
+
+/**
+ * Primera línea de CADA acción de servidor del estudio. El proxy solo corta
+ * las páginas de /estudio; una server action se puede llamar por POST desde
+ * cualquier ruta con su id, así que la sesión se comprueba aquí dentro.
+ */
+export async function exigirSesion(): Promise<boolean> {
+  return sesionValida();
+}
+
+// ───────────────────────────────────────────── entrar con Google (opcional)
+
+/**
+ * `ESTUDIO_EMAILS`: los emails de Google que pueden abrir el estudio,
+ * separados por comas. Solo en el servidor (sin NEXT_PUBLIC_). Vacío = el
+ * botón de Google no aparece y solo vale la clave.
+ */
+export function emailsDeEstudio(): string[] {
+  return (process.env.ESTUDIO_EMAILS ?? "")
+    .split(",")
+    .map((e) => e.trim().toLowerCase())
+    .filter((e) => e.includes("@"));
+}
+
+export function esEmailDeEstudio(email: string | null | undefined): boolean {
+  if (!email) return false;
+  return emailsDeEstudio().includes(email.trim().toLowerCase());
+}
+
+/**
+ * Abre la sesión del estudio: la misma cookie que pone la clave (su hash),
+ * así el proxy y `sesionValida` no cambian. Por eso ESTUDIO_CLAVE sigue
+ * siendo obligatoria aunque se entre con Google. Solo en una acción de
+ * servidor o un route handler, y SOLO después de comprobar el email.
+ */
+export async function abrirSesionEstudio(): Promise<boolean> {
+  const esperada = process.env.ESTUDIO_CLAVE;
+  if (!esperada) return false;
+  (await cookies()).set(COOKIE, huella(esperada), {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/estudio",
+    maxAge: 60 * 60 * 24 * 14,
+  });
+  return true;
+}

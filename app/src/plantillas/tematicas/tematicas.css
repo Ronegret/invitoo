@@ -1,0 +1,139 @@
+/* ------------------------------------------------------------------
+   TEMÁTICAS (K1) — lo común de Alta sociedad, Elegancia pura y Cuento.
+   · El vídeo de cabecera (.kv) y su botón «Ver el vídeo».
+   · La cabecera a pantalla completa (.k-hero), con safe-area y svh.
+   · Las escenas al hacer scroll ([data-k-escena]): CSS ligado al scroll
+     donde existe; IntersectionObserver (escenas.tsx) donde no.
+   Reglas: solo opacity, transform, filter y clip-path; nada secuestra el
+   scroll; con «menos movimiento» todo quieto y entero; sin JS, todo se lee.
+   ------------------------------------------------------------------ */
+
+/* —— la cabecera —— */
+.lienzo .k-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: max(100svh, 36rem);
+  overflow: clip;
+}
+.lienzo .k-hero-medio { position: absolute; inset: 0; z-index: -1; overflow: hidden; }
+
+/* —— el vídeo —— */
+.kv { position: absolute; inset: 0; }
+.kv picture, .kv-poster, .kv-video {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+.lienzo .kv img { outline: none; }
+.kv-video { opacity: 0; transition: opacity 900ms cubic-bezier(.25,.1,.12,1); }
+.kv[data-vivo="1"] .kv-video { opacity: 1; }
+.kv-play {
+  position: absolute; z-index: 6;
+  top: calc(env(safe-area-inset-top, 0px) + 1rem);
+  left: max(1rem, env(safe-area-inset-left, 0px));
+  display: inline-flex; align-items: center; gap: .6rem;
+  min-height: 48px; padding: 0 1.25rem 0 1rem;
+  border-radius: 999px;
+  font-size: 1.0625rem; letter-spacing: .04em;
+  color: var(--kv-play-texto, #fff);
+  background: var(--kv-play-fondo, rgb(0 0 0 / .38));
+  border: 1px solid var(--kv-play-borde, rgb(255 255 255 / .55));
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: transform 180ms cubic-bezier(.22,.61,.36,1), background-color 180ms ease;
+}
+.kv-play:active { transform: scale(.97); }
+/* Bajo la marca «Demo» de las muestras (arriba a la izquierda): sin solaparse. */
+:where(main):has(> .marca-demo) .kv-play { top: calc(env(safe-area-inset-top, 0px) + 3rem); }
+/* Pausa del vídeo (WCAG 2.2.2): discreta, arriba a la derecha (el «Saltar»
+   de la apertura ya se ha ido cuando aparece). 44 px de diana. */
+.kv-pausa {
+  position: absolute; z-index: 6;
+  top: calc(env(safe-area-inset-top, 0px) + .75rem);
+  right: max(.75rem, env(safe-area-inset-right, 0px));
+  display: grid; place-items: center;
+  width: 44px; height: 44px; border-radius: 999px;
+  color: var(--kv-play-texto, #fff);
+  background: var(--kv-play-fondo, rgb(0 0 0 / .3));
+  border: 1px solid var(--kv-play-borde, rgb(255 255 255 / .45));
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  opacity: .78; cursor: pointer;
+  transition: opacity 180ms ease, transform 180ms cubic-bezier(.22,.61,.36,1);
+}
+.kv-pausa:hover, .kv-pausa:focus-visible, .kv-pausa[aria-pressed="true"] { opacity: 1; }
+.kv-pausa:active { transform: scale(.94); }
+.kv-pausa:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
+.kv-play:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
+
+/* —— el hero sale al hacer scroll: el vídeo se acerca, el rótulo se va —— */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .lienzo .k-hero { view-timeline: --k-hero block; }
+    .lienzo .k-hero .k-hero-medio {
+      animation: k-hero-medio linear both;
+      animation-timeline: --k-hero;
+      animation-range: exit 0% exit 100%;
+    }
+    .lienzo .k-hero .k-hero-sale {
+      animation: k-hero-sale linear both;
+      animation-timeline: --k-hero;
+      animation-range: exit 0% exit 70%;
+    }
+  }
+}
+@keyframes k-hero-medio { to { transform: translateY(18%) scale(1.1); } }
+/* El rótulo solo se desplaza (parallax): ningún texto se desvanece mientras se lee. */
+@keyframes k-hero-sale { to { transform: translateY(-12%); } }
+
+/* —— la indicación de bajar —— */
+.lienzo .k-baja {
+  display: inline-flex; flex-direction: column; align-items: center; gap: .35rem;
+  min-height: 48px; padding: .25rem 1rem;
+  font-size: 1.0625rem; letter-spacing: .08em;
+}
+.lienzo .k-baja svg { width: 18px; height: 18px; }
+@media (prefers-reduced-motion: no-preference) {
+  .lienzo .k-baja svg { animation: k-baja 2.4s cubic-bezier(.45,0,.55,1) infinite; }
+}
+@keyframes k-baja { 0%, 100% { transform: translateY(0); opacity: .9; } 50% { transform: translateY(6px); opacity: .55; } }
+
+/* —— escenas: el fallback con observador —— */
+@supports not (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    html.js .lienzo [data-k-escena] {
+      transition:
+        opacity 900ms cubic-bezier(.22,.61,.36,1),
+        transform 1100ms cubic-bezier(.22,.61,.36,1),
+        filter 900ms cubic-bezier(.22,.61,.36,1),
+        clip-path 1200ms cubic-bezier(.65,0,.35,1);
+    }
+    html.js .lienzo [data-k-escena][data-k-espera]:not([data-k-visto]) {
+      opacity: 0;
+      transform: translateY(28px);
+      filter: blur(6px);
+    }
+  }
+}
+
+/* —— el polvo de hadas —— */
+.polvo-hadas {
+  position: fixed; inset: 0; z-index: 30;
+  width: 100vw; height: 100dvh;
+  pointer-events: none;
+}
+
+/* —— lo que no se debe pegar a los bordes en el móvil —— */
+.lienzo .k-ancho { width: min(100% - 2.5rem, 34rem); margin-inline: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  .kv-video { transition: none; }
+}
+
+/* —— 17 px como mínimo en TODO el texto de lectura de las temáticas ——
+   Los bloques compartidos (RSVP, Copiar, álbum, capítulos) traen alguna
+   etiqueta a 15–16 px; aquí, dentro de estas tres plantillas, se suben a
+   17 px sin tocar los archivos de sus dueños. */
+.lienzo:is([data-plantilla="regencia"], [data-plantilla="aire"], [data-plantilla="cuento"])
+  :is(.text-\[1rem\], .text-\[0\.95rem\], .text-sm, .text-base, label, legend) {
+  font-size: 1.0625rem;
+}
+.lienzo:is([data-plantilla="regencia"], [data-plantilla="aire"], [data-plantilla="cuento"]) .kv-play { font-size: 1.0625rem; }

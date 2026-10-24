@@ -1,0 +1,242 @@
+[
+  {
+    "name": "festival-poster",
+    "carpeta": "festival",
+    "prompt": "Vertical 9:16, golden-hour open-air summer festival seen from inside the crowd, raised hands in soft silhouette, warm haze and slow drifting paper confetti, a Spanish couple around thirty: she has long wavy honey-brown hair and a flowing ivory linen dress with a small flower crown; he has short dark curly hair, light stubble and a sand-colored linen suit with an open-collar white shirt, embracing in soft focus at the centre of the frame, empty sky at the top, 35mm grain, magenta and amber palette, cinematic and elegant. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 720,
+    "height": 1280,
+    "seed": 41101
+  },
+  {
+    "name": "festival-album-1",
+    "carpeta": "festival",
+    "prompt": "Editorial wedding portrait of a Spanish couple around thirty: she has long wavy honey-brown hair and a flowing ivory linen dress with a small flower crown; he has short dark curly hair, light stubble and a sand-colored linen suit with an open-collar white shirt, laughing together on a grassy meadow at sunset among olive trees, warm backlight, string lights out of focus behind, natural and joyful, true-to-life skin texture. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 832,
+    "height": 1248,
+    "seed": 41102
+  },
+  {
+    "name": "festival-album-2",
+    "carpeta": "festival",
+    "prompt": "Candid wedding photo: a Spanish couple around thirty: she has long wavy honey-brown hair and a flowing ivory linen dress with a small flower crown; he has short dark curly hair, light stubble and a sand-colored linen suit with an open-collar white shirt, dancing barefoot on the grass at dusk under strings of warm bulbs, motion blur in her dress, guests softly out of focus, golden and magenta tones, 35mm film look. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 832,
+    "height": 1248,
+    "seed": 41103
+  },
+  {
+    "name": "festival-album-3",
+    "carpeta": "festival",
+    "prompt": "Close portrait of a Spanish couple around thirty: she has long wavy honey-brown hair and a flowing ivory linen dress with a small flower crown; he has short dark curly hair, light stubble and a sand-colored linen suit with an open-collar white shirt, forehead to forehead at golden hour, lens flare, paper confetti falling, shallow depth of field, editorial wedding photography. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 832,
+    "height": 1248,
+    "seed": 41104
+  },
+  {
+    "name": "festival-album-4",
+    "carpeta": "festival",
+    "prompt": "Wide shot of a summer evening wedding party in an olive grove: a small wooden stage with warm lights, guests dancing with raised hands in silhouette against a magenta and amber sky, a Spanish couple around thirty: she has long wavy honey-brown hair and a flowing ivory linen dress with a small flower crown; he has short dark curly hair, light stubble and a sand-colored linen suit with an open-collar white shirt at the centre, elegant and festive. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 832,
+    "height": 1248,
+    "seed": 41105
+  },
+  {
+    "name": "festival-detalle",
+    "carpeta": "festival",
+    "prompt": "Macro still life on ivory card: a laminated holographic access pass on a woven coral fabric lanyard, iridescent foil reflecting pink and mint light, a perforated tear-off stub, a woven fabric wristband, soft daylight, minimal and luxurious. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 1024,
+    "height": 1024,
+    "seed": 41106
+  },
+  {
+    "name": "vinilo-poster",
+    "carpeta": "vinilo",
+    "prompt": "Vertical 9:16, black-and-white 35mm footage still: a Spanish couple in their early thirties: she has a sleek black bob, red lipstick and a fitted ivory satin slip dress under a cropped black leather jacket; he has tousled dark hair, a short beard and a slim black suit with a black shirt, slow-dancing on an empty stage, a single red backlight cutting through haze, a vinyl record spinning in macro out of focus in the foreground, high contrast, deep blacks, film grain, cinematic. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 720,
+    "height": 1280,
+    "seed": 42101
+  },
+  {
+    "name": "vinilo-album-1",
+    "carpeta": "vinilo",
+    "prompt": "Black-and-white editorial wedding portrait of a Spanish couple in their early thirties: she has a sleek black bob, red lipstick and a fitted ivory satin slip dress under a cropped black leather jacket; he has tousled dark hair, a short beard and a slim black suit with a black shirt, leaning against a brick wall of an old industrial hall, dramatic side light, film grain, rock and roll attitude but elegant. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 832,
+    "height": 1248,
+    "seed": 42102
+  },
+  {
+    "name": "vinilo-album-2",
+    "carpeta": "vinilo",
+    "prompt": "Wedding photo: a Spanish couple in their early thirties: she has a sleek black bob, red lipstick and a fitted ivory satin slip dress under a cropped black leather jacket; he has tousled dark hair, a short beard and a slim black suit with a black shirt, laughing in the front row of a small live-music hall, warm red stage light, smoke, the band out of focus, generic unbranded instruments, 35mm film look. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 832,
+    "height": 1248,
+    "seed": 42103
+  },
+  {
+    "name": "vinilo-album-3",
+    "carpeta": "vinilo",
+    "prompt": "Black-and-white close-up of a Spanish couple in their early thirties: she has a sleek black bob, red lipstick and a fitted ivory satin slip dress under a cropped black leather jacket; he has tousled dark hair, a short beard and a slim black suit with a black shirt, sharing headphones and listening to a record on a vintage turntable at home, shelves of record sleeves with blank spines behind, soft window light. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 832,
+    "height": 1248,
+    "seed": 42104
+  },
+  {
+    "name": "vinilo-album-4",
+    "carpeta": "vinilo",
+    "prompt": "Couple portrait at night: a Spanish couple in their early thirties: she has a sleek black bob, red lipstick and a fitted ivory satin slip dress under a cropped black leather jacket; he has tousled dark hair, a short beard and a slim black suit with a black shirt, walking out of a Catalan stone farmhouse converted into a concert hall, warm light spilling from the open door, motion and confetti, high contrast. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 832,
+    "height": 1248,
+    "seed": 42105
+  },
+  {
+    "name": "vinilo-detalle",
+    "carpeta": "vinilo",
+    "prompt": "Macro still life: a black 180 gram vinyl record half out of a plain black leather-textured sleeve with blind-embossed ring wear, a red center label with no text, a celluloid guitar pick and a chrome vintage microphone grille, dramatic red rim light on black. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 1024,
+    "height": 1024,
+    "seed": 42106
+  },
+  {
+    "name": "neon-poster",
+    "carpeta": "neon",
+    "prompt": "Vertical 9:16, night city rooftop after rain, a Spanish couple in their late twenties: she has long straight dark hair, gold hoop earrings and a sleek silver sequined slip dress; he has a short fade haircut, light brown skin and a black velvet tuxedo jacket, dancing close in silhouette at the centre of the frame, soft pink and violet neon glow reflecting on the wet ground in the lower third, light haze, deep blacks, elegant and cinematic, no readable signs. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 720,
+    "height": 1280,
+    "seed": 43101
+  },
+  {
+    "name": "neon-album-1",
+    "carpeta": "neon",
+    "prompt": "Editorial night wedding portrait with direct flash: a Spanish couple in their late twenties: she has long straight dark hair, gold hoop earrings and a sleek silver sequined slip dress; he has a short fade haircut, light brown skin and a black velvet tuxedo jacket, on a rooftop terrace, city lights bokeh behind, glossy and fashionable, deep black background with pink rim light. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 832,
+    "height": 1248,
+    "seed": 43102
+  },
+  {
+    "name": "neon-album-2",
+    "carpeta": "neon",
+    "prompt": "Candid wedding photo: a Spanish couple in their late twenties: she has long straight dark hair, gold hoop earrings and a sleek silver sequined slip dress; he has a short fade haircut, light brown skin and a black velvet tuxedo jacket, dancing on a glass dance floor in a dark private club, pink and violet light, motion blur, confetti, elegant crowd out of focus. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 832,
+    "height": 1248,
+    "seed": 43103
+  },
+  {
+    "name": "neon-album-3",
+    "carpeta": "neon",
+    "prompt": "Portrait of a Spanish couple in their late twenties: she has long straight dark hair, gold hoop earrings and a sleek silver sequined slip dress; he has a short fade haircut, light brown skin and a black velvet tuxedo jacket, laughing in the back seat of a car at night, city lights streaking through the window in pink and blue, 35mm film grain, intimate. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 832,
+    "height": 1248,
+    "seed": 43104
+  },
+  {
+    "name": "neon-album-4",
+    "carpeta": "neon",
+    "prompt": "Sunrise after a wedding party: a Spanish couple in their late twenties: she has long straight dark hair, gold hoop earrings and a sleek silver sequined slip dress; he has a short fade haircut, light brown skin and a black velvet tuxedo jacket, sitting on the edge of a rooftop wrapped in his jacket, violet and peach dawn sky over the city skyline, tired and happy, soft light. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 832,
+    "height": 1248,
+    "seed": 43105
+  },
+  {
+    "name": "neon-detalle",
+    "carpeta": "neon",
+    "prompt": "Still life: a hand-blown glass neon tube shaped like a single elegant cursive loop glowing soft pink on smoked black glass, chrome electrodes and brackets visible, wet reflective surface below, minimal and luxurious, no letters. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 1024,
+    "height": 1024,
+    "seed": 43106
+  },
+  {
+    "name": "fuego-poster",
+    "carpeta": "fuego",
+    "prompt": "Vertical 9:16, slow-motion close-up of a Spanish couple in their early thirties: she has long dark curly hair pinned with a red flower and a fitted red silk dress with a flowing skirt; he has slicked-back black hair, a thin moustache and a cream dinner jacket with black trousers, dancing salsa, her red skirt spinning open like a fan, their hands joined at the centre of the frame, warm tungsten bulbs and candlelight bokeh, polished brass and red velvet behind, rich warm tones, elegant 1950s Havana nightclub mood. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 720,
+    "height": 1280,
+    "seed": 44101
+  },
+  {
+    "name": "fuego-album-1",
+    "carpeta": "fuego",
+    "prompt": "Editorial wedding portrait of a Spanish couple in their early thirties: she has long dark curly hair pinned with a red flower and a fitted red silk dress with a flowing skirt; he has slicked-back black hair, a thin moustache and a cream dinner jacket with black trousers, mid-turn under his arm in the courtyard of an Andalusian hacienda with orange trees, golden evening light, joyful and elegant. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 832,
+    "height": 1248,
+    "seed": 44102
+  },
+  {
+    "name": "fuego-album-2",
+    "carpeta": "fuego",
+    "prompt": "Candid wedding photo: a Spanish couple in their early thirties: she has long dark curly hair pinned with a red flower and a fitted red silk dress with a flowing skirt; he has slicked-back black hair, a thin moustache and a cream dinner jacket with black trousers, dancing salsa on a tiled patio at night with a live orchestra out of focus, warm string lights, motion in the skirt, guests clapping. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 832,
+    "height": 1248,
+    "seed": 44103
+  },
+  {
+    "name": "fuego-album-3",
+    "carpeta": "fuego",
+    "prompt": "Close-up of the couple's feet dancing salsa on terracotta tiles: her red satin dance shoes and his polished black shoes mid-step, warm side light, shallow depth of field. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 832,
+    "height": 1248,
+    "seed": 44104
+  },
+  {
+    "name": "fuego-album-4",
+    "carpeta": "fuego",
+    "prompt": "Portrait of a Spanish couple in their early thirties: she has long dark curly hair pinned with a red flower and a fitted red silk dress with a flowing skirt; he has slicked-back black hair, a thin moustache and a cream dinner jacket with black trousers, laughing in front of red velvet curtains framed by warm marquee bulbs in a vintage dance hall, brass details, 35mm film look. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 832,
+    "height": 1248,
+    "seed": 44105
+  },
+  {
+    "name": "fuego-detalle",
+    "carpeta": "fuego",
+    "prompt": "Still life: a red velvet folding hand fan with polished brass ribs half open on cream card, a pair of wooden claves, warm marquee light bulbs glowing out of focus, rich and elegant. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 1024,
+    "height": 1024,
+    "seed": 44106
+  },
+  {
+    "name": "bachata-poster",
+    "carpeta": "bachata",
+    "prompt": "Vertical 9:16, a Spanish couple around thirty: she has wavy auburn hair loose over her shoulders and a lilac chiffon dress with thin straps; he has short brown hair, a trimmed beard and a dusty-mauve linen suit with a white shirt, dancing bachata very close on a seaside terrace at blue hour, warm candlelight and a soft violet sky, an acoustic guitar resting out of focus in the foreground, the moon low on the horizon, intimate and romantic, film grain, deep purples and warm skin tones. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 720,
+    "height": 1280,
+    "seed": 45101
+  },
+  {
+    "name": "bachata-album-1",
+    "carpeta": "bachata",
+    "prompt": "Editorial wedding portrait of a Spanish couple around thirty: she has wavy auburn hair loose over her shoulders and a lilac chiffon dress with thin straps; he has short brown hair, a trimmed beard and a dusty-mauve linen suit with a white shirt, foreheads touching on a wooden deck by the sea at dusk, lilac sky, candles in glass jars around them, soft and intimate. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 832,
+    "height": 1248,
+    "seed": 45102
+  },
+  {
+    "name": "bachata-album-2",
+    "carpeta": "bachata",
+    "prompt": "Close-up of the couple's hands intertwined while dancing, her lilac chiffon sleeve and his mauve linen cuff, wedding rings visible, warm candlelight, shallow depth of field. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 832,
+    "height": 1248,
+    "seed": 45103
+  },
+  {
+    "name": "bachata-album-3",
+    "carpeta": "bachata",
+    "prompt": "Candid photo: a Spanish couple around thirty: she has wavy auburn hair loose over her shoulders and a lilac chiffon dress with thin straps; he has short brown hair, a trimmed beard and a dusty-mauve linen suit with a white shirt, dancing barefoot on a wooden floor under string lights by the sea at night, violet and rose tones, motion blur, guests out of focus. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 832,
+    "height": 1248,
+    "seed": 45104
+  },
+  {
+    "name": "bachata-album-4",
+    "carpeta": "bachata",
+    "prompt": "Portrait of a Spanish couple around thirty: she has wavy auburn hair loose over her shoulders and a lilac chiffon dress with thin straps; he has short brown hair, a trimmed beard and a dusty-mauve linen suit with a white shirt, sitting together on a low wall at night, he plays a cedar acoustic guitar for her, a single candle between them, deep violet background, romantic. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 832,
+    "height": 1248,
+    "seed": 45105
+  },
+  {
+    "name": "bachata-detalle",
+    "carpeta": "bachata",
+    "prompt": "Still life: the soundhole and rosette of a cedar acoustic guitar with four bronze strings catching warm candlelight, a lit white candle, a lilac silk ribbon, deep aubergine velvet background, intimate and luxurious. Fictional people, no text, no lettering, no logos, no brand markings, no recognizable venues.",
+    "width": 1024,
+    "height": 1024,
+    "seed": 45106
+  }
+]

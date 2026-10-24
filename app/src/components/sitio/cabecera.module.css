@@ -1,0 +1,714 @@
+/*
+ * La cabecera v3: cápsula flotante de papel esmerilado, enlaces con
+ * subrayado que se dibuja, cápsula que se desliza a la página activa, CTA
+ * con círculo granate y menú móvil a pantalla completa.
+ *
+ * Curvas de la casa (docs/09 §4): carta para entrar, velo para moverse,
+ * sello con un rebote del 4 % como mucho.
+ */
+
+.cabecera {
+  --ease-carta: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-velo: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-sello: cubic-bezier(0.34, 1.12, 0.64, 1);
+  --hueco: 10px;
+
+  position: fixed;
+  z-index: 60;
+  inset-inline: 0;
+  top: 0;
+  padding-top: calc(env(safe-area-inset-top, 0px) + var(--hueco));
+  padding-inline: max(12px, env(safe-area-inset-left, 0px)) max(12px, env(safe-area-inset-right, 0px));
+  pointer-events: none;
+  view-transition-name: cabecera;
+  color: var(--tinta);
+}
+
+/* Con una plantilla abierta a pantalla completa, la cabecera se aparta. */
+:global(html[data-vista]) .cabecera {
+  visibility: hidden;
+}
+
+@media (min-width: 640px) {
+  .cabecera {
+    --hueco: 14px;
+    padding-inline: 20px;
+  }
+}
+
+/* ───────────── Saltar al contenido ───────────── */
+
+.saltar {
+  position: absolute;
+  left: 16px;
+  top: calc(env(safe-area-inset-top, 0px) + 8px);
+  z-index: 5;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: var(--tinta);
+  color: var(--papel);
+  font-size: 1rem;
+  transform: translateY(-160%);
+  pointer-events: auto;
+}
+.saltar:focus-visible {
+  transform: none;
+  outline: 2px solid var(--acento);
+  outline-offset: 2px;
+}
+
+/* ───────────── La cápsula ───────────── */
+
+.capsula {
+  position: relative;
+  z-index: 2;
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 74rem;
+  height: 60px;
+  padding: 0 7px 0 18px;
+  border-radius: 999px;
+  pointer-events: auto;
+  background: color-mix(in srgb, var(--papel) 58%, transparent);
+  -webkit-backdrop-filter: blur(16px) saturate(1.5);
+  backdrop-filter: blur(16px) saturate(1.5);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--tinta) 8%, transparent),
+    inset 0 1px 0 rgb(255 255 255 / 0.55);
+  transition:
+    max-width 700ms var(--ease-carta),
+    height 500ms var(--ease-carta),
+    background-color 400ms ease,
+    box-shadow 400ms ease;
+}
+
+[data-bajado="1"] .capsula {
+  max-width: 62rem;
+  height: 54px;
+  background: color-mix(in srgb, var(--papel) 80%, transparent);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--tinta) 9%, transparent),
+    inset 0 1px 0 rgb(255 255 255 / 0.7),
+    var(--sombra-3);
+}
+
+/* Con el menú abierto, la cápsula se funde con el papel del menú. */
+[data-abierto="1"] .capsula {
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+@media (min-width: 1024px) {
+  .capsula {
+    height: 64px;
+    padding-left: 26px;
+  }
+  [data-bajado="1"] .capsula {
+    height: 56px;
+  }
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  flex-shrink: 0;
+  border-radius: 8px;
+}
+.logo img {
+  display: block;
+  height: 22px;
+  width: auto;
+  transform-origin: left center;
+  transition: transform 500ms var(--ease-carta);
+}
+[data-bajado="1"] .logo img {
+  transform: scale(0.9);
+}
+@media (min-width: 1024px) {
+  .logo img {
+    height: 25px;
+  }
+}
+
+/* ───────────── La navegación de escritorio ───────────── */
+
+.nav {
+  display: none;
+  margin-inline: auto;
+}
+@media (min-width: 1024px) {
+  .nav {
+    display: block;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.lista {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Colaboradores solo va en el menú móvil y en el pie: en la cápsula de
+   escritorio, seis enlaces no caben cuando se compacta. */
+.soloAncho {
+  display: none;
+}
+
+.pildora {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 38px;
+  margin-top: -19px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--tinta) 6.5%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tinta) 6%, transparent);
+  transition:
+    transform 560ms var(--ease-velo),
+    width 560ms var(--ease-velo),
+    opacity 300ms ease;
+  pointer-events: none;
+}
+
+.enlace {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 15px;
+  border-radius: 999px;
+  font-size: 1rem;
+  letter-spacing: 0.005em;
+  white-space: nowrap;
+  color: color-mix(in srgb, var(--tinta) 74%, transparent);
+  transition: color 200ms ease;
+}
+.enlace:hover,
+.enlace[aria-current="page"] {
+  color: var(--tinta);
+}
+.enlace:focus-visible,
+.entrar:focus-visible,
+.cta:focus-visible,
+.hamburguesa:focus-visible,
+.logo:focus-visible,
+.menuEnlace:focus-visible,
+.mini:focus-visible,
+.menuEntrar:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 3px;
+}
+
+/* El subrayado: se dibuja de izquierda a derecha y se va por la derecha. */
+.subrayado {
+  position: relative;
+}
+.subrayado::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 380ms var(--ease-carta);
+}
+@media (hover: hover) and (pointer: fine) {
+  .enlace:hover .subrayado::after,
+  .menuEntrar:hover .subrayado::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+}
+.enlace[aria-current="page"] .subrayado::after {
+  transform: none;
+  opacity: 0;
+}
+.menuEntrar .subrayado::after {
+  transform: scaleX(1);
+  opacity: 0.35;
+}
+
+/* ───────────── La derecha: Entrar, Hablemos y el menú ───────────── */
+
+.derecha {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.entrar {
+  display: none;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 999px;
+  font-size: 1rem;
+  color: color-mix(in srgb, var(--tinta) 66%, transparent);
+  transition: color 200ms ease;
+}
+.entrar:hover {
+  color: var(--tinta);
+}
+@media (min-width: 640px) {
+  .entrar {
+    display: inline-flex;
+  }
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 46px;
+  padding: 0 5px 0 18px;
+  border-radius: 999px;
+  background: var(--tinta);
+  color: var(--papel);
+  font-size: 1rem;
+  white-space: nowrap;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.12),
+    var(--sombra-2);
+  transition: transform 180ms ease-out;
+  -webkit-tap-highlight-color: transparent;
+}
+.cta:active {
+  transform: scale(0.97);
+}
+[data-bajado="1"] .cta {
+  height: 42px;
+}
+[data-bajado="1"] .circulo {
+  width: 32px;
+  height: 32px;
+}
+
+.circulo {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--acento);
+  color: #fff;
+  box-shadow: var(--sombra-lacre, inset 0 1px 0 rgb(255 255 255 / 0.18));
+  transition:
+    transform 420ms var(--ease-sello),
+    width 400ms var(--ease-carta),
+    height 400ms var(--ease-carta);
+}
+.circulo svg {
+  transition: transform 460ms var(--ease-sello);
+}
+@media (hover: hover) and (pointer: fine) {
+  .cta:hover .circulo {
+    transform: scale(1.06);
+  }
+  .cta:hover .circulo svg {
+    transform: rotate(45deg);
+  }
+}
+
+.hamburguesa {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  color: var(--tinta);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tinta) 14%, transparent);
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 200ms ease;
+}
+.hamburguesa:active {
+  background: color-mix(in srgb, var(--tinta) 6%, transparent);
+}
+@media (min-width: 1024px) {
+  .hamburguesa {
+    display: none;
+  }
+}
+.rayas {
+  position: relative;
+  display: block;
+  width: 18px;
+  height: 8px;
+}
+.rayas i {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  border-radius: 1px;
+  background: currentColor;
+  transition: transform 420ms var(--ease-velo);
+}
+.rayas i:first-child {
+  top: 0;
+}
+.rayas i:last-child {
+  bottom: 0;
+}
+[data-abierto="1"] .rayas i:first-child {
+  transform: translateY(3.25px) rotate(45deg);
+}
+[data-abierto="1"] .rayas i:last-child {
+  transform: translateY(-3.25px) rotate(-45deg);
+}
+
+/* ───────────── El menú móvil ───────────── */
+
+.menu {
+  position: fixed;
+  z-index: 1;
+  inset: 0;
+  height: 100dvh;
+  pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0s linear 520ms;
+}
+.menu[data-abierto="1"] {
+  pointer-events: auto;
+  visibility: visible;
+  transition: none;
+}
+@media (min-width: 1024px) {
+  .menu {
+    display: none;
+  }
+}
+
+/* El papel crece desde el botón, como una burbuja (BubbleMenu). */
+.menuFondo {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 60% at 100% 0%, color-mix(in srgb, var(--acento) 7%, transparent), transparent 60%),
+    radial-gradient(90% 50% at 0% 100%, color-mix(in srgb, var(--oro) 12%, transparent), transparent 70%),
+    var(--papel);
+  clip-path: circle(0px at calc(100% - 46px) calc(env(safe-area-inset-top, 0px) + 40px));
+  transition: clip-path 480ms var(--ease-velo);
+}
+[data-abierto="1"] .menuFondo {
+  clip-path: circle(150% at calc(100% - 46px) calc(env(safe-area-inset-top, 0px) + 40px));
+  transition: clip-path 720ms var(--ease-velo);
+}
+
+.menuCuerpo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding:
+    calc(env(safe-area-inset-top, 0px) + 92px)
+    max(24px, env(safe-area-inset-right, 0px))
+    calc(env(safe-area-inset-bottom, 0px) + 24px)
+    max(24px, env(safe-area-inset-left, 0px));
+}
+
+.menuLista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menuFila {
+  position: relative;
+}
+/* La línea de debajo se dibuja, escalonada, detrás de cada palabra. */
+.menuFila::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: color-mix(in srgb, var(--tinta) 12%, transparent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 300ms var(--ease-carta);
+}
+[data-abierto="1"] .menuFila::after {
+  transform: scaleX(1);
+  transition: transform 800ms var(--ease-carta) calc(200ms + var(--i) * 70ms);
+}
+
+.menuEnlace {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 64px;
+  padding: 8px 2px 6px;
+  border-radius: 6px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menuMascara {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.menuPalabra {
+  display: block;
+  font-family: var(--display);
+  font-size: clamp(2.15rem, 9.8vw, 3rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  transform: translateY(108%);
+  transition: transform 260ms var(--ease-velo);
+}
+[data-abierto="1"] .menuPalabra {
+  transform: none;
+  transition: transform 760ms var(--ease-carta) calc(140ms + var(--i) * 65ms);
+}
+.menuEnlace[aria-current="page"] .menuPalabra {
+  font-family: var(--font-italica), var(--display);
+  font-style: italic;
+  color: var(--acento);
+}
+@media (hover: hover) and (pointer: fine) {
+  .menuEnlace:hover .menuPalabra {
+    font-family: var(--font-italica), var(--display);
+    font-style: italic;
+  }
+}
+.menuEnlace:active .menuPalabra {
+  transform: translateX(6px);
+}
+
+.menuNota {
+  flex-shrink: 0;
+  font-family: var(--font-italica), var(--display);
+  font-style: italic;
+  font-size: 1rem;
+  color: color-mix(in srgb, var(--tinta) 60%, transparent);
+  opacity: 0;
+  transform: translateX(-8px);
+  transition:
+    opacity 200ms ease,
+    transform 200ms ease;
+}
+[data-abierto="1"] .menuNota {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 600ms ease calc(420ms + var(--i) * 65ms),
+    transform 700ms var(--ease-carta) calc(420ms + var(--i) * 65ms);
+}
+@media (max-width: 359px) {
+  .menuNota {
+    display: none;
+  }
+}
+
+/* ── La mini invitación viva ── */
+
+.mini {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 16px 14px 14px;
+  border-radius: 22px;
+  background: color-mix(in srgb, var(--bruma) 70%, var(--papel));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--oro) 26%, transparent),
+    var(--sombra-3);
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 200ms ease,
+    transform 260ms var(--ease-velo);
+  -webkit-tap-highlight-color: transparent;
+}
+[data-abierto="1"] .mini {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 600ms ease 520ms,
+    transform 800ms var(--ease-carta) 520ms;
+}
+.mini:active {
+  transform: scale(0.985);
+}
+
+.miniCartulina {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 92px;
+  aspect-ratio: 5 / 7;
+  padding: 8px;
+  overflow: hidden;
+  border-radius: 3px;
+  background:
+    radial-gradient(80% 60% at 50% 40%, #fffdf8, transparent),
+    #f8f2e7;
+  color: #241a16;
+  text-align: center;
+  rotate: -4deg;
+  box-shadow: var(--sombra-papel);
+  outline: 1px solid color-mix(in srgb, var(--oro) 70%, transparent);
+  outline-offset: -6px;
+}
+.miniSobre {
+  font-size: 7px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.miniNombres {
+  font-family: var(--font-italica), var(--display);
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+}
+.miniNombres em {
+  color: var(--acento);
+  font-size: 0.8em;
+}
+.miniFecha {
+  font-size: 7px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+/* Un reflejo dorado cruza la cartulina de vez en cuando. */
+.miniBrillo {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgb(240 214 160 / 0.55) 50%, transparent 65%);
+  transform: translateX(-120%);
+  mix-blend-mode: soft-light;
+}
+[data-abierto="1"] .miniBrillo {
+  animation: brillo 4.8s var(--ease-velo) 1.2s infinite;
+}
+@keyframes brillo {
+  0%,
+  70% {
+    transform: translateX(-120%);
+  }
+  85%,
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+.miniTexto {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.miniTitulo {
+  font-family: var(--display);
+  font-size: 1.3rem;
+  line-height: 1.15;
+}
+.miniBajo {
+  font-size: 1rem;
+  color: color-mix(in srgb, var(--tinta) 68%, transparent);
+}
+
+/* ── Los CTA ── */
+
+.menuCtas {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: auto;
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 200ms ease,
+    transform 260ms var(--ease-velo);
+}
+[data-abierto="1"] .menuCtas {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 600ms ease 620ms,
+    transform 800ms var(--ease-carta) 620ms;
+}
+
+.ctaGrande {
+  justify-content: space-between;
+  height: 58px;
+  padding-left: 24px;
+  font-size: 1.06rem;
+}
+.ctaGrande .circulo {
+  width: 46px;
+  height: 46px;
+}
+
+.menuEntrar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0 6px;
+  min-height: 48px;
+  font-size: 1rem;
+  color: color-mix(in srgb, var(--tinta) 78%, transparent);
+  text-align: center;
+}
+
+/* ───────────── Movimiento reducido ───────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .capsula,
+  .logo img,
+  .pildora,
+  .circulo,
+  .circulo svg,
+  .rayas i,
+  .menuFila::after,
+  .menuPalabra,
+  .menuNota,
+  .mini,
+  .menuCtas,
+  .menuFondo,
+  .subrayado::after {
+    transition: none !important;
+  }
+  .menuFondo {
+    clip-path: none !important;
+  }
+  .menuPalabra {
+    transform: none !important;
+  }
+  .menuFila::after {
+    transform: none !important;
+  }
+  [data-abierto="1"] .miniBrillo {
+    animation: none;
+  }
+}

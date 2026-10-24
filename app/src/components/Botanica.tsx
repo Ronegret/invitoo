@@ -1,7 +1,3 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
-
 /**
  * Las ramas de Invitoo.
  *
@@ -12,6 +8,13 @@ import { useEffect, useRef, useState } from "react";
  *
  * Y hacen algo que una acuarela no puede: **se dibujan solas** al entrar en
  * pantalla, con `stroke-dashoffset`. Cada rama pesa menos de 2 KB.
+ *
+ * Ya no lleva JavaScript propio: es un componente de servidor con
+ * `data-rama`, y el revelado de la invitación (`movimiento/programa.ts`)
+ * la pone a la espera y la suelta al llegar a ella. El ritmo sale de las
+ * variables `--mov-ornamento` y `--mov-curva` del lienzo, así que una boda
+ * «cinematográfica» dibuja más despacio que una «mínima». Sin JavaScript,
+ * con menos movimiento o con «ornamentos» apagado: la rama ya dibujada.
  */
 
 type Forma = "olivo" | "eucalipto" | "espiga" | "guirnalda" | "brote";
@@ -99,6 +102,8 @@ export default function Rama({
   retraso = 0,
   /** Espejo horizontal, para la esquina contraria. */
   espejo = false,
+  /** En la portada: se dibuja al entrar en la invitación, no al llegar a ella. */
+  alCargar = false,
 }: {
   forma?: Forma;
   ancho?: number;
@@ -106,73 +111,38 @@ export default function Rama({
   style?: React.CSSProperties;
   retraso?: number;
   espejo?: boolean;
+  alCargar?: boolean;
 }) {
-  const ref = useRef<SVGSVGElement>(null);
-  const [dibujar, setDibujar] = useState(false);
-  const [armado, setArmado] = useState(false);
   const r = RAMAS[forma];
   const [w, h] = r.vb.split(" ").slice(2).map(Number);
 
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setDibujar(true);
-      return;
-    }
-    setArmado(true);
-    const nodo = ref.current;
-    if (!nodo) return;
-    const obs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          setDibujar(true);
-          obs.disconnect();
-        }
-      },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.01 },
-    );
-    obs.observe(nodo);
-    return () => obs.disconnect();
-  }, []);
-
-  const pintado = !armado || dibujar;
-
   return (
     <svg
-      ref={ref}
       viewBox={r.vb}
       width={ancho}
       height={(ancho * h) / w}
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.6}
+      strokeWidth={1.4}
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
-      className={className}
-      style={{ ...style, transform: espejo ? "scaleX(-1)" : undefined }}
+      data-rama={alCargar ? "al-cargar" : ""}
+      // El revelado le pone `data-espera`/`data-entrando` antes de hidratar.
+      suppressHydrationWarning
+      className={`rama ${className ?? ""}`}
+      style={
+        {
+          ...style,
+          "--r": `${retraso}ms`,
+          transform: espejo ? "scaleX(-1)" : style?.transform,
+        } as React.CSSProperties
+      }
     >
       {/* El tallo se dibuja primero y las hojas van brotando detrás. */}
-      <path
-        d={r.tallo}
-        style={{
-          strokeDasharray: 600,
-          strokeDashoffset: pintado ? 0 : 600,
-          transition: `stroke-dashoffset 1400ms cubic-bezier(.22,.65,.3,1) ${retraso}ms`,
-        }}
-      />
+      <path d={r.tallo} className="rama-tallo" />
       {r.hojas.map((d, i) => (
-        <path
-          key={i}
-          d={d}
-          style={{
-            strokeDasharray: 90,
-            strokeDashoffset: pintado ? 0 : 90,
-            opacity: pintado ? 1 : 0,
-            transition:
-              `stroke-dashoffset 620ms cubic-bezier(.22,.65,.3,1) ${retraso + 320 + i * 85}ms,` +
-              `opacity 420ms ease ${retraso + 320 + i * 85}ms`,
-          }}
-        />
+        <path key={i} d={d} className="rama-hoja" style={{ "--h": i } as React.CSSProperties} />
       ))}
     </svg>
   );

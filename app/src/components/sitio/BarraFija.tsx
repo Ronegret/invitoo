@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
+
+const nada = () => () => {};
 import { enlaceReserva } from "@/lib/contacto";
 
 /**
@@ -19,16 +21,33 @@ import { enlaceReserva } from "@/lib/contacto";
  * completa sobraría y estropearía justo el momento que tiene que emocionar.
  * Y se puede cerrar: quien no la quiere no la vuelve a ver en esa sesión.
  */
-export default function BarraFija() {
+export default function BarraFija({
+  resumen,
+  corto,
+}: {
+  /** «8 plantillas · desde 149 € · lista en 5 días». Lo calcula el layout. */
+  resumen: string;
+  /** La versión para pantallas estrechas. */
+  corto: string;
+}) {
   const [visible, setVisible] = useState(false);
-  const [cerrada, setCerrada] = useState(false);
+  const [cerradaAhora, setCerrada] = useState(false);
+  // Si ya la cerró en esta sesión, no vuelve. Se lee sin efecto: en el
+  // servidor no hay sessionStorage y cuenta como abierta.
+  const cerradaAntes = useSyncExternalStore(
+    nada,
+    () => {
+      try {
+        return sessionStorage.getItem("invitoo:barra") === "0";
+      } catch {
+        return false; // modo privado: se ve
+      }
+    },
+    () => false,
+  );
+  const cerrada = cerradaAhora || cerradaAntes;
 
   useEffect(() => {
-    try {
-      if (sessionStorage.getItem("invitoo:barra") === "0") setCerrada(true);
-    } catch {
-      /* modo privado: se ve */
-    }
     const mirar = () => {
       // Pasada la portada y antes del cierre, donde ya hay botones propios y
       // esto sería ruido. El margen de abajo es proporcional: /precios es
@@ -66,21 +85,21 @@ export default function BarraFija() {
       }}
     >
       <div className="pointer-events-auto flex w-full max-w-[32rem] items-center gap-3 rounded-full border border-white/12 bg-[#191411]/94 py-2.5 pl-5 pr-2 text-[var(--papel)] shadow-[0_18px_44px_-18px_rgba(0,0,0,.65)] backdrop-blur-md">
-        <p className="min-w-0 flex-1 text-[0.82rem] leading-tight">
-          <span className="hidden sm:inline">36 diseños · </span>
-          desde 89 € · en 5 días
+        <p className="min-w-0 flex-1 text-[1rem] leading-tight">
+          <span className="hidden sm:inline">{resumen}</span>
+          <span className="sm:hidden">{corto}</span>
         </p>
         <Link
           href="/plantillas"
-          className="hidden min-h-11 shrink-0 items-center rounded-full px-4 text-[0.76rem] uppercase tracking-[0.14em] opacity-70 transition-opacity hover:opacity-100 sm:inline-flex"
+          className="hidden min-h-12 shrink-0 items-center rounded-full px-4 text-[1rem] opacity-75 transition-opacity hover:opacity-100 sm:inline-flex"
         >
-          Ver diseños
+          Plantillas
         </Link>
         <a
           href={enlaceReserva()}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex min-h-11 shrink-0 items-center rounded-full bg-[var(--papel)] px-5 text-[0.76rem] uppercase tracking-[0.14em] text-[#191411] transition-transform duration-500 hover:scale-[1.03]"
+          className="inline-flex min-h-12 shrink-0 items-center rounded-full bg-[var(--papel)] px-5 text-[1rem] text-[#191411] transition-transform duration-200 hover:scale-[1.02]"
         >
           Hablamos
         </a>
@@ -88,7 +107,7 @@ export default function BarraFija() {
           type="button"
           onClick={cerrar}
           aria-label="Cerrar"
-          className="grid h-11 w-11 shrink-0 place-items-center rounded-full text-[1.1rem] leading-none opacity-45 transition-opacity hover:opacity-90"
+          className="grid h-12 w-12 shrink-0 place-items-center rounded-full text-[1.1rem] leading-none opacity-45 transition-opacity hover:opacity-90"
         >
           ×
         </button>

@@ -1,0 +1,30 @@
+/* ------------------------------------------------------------------
+   K4 · lo común de las cinco temáticas de música (festival, vinilo,
+   neon, fuego, bachata). Solo lo que ninguna puede resolver sola.
+   ------------------------------------------------------------------ */
+
+/* 17 px como mínimo en TODO el texto de lectura: los bloques compartidos
+   (RSVP, Copiar, álbum…) traen alguna etiqueta a 15–16 px; aquí se suben
+   sin tocar los archivos de sus dueños (igual que K1 en tematicas.css). */
+.lienzo:is([data-plantilla="festival"], [data-plantilla="vinilo"], [data-plantilla="neon"], [data-plantilla="fuego"], [data-plantilla="bachata"])
+  :is(.text-\[1rem\], .text-\[0\.95rem\], .text-\[0\.9rem\], .text-sm, .text-base, label, legend, .copiar, .album-cta) {
+  font-size: 1.0625rem;
+}
+
+/* La frase del RSVP confirmado (MusicaRsvp): común; el tono, en cada plantilla. */
+.lienzo .mr { position: relative; }
+.lienzo .mr-frase {
+  text-align: center; padding: 3rem 1.5rem 0; margin: 0 auto; max-width: 26rem;
+  font-size: clamp(1.9rem, 8vw, 2.6rem); line-height: 1.1; text-wrap: balance;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .lienzo .mr-frase { animation: mr-frase 700ms cubic-bezier(.22,.61,.36,1) both; }
+}
+@keyframes mr-frase { from { opacity: 0; filter: blur(6px); transform: translateY(10px); } }
+
+/* El rótulo «Demo» de las muestras ocupa la esquina de arriba a la
+   izquierda: el «Ver el vídeo» (solo si falla el autoplay) va a la derecha. */
+.lienzo:is([data-plantilla="festival"], [data-plantilla="vinilo"], [data-plantilla="neon"], [data-plantilla="fuego"], [data-plantilla="bachata"]) .kv-play {
+  left: auto;
+  right: max(1rem, env(safe-area-inset-right, 0px));
+}

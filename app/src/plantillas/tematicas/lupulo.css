@@ -1,0 +1,369 @@
+/* ------------------------------------------------------------------
+   LÚPULO Y COBRE (Cerveza artesanal) — K5 · docs/16b §6
+   Kraft claro, tinta tostada, ámbar (--acento), verde lúpulo (--acento2),
+   cobre (--brillo, solo filetes e iconos) y la pizarra del bar.
+   ------------------------------------------------------------------ */
+.lienzo[data-plantilla="lupulo"] {
+  --acento2: var(--tema-acento2, color-mix(in oklch, #556b2f 80%, var(--tinta)));
+  --brillo: var(--tema-brillo, #b5703a);
+  --cobre-claro: #e2a978;
+  --pizarra: color-mix(in oklch, #26302b 88%, var(--tinta));
+  --tiza: #f2ede2;
+  --tiza-ambar: #e0a645;
+  --kraft: color-mix(in srgb, var(--papel) 82%, #c9a46a);
+  --verjurado: repeating-linear-gradient(0deg, rgb(0 0 0 / .04) 0 1px, transparent 1px 7px);
+  font-size: 1.125rem;
+  line-height: 1.62;
+  background-image: var(--verjurado);
+}
+.lienzo[data-plantilla="lupulo"] .acento { font-family: var(--p-acento), "IM Fell English SC", Georgia, serif; font-weight: 400; }
+.lienzo[data-plantilla="lupulo"] .display { font-weight: 600; letter-spacing: 0; }
+
+/* —— la piña de lúpulo grabada —— */
+.lp-pina { width: 40px; height: 50px; overflow: visible; }
+.lp-pina path { fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; vector-effect: non-scaling-stroke; }
+.lp-orn { display: flex; align-items: center; justify-content: center; gap: .9rem; color: var(--brillo); margin-top: 1.1rem; }
+.lp-orn > span { width: 3.2rem; height: 1px; background: currentColor; }
+.lp-orn .lp-pina { width: 26px; height: 32px; color: var(--acento2); }
+
+/* —— cabecera —— */
+.lp-hero {
+  display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
+  /* Abajo quedan libres el botón de música y la barra de la demo. */
+  padding: calc(env(safe-area-inset-top, 0px) + 5.5rem) 1rem calc(env(safe-area-inset-bottom, 0px) + 5.5rem);
+}
+.grad-lupulo .kv-grad { filter: saturate(.9) contrast(1.02) sepia(.12); }
+.lp-tinte {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(to top, rgb(10 8 12 / .62) 0 34%, transparent 70%),
+    rgb(169 100 15 / .12);
+}
+.lp-burbujas { position: absolute; inset: 40% 0 0; z-index: 1; pointer-events: none; overflow: clip; }
+.lp-burbujas i {
+  position: absolute; bottom: -10px; left: var(--x);
+  width: var(--t); height: var(--t); border-radius: 50%;
+  border: 1px solid rgb(255 236 200 / .7);
+  background: radial-gradient(circle at 35% 35%, rgb(255 255 255 / .55), transparent 60%);
+  opacity: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* Se paran solas (WCAG 2.2.2): unos 80 s y quietas. */
+  .lp-burbujas i { animation: lp-sube var(--v) cubic-bezier(.4,0,.6,1) var(--d) 8; }
+}
+@keyframes lp-sube {
+  0% { transform: translate(0, 0); opacity: 0; }
+  12% { opacity: .9; }
+  50% { transform: translate(6px, -32svh); }
+  100% { transform: translate(-4px, -64svh); opacity: 0; }
+}
+
+/* La etiqueta: kraft con doble filete, impresa en letterpress. Lleva su
+   propio fondo, así el contraste no depende del vídeo. */
+.lp-etiqueta {
+  position: relative; z-index: 3;
+  width: min(100%, 26rem);
+  margin-top: 2.2rem;
+  padding: 2.6rem 1.4rem 1.3rem;
+  text-align: center;
+  color: var(--tinta);
+  background:
+    var(--verjurado),
+    radial-gradient(130% 90% at 50% 0%, color-mix(in srgb, var(--papel) 70%, #fff), var(--papel) 75%);
+  border-radius: var(--radio, 4px);
+  box-shadow:
+    inset 0 0 0 7px var(--papel),
+    inset 0 0 0 8px var(--brillo),
+    inset 0 0 0 11px var(--papel),
+    inset 0 0 0 12px color-mix(in srgb, var(--brillo) 55%, transparent),
+    0 30px 60px -28px rgb(20 12 4 / .7);
+}
+.lp-medalla {
+  position: absolute; left: 50%; top: 0;
+  width: 4.2rem; height: 4.2rem; margin: -2.1rem 0 0 -2.1rem;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  color: var(--acento2);
+  background: var(--papel);
+  box-shadow: inset 0 0 0 3px var(--papel), inset 0 0 0 4px var(--brillo), 0 6px 16px -6px rgb(20 12 4 / .5);
+}
+.lp-medalla .lp-pina { width: 28px; height: 36px; }
+.lp-lote { font-size: 1.0625rem; letter-spacing: .12em; color: var(--acento-texto); }
+.lp-nombres {
+  margin-top: .5rem;
+  font-weight: 700;
+  line-height: 1.02;
+  color: var(--tinta);
+  text-wrap: balance;
+  /* Letterpress: la tinta hundida en el papel. */
+  text-shadow: 0 1px 0 rgb(255 255 255 / .7), 0 -1px 0 rgb(60 30 0 / .18);
+}
+.lp-nombres .lp-y {
+  display: block; margin-block: .1rem;
+  font-family: var(--p-acento), Georgia, serif; font-size: .38em; line-height: 1.2;
+  color: var(--acento-texto);
+}
+.lp-cosecha { margin-top: .75rem; font-size: 1.125rem; letter-spacing: .24em; color: var(--acento-texto); }
+.lp-fecha { margin-top: .5rem; font-size: 1.0625rem; line-height: 1.45; }
+.lp-baja { position: relative; z-index: 3; margin-top: .9rem; color: #fff; text-shadow: 0 1px 10px rgb(0 0 0 / .6); }
+@media (prefers-reduced-motion: no-preference) {
+  .lp-etiqueta { animation: lp-imprime 1300ms var(--ease-carta) 500ms both; }
+  .lp-nombres { animation: lp-tinta 1500ms var(--ease-carta) 700ms both; }
+  .lp-medalla .lp-pina path { animation: lp-graba 1800ms var(--ease-velo) 1100ms both; }
+}
+main:has(> .apertura[data-estado="dentro"]) :is(.lp-etiqueta, .lp-nombres, .lp-medalla .lp-pina path) { animation-play-state: paused; }
+@keyframes lp-imprime { from { opacity: 0; transform: translateY(18px) scale(1.03); filter: blur(3px); } }
+@keyframes lp-tinta { from { text-shadow: 0 6px 14px rgb(60 30 0 / .25), 0 0 0 transparent; } }
+@keyframes lp-graba { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+
+.lienzo[data-plantilla="lupulo"] .kv-play {
+  --kv-play-fondo: color-mix(in srgb, var(--papel) 86%, transparent);
+  --kv-play-texto: var(--tinta);
+  --kv-play-borde: var(--brillo);
+  border-radius: var(--radio, 4px);
+}
+
+/* —— dedicatoria —— */
+.lp-dedicatoria { padding: 5.5rem 0 1.5rem; text-align: center; }
+.lp-dedicatoria blockquote { margin-top: 1.6rem; font-size: clamp(1.7rem, 7.4vw, 2.4rem); line-height: 1.22; text-wrap: balance; }
+.lp-firma { margin-top: 1.2rem; font-size: 1.1875rem; letter-spacing: .1em; color: var(--acento-texto); }
+
+/* —— títulos y secciones —— */
+.lp-seccion { padding: 5.5rem 1.25rem 3.5rem; }
+.lp-titulo { text-align: center; }
+.lp-antes { font-family: var(--p-acento), Georgia, serif; font-size: 1.125rem; letter-spacing: .12em; color: var(--acento-texto); }
+.lp-titulo h2 { margin-top: .35rem; font-size: clamp(2.3rem, 10.5vw, 3.4rem); line-height: 1.04; text-wrap: balance; }
+
+/* Notas de cata */
+.lp-notas { margin-top: 2.6rem; display: grid; gap: 1.4rem; }
+.lp-nota {
+  position: relative; padding: 1.6rem 1.4rem 1.5rem 1.4rem;
+  background: color-mix(in srgb, var(--kraft) 55%, var(--papel));
+  border-radius: var(--radio, 4px);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brillo) 45%, transparent);
+}
+.lp-nota-pina { position: absolute; right: 1.1rem; top: 1.1rem; color: var(--acento2); }
+.lp-nota-tipo { font-size: 1.1875rem; letter-spacing: .12em; color: var(--acento-texto); }
+.lp-nota-cuando { font-size: 1.0625rem; opacity: .85; padding-right: 3rem; }
+.lp-nota h3 { margin-top: .5rem; font-size: 1.6rem; line-height: 1.15; padding-right: 2.5rem; }
+.lp-nota-texto { margin-top: .5rem; }
+.lp-nota-foto { margin-top: 1rem; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radio, 4px); filter: sepia(.15) saturate(.92); }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .lp-nota-pina path { animation: lp-graba linear both; animation-timeline: view(); animation-range: entry 0% cover 35%; }
+    .lp-nota { animation: lp-entra linear both; animation-timeline: view(); animation-range: entry 0% cover 25%; }
+  }
+}
+@keyframes lp-entra { from { opacity: .2; transform: translateY(26px); } }
+
+/* Dónde se sirve: el marco de cobre con un brillo que cruza el metal. */
+.lp-cobre {
+  position: relative; margin-top: 2.4rem; padding: 2rem 1.4rem;
+  text-align: center;
+  border: 6px solid transparent;
+  border-radius: var(--radio, 4px);
+  background:
+    linear-gradient(var(--papel), var(--papel)) padding-box,
+    linear-gradient(115deg, #8a4f22 0%, var(--brillo) 30%, #f0c49a 46%, var(--brillo) 58%, #7a4520 100%) border-box;
+  background-size: 100% 100%, 260% 100%;
+  background-position: 0 0, 100% 0;
+  box-shadow: 0 18px 40px -24px rgb(60 30 0 / .55);
+}
+.lp-cobre-dia { font-size: 1.125rem; }
+.lp-cobre-hora { margin-top: .3rem; font-size: clamp(3rem, 15vw, 4.2rem); line-height: 1; color: var(--acento-texto); }
+.lp-cobre-lugar { margin-top: .6rem; font-size: 1.3125rem; font-weight: 600; }
+.lp-cobre-sitio { font-size: 1.0625rem; opacity: .85; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .lp-cobre { animation: lp-brillo linear both; animation-timeline: view(); animation-range: entry 0% exit 100%; }
+  }
+}
+@keyframes lp-brillo { from { background-position: 0 0, 100% 0; } to { background-position: 0 0, 0% 0; } }
+
+/* Carta de grifos: cada hora sirve su línea de ámbar. */
+.lp-seccion-grifos { padding-top: 3rem; }
+.lp-grifos { margin-top: 2.4rem; display: grid; gap: 0; }
+.lp-grifos li {
+  display: grid; grid-template-columns: 2.2rem 5.2rem 1fr; align-items: start; gap: .8rem;
+  padding: 1.15rem 0; border-top: 1px solid color-mix(in srgb, var(--tinta) 16%, transparent);
+}
+.lp-grifos li:last-child { border-bottom: 1px solid color-mix(in srgb, var(--tinta) 16%, transparent); }
+.lp-grifo { position: relative; width: 2.2rem; height: 3.4rem; }
+.lp-grifo-tirador {
+  position: absolute; left: 50%; top: 0; width: 10px; height: 1.6rem; margin-left: -5px;
+  border-radius: 5px 5px 2px 2px;
+  background: linear-gradient(90deg, #6e3d18, var(--brillo) 40%, var(--cobre-claro) 55%, #6e3d18);
+}
+.lp-grifo-chorro {
+  position: absolute; left: 50%; top: 1.7rem; width: 4px; height: 1.7rem; margin-left: -2px;
+  border-radius: 2px; background: linear-gradient(var(--tiza-ambar), var(--acento));
+  transform-origin: 50% 0;
+}
+.lp-grifo-hora { font-size: 1.75rem; line-height: 1.1; color: var(--acento-texto); }
+.lp-grifo-que { display: flex; flex-direction: column; min-width: 0; }
+.lp-grifo-t { font-weight: 600; font-size: 1.1875rem; line-height: 1.3; }
+.lp-grifo-l { font-size: 1.0625rem; opacity: .85; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .lp-grifo-chorro { animation: lp-sirve linear both; animation-timeline: view(); animation-range: cover 10% cover 40%; }
+  }
+}
+@keyframes lp-sirve { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+/* —— la pizarra del bar —— */
+.lp-pizarra {
+  position: relative; overflow: clip;
+  padding: 5.5rem 1.25rem 5rem;
+  color: var(--tiza);
+  background:
+    radial-gradient(60% 40% at 25% 20%, rgb(255 255 255 / .05), transparent 70%),
+    radial-gradient(50% 35% at 80% 75%, rgb(255 255 255 / .04), transparent 70%),
+    var(--pizarra);
+  box-shadow: inset 0 0 0 10px #4a3524, inset 0 0 0 12px #2a1d12;
+}
+.lp-pizarra .lp-antes { color: var(--tiza-ambar); }
+.lp-titulo-tiza h2 { color: var(--tiza); }
+.lp-pizarra-cuerpo {
+  display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 1rem;
+  width: min(100%, 30rem); margin: 2.6rem auto 0;
+}
+.lp-tiza-cifras { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.6rem 1rem; }
+.lp-tiza-cifras dd { font-size: clamp(2.6rem, 13vw, 3.6rem); line-height: 1; color: var(--tiza); }
+.lp-tiza-cifras dt { margin-top: .35rem; font-size: 1.0625rem; line-height: 1.25; color: var(--tiza-ambar); }
+.lp-tiza {
+  display: inline-block;
+  /* El trazo de tiza: la cifra se lee entera; el ruido solo la ensucia un poco. */
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.6 1.9'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.6 1.9'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+@media (prefers-reduced-motion: no-preference) {
+  .lp-tiza { animation: lp-reescribe 300ms var(--ease-carta) both; }
+}
+@keyframes lp-reescribe { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+.lp-tiza-fecha { grid-column: 1; font-size: clamp(1.7rem, 7.4vw, 2.4rem); line-height: 1.2; text-wrap: balance; color: var(--tiza); }
+
+.lp-cana {
+  position: relative; display: block;
+  width: 5.2rem; height: 9.5rem; padding: 0;
+  background: none; border: 0; cursor: pointer;
+  border-radius: 6px;
+  touch-action: manipulation;
+}
+.lp-cana:focus-visible { outline: 3px solid var(--tiza-ambar); outline-offset: 4px; }
+.lp-cana-vaso {
+  position: absolute; inset: 0;
+  clip-path: polygon(0 0, 100% 0, 88% 100%, 12% 100%);
+  background: rgb(255 255 255 / .1);
+  box-shadow: inset 0 0 0 2px rgb(242 237 226 / .7);
+  overflow: clip;
+}
+.lp-cana-liquido {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 100%;
+  background: linear-gradient(90deg, #b8721a, #e0a645 45%, #c9831f);
+  transform-origin: 50% 100%;
+  transform: scaleY(calc(var(--nivel) * .86));
+  transition: transform 1200ms var(--ease-carta);
+}
+.lp-cana-espuma {
+  position: absolute; left: 0; right: 0; height: 14%;
+  bottom: calc(var(--nivel) * 86%);
+  background: radial-gradient(circle at 20% 60%, #fffaf0 0 30%, transparent 32%) 0 0 / 14px 12px, #f6ecd8;
+  transition: bottom 1200ms var(--ease-carta);
+}
+.lp-cana-burbuja, .lp-chorro {
+  position: absolute; bottom: 4px; left: var(--x);
+  width: 4px; height: 4px; border-radius: 50%; background: rgb(255 248 230 / .85);
+  opacity: 0;
+}
+.lp-chorro { width: var(--t); height: var(--t); bottom: 8px; pointer-events: none; animation: lp-chorro 1.6s var(--ease-carta) both; }
+@keyframes lp-chorro { 0% { opacity: 0; transform: none; } 15% { opacity: 1; } 100% { opacity: 0; transform: translateY(-8rem); } }
+@media (prefers-reduced-motion: no-preference) {
+  .lp-cana-burbuja { animation: lp-burbuja 3.6s ease-in var(--d) 22; }
+}
+@keyframes lp-burbuja { 0% { opacity: 0; transform: none; } 20% { opacity: .9; } 100% { opacity: 0; transform: translateY(calc(var(--nivel) * -7.6rem)); } }
+
+/* —— maridaje (dress code) —— */
+.lp-posavasos { margin: 2.6rem auto 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem 1.1rem; max-width: 30rem; }
+.lp-posavasos li { display: flex; flex-direction: column; align-items: center; gap: .45rem; width: 4.6rem; }
+.lp-posavaso {
+  width: 4.2rem; height: 4.2rem; border-radius: 50%;
+  background:
+    radial-gradient(circle, transparent 0 54%, rgb(255 255 255 / .35) 55% 57%, transparent 58%),
+    var(--c);
+  box-shadow: 0 0 0 3px var(--papel), 0 0 0 4px color-mix(in srgb, var(--brillo) 70%, transparent), 0 8px 16px -10px rgb(0 0 0 / .5);
+}
+.lp-posavaso-n { font-size: 1.0625rem; color: var(--acento-texto); }
+.lp-nota-dress { margin-top: 2rem; text-align: center; text-wrap: pretty; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    html.js .lp-posavasos li { animation: lp-posa linear both; animation-timeline: view(); animation-range: entry 10% cover 35%; }
+  }
+}
+@keyframes lp-posa { from { opacity: 0; transform: translateY(-14px) rotate(-14deg) scale(.85); } }
+
+/* —— regalos: el barril —— */
+.lp-barril { position: relative; }
+.lp-barril-icono { display: block; width: 46px; height: 52px; margin: 4rem auto -3.6rem; color: var(--brillo); }
+.lp-barril-icono path { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; }
+.lp-barril .regalo-datos > div { background: color-mix(in srgb, var(--kraft) 45%, var(--papel)); border-radius: var(--radio, 4px); }
+
+/* —— RSVP: chocad las jarras —— */
+.lp-brindis { position: relative; padding-top: 4.5rem; text-align: center; }
+.lp-jarras { position: relative; display: flex; justify-content: center; align-items: flex-end; gap: 1.6rem; height: 8.5rem; }
+.lp-jarra-caja { width: 5.4rem; height: 8.1rem; transition: transform 500ms var(--ease-sello); }
+.lp-jarra-caja.der { cursor: grab; touch-action: none; }
+.lp-jarra { width: 100%; height: 100%; overflow: visible; }
+.lp-jarra-cerveza { fill: color-mix(in srgb, var(--acento) 80%, #e0a645); }
+.lp-jarra-espuma { fill: #fbf5e8; stroke: color-mix(in srgb, var(--tinta) 30%, transparent); stroke-width: 1; }
+.lp-jarra-vidrio, .lp-jarra-asa { fill: none; stroke: var(--tinta); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.lp-jarra-grabado { fill: none; stroke: rgb(255 255 255 / .55); stroke-width: 1.4; stroke-linecap: round; }
+.lp-salud { min-height: 1.3em; margin-top: 1.2rem; font-size: clamp(2rem, 9vw, 2.8rem); line-height: 1.1; color: var(--acento-texto); }
+.lp-boton {
+  display: inline-flex; align-items: center; min-height: 3.5rem; margin-top: .4rem; padding: 0 2rem;
+  font-size: 1.0625rem; letter-spacing: .02em;
+  border: 1.5px solid currentColor; border-radius: var(--radio, 4px);
+  background: transparent; color: var(--tinta); cursor: pointer;
+}
+.lp-boton:focus-visible { outline: 3px solid var(--acento-texto); outline-offset: 3px; }
+.lp-gotas { position: absolute; left: 50%; top: 1.2rem; width: 0; height: 0; }
+.lp-gotas i {
+  position: absolute; width: 7px; height: 7px; border-radius: 50%; background: #fbf5e8;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--tinta) 20%, transparent);
+  opacity: 0;
+}
+/* ¡Salud!: se juntan, se inclinan y salta la espuma. */
+.lp-brindis[data-salud] .lp-jarra-caja.izq { transform: translateX(1rem) rotate(12deg); }
+.lp-brindis[data-salud] .lp-jarra-caja.der { transform: translateX(-1rem) rotate(-12deg); }
+@media (prefers-reduced-motion: no-preference) {
+  .lp-brindis[data-salud] .lp-jarra-caja.izq { animation: lp-choca-izq 900ms var(--ease-sello) both; }
+  .lp-brindis[data-salud] .lp-jarra-caja.der { animation: lp-choca-der 900ms var(--ease-sello) both; }
+  .lp-brindis[data-salud] .lp-gotas i { animation: lp-gota 1100ms var(--ease-carta) 380ms both; }
+  .lp-brindis[data-salud] .lp-salud { animation: lp-tinta-sale 700ms var(--ease-carta) 300ms both; }
+}
+@keyframes lp-choca-izq { 0% { transform: translateX(-2.5rem); } 55% { transform: translateX(1.2rem) rotate(14deg); } 100% { transform: translateX(1rem) rotate(12deg); } }
+@keyframes lp-choca-der { 0% { transform: translateX(2.5rem); } 55% { transform: translateX(-1.2rem) rotate(-14deg); } 100% { transform: translateX(-1rem) rotate(-12deg); } }
+@keyframes lp-gota {
+  0% { opacity: 0; transform: rotate(var(--a)) translateX(0); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: rotate(var(--a)) translateX(var(--d)) translateY(28px); }
+}
+@keyframes lp-tinta-sale { from { opacity: 0; transform: translateY(8px); } }
+
+/* —— cierre —— */
+.lp-cierre {
+  display: inline-block; padding: .7rem 2.2rem .9rem;
+  font-size: clamp(2.4rem, 11vw, 3.4rem); line-height: 1;
+  color: var(--tiza); background: var(--pizarra);
+  border-radius: var(--radio, 4px);
+  box-shadow: inset 0 0 0 6px #4a3524, inset 0 0 0 7px #2a1d12;
+}
+
+/* —— 17 px como mínimo en todo el texto de lectura (los bloques compartidos) —— */
+.lienzo[data-plantilla="lupulo"] :is(.text-\[1rem\], .text-\[0\.95rem\], .text-sm, .text-base, label, legend) { font-size: 1.0625rem; }
+.lienzo[data-plantilla="lupulo"] .kv-play { font-size: 1.0625rem; }
+
+/* —— familias con su reserva genérica (GENERICA de tokens.ts no las conoce) —— */
+.lienzo[data-plantilla="lupulo"] { font-family: var(--p-texto), "Libre Franklin", ui-sans-serif, system-ui, sans-serif; }
+.lienzo[data-plantilla="lupulo"] :is(.display, h1, h2, h3).display { font-family: var(--p-display), "Zilla Slab", Rockwell, Georgia, serif; }
+/* El botón «Ver el vídeo», arriba a la DERECHA: la esquina izquierda es de la etiqueta «Demo». */
+.lienzo[data-plantilla="lupulo"] .kv-play { left: auto; right: max(1rem, env(safe-area-inset-right, 0px)); }

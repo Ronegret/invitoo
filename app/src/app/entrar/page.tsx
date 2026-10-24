@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import Entrar from "@/components/estudio/Entrar";
+import { emailsDeEstudio } from "@/app/estudio/sesion";
+import { hayAuth } from "@/lib/auth/supabase";
+import { modoDemo } from "@/lib/datos";
 
 export const metadata: Metadata = {
   title: "Entrar · Invitoo",
@@ -18,7 +21,7 @@ export const metadata: Metadata = {
 export default function PaginaEntrar() {
   return (
     <Suspense>
-      <Entrar />
+      <Entrar google={emailsDeEstudio().length > 0 && (hayAuth() || modoDemo())} />
     </Suspense>
   );
 }

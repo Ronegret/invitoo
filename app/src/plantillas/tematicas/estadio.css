@@ -1,0 +1,328 @@
+/* ------------------------------------------------------------------
+   NOCHE DE ESTADIO (Fútbol) — K5 · docs/16b §7
+   Cartulina de abono, cal, oro de trofeo (--brillo, solo adorno) y los
+   dos colores de vuestro equipo: --acento (color 1) y --acento2 (color 2).
+   ------------------------------------------------------------------ */
+@property --es-luz { syntax: "<number>"; inherits: true; initial-value: 0; }
+
+.lienzo[data-plantilla="estadio"] {
+  --acento2: var(--tema-acento2, color-mix(in oklch, var(--acento) 55%, var(--tinta)));
+  --brillo: var(--tema-brillo, #b8954a);
+  --oro-marcador: #d9bf7a;
+  --cal: #f7f5ee;
+  /* El fondo del marcador: el color 1 del equipo, muy hondo (oro encima ≥ 7:1). */
+  --grada: color-mix(in oklch, var(--acento) 42%, #050b08);
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+.lienzo[data-plantilla="estadio"] .display { font-weight: 800; letter-spacing: .01em; }
+.lienzo[data-plantilla="estadio"] .es-y,
+.lienzo[data-plantilla="estadio"] .y-gesto { font-family: var(--p-acento), "Libre Caslon Text", Georgia, serif; font-style: italic; font-weight: 400; text-transform: none; }
+
+/* —— el ornamento: medio campo —— */
+.es-cal { display: block; width: 9rem; height: 1.7rem; margin: 1.1rem auto 0; overflow: visible; color: var(--acento-texto); }
+.es-cal path, .es-cal circle:not(.es-cal-punto) { fill: none; stroke: currentColor; stroke-width: 1.3; stroke-dasharray: 1; vector-effect: non-scaling-stroke; }
+.es-cal-punto { fill: currentColor; }
+.es-cal-cierre { width: 11rem; height: 2rem; margin: 0; }
+
+/* —— cabecera —— */
+.es-hero {
+  display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
+  padding: calc(env(safe-area-inset-top, 0px) + 5rem) 1.25rem calc(env(safe-area-inset-bottom, 0px) + 5.5rem);
+  color: #fff;
+}
+.grad-estadio .kv-grad { filter: saturate(.85) contrast(1.06) brightness(.94); }
+.es-velo {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(70% 30% at 15% 0%, rgb(255 246 214 / .22), transparent 70%),
+    radial-gradient(70% 30% at 85% 0%, rgb(255 246 214 / .22), transparent 70%),
+    linear-gradient(to top, rgb(10 8 12 / .74) 0 38%, rgb(10 8 12 / .2) 70%, rgb(10 8 12 / .3) 100%);
+}
+.es-rotulo { position: relative; z-index: 2; text-align: center; width: min(100%, 32rem); }
+.es-final {
+  font-family: var(--display); font-weight: 600; font-size: 1.125rem;
+  letter-spacing: .3em; text-transform: uppercase; color: var(--oro-marcador);
+}
+.es-final::before, .es-final::after { content: ""; display: inline-block; width: 1.6rem; height: 1px; background: currentColor; vertical-align: middle; margin: 0 .7rem .2rem; }
+.es-nombres {
+  margin-top: .4rem; line-height: .92; text-transform: uppercase;
+  text-wrap: balance; text-shadow: 0 2px 24px rgb(0 0 0 / .45);
+}
+.es-nombres .es-y { font-size: .55em; color: var(--oro-marcador); vertical-align: .12em; }
+.es-datos { margin-top: 1rem; font-size: 1.125rem; letter-spacing: .04em; line-height: 1.45; }
+.es-baja { position: relative; z-index: 2; margin-top: 1.2rem; color: #fff; }
+@media (prefers-reduced-motion: no-preference) {
+  .es-rotulo { animation: es-entra 1300ms var(--ease-carta) 500ms both; }
+}
+main:has(> .apertura[data-estado="dentro"]) .es-rotulo { animation-play-state: paused; }
+@keyframes es-entra { from { opacity: 0; transform: translateY(22px); filter: blur(4px); } }
+
+.lienzo[data-plantilla="estadio"] .kv-play { --kv-play-borde: var(--oro-marcador); text-transform: uppercase; letter-spacing: .14em; }
+
+/* —— la entrada de abono en relieve —— */
+.es-entrada-zona { padding: 4.5rem 1.25rem 2rem; }
+.es-entrada {
+  --sombra-x: calc(-1px + var(--es-luz) * 2px);
+  position: relative; display: grid; grid-template-columns: 1fr 6.4rem;
+  width: min(100%, 30rem); margin-inline: auto;
+  border-radius: var(--radio, 8px);
+  background:
+    linear-gradient(calc(135deg + var(--es-luz) * 90deg), rgb(255 255 255 / .7), transparent 45%, rgb(0 0 0 / .05)),
+    color-mix(in srgb, var(--papel) 70%, #fff);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / .9) inset,
+    0 24px 50px -28px rgb(10 20 14 / .55),
+    0 0 0 1px color-mix(in srgb, var(--tinta) 12%, transparent);
+}
+.es-entrada-cuerpo { padding: 1.4rem 1.1rem 1.3rem 1.3rem; min-width: 0; }
+.es-entrada-tipo { font-family: var(--display); font-weight: 600; font-size: 1.0625rem; letter-spacing: .24em; text-transform: uppercase; color: var(--acento-texto); }
+/* El relieve: una sombra clara y otra oscura; su lado sigue a la luz. */
+.es-entrada-nombres {
+  margin-top: .3rem;
+  font-family: var(--display); font-weight: 800; font-size: clamp(1.9rem, 9vw, 2.6rem); line-height: 1; text-transform: uppercase;
+  color: color-mix(in srgb, var(--papel) 60%, var(--tinta));
+  text-shadow:
+    calc(var(--sombra-x) * -1) -1px 0 rgb(255 255 255 / .95),
+    var(--sombra-x) 1px 1px rgb(0 0 0 / .28);
+  overflow-wrap: anywhere;
+}
+.es-entrada-nombres .es-y { font-size: .6em; color: var(--acento-texto); text-shadow: none; }
+.es-entrada-datos { display: flex; gap: 1.1rem; margin-top: .9rem; }
+.es-entrada-datos dt { font-size: 1.0625rem; opacity: .8; }
+.es-entrada-datos dd { font-family: var(--display); font-weight: 800; font-size: 1.75rem; line-height: 1; }
+.es-entrada-cuando { margin-top: .9rem; font-size: 1.0625rem; line-height: 1.4; }
+.es-entrada-talon {
+  position: relative; display: grid; place-items: center;
+  border-left: 2px dashed color-mix(in srgb, var(--tinta) 28%, transparent);
+  background: color-mix(in srgb, var(--acento) 7%, transparent);
+  border-radius: 0 var(--radio, 8px) var(--radio, 8px) 0;
+}
+.es-entrada-talon::before, .es-entrada-talon::after {
+  content: ""; position: absolute; left: -10px; width: 18px; height: 18px; border-radius: 50%; background: var(--papel);
+}
+.es-entrada-talon::before { top: -9px; } .es-entrada-talon::after { bottom: -9px; }
+.es-escudo { width: 5.2rem; height: 5.2rem; color: var(--acento-texto); }
+.es-escudo-aro { fill: none; stroke: currentColor; stroke-width: 3; }
+.es-escudo-fino { fill: none; stroke: var(--brillo); stroke-width: 1; }
+.es-escudo-ini { font-family: var(--display); font-weight: 800; font-size: 34px; fill: currentColor; letter-spacing: .02em; }
+.es-escudo-y { font-family: var(--p-acento), Georgia, serif; font-style: italic; font-weight: 400; font-size: 20px; fill: var(--brillo); }
+.es-escudo-arco { font-family: var(--display); font-weight: 600; font-size: 10px; letter-spacing: .2em; fill: currentColor; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .es-entrada {
+      animation: es-sube linear both, es-luz linear both;
+      animation-timeline: view(), view();
+      animation-range: entry 0% cover 30%, cover 20% exit 60%;
+    }
+  }
+}
+@keyframes es-sube { from { opacity: .25; transform: translateY(40px) rotateX(14deg); } }
+@keyframes es-luz { from { --es-luz: 0; } to { --es-luz: 1; } }
+.es-frase { margin-top: 3.2rem; text-align: center; font-weight: 600; font-size: clamp(1.7rem, 7.6vw, 2.4rem); line-height: 1.15; text-wrap: balance; }
+
+/* —— el marcador —— */
+.es-marcador-zona {
+  position: relative; overflow: clip;
+  padding: 5rem 1rem 5rem;
+  color: var(--cal);
+  background:
+    radial-gradient(60% 50% at 50% 0%, rgb(255 244 210 / .14), transparent 70%),
+    repeating-linear-gradient(90deg, rgb(255 255 255 / .03) 0 12.5%, transparent 12.5% 25%),
+    var(--grada);
+}
+.es-marcador { width: min(100%, 26rem); margin-inline: auto; text-align: center; }
+.es-marcador-rotulo { font-family: var(--display); font-weight: 600; font-size: 1.125rem; letter-spacing: .26em; text-transform: uppercase; color: var(--oro-marcador); text-wrap: balance; }
+.es-marcador-cifras { display: grid; gap: 1rem; margin-top: 1.8rem; }
+.es-marcador-fila { display: flex; justify-content: center; gap: 1.1rem; }
+.es-paleta { display: flex; flex-direction: column; align-items: center; gap: .45rem; }
+.es-paleta-cifras { display: flex; gap: 3px; perspective: 400px; }
+.es-cifra {
+  position: relative; display: grid; place-items: center;
+  width: clamp(2.3rem, 11vw, 2.9rem); height: clamp(3.3rem, 15vw, 4.1rem);
+  font-size: clamp(2.6rem, 13vw, 3.4rem); line-height: 1;
+  color: var(--oro-marcador);
+  background: linear-gradient(#0d1410 0 49.4%, #050806 49.6% 50.4%, #101a14 50.6%);
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / .06), 0 4px 8px -4px rgb(0 0 0 / .6);
+}
+.es-paleta.grande .es-cifra { width: clamp(3rem, 15vw, 3.8rem); height: clamp(4.2rem, 21vw, 5.4rem); font-size: clamp(3.4rem, 18vw, 4.6rem); }
+.es-paleta-et { font-size: 1.0625rem; letter-spacing: .14em; text-transform: uppercase; color: var(--cal); opacity: .9; }
+@media (prefers-reduced-motion: no-preference) {
+  .es-cifra { animation: es-abate 240ms var(--ease-velo) both; transform-origin: 50% 50%; }
+}
+@keyframes es-abate { from { transform: rotateX(-90deg); filter: brightness(.6); } }
+.es-marcador-fecha { margin-top: 1.6rem; font-size: clamp(1.8rem, 8vw, 2.4rem); line-height: 1.15; color: var(--oro-marcador); text-wrap: balance; }
+
+/* —— títulos y secciones —— */
+.es-seccion { padding: 5.5rem 1.25rem 3.5rem; }
+.es-titulo { text-align: center; }
+.es-antes { font-size: 1.0625rem; letter-spacing: .22em; text-transform: uppercase; color: var(--acento-texto); }
+.es-titulo h2 { margin-top: .2rem; font-size: clamp(2.5rem, 12vw, 3.6rem); line-height: .98; text-transform: uppercase; text-wrap: balance; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .es-titulo .es-cal :is(path, circle:not(.es-cal-punto)) { animation: es-traza linear both; animation-timeline: view(); animation-range: entry 10% cover 35%; }
+  }
+}
+@keyframes es-traza { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+
+/* Historial de partidos: fichas unidas por la cal. */
+.es-historial { position: relative; margin-top: 2.6rem; display: grid; gap: 1.6rem; padding-left: 1.5rem; }
+.es-historial::before {
+  content: ""; position: absolute; left: .35rem; top: .5rem; bottom: .5rem; width: 3px; border-radius: 2px;
+  background: color-mix(in srgb, var(--acento) 70%, transparent); transform-origin: 50% 0;
+}
+.es-ficha { position: relative; padding: 1.3rem 1.2rem; background: color-mix(in srgb, var(--papel) 60%, #fff); border-radius: var(--radio, 8px); box-shadow: 0 0 0 1px color-mix(in srgb, var(--tinta) 10%, transparent); }
+.es-ficha::before { content: ""; position: absolute; left: calc(-1.5rem + .05rem); top: 1.55rem; width: 12px; height: 12px; border-radius: 50%; background: var(--papel); border: 3px solid var(--acento); }
+.es-ficha-n { font-family: var(--display); font-weight: 600; font-size: 1.0625rem; letter-spacing: .12em; text-transform: uppercase; color: var(--acento-texto); }
+.es-ficha h3 { margin-top: .2rem; font-size: 1.75rem; line-height: 1.05; text-transform: uppercase; }
+.es-ficha p:last-of-type { margin-top: .4rem; }
+.es-ficha-foto { margin-top: 1rem; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: calc(var(--radio, 8px) - 2px); }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .es-historial::before { animation: es-linea linear both; animation-timeline: view(); animation-range: entry 0% cover 60%; }
+    .es-ficha { animation: es-ficha linear both; animation-timeline: view(); animation-range: entry 0% cover 25%; }
+  }
+}
+@keyframes es-linea { from { transform: scaleY(0); } }
+@keyframes es-ficha { from { opacity: .2; transform: translateX(18px); } }
+
+/* Puerta 7: los cuatro focos se encienden uno tras otro. */
+.es-puerta { position: relative; }
+.es-focos { display: flex; justify-content: center; gap: 1.1rem; margin-bottom: 1.6rem; }
+.es-foco-torre { display: grid; grid-template-columns: repeat(3, 9px); gap: 3px; padding: 4px; border-radius: 3px; background: color-mix(in srgb, var(--tinta) 85%, transparent); }
+.es-foco-torre i { width: 9px; height: 9px; border-radius: 2px; background: #fff7d6; box-shadow: 0 0 10px 2px rgb(255 240 190 / .65); }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .es-foco-torre i { animation: es-enciende linear both; animation-timeline: view(); animation-range: cover calc(5% + var(--i) * 8%) cover calc(15% + var(--i) * 8%); }
+  }
+}
+@keyframes es-enciende { from { background: #4a4a44; box-shadow: none; } }
+.es-programa { margin-top: 2.4rem; }
+.es-programa li { display: grid; grid-template-columns: 5rem 1fr; gap: .9rem; padding: 1.1rem 0; border-top: 1px solid color-mix(in srgb, var(--tinta) 15%, transparent); }
+.es-programa li:last-child { border-bottom: 1px solid color-mix(in srgb, var(--tinta) 15%, transparent); }
+.es-programa-hora { font-size: 2rem; line-height: 1; color: var(--acento-texto); }
+.es-programa-que { display: flex; flex-direction: column; min-width: 0; }
+.es-programa-tiempo { font-family: var(--display); font-weight: 600; font-size: 1.0625rem; letter-spacing: .14em; text-transform: uppercase; opacity: .8; }
+.es-programa-t { font-weight: 500; font-size: 1.1875rem; line-height: 1.3; }
+.es-programa-l { font-size: 1.0625rem; opacity: .85; }
+
+/* La alineación: el campo en cal sobre el césped a franjas. */
+.es-alineacion { padding-top: 3rem; }
+.es-campo {
+  position: relative; width: min(78vw, 17rem); aspect-ratio: 2 / 3; margin: 2.4rem auto 0;
+  border-radius: var(--radio, 8px);
+  background: repeating-linear-gradient(180deg, var(--acento) 0 12.5%, color-mix(in srgb, var(--acento) 86%, #000) 12.5% 25%);
+  box-shadow: 0 20px 40px -24px rgb(0 0 0 / .5);
+}
+.es-campo-lineas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.es-campo-lineas :is(rect, path, circle) { fill: none; stroke: rgb(255 255 255 / .85); stroke-width: 1.4; stroke-dasharray: 1; vector-effect: non-scaling-stroke; }
+.es-jugador { position: absolute; top: 50%; display: flex; flex-direction: column; align-items: center; transform: translate(-50%, -50%); }
+.es-jugador.uno { left: 38%; } .es-jugador.dos { left: 62%; }
+.es-jugador b {
+  display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: 50%;
+  font-family: var(--display); font-weight: 800; font-size: 1.3rem;
+  background: var(--cal); color: var(--tinta); box-shadow: 0 0 0 3px var(--brillo);
+}
+.es-jugador span { position: absolute; top: 100%; margin-top: .35rem; white-space: nowrap; font-weight: 500; font-size: 1.0625rem; color: #fff; text-shadow: 0 1px 4px rgb(0 0 0 / .7); }
+.es-grada-leyenda { margin-top: 1.8rem; text-align: center; font-family: var(--p-acento), Georgia, serif; font-style: italic; font-weight: 400; font-size: clamp(1.6rem, 7vw, 2.1rem); }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .es-campo-lineas :is(rect, path, circle) { animation: es-traza linear both; animation-timeline: view(); animation-range: entry 10% cover 45%; }
+    html.js .es-jugador { animation: es-jugador linear both; animation-timeline: view(); animation-range: cover 25% cover 45%; }
+  }
+}
+@keyframes es-jugador { from { opacity: 0; transform: translate(-50%, 30%); } }
+
+/* Equipación: camisetas lisas, sin escudo. */
+.es-camisetas { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-top: 2.4rem; }
+.es-camisetas li { width: 4.2rem; }
+.es-camisetas svg { width: 100%; height: auto; filter: drop-shadow(0 6px 8px rgb(0 0 0 / .18)); }
+.es-camisetas path { fill: var(--c); stroke: color-mix(in srgb, var(--tinta) 30%, transparent); stroke-width: 1; stroke-linejoin: round; }
+.es-nota { margin-top: 2rem; text-align: center; text-wrap: pretty; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    html.js .es-camisetas li { animation: es-camiseta linear both; animation-timeline: view(); animation-range: entry 10% cover 35%; }
+  }
+}
+@keyframes es-camiseta { from { opacity: 0; transform: translateY(16px) rotate(-6deg); } }
+
+/* —— RSVP: ¡gol! —— */
+.es-gol { position: relative; padding-top: 4.5rem; text-align: center; overflow: clip; }
+.es-porteria { position: relative; width: min(84vw, 20rem); margin-inline: auto; aspect-ratio: 2 / 1.15; }
+.es-red { position: absolute; inset: 0; width: 100%; height: 100%; color: color-mix(in srgb, var(--tinta) 45%, transparent); overflow: visible; }
+.es-malla { transform-origin: 50% 0; transform-box: fill-box; }
+.es-palos { fill: none; stroke: var(--tinta); stroke-width: 4; stroke-linecap: round; }
+.es-balon {
+  position: absolute; left: 50%; bottom: -1.4rem; width: 1.6rem; height: 1.6rem; margin-left: -.8rem; border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, var(--tinta) 0 22%, transparent 24%),
+    radial-gradient(circle at 15% 30%, var(--tinta) 0 12%, transparent 14%),
+    radial-gradient(circle at 85% 30%, var(--tinta) 0 12%, transparent 14%),
+    radial-gradient(circle at 30% 90%, var(--tinta) 0 12%, transparent 14%),
+    radial-gradient(circle at 70% 90%, var(--tinta) 0 12%, transparent 14%),
+    #fff;
+  box-shadow: inset -3px -3px 6px rgb(0 0 0 / .2), 0 0 0 1px color-mix(in srgb, var(--tinta) 40%, transparent);
+}
+.es-foco { position: absolute; top: -2rem; width: 50%; height: 140%; opacity: 0; pointer-events: none; background: radial-gradient(50% 60% at 50% 0%, rgb(255 246 214 / .7), transparent 70%); }
+.es-foco.f1 { left: -10%; } .es-foco.f2 { right: -10%; }
+.es-confeti { position: absolute; inset: -1rem 0 auto; height: 0; }
+.es-confeti i {
+  position: absolute; top: 0; left: var(--x); width: 7px; height: 11px; border-radius: 1px; opacity: 0;
+  background: var(--acento);
+}
+.es-confeti i.c1 { background: var(--acento2); }
+.es-confeti i.c2 { background: var(--brillo); }
+.es-resultado { margin-top: 2.2rem; font-size: clamp(2.8rem, 14vw, 3.8rem); line-height: 1; color: var(--acento-texto); }
+.es-golazo { min-height: 1.6em; margin-top: .6rem; font-family: var(--p-acento), Georgia, serif; font-style: italic; font-size: clamp(1.4rem, 6vw, 1.8rem); line-height: 1.25; text-wrap: balance; padding-inline: 1.25rem; }
+.es-boton {
+  display: inline-flex; align-items: center; min-height: 3.5rem; margin-top: .6rem; padding: 0 2rem;
+  font-family: var(--display); font-weight: 600; font-size: 1.125rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--tinta); background: transparent; border: 2px solid currentColor; border-radius: var(--radio, 8px); cursor: pointer;
+}
+.es-boton:focus-visible { outline: 3px solid var(--acento-texto); outline-offset: 3px; }
+.es-gol[data-gol] .es-balon { transform: translate(6.2rem, -8.4rem) scale(.8); }
+@media (prefers-reduced-motion: no-preference) {
+  .es-gol[data-gol="recien"] .es-balon { animation: es-chuta 700ms cubic-bezier(.3,.6,.4,1) both; }
+  .es-gol[data-gol="recien"] .es-malla { animation: es-hincha 400ms var(--ease-sello) 650ms both; }
+  .es-gol[data-gol="recien"] .es-foco { animation: es-destello 900ms ease-out 650ms both; }
+  .es-gol[data-gol="recien"] .es-confeti i { animation: es-cae 1400ms cubic-bezier(.2,.6,.4,1) calc(700ms + var(--d)) both; }
+  .es-gol[data-gol="recien"] .es-resultado { animation: es-abate 320ms var(--ease-velo) 700ms both; }
+}
+/* Una curva hasta la escuadra. */
+@keyframes es-chuta { 0% { transform: none; } 45% { transform: translate(2.4rem, -6.6rem) rotate(260deg) scale(.9); } 100% { transform: translate(6.2rem, -8.4rem) rotate(540deg) scale(.8); } }
+@keyframes es-hincha { 0% { transform: none; } 50% { transform: scale(1.04, 1.1); } 100% { transform: none; } }
+@keyframes es-destello { 0% { opacity: 0; } 25% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes es-cae { 0% { opacity: 0; transform: translateY(0) rotate(0); } 10% { opacity: 1; } 100% { opacity: 0; transform: translateY(15rem) rotate(var(--r)); } }
+
+/* —— cierre: la grada hace la ola —— */
+.es-cierre { padding: 5rem 1rem 0; text-align: center; }
+.es-grada {
+  display: grid; gap: 6px; width: min(100%, 26rem); margin-inline: auto; padding: 1rem .5rem;
+  background: none; border: 0; cursor: pointer; touch-action: manipulation;
+  border-radius: var(--radio, 8px);
+}
+.es-grada:focus-visible { outline: 3px solid var(--acento-texto); outline-offset: 3px; }
+.es-fila { display: grid; grid-template-columns: repeat(24, 1fr); gap: 4px; }
+.es-fila i { aspect-ratio: 1; border-radius: 50%; background: var(--acento); }
+.es-fila i.k1 { background: var(--acento2); }
+.es-fila i.k2 { background: color-mix(in srgb, var(--tinta) 18%, var(--papel)); }
+.es-cierre-pista { margin-top: .8rem; font-size: 1.0625rem; opacity: .85; }
+@supports (animation-timeline: view()) and (top: calc(sin(1rad) * 1px)) {
+  @media (prefers-reduced-motion: no-preference) {
+    .es-grada { animation: es-p linear both; animation-timeline: view(); animation-range: cover 0% cover 80%; }
+    .es-fila i { translate: 0 calc(sin((var(--es-luz) * 12 - var(--i) / 3) * 1rad) * -6px); }
+  }
+}
+@keyframes es-p { from { --es-luz: 0; } to { --es-luz: 1; } }
+@keyframes es-ola { 0%, 100% { transform: none; } 45% { transform: translateY(-12px) scale(1.15); } }
+
+/* —— 17 px como mínimo en todo el texto de lectura (los bloques compartidos) —— */
+.lienzo[data-plantilla="estadio"] :is(.text-\[1rem\], .text-\[0\.95rem\], .text-sm, .text-base, label, legend) { font-size: 1.0625rem; }
+.lienzo[data-plantilla="estadio"] .kv-play { font-size: 1.0625rem; }
+
+/* —— familias con su reserva genérica (GENERICA de tokens.ts no las conoce) —— */
+.lienzo[data-plantilla="estadio"] { font-family: var(--p-texto), "Barlow", ui-sans-serif, system-ui, sans-serif; }
+.lienzo[data-plantilla="estadio"] :is(.display, h1, h2, h3).display { font-family: var(--p-display), "Barlow Condensed", "Arial Narrow", ui-sans-serif, sans-serif; }
+/* El botón «Ver el vídeo», arriba a la DERECHA: la esquina izquierda es de la etiqueta «Demo». */
+.lienzo[data-plantilla="estadio"] .kv-play { left: auto; right: max(1rem, env(safe-area-inset-right, 0px)); }

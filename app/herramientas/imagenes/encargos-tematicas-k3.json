@@ -1,0 +1,146 @@
+[
+  {
+    "name": "pinar-poster",
+    "carpeta": "pinar",
+    "prompt": "Vertical cinematic still for a video loop: a misty pine and eucalyptus forest at golden hour, sunbeams slicing through the canopy, floating dust and a few warm fireflies, deep greens with copper light, a soft natural path in the center, no people. Enchanted but natural, photographic, 35mm film look, shallow depth of field. Fictional people, no text, no lettering, no logos.",
+    "width": 720,
+    "height": 1280,
+    "seed": 40101
+  },
+  {
+    "name": "pinar-1",
+    "carpeta": "pinar",
+    "prompt": "Wedding photograph, full length, small figures: a fictional Spanish couple in their early thirties: the bride has long light-brown hair in a loose low braid with tiny white flowers, fair skin with freckles, wearing a flowing ivory chiffon gown with long sheer sleeves; the groom has short dark-blond hair and a short beard, wearing a moss-green linen suit with no tie. They walk hand in hand along a needle-covered path between tall Scots pines in the Montseny forest, Catalonia, backlit by late-afternoon sun, haze between the trunks. Palette: deep pine green, kraft brown, copper light. Natural, candid, editorial. Fictional people, no text, no lettering, no logos.",
+    "width": 832,
+    "height": 1248,
+    "seed": 40102
+  },
+  {
+    "name": "pinar-2",
+    "carpeta": "pinar",
+    "prompt": "Wedding photograph, medium shot: a fictional Spanish couple in their early thirties: the bride has long light-brown hair in a loose low braid with tiny white flowers, fair skin with freckles, wearing a flowing ivory chiffon gown with long sheer sleeves; the groom has short dark-blond hair and a short beard, wearing a moss-green linen suit with no tie. They laugh face to face under a huge old pine, she holds a small bouquet of eucalyptus, ferns and white astrantia. Soft golden backlight, forest bokeh. Palette: forest green, cream, copper. Fictional people, no text, no lettering, no logos.",
+    "width": 832,
+    "height": 1248,
+    "seed": 40103
+  },
+  {
+    "name": "pinar-3",
+    "carpeta": "pinar",
+    "prompt": "Wedding photograph at dusk: a fictional Spanish couple in their early thirties: the bride has long light-brown hair in a loose low braid with tiny white flowers, fair skin with freckles, wearing a flowing ivory chiffon gown with long sheer sleeves; the groom has short dark-blond hair and a short beard, wearing a moss-green linen suit with no tie. Seated together on a wooden bench at the edge of a forest clearing strung with warm festoon lights, fireflies in the dark trees behind, intimate and quiet. Palette: night green, warm amber points of light. Fictional people, no text, no lettering, no logos.",
+    "width": 1248,
+    "height": 832,
+    "seed": 40104
+  },
+  {
+    "name": "pinar-4",
+    "carpeta": "pinar",
+    "prompt": "Wedding photograph, wide: a fictional Spanish couple in their early thirties: the bride has long light-brown hair in a loose low braid with tiny white flowers, fair skin with freckles, wearing a flowing ivory chiffon gown with long sheer sleeves; the groom has short dark-blond hair and a short beard, wearing a moss-green linen suit with no tie. Ceremony in a forest clearing among pines, a simple arch of raw wood with eucalyptus garlands and ivory chiffon, wooden folding chairs, guests out of focus, late-afternoon light. Palette: pine green, kraft, ivory. Fictional people, no text, no lettering, no logos.",
+    "width": 1248,
+    "height": 832,
+    "seed": 40105
+  },
+  {
+    "name": "pinar-detalle-rodaja",
+    "carpeta": "pinar",
+    "prompt": "Overhead still life on a kraft paper background: a polished cross-section slice of pine trunk with clear growth rings, two plain gold wedding bands resting on it, a sprig of eucalyptus, a fern frond and a loop of jute twine, soft window light. Fictional people, no text, no lettering, no logos.",
+    "width": 1024,
+    "height": 1024,
+    "seed": 40106
+  },
+  {
+    "name": "orbita-poster",
+    "carpeta": "orbita",
+    "prompt": "Vertical cinematic still for a video loop: slow drift through a violet and deep-blue nebula with sparkling star fields, a ringed planet turning very slowly in the distance, silver rim light, elegant and calm. No spacecraft, no people. Fictional people, no text, no lettering, no logos.",
+    "width": 720,
+    "height": 1280,
+    "seed": 40201
+  },
+  {
+    "name": "orbita-1",
+    "carpeta": "orbita",
+    "prompt": "Wedding photograph at night, long exposure: a fictional Spanish couple in their early thirties: the bride has a sleek dark bob and warm olive skin, wearing a minimal silver-white satin slip gown with a long cape; the groom has black wavy hair and light brown skin, wearing a midnight-blue velvet tuxedo. Silhouettes holding hands on a volcanic ridge at Roque de los Muchachos, La Palma, the Milky Way arching above, faint violet airglow on the horizon. Palette: navy, violet, silver. Fictional people, no text, no lettering, no logos.",
+    "width": 832,
+    "height": 1248,
+    "seed": 40202
+  },
+  {
+    "name": "orbita-2",
+    "carpeta": "orbita",
+    "prompt": "Wedding photograph, medium shot at blue hour: a fictional Spanish couple in their early thirties: the bride has a sleek dark bob and warm olive skin, wearing a minimal silver-white satin slip gown with a long cape; the groom has black wavy hair and light brown skin, wearing a midnight-blue velvet tuxedo. Forehead to forehead beside a white observatory dome, the first stars appearing, soft silver light on their faces. Palette: deep blue, lilac, silver. Fictional people, no text, no lettering, no logos.",
+    "width": 832,
+    "height": 1248,
+    "seed": 40203
+  },
+  {
+    "name": "orbita-3",
+    "carpeta": "orbita",
+    "prompt": "Wedding photograph, candid: a fictional Spanish couple in their early thirties: the bride has a sleek dark bob and warm olive skin, wearing a minimal silver-white satin slip gown with a long cape; the groom has black wavy hair and light brown skin, wearing a midnight-blue velvet tuxedo. They look through a brass amateur telescope on a terrace at night, string lights out of focus, guests' faces dimly lit. Elegant, quiet, cinematic. Fictional people, no text, no lettering, no logos.",
+    "width": 1248,
+    "height": 832,
+    "seed": 40204
+  },
+  {
+    "name": "orbita-4",
+    "carpeta": "orbita",
+    "prompt": "Wedding photograph, wide: a fictional Spanish couple in their early thirties: the bride has a sleek dark bob and warm olive skin, wearing a minimal silver-white satin slip gown with a long cape; the groom has black wavy hair and light brown skin, wearing a midnight-blue velvet tuxedo. Long dinner table under the open night sky in the gardens of a Canarian hacienda, candles and silver tableware, star trails above. Palette: midnight blue, silver, warm candlelight. Fictional people, no text, no lettering, no logos.",
+    "width": 1248,
+    "height": 832,
+    "seed": 40205
+  },
+  {
+    "name": "orbita-detalle-anillos",
+    "carpeta": "orbita",
+    "prompt": "Macro still life: two plain platinum wedding bands interlocked on dark navy velvet, tiny star-like sparkles of light, a vintage star chart with no readable labels softly out of focus behind. Silver and violet tones. Fictional people, no text, no lettering, no logos.",
+    "width": 1024,
+    "height": 1024,
+    "seed": 40206
+  },
+  {
+    "name": "brazada-poster",
+    "carpeta": "brazada",
+    "prompt": "Vertical cinematic still for a video loop: underwater view in a sunlit swimming pool, shimmering light caustics dancing on pale blue tiles, streams of small bubbles rising, a lane rope floating at the surface above. Fresh and dynamic, no people. Fictional people, no text, no lettering, no logos.",
+    "width": 720,
+    "height": 1280,
+    "seed": 40301
+  },
+  {
+    "name": "brazada-1",
+    "carpeta": "brazada",
+    "prompt": "Underwater pre-wedding photograph: a fictional Spanish couple in their late twenties, both swimmers with athletic builds: the bride has sun-streaked wet-look dark-blonde hair pulled back, tanned skin, wearing a short white crepe dress with a low back; the groom has short dark hair and tanned skin, wearing a light-grey linen suit with the sleeves rolled up and no tie. Both fully dressed, swimming underwater toward each other in a clear pool, her dress flowing like a cloud, sunlight caustics on their skin, small bubbles. Palette: cyan, white, deep pool blue. Fictional people, no text, no lettering, no logos.",
+    "width": 832,
+    "height": 1248,
+    "seed": 40302
+  },
+  {
+    "name": "brazada-2",
+    "carpeta": "brazada",
+    "prompt": "Wedding photograph, medium shot at midday: a fictional Spanish couple in their late twenties, both swimmers with athletic builds: the bride has sun-streaked wet-look dark-blonde hair pulled back, tanned skin, wearing a short white crepe dress with a low back; the groom has short dark hair and tanned skin, wearing a light-grey linen suit with the sleeves rolled up and no tie. Sitting on the edge of a hotel swimming pool with their feet in the water, laughing, a cyan-and-white lane rope beside them, chrome pool ladder. Bright, clean, Mediterranean light. Fictional people, no text, no lettering, no logos.",
+    "width": 1248,
+    "height": 832,
+    "seed": 40303
+  },
+  {
+    "name": "brazada-3",
+    "carpeta": "brazada",
+    "prompt": "Wedding photograph: a fictional Spanish couple in their late twenties, both swimmers with athletic builds: the bride has sun-streaked wet-look dark-blonde hair pulled back, tanned skin, wearing a short white crepe dress with a low back; the groom has short dark hair and tanned skin, wearing a light-grey linen suit with the sleeves rolled up and no tie. On a wooden jetty of a yacht club in Palma de Mallorca, turquoise sea behind, wind in her dress, he kisses her temple. Palette: turquoise, white, sand. Fictional people, no text, no lettering, no logos.",
+    "width": 832,
+    "height": 1248,
+    "seed": 40304
+  },
+  {
+    "name": "brazada-4",
+    "carpeta": "brazada",
+    "prompt": "Wedding photograph, playful: a fictional Spanish couple in their late twenties, both swimmers with athletic builds: the bride has sun-streaked wet-look dark-blonde hair pulled back, tanned skin, wearing a short white crepe dress with a low back; the groom has short dark hair and tanned skin, wearing a light-grey linen suit with the sleeves rolled up and no tie. Mid-jump together into a sea cove, holding hands, splash and spray frozen in the air, clear Mediterranean water. Energetic but elegant. Fictional people, no text, no lettering, no logos.",
+    "width": 832,
+    "height": 1248,
+    "seed": 40305
+  },
+  {
+    "name": "brazada-detalle-gotas",
+    "carpeta": "brazada",
+    "prompt": "Macro still life: two plain gold wedding bands resting on wet white pool tiles with water droplets and refracted caustic light, a corner of a cyan-and-white lane rope float out of focus. Fictional people, no text, no lettering, no logos.",
+    "width": 1024,
+    "height": 1024,
+    "seed": 40306
+  }
+]

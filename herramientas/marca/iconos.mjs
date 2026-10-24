@@ -1,0 +1,10 @@
+import { createRequire } from 'node:module';
+const require = createRequire('/home/claude/web/app/package.json');
+const sharp = require('sharp');
+const [S, M, APP] = process.argv.slice(2);
+const r = (src, w, out) => sharp(src, { density: Math.min(2400, 72 * 4 * w / (src.includes("_fav") ? 64 : 512)) }).resize(w, w).png({ compressionLevel: 9 }).toFile(out);
+for (const w of [16, 32, 48]) await r(`${S}/_ic_fav.svg`, w, `${S}/fav-${w}.png`);
+await r(`${S}/_ic_full.svg`, 180, `${APP}/src/app/apple-icon.png`);
+await r(`${S}/_ic_full.svg`, 192, `${M}/icono-192.png`);
+await r(`${S}/_ic_full.svg`, 512, `${M}/icono-512.png`);
+await r(`${S}/_ic_mask.svg`, 512, `${M}/icono-maskable-512.png`);

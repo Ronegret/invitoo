@@ -1,79 +1,63 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import Revelar from "@/components/Revelar";
+import DatosEstructurados from "@/components/sitio/DatosEstructurados";
 import Encabezado from "@/components/sitio/Encabezado";
 import LlamadaFinal from "@/components/sitio/LlamadaFinal";
 import Preguntas from "@/components/sitio/Preguntas";
-import { PREGUNTAS } from "@/data/sitio";
+import type { Pregunta } from "@/data/sitio";
 
 export const metadata: Metadata = {
-  title: "Preguntas frecuentes · Invitoo",
+  title: "Preguntas frecuentes",
   description:
-    "Si vuestra abuela podrá abrirla, qué pasa si cambia algo, cuánto tarda, cuánto tiempo está online y qué es lo de la canción.",
+    "Si vuestra abuela podrá abrirla (y si no tiene WhatsApp), cuánto tarda, qué pasa si cambia algo, idiomas, quién ve la lista de invitados, cómo funcionan las fotos en directo el día de la boda y qué pasa después.",
+  alternates: { canonical: "/preguntas" },
 };
 
+const GRUPOS: { de: Pregunta["de"]; titulo: string; id: string }[] = [
+  { de: "invitados", titulo: "Vuestros invitados", id: "invitados" },
+  { de: "producto", titulo: "La invitación", id: "la-invitacion" },
+  { de: "precio", titulo: "Precio y plazos", id: "precio" },
+  { de: "directo", titulo: "El día de la boda, en directo", id: "el-dia-de-la-boda" },
+  { de: "despues", titulo: "Después de la boda", id: "despues" },
+];
+
 /**
- * Las preguntas, todas juntas.
+ * Las preguntas, todas, agrupadas por lo que preocupa: primero los
+ * invitados (la abuela, el papel, la privacidad), que es lo que de verdad
+ * quita el sueño; el dinero después.
  *
- * En /precios y /servicios salen filtradas —allí solo estorban las que no
- * vienen a cuento—, pero hace falta una página que las tenga todas: es la
- * que se enlaza desde el pie, la que se manda cuando alguien duda, y la que
- * Google enseña cuando se busca «invitación digital boda abuela móvil».
- *
- * Los datos estructurados son de verdad: salen de la misma lista que se
- * pinta debajo, así que no pueden desincronizarse ni prometer respuestas que
- * no estén en la página.
+ * El FAQPage sale de la misma lista que se pinta, así que no puede
+ * prometer respuestas que no estén en la página.
  */
 export default function PaginaPreguntas() {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: PREGUNTAS.map((p) => ({
-      "@type": "Question",
-      name: p.q,
-      acceptedAnswer: { "@type": "Answer", text: p.a },
-    })),
-  };
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        // Contenido propio, generado arriba: no viene de fuera.
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <DatosEstructurados tipo="preguntas" />
 
       <Encabezado
         sobre="Antes de decidir"
         titulo="Preguntas"
         bajo="Las que nos hacen siempre, respondidas sin rodeos. Si falta la vuestra, escribidnos y la añadimos."
-        foto="/fotos/sitio/corte-1.avif"
       />
 
-      <section className="grano relative bg-[var(--papel)] px-5 py-24 sm:py-28">
-        <div className="mx-auto max-w-[46rem]">
-          <Preguntas />
-
-          <Revelar>
-            <p className="mt-16 text-center text-[0.94rem] leading-[1.8] opacity-60">
-              Lo que se pregunta después suele ser el precio.{" "}
-              <Link href="/precios" className="enlace-sub">
-                Los cuatro planes están aquí
-              </Link>
-              , y{" "}
-              <Link href="/servicios" className="enlace-sub">
-                lo que lleva dentro, aquí
-              </Link>
-              .
-            </p>
-          </Revelar>
+      <div className="bg-[var(--papel)] px-4 py-16 sm:px-6 sm:py-24">
+        <div className="mx-auto flex max-w-[72rem] flex-col gap-16 sm:gap-20">
+          {GRUPOS.map((g) => (
+            <section key={g.de} id={g.id} className="scroll-mt-28 grid gap-6 lg:grid-cols-12 lg:gap-10">
+              <h2 className="display text-[clamp(1.9rem,4vw,2.6rem)] leading-[1.05] lg:col-span-4">
+                {g.titulo}
+              </h2>
+              <div className="lg:col-span-8">
+                <Preguntas de={g.de} />
+              </div>
+            </section>
+          ))}
         </div>
-      </section>
+      </div>
 
       <LlamadaFinal
         sobre="¿Falta la vuestra?"
         titulo="Preguntádnosla"
-        texto="Veinte minutos por Meet, o un correo. Lo que sea más cómodo: no hay presupuesto por delante ni compromiso de nada."
+        texto="Veinte minutos por vídeo, o un correo. Lo que os resulte más cómodo: no hay presupuesto por delante ni compromiso de nada."
       />
     </>
   );

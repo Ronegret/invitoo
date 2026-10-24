@@ -1,67 +1,183 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import { guardarInvitacion, guardarMensaje, guardarRsvp } from "@/lib/datos";
+import { after } from "next/server";
+import { avisarDeseo, avisarRespuesta } from "@/lib/avisos/avisar";
+import { programar } from "@/lib/correos/programar";
+import { guardarMensaje, guardarRsvp } from "@/lib/datos";
+import {
+  CUPO_SIN_TOKEN,
+  esAlergeno,
+  esBus,
+  esMenu,
+  type PersonaRsvp,
+} from "@/lib/rsvp";
 
 export type Resultado =
   | { ok: true; mensaje: string }
   | { ok: false; error: string };
 
 /**
- * Acciones de servidor.
+ * Acciones de servidor PÚBLICAS: las que usa el invitado.
  *
  * Validan aquí y solo aquí. El invitado no tiene cuenta, así que la escritura
  * en base de datos va con service role: no hay `auth.uid()` con el que darle
  * permiso bajo RLS. Por eso estas funciones son la frontera de confianza y no
  * pueden dar por bueno nada de lo que llega del formulario.
+ *
+ * Las del estudio NO están aquí: viven en `app/estudio/acciones.ts` y cada
+ * una comprueba la sesión. Una server action se puede invocar por POST desde
+ * cualquier ruta, así que el proxy de /estudio no las protege. Las del panel
+ * de los novios están en `app/panel/acciones.ts` y cada una empieza por
+ * `exigirAccesoBoda(slug)` (estudio, cuenta o enlace privado de /novios).
  */
 
 function texto(datos: FormData, campo: string, max = 500) {
   return String(datos.get(campo) ?? "").trim().slice(0, max);
 }
 
+/**
+ * Confirmación de asistencia. Contrato (ver BRIEF-EQUIPO.md):
+ *   slug, token?, asiste=si|no, personas=N,
+ *   p{i}_nombre, p{i}_menu, p{i}_alergenos (repetido), p{i}_alergias_texto,
+ *   p{i}_consentimiento_salud=si (o uno general, consentimiento_salud=si),
+ *   bus=no|ida|vuelta|ida_vuelta, parada?, mensaje?, telefono?,
+ *   nombre_previo? (sin token: el nombre de la respuesta que se corrige)
+ *
+ * También entiende el formulario antiguo (invitacion, nombre, acompanantes,
+ * menu, alergias, bus=si) para no romper nada mientras se cambia.
+ */
 export async function confirmarAsistencia(
   _previo: Resultado | null,
   datos: FormData,
 ): Promise<Resultado> {
-  const slug = texto(datos, "invitacion", 80);
-  const nombre = texto(datos, "nombre", 120);
-  const asiste = datos.get("asiste") === "si";
-  const acompanantes = Number(datos.get("acompanantes") ?? 0);
-
-  if (nombre.length < 2) return { ok: false, error: "Nos falta tu nombre." };
+  const slug = texto(datos, "slug", 80) || texto(datos, "invitacion", 80);
+  const token = texto(datos, "token", 64) || null;
+  const asisteCrudo = texto(datos, "asiste", 4);
   if (!slug) return { ok: false, error: "Algo ha fallado. Prueba a recargar." };
-  if (!Number.isInteger(acompanantes) || acompanantes < 0 || acompanantes > 8) {
-    return { ok: false, error: "Revisa el número de acompañantes." };
+  if (asisteCrudo !== "si" && asisteCrudo !== "no") {
+    return { ok: false, error: "Dinos si vienes o no." };
   }
+  const asiste = asisteCrudo === "si";
+
+  let personas: PersonaRsvp[];
+  if (datos.has("personas")) {
+    const n = Number(texto(datos, "personas", 3));
+    if (!Number.isInteger(n) || n < 1 || n > 20) {
+      return { ok: false, error: "Revisa cuántos sois." };
+    }
+    personas = [];
+    for (let i = 0; i < n; i++) {
+      const nombre = texto(datos, `p${i}_nombre`, 120);
+      if (nombre.length < 2) {
+        return {
+          ok: false,
+          error: i === 0 ? "Nos falta tu nombre." : `Nos falta el nombre de la persona ${i + 1}.`,
+        };
+      }
+      const menu = texto(datos, `p${i}_menu`, 20) || "adulto";
+      if (!esMenu(menu)) return { ok: false, error: "Revisa el menú elegido." };
+      const alergenos = [
+        ...new Set(datos.getAll(`p${i}_alergenos`).map(String).filter(esAlergeno)),
+      ];
+      const alergias_texto = texto(datos, `p${i}_alergias_texto`, 400) || null;
+      // El permiso es por persona; vale también uno general (`consentimiento_salud`).
+      const permiso =
+        datos.get(`p${i}_consentimiento_salud`) === "si" || datos.get("consentimiento_salud") === "si";
+      personas.push({
+        nombre,
+        menu,
+        alergenos,
+        alergias_texto,
+        consentimiento_salud: alergenos.length > 0 || alergias_texto ? permiso : false,
+      });
+    }
+  } else {
+    // Formulario antiguo: una persona + N acompañantes sin nombre.
+    const nombre = texto(datos, "nombre", 120);
+    if (nombre.length < 2) return { ok: false, error: "Nos falta tu nombre." };
+    const acompanantes = Number(datos.get("acompanantes") ?? 0);
+    if (!Number.isInteger(acompanantes) || acompanantes < 0 || acompanantes >= CUPO_SIN_TOKEN) {
+      return { ok: false, error: "Revisa el número de acompañantes." };
+    }
+    const menuViejo = texto(datos, "menu", 60).toLowerCase();
+    const menu = esMenu(menuViejo) ? menuViejo : "adulto";
+    const alergias = texto(datos, "alergias", 400) || null;
+    personas = [
+      { nombre, menu, alergenos: [], alergias_texto: alergias, consentimiento_salud: false },
+      ...Array.from({ length: asiste ? acompanantes : 0 }, (_, i) => ({
+        nombre: `Acompañante ${i + 1} de ${nombre}`,
+        menu,
+        alergenos: [],
+        alergias_texto: null,
+      })),
+    ];
+  }
+
+  // Quien no viene no come: se guarda solo el nombre de cada uno.
+  if (!asiste) {
+    personas = personas.map((p) => ({
+      ...p,
+      menu: "adulto",
+      alergenos: [],
+      alergias_texto: null,
+      consentimiento_salud: false,
+    }));
+  }
+
+  const busCrudo = texto(datos, "bus", 12);
+  const bus = busCrudo === "si" ? "ida_vuelta" : esBus(busCrudo) ? busCrudo : "no";
 
   const guardado = await guardarRsvp({
     slug,
-    nombre,
+    token,
     asiste,
-    acompanantes: asiste ? acompanantes : 0,
-    menu: asiste ? texto(datos, "menu", 60) || null : null,
-    alergias: asiste ? texto(datos, "alergias", 400) || null : null,
-    bus: asiste && datos.get("bus") === "si",
+    personas,
+    bus,
+    parada: texto(datos, "parada", 120) || null,
+    mensaje: texto(datos, "mensaje", 1000) || null,
+    telefono: texto(datos, "telefono", 30) || null,
+    nombrePrevio: texto(datos, "nombre_previo", 120) || null,
   });
 
-  if (!guardado) {
+  if (!guardado.ok) return { ok: false, error: guardado.error };
+
+  if (guardado.demo) {
     return {
-      ok: false,
-      error: "No hemos podido guardarlo. Escríbenos por WhatsApp y lo apuntamos.",
+      ok: true,
+      mensaje:
+        "Esto es una invitación de muestra, así que no se guarda. En la vuestra, les llegaría a los novios al momento.",
     };
   }
 
-  return asiste
-    ? { ok: true, mensaje: "Contamos contigo. Nos vemos allí." }
-    : { ok: true, mensaje: "Gracias por avisar. Te echaremos de menos." };
+  // Avisos a la pareja (campana, email o push), sin retrasar la respuesta.
+  after(() =>
+    avisarRespuesta(slug, { nombre: personas[0].nombre, asiste, personas: personas.length, previo: guardado.previo ?? null }),
+  );
+  // Métricas del estudio (lib/correos): solo las respuestas nuevas, no las correcciones.
+  if (guardado.previo == null) after(() => programar({ evento: "rsvp", slug }));
+
+  const varios = personas.length > 1;
+  if (!asiste) {
+    return {
+      ok: true,
+      mensaje: varios
+        ? "Gracias por avisar. Os echaremos de menos."
+        : "Gracias por avisar. Te echaremos de menos.",
+    };
+  }
+  return {
+    ok: true,
+    mensaje: varios
+      ? "Contamos con vosotros. Si cambia algo, volved a este enlace y corregidlo."
+      : "Contamos contigo. Si cambia algo, vuelve a este enlace y corrígelo.",
+  };
 }
 
 export async function dejarMensaje(
   _previo: Resultado | null,
   datos: FormData,
 ): Promise<Resultado> {
-  const slug = texto(datos, "invitacion", 80);
+  const slug = texto(datos, "slug", 80) || texto(datos, "invitacion", 80);
   const nombre = texto(datos, "nombre", 120);
   const mensaje = texto(datos, "mensaje", 2000);
 
@@ -70,67 +186,13 @@ export async function dejarMensaje(
   if (!slug) return { ok: false, error: "Algo ha fallado. Prueba a recargar." };
 
   const guardado = await guardarMensaje({ slug, nombre, mensaje });
-  if (!guardado) {
-    return { ok: false, error: "No hemos podido guardarlo. Inténtalo otra vez." };
-  }
-  return { ok: true, mensaje: "Escrito. Se lo daremos el día de la boda." };
-}
-
-// ───────────────────────────────────────────────────────────────── el estudio
-
-export async function guardarDesdeEstudio(
-  _previo: Resultado | null,
-  datos: FormData,
-): Promise<Resultado> {
-  const id = texto(datos, "id", 40) || null;
-  const slug = texto(datos, "slug", 80);
-
-  if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) {
+  if (!guardado.ok) return { ok: false, error: guardado.error };
+  if (guardado.demo) {
     return {
-      ok: false,
-      error: "El slug solo admite minúsculas, números y guiones. Ej: laura-y-ruben",
+      ok: true,
+      mensaje: "Esto es una invitación de muestra, así que no se guarda. En la vuestra, les llegaría a los novios.",
     };
   }
-
-  // Los bloques llegan como JSON del textarea. Se valida aquí: un JSON roto
-  // guardado es una invitación que revienta el sábado por la mañana.
-  let bloques: unknown;
-  try {
-    bloques = JSON.parse(texto(datos, "bloques", 60000) || "[]");
-  } catch {
-    return { ok: false, error: "Los bloques no son JSON válido." };
-  }
-  if (!Array.isArray(bloques)) {
-    return { ok: false, error: "Los bloques tienen que ser una lista." };
-  }
-
-  const fecha = texto(datos, "fecha", 40);
-  if (Number.isNaN(Date.parse(fecha))) {
-    return { ok: false, error: "La fecha no es válida." };
-  }
-
-  const estado = texto(datos, "estado", 20);
-  const resultado = await guardarInvitacion(id, {
-    slug,
-    plantilla: texto(datos, "plantilla", 20) as never,
-    estado: estado as never,
-    nombre_a: texto(datos, "nombre_a", 60),
-    nombre_b: texto(datos, "nombre_b", 60),
-    fecha: new Date(fecha).toISOString(),
-    tema: {
-      tinta: texto(datos, "tinta", 9),
-      papel: texto(datos, "papel", 9),
-      acento: texto(datos, "acento", 9),
-      grano: Number(datos.get("grano") ?? 0.04),
-    },
-    bloques: bloques as never,
-  });
-
-  if (!resultado.ok) return { ok: false, error: resultado.error ?? "Error" };
-
-  // La invitación es estática: hay que decirle a Next que se ha movido.
-  revalidatePath(`/i/${slug}`);
-  revalidatePath("/estudio");
-
-  return { ok: true, mensaje: `Guardada. Ver en /i/${slug}` };
+  after(() => avisarDeseo(slug, { nombre, texto: mensaje, donde: "en la invitación" }));
+  return { ok: true, mensaje: "Escrito. Irá a su libro de buenos deseos." };
 }

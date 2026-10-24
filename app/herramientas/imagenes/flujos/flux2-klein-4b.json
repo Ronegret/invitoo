@@ -1,0 +1,16 @@
+{
+  "_comentario": "FLUX.2 [klein] 4B destilado (Apache-2.0), el instalado en el PC de Rodrigo (ComfyUI 0.42.1, RTX 5070 8 GB, ~16 s por 1024²). Modelos: diffusion_models/flux-2-klein-4b.safetensors, text_encoders/qwen_3_4b_fp4_flux2.safetensors (CLIPLoader tipo flux2), vae/flux2-vae.safetensors. Mismo grafo que C:\\IA\\probar-flux.py. Los nodos PROMPT, LIENZO y MUESTREO los rellena el script.",
+  "1": { "class_type": "UNETLoader", "inputs": { "unet_name": "flux-2-klein-4b.safetensors", "weight_dtype": "default" } },
+  "2": { "class_type": "CLIPLoader", "inputs": { "clip_name": "qwen_3_4b_fp4_flux2.safetensors", "type": "flux2" } },
+  "3": { "class_type": "VAELoader", "inputs": { "vae_name": "flux2-vae.safetensors" } },
+  "4": { "class_type": "CLIPTextEncode", "inputs": { "text": "", "clip": ["2", 0] }, "_meta": { "title": "PROMPT" } },
+  "5": { "class_type": "ConditioningZeroOut", "inputs": { "conditioning": ["4", 0] } },
+  "6": { "class_type": "CFGGuider", "inputs": { "model": ["1", 0], "positive": ["4", 0], "negative": ["5", 0], "cfg": 1 } },
+  "7": { "class_type": "KSamplerSelect", "inputs": { "sampler_name": "euler" } },
+  "8": { "class_type": "Flux2Scheduler", "inputs": { "steps": 4, "width": 1024, "height": 1024 }, "_meta": { "title": "LIENZO" } },
+  "9": { "class_type": "EmptyFlux2LatentImage", "inputs": { "width": 1024, "height": 1024, "batch_size": 1 }, "_meta": { "title": "LIENZO" } },
+  "10": { "class_type": "RandomNoise", "inputs": { "noise_seed": 0 }, "_meta": { "title": "MUESTREO" } },
+  "11": { "class_type": "SamplerCustomAdvanced", "inputs": { "noise": ["10", 0], "guider": ["6", 0], "sampler": ["7", 0], "sigmas": ["8", 0], "latent_image": ["9", 0] } },
+  "12": { "class_type": "VAEDecode", "inputs": { "samples": ["11", 0], "vae": ["3", 0] } },
+  "13": { "class_type": "SaveImage", "inputs": { "filename_prefix": "invitoo", "images": ["12", 0] } }
+}

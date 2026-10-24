@@ -42,3 +42,17 @@ next-env.d.ts
 
 # El ejemplo sí se comparte: es la plantilla, no lleva secretos.
 !.env.example
+
+# «En directo» en desarrollo: fotos subidas en local (src/lib/momentos/almacen.ts)
+/.momentos-local/
+.next-*/
+
+# Pagos y pedidos en desarrollo, sin Supabase (src/lib/pagos/datos.ts y pedidos.ts)
+/.pagos-local/
+
+# Correos automáticos y visitas en desarrollo, sin Supabase ni Resend (src/lib/correos, src/lib/visitas)
+/.correos-local/
+/.visitas-local/
+
+# Fotos de stock retiradas por las propias (I1, docs/22). Fuera de public y del repo.
+/archivo-fotos-antiguas/

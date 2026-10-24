@@ -1,0 +1,435 @@
+/*
+ * «En directo» y «Vuestro panel»: las dos maquetas de la portada.
+ *
+ * Todo es CSS: sin JavaScript la TV ya pasa las fotos y el móvil ya sube la
+ * suya. Un solo reloj de 24 s mueve las dos cosas, así la foto que sube el
+ * móvil es la que entra en la TV justo después.
+ *
+ * Solo se anima opacidad y transform. Fundidos largos (1,8 s) y una deriva
+ * de escala mínima (4 %) en cada foto: el ritmo de una sobremesa, no el de
+ * un anuncio. Con `prefers-reduced-motion` todo se queda quieto en el
+ * primer fotograma, que es una composición completa por sí sola.
+ */
+
+.escena {
+  --ciclo: 24s;
+  --fundido: cubic-bezier(0.45, 0, 0.25, 1);
+  position: relative;
+}
+
+/* ───────────── La TV ───────────── */
+
+.tv {
+  position: relative;
+  border-radius: 14px;
+  padding: 10px;
+  background: linear-gradient(180deg, #2a2420, #120e0c);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.08) inset,
+    0 40px 80px -30px rgba(0, 0, 0, 0.8),
+    0 0 120px -20px rgba(232, 185, 191, 0.18);
+}
+
+.pantalla {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #0c0a09;
+}
+
+.peana {
+  margin: 0 auto;
+  height: 14px;
+  width: 22%;
+  border-radius: 0 0 6px 6px;
+  background: linear-gradient(180deg, #1a1512, #0b0908);
+}
+
+.diapo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  animation: diapo var(--ciclo) var(--fundido) infinite both;
+}
+.diapo:first-of-type {
+  opacity: 1;
+}
+/*
+ * Cuatro diapositivas de 6 s. El retraso negativo hace que al cargar la
+ * primera ya esté entera, en vez de entrar desde negro.
+ */
+.d0 { animation-delay: -1.8s; }
+.d1 { animation-delay: 4.2s; }
+.d2 { animation-delay: 10.2s; }
+.d3 { animation-delay: 16.2s; }
+
+@keyframes diapo {
+  0% { opacity: 0; transform: scale(1); }
+  7.5% { opacity: 1; }
+  25% { opacity: 1; }
+  32.5% { opacity: 0; transform: scale(1.04); }
+  100% { opacity: 0; transform: scale(1.04); }
+}
+
+/* El velo de abajo, para que el rótulo se lea sobre cualquier foto. */
+.velo {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(10, 8, 7, 0.62));
+  pointer-events: none;
+}
+
+/* El mensaje: una tarjeta tipográfica que se posa sobre la tercera foto. */
+.mensaje {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(12, 10, 9, 0.38);
+  opacity: 0;
+  animation: mensaje var(--ciclo) var(--fundido) infinite both;
+  animation-delay: 4.2s;
+}
+.tarjeta {
+  width: min(62%, 30rem);
+  padding: clamp(0.9rem, 3vw, 2rem) clamp(1rem, 3.4vw, 2.4rem);
+  background: #fbf8f3;
+  color: #1a1512;
+  text-align: center;
+  box-shadow: 0 30px 60px -24px rgba(0, 0, 0, 0.6);
+  transform: translateY(6px);
+  animation: tarjeta var(--ciclo) var(--fundido) infinite both;
+  animation-delay: 4.2s;
+}
+@keyframes mensaje {
+  0%, 33% { opacity: 0; }
+  40% { opacity: 1; }
+  54% { opacity: 1; }
+  60%, 100% { opacity: 0; }
+}
+@keyframes tarjeta {
+  0%, 33% { transform: translateY(8px); }
+  44%, 100% { transform: none; }
+}
+.tarjetaTexto {
+  font-family: var(--display);
+  font-size: clamp(0.95rem, 2.3vw, 1.7rem);
+  line-height: 1.2;
+}
+.tarjetaFirma {
+  margin-top: 0.6em;
+  font-size: clamp(0.6rem, 1.2vw, 0.85rem);
+  color: #8c1d2c;
+}
+
+.rotulo {
+  position: absolute;
+  left: 4%;
+  bottom: 6%;
+  color: #fff;
+}
+.rotuloNombres {
+  font-family: var(--display);
+  font-size: clamp(0.95rem, 2.2vw, 1.6rem);
+  line-height: 1;
+}
+.rotuloCuenta {
+  margin-top: 0.4em;
+  font-size: clamp(0.55rem, 1.05vw, 0.8rem);
+  opacity: 0.75;
+}
+
+.qr {
+  position: absolute;
+  right: 3%;
+  top: 5%;
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.45em 0.6em 0.45em 0.45em;
+  border-radius: 6px;
+  background: rgba(251, 248, 243, 0.94);
+  color: #1a1512;
+  font-size: clamp(0.5rem, 1vw, 0.78rem);
+  line-height: 1.25;
+}
+.qr svg {
+  width: clamp(1.6rem, 3.6vw, 2.8rem);
+  height: auto;
+}
+
+/* ───────────── El móvil que sube ───────────── */
+
+.movil {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 18.5;
+  border-radius: 34px;
+  padding: 8px;
+  background: #1a1512;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.1) inset,
+    0 40px 70px -28px rgba(0, 0, 0, 0.85);
+}
+.movilPantalla {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 27px;
+  background: #fbf8f3;
+  color: #1a1512;
+  display: flex;
+  flex-direction: column;
+  padding: 2.4rem 0.9rem 1rem;
+  font-size: 0.78rem;
+}
+.isla {
+  position: absolute;
+  top: 9px;
+  left: 50%;
+  width: 34%;
+  height: 18px;
+  border-radius: 99px;
+  background: #1a1512;
+  transform: translateX(-50%);
+}
+.movilTitulo {
+  font-family: var(--display);
+  font-size: 1.15rem;
+  line-height: 1.1;
+  text-align: center;
+}
+.movilSub {
+  margin-top: 0.25rem;
+  text-align: center;
+  opacity: 0.6;
+}
+.foto {
+  position: relative;
+  margin-top: 0.9rem;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #f0e8dc;
+}
+.foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: fotoElegida var(--ciclo) var(--fundido) infinite both;
+  animation-delay: -1.8s;
+}
+@keyframes fotoElegida {
+  0%, 2% { opacity: 0; transform: scale(1.03); }
+  8%, 92% { opacity: 1; transform: none; }
+  98%, 100% { opacity: 0; }
+}
+
+.barra {
+  margin-top: 0.8rem;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(26, 21, 18, 0.1);
+  overflow: hidden;
+}
+.barra span {
+  display: block;
+  height: 100%;
+  background: #8c1d2c;
+  transform-origin: left;
+  transform: scaleX(1);
+  animation: sube var(--ciclo) var(--fundido) infinite both;
+  animation-delay: -1.8s;
+}
+@keyframes sube {
+  0%, 8% { transform: scaleX(0); }
+  22%, 100% { transform: scaleX(1); }
+}
+
+/* Dos estados apilados que se funden: «Subiendo…» y «Ya está». */
+.estado {
+  position: relative;
+  margin-top: 0.55rem;
+  height: 1.3em;
+}
+.estado span {
+  position: absolute;
+  inset: 0;
+}
+.subiendo {
+  opacity: 0;
+  animation: subiendo var(--ciclo) var(--fundido) infinite both;
+  animation-delay: -1.8s;
+}
+.hecho {
+  color: #8c1d2c;
+  animation: hecho var(--ciclo) var(--fundido) infinite both;
+  animation-delay: -1.8s;
+}
+@keyframes subiendo {
+  0%, 6% { opacity: 0; }
+  9%, 22% { opacity: 1; }
+  25%, 100% { opacity: 0; }
+}
+@keyframes hecho {
+  0%, 23% { opacity: 0; }
+  27%, 92% { opacity: 1; }
+  97%, 100% { opacity: 0; }
+}
+
+.ultimas {
+  margin-top: 0.9rem;
+}
+.ultimas p {
+  font-size: 0.7rem;
+  opacity: 0.55;
+}
+.ultimas div {
+  margin-top: 0.35rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+.ultimas img {
+  aspect-ratio: 1;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.acciones {
+  margin-top: auto;
+  display: grid;
+  gap: 0.45rem;
+}
+.accion {
+  display: flex;
+  min-height: 2.4rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 99px;
+  border: 1px solid rgba(26, 21, 18, 0.25);
+}
+.accionLlena {
+  background: #1a1512;
+  border-color: #1a1512;
+  color: #fbf8f3;
+}
+
+/* ───────────── El panel ───────────── */
+
+.panel {
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fbf8f3;
+  border: 1px solid rgba(26, 21, 18, 0.12);
+  box-shadow: 0 50px 90px -50px rgba(26, 21, 18, 0.45);
+  color: #1a1512;
+}
+.panelBarra {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(26, 21, 18, 0.08);
+  background: #f5efe6;
+}
+.panelBarra i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(26, 21, 18, 0.16);
+}
+.panelUrl {
+  margin-left: 10px;
+  padding: 3px 12px;
+  border-radius: 99px;
+  background: rgba(26, 21, 18, 0.05);
+  font-size: 0.72rem;
+  opacity: 0.7;
+}
+.panelCuerpo {
+  display: grid;
+  grid-template-columns: 11rem 1fr;
+  min-height: 24rem;
+}
+@media (max-width: 767px) {
+  .panelCuerpo {
+    grid-template-columns: 1fr;
+  }
+  .panelMenu {
+    display: none;
+  }
+}
+.panelMenu {
+  border-right: 1px solid rgba(26, 21, 18, 0.08);
+  padding: 1.1rem 0.7rem;
+  font-size: 0.86rem;
+}
+.panelMenu li {
+  padding: 0.45rem 0.7rem;
+  border-radius: 8px;
+  opacity: 0.62;
+}
+.panelMenu li[aria-current] {
+  opacity: 1;
+  background: rgba(140, 29, 44, 0.08);
+  color: #8c1d2c;
+}
+.panelMain {
+  padding: 1.3rem clamp(1rem, 2.6vw, 1.8rem);
+  min-width: 0;
+}
+
+/* La barra de confirmaciones se dibuja una vez, despacio. */
+.progreso {
+  display: flex;
+  height: 8px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: rgba(26, 21, 18, 0.08);
+}
+.progreso span {
+  display: block;
+  height: 100%;
+  transform-origin: left;
+  animation: dibuja 2.4s var(--fundido, ease) both;
+  animation-timeline: view();
+  animation-range: entry 10% cover 40%;
+}
+@keyframes dibuja {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.fila {
+  transition: background-color 400ms ease;
+}
+.fila:hover {
+  background: rgba(140, 29, 44, 0.04);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .diapo,
+  .mensaje,
+  .tarjeta,
+  .foto img,
+  .barra span,
+  .subiendo,
+  .hecho,
+  .progreso span {
+    animation: none;
+  }
+  .diapo { opacity: 0; transform: none; }
+  .diapo:first-of-type { opacity: 1; }
+  /* Quieto, se queda el momento más completo: foto, mensaje y «Ya está». */
+  .mensaje { opacity: 1; }
+  .tarjeta { transform: none; }
+  .subiendo { opacity: 0; }
+  .hecho { opacity: 1; }
+  .barra span { transform: scaleX(1); }
+}

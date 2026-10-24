@@ -1,53 +1,60 @@
 /**
- * El monograma de las alianzas, redibujado.
+ * El monograma de las alianzas de Invitoo, redibujado con geometría exacta.
  *
- * El logo original es un trazado automático: en vector limpio ocupa 21 KB
- * (`public/marca/aros.svg`) y a 24 px sus dos líneas concéntricas se
- * empastan hasta parecer una mancha. Esta versión es el mismo dibujo
- * simplificado a un solo trazo, en 600 bytes, y se lee a cualquier tamaño.
+ * Generado por `herramientas/marca/sello_tsx.py` a partir del logotipo de
+ * 3240 px (`marca-origen/insta invitoo/logo largo 4.png`): dos circunferencias
+ * perfectas por alianza (el doble trazo del original), el entrelazado calculado
+ * con arcos (el aro izquierdo pasa por encima arriba y el derecho abajo) y el
+ * brillante como polígono limpio. Pesa menos de 1 KB.
  *
- * Para usos grandes —cabecera, portadas, impresión— va el SVG de
- * `/marca/aros.svg`, que es fiel al original. Éste es para lo pequeño:
- * favicon, loader, firma al pie, sello de confirmación.
+ * Dos cortes ópticos, como en una tipografía:
+ * - **fino** (≥ 48 px): el dibujo fiel, con las dos líneas de cada aro.
+ * - **grueso** (< 48 px): cada aro como una banda maciza. A 22–40 px las dos
+ *   líneas finas se empastan; la banda conserva la silueta y el entrelazado.
+ *   Se puede forzar con `corte`.
  *
- * Proporciones tomadas del original: aro derecho mayor que el izquierdo,
- * solapados a un tercio, y el brillante sobre el izquierdo.
+ * API sin cambios: `size`, `girando` y `className`. viewBox 300 × 212, como antes.
+ * Para usos grandes (cabecera, portadas, impresión) están `public/marca/*.svg`.
  */
+
+/** Trazados en el viewBox 300 × 212 (para quien necesite el dibujo fuera de React). */
+export const ALIANZAS_VIEWBOX = "0 0 300 212";
+export const ALIANZAS_FINO = "M142.3 160.2A70.3 70.3 0 1 0 133.6 169.7A89.1 89.1 0 0 1 130.9 165.6A65.5 65.5 0 1 1 139.6 155.7A76.6 76.6 0 0 0 142.3 160.2ZM152.7 172.7A86.2 86.2 0 1 0 144 181.7A89.1 89.1 0 0 1 140.7 178.3A81.4 81.4 0 1 1 149.3 169.2A76.6 76.6 0 0 0 152.7 172.7ZM142.3 75.4A76.6 76.6 0 1 0 149.3 66.4A81.4 81.4 0 0 1 152.3 70.3A71.7 71.7 0 1 1 145.3 79.7A70.3 70.3 0 0 0 142.3 75.4ZM129.9 62.7A93.9 93.9 0 1 0 137 54.1A81.4 81.4 0 0 1 140.7 57.3A89.1 89.1 0 1 1 133.6 65.9A70.3 70.3 0 0 0 129.9 62.7Z";
+export const BRILLANTE_FINO = "M51.4 12.3L66.1 0.3L86.9 0.3L106.3 0.3L121.1 12.3L91.2 36.5L88.7 36.4L86.2 36.4L83.7 36.4L81.2 36.5ZM83.8 14.8L75.8 14.8L83.8 28.4ZM88.7 14.8L88.7 28.4L96.6 14.8ZM95.2 27L110.2 14.8L102.5 14.8L102 15.9L101.8 15.8ZM104.8 9.8L110.2 9.8L106.3 6.6ZM99.9 8.7L101.6 5.2L94.5 5.2ZM72.5 8.7L77.9 5.2L70.9 5.2ZM67.6 9.8L66.1 6.6L62.2 9.8ZM77.2 27L70.7 15.8L70.5 15.9L69.9 14.8L62.2 14.8ZM83.8 9.8L83.8 7.3L79.8 9.8ZM88.7 9.8L92.6 9.8L88.7 7.3Z";
+export const ALIANZAS_GRUESO = "M159.5 163.2A86.2 86.2 0 1 0 134.9 189A100.7 100.7 0 0 1 121.7 172.8A65.5 65.5 0 1 1 146.4 143.6A65 65 0 0 0 159.5 163.2ZM123.7 72.6A93.9 93.9 0 1 0 145.4 46.1A93 93 0 0 1 160.7 62.2A71.7 71.7 0 1 1 139.1 92.1A58.7 58.7 0 0 0 123.7 72.6Z";
+export const BRILLANTE_GRUESO = "M80.2 36.6L50.3 12.3L65.1 0.3L107.4 0.3L122.1 12.3L92.2 36.6L89.2 36.4L86.2 36.4L83.2 36.4ZM83.1 15.4L77 15.4L83.1 25.9ZM89.4 15.4L89.4 25.9L95.5 15.4ZM108.3 15.4L102.9 15.4L102.2 16.9L102 16.7L97.7 24.1ZM108.3 9.2L106.6 7.7L105.9 9.2ZM99.6 7.7L100.5 5.9L96.8 5.9ZM72.8 7.7L75.6 5.9L71.9 5.9ZM65.9 7.7L65.2 8.3L64.1 9.2L66.6 9.2ZM74.8 24.1L70.5 16.7L70.2 16.9L69.5 15.4L64.1 15.4L67.2 17.9ZM83.1 9.2L83.1 8.5L82.1 9.2ZM89.4 9.2L90.3 9.2L89.4 8.5Z";
 
 type Props = {
   size?: number;
   /** Los aros giran y encajan. Loader de la invitación. */
   girando?: boolean;
   className?: string;
+  /** Corte óptico. Por defecto, «grueso» por debajo de 48 px y «fino» desde ahí. */
+  corte?: "fino" | "grueso";
 };
 
 export default function SelloAlianzas({
   size = 48,
   girando = false,
   className,
+  corte,
 }: Props) {
+  const grueso = (corte ?? (size < 48 ? "grueso" : "fino")) === "grueso";
   return (
     <svg
-      viewBox="0 0 300 212"
+      viewBox={ALIANZAS_VIEWBOX}
       width={size}
       height={(size * 212) / 300}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={9}
+      fill="currentColor"
       aria-hidden="true"
       className={className}
     >
       <g
         className={girando ? "sello-gira" : undefined}
-        style={{ transformOrigin: "150px 115px" }}
+        style={{ transformOrigin: "146.1px 117.8px" }}
       >
-        <circle cx="71" cy="118" r="65" />
-        <circle cx="201" cy="110" r="84" />
-        <path
-          d="M71 46 42 13h58L71 46ZM42 13h58M71 46 56 13M71 46l15-33"
-          strokeWidth="6"
-          strokeLinejoin="round"
-        />
+        <path d={grueso ? ALIANZAS_GRUESO : ALIANZAS_FINO} />
+        <path d={grueso ? BRILLANTE_GRUESO : BRILLANTE_FINO} />
       </g>
       <style>{`
         @keyframes selloGira { to { transform: rotate(360deg); } }

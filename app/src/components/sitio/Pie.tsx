@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PLANTILLAS } from "@/data/plantillas";
 import { EMAIL, INSTAGRAM, WHATSAPP } from "@/lib/contacto";
 
 export default function Pie() {
@@ -14,16 +15,16 @@ export default function Pie() {
             height={53}
             className="h-auto w-[156px]"
           />
-          <p className="mt-5 max-w-[20rem] text-[0.9rem] leading-relaxed opacity-60">
+          <p className="mt-5 max-w-[20rem] text-[1rem] leading-relaxed opacity-60">
             Diseñamos la invitación de vuestra boda como una pieza a medida.
-            Madrid, y a distancia a donde haga falta.
+            Desde Barcelona, y a distancia a donde haga falta.
           </p>
         </div>
 
         {/* La web partida en páginas: aquí está el mapa entero. */}
-        <div className="flex flex-col gap-3 text-[0.9rem]">
+        <div className="flex flex-col gap-3 text-[1rem]">
           <Link href="/plantillas" className="min-h-11 leading-[2.75rem] opacity-75 hover:opacity-100">
-            Las doce plantillas
+            Las {PLANTILLAS.length} plantillas
           </Link>
           <Link href="/servicios" className="min-h-11 leading-[2.75rem] opacity-75 hover:opacity-100">
             Qué hacemos
@@ -34,9 +35,12 @@ export default function Pie() {
           <Link href="/preguntas" className="min-h-11 leading-[2.75rem] opacity-75 hover:opacity-100">
             Preguntas
           </Link>
+          <Link href="/colaboradores" className="min-h-11 leading-[2.75rem] opacity-75 hover:opacity-100">
+            Wedding planners, fincas y hoteles
+          </Link>
         </div>
 
-        <div className="flex flex-col gap-3 text-[0.9rem]">
+        <div className="flex flex-col gap-3 text-[1rem]">
           <a
             href={`https://wa.me/${WHATSAPP}`}
             target="_blank"
@@ -61,20 +65,23 @@ export default function Pie() {
           </a>
         </div>
 
-        <div className="flex flex-col gap-3 text-[0.9rem]">
+        <div className="flex flex-col gap-3 text-[1rem]">
           <Link href="/para-invitados" className="min-h-11 leading-[2.75rem] opacity-75 hover:opacity-100">
-            ¿Has recibido una invitación?
+            ¿Venís de una boda nuestra?
           </Link>
-          <Link href="/aviso-legal" className="min-h-11 leading-[2.75rem] opacity-50 hover:opacity-100">
+          <Link href="/privacidad" className="min-h-11 leading-[2.75rem] opacity-75 hover:opacity-100">
+            Privacidad
+          </Link>
+          <Link href="/aviso-legal" className="min-h-11 leading-[2.75rem] opacity-75 hover:opacity-100">
             Aviso legal
           </Link>
-          <Link href="/privacidad" className="min-h-11 leading-[2.75rem] opacity-50 hover:opacity-100">
-            Privacidad
+          <Link href="/condiciones" className="min-h-11 leading-[2.75rem] opacity-75 hover:opacity-100">
+            Condiciones de contratación
           </Link>
         </div>
       </div>
 
-      <p className="mx-auto mt-12 max-w-[72rem] text-[0.75rem] opacity-40">
+      <p className="mx-auto mt-12 max-w-[72rem] text-[1rem] opacity-60">
         Invitoo © {new Date().getFullYear()}
       </p>
     </footer>

@@ -1,0 +1,277 @@
+/* ------------------------------------------------------------------
+   SON DE FUEGO (salsa) — K4 · docs/16b §4
+   Crema de cartel (--papel), tinta tostada (--tinta), rojo terciopelo
+   (--acento). La brasa (--acento2) y el latón (--laton) son brillos:
+   filetes, bombillas y varillas, nunca texto.
+   ------------------------------------------------------------------ */
+@property --fu-p { syntax: "<number>"; inherits: true; initial-value: 1; }
+@property --fu-q { syntax: "<number>"; inherits: true; initial-value: 1; }
+@property --fu-r { syntax: "<number>"; inherits: true; initial-value: 1; }
+
+.lienzo[data-plantilla="fuego"] {
+  --acento2: color-mix(in oklch, #e07a2c 85%, var(--acento));
+  --laton: #b8913f;
+  --laton-g: linear-gradient(135deg, #8a6a2a, #e9cf8a 40%, #b8913f 60%, #7c5d22);
+  --terciopelo: radial-gradient(120% 90% at 30% 20%, color-mix(in oklch, var(--acento) 80%, #fff 20%), var(--acento) 45%, color-mix(in oklch, var(--acento) 70%, #000) 100%);
+  --pincel: var(--p-acento), "Mr Dafoe", cursive;
+  --ease-carta: cubic-bezier(.22,.61,.36,1);
+  font-size: 1.125rem;
+  line-height: 1.65;
+}
+.lienzo[data-plantilla="fuego"] .display {
+  font-weight: 400; letter-spacing: .005em; line-height: 1.08;
+  /* Serigrafía con el registro desplazado. */
+  text-shadow: 1px 1px 0 color-mix(in srgb, var(--acento2) 30%, transparent);
+}
+.lienzo[data-plantilla="fuego"][data-ornamento] {
+  --orn-w: 160px; --orn-h: 12px;
+  --orn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 12'%3E%3Cpath d='M0 6H160' stroke='%23000'/%3E%3Ccircle cx='8' cy='6' r='4'/%3E%3Ccircle cx='35.6' cy='6' r='4'/%3E%3Ccircle cx='63.2' cy='6' r='4'/%3E%3Ccircle cx='100' cy='6' r='4'/%3E%3Ccircle cx='118.4' cy='6' r='4'/%3E%3C/svg%3E");
+}
+.lienzo[data-plantilla="fuego"] .y-gesto,
+.lienzo[data-plantilla="fuego"] .fu-y { font-family: var(--pincel); font-style: normal; text-shadow: none; }
+
+/* —— cabecera —— */
+.fu-hero {
+  display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
+  padding: calc(env(safe-area-inset-top, 0px) + 5rem) 1.25rem calc(env(safe-area-inset-bottom, 0px) + 2rem);
+  text-align: center; color: #fff6ec;
+}
+.grad-fuego .kv-grad { filter: saturate(1.15) sepia(.25) hue-rotate(-12deg) contrast(1.06) brightness(.82); }
+.fu-tinte { position: absolute; inset: 0; pointer-events: none; }
+.fu-tinte::before {
+  content: ""; position: absolute; inset: 0;
+  /* Luz de tungsteno y terciopelo: el metraje vira a rojo cálido. */
+  background:
+    linear-gradient(180deg, color-mix(in oklch, var(--acento2) 35%, transparent), transparent 45%),
+    color-mix(in oklch, var(--acento) 55%, transparent);
+  mix-blend-mode: multiply;
+}
+.fu-tinte::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgb(30 10 8 / .78) 0 36%, rgb(30 10 8 / .2) 66%, transparent 82%);
+}
+.fu-rotulo { position: relative; z-index: 2; width: 100%; max-width: 30rem; }
+.fu-esta { font-size: 1.0625rem; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; }
+.fu-nombres { margin-top: .5rem; line-height: 1.02; text-shadow: 0 2px 26px rgb(0 0 0 / .35) !important; }
+.fu-nombres .fu-y { display: block; font-size: .62em; line-height: 1; color: #ffd2a8; margin-block: .05em; }
+.fu-cuando { margin-top: 1rem; font-size: 1.125rem; line-height: 1.45; }
+.fu-baja { margin-top: 1.2rem; color: inherit; }
+.lienzo[data-plantilla="fuego"] .kv-play { --kv-play-fondo: rgb(42 20 17 / .5); }
+
+/* —— el abanico (MOMENTO WOW) —— */
+.fu-abanico-escena { position: relative; height: 150svh; }
+.fu-abanico-fijo {
+  position: sticky; top: 0; min-height: 100svh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 3rem 1.25rem; text-align: center;
+}
+.fu-abanico { position: relative; width: min(86vw, 24rem); aspect-ratio: 2 / 1.15; }
+.fu-pliegue {
+  position: absolute; left: 50%; bottom: 0; width: 26%; height: 100%; margin-left: -13%;
+  transform-origin: 50% 100%;
+  transform: rotate(calc(var(--i) * var(--fu-p) * 17deg));
+  clip-path: polygon(46% 100%, 54% 100%, 100% 4%, 75% 0, 50% 2%, 25% 0, 0 4%);
+  background:
+    linear-gradient(90deg, transparent 49%, color-mix(in srgb, var(--laton) 85%, #fff) 49.5% 50.5%, transparent 51%),
+    linear-gradient(90deg, rgb(0 0 0 / .22), transparent 30% 70%, rgb(255 255 255 / .12)),
+    var(--terciopelo);
+  filter: drop-shadow(0 4px 6px rgb(0 0 0 / .18));
+}
+.fu-pliegue:nth-child(even) { filter: brightness(.86); }
+.fu-eje {
+  position: absolute; left: 50%; bottom: -.7rem; width: 1.4rem; height: 1.4rem; margin-left: -.7rem; border-radius: 50%;
+  background: var(--laton-g); box-shadow: 0 2px 5px rgb(0 0 0 / .3);
+}
+.fu-abanico-y { margin-top: 2.2rem; font-family: var(--display); font-size: 2rem; letter-spacing: .1em; }
+.fu-abanico-y span { font-family: var(--pincel); color: var(--acento-texto); font-size: 1.3em; letter-spacing: 0; }
+.fu-frase { margin-top: 1.2rem; max-width: 24rem; font-size: clamp(1.6rem, 7vw, 2.1rem); line-height: 1.2; text-wrap: balance; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .fu-abanico-escena {
+      view-timeline: --fu-ab block;
+      animation: fu-abre linear both;
+      animation-timeline: --fu-ab;
+      animation-range: cover 12% cover 58%;
+    }
+  }
+}
+@keyframes fu-abre { from { --fu-p: 0; } to { --fu-p: 1; } }
+/* Reserva sin scroll-timeline: el abanico se abre al asomar (escenas.tsx). */
+@supports not (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    html.js .fu-abanico-fijo .fu-pliegue { transition: transform 1400ms var(--ease-carta); }
+    html.js .fu-abanico-fijo[data-k-espera]:not([data-k-visto]) .fu-pliegue { transform: none; }
+  }
+}
+@media (max-height: 560px) { .fu-abanico-escena { height: auto; } .fu-abanico-fijo { position: relative; } }
+
+/* —— títulos y secciones —— */
+.fu-seccion { padding: 5.5rem 1.25rem 4rem; }
+.fu-titulo { text-align: center; max-width: 30rem; margin-inline: auto; }
+.fu-antes { font-size: 1.0625rem; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--acento-texto); text-align: center; }
+.fu-titulo h2 { margin-top: .5rem; font-size: clamp(2.4rem, 11vw, 3.4rem); text-wrap: balance; }
+.fu-orn { display: block; width: 9rem; height: .7rem; margin: 1.1rem auto 0; overflow: visible; }
+.fu-orn path { stroke: var(--laton); stroke-width: 1; }
+.fu-orn circle { fill: var(--laton); }
+
+/* —— nuestros pasos —— */
+.fu-pasos { margin-top: 2.8rem; display: grid; gap: 2.6rem; }
+.fu-pasos li { max-width: 26rem; }
+.fu-pasos li[data-lado="der"] { margin-left: auto; text-align: right; }
+.fu-conteo { font-family: var(--pincel); font-size: 1.8rem; line-height: 1; color: var(--acento-texto); }
+.fu-paso-cuando { margin-top: .3rem; font-size: 1.0625rem; letter-spacing: .1em; text-transform: uppercase; opacity: .85; }
+.fu-pasos h3 { margin-top: .2rem; font-size: clamp(1.8rem, 8vw, 2.3rem); }
+.fu-paso-texto { margin-top: .5rem; text-wrap: pretty; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .fu-pasos li {
+      animation: fu-cruza linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 30%;
+    }
+    .fu-pasos li[data-lado="der"] { animation-name: fu-cruza-der; }
+  }
+}
+@keyframes fu-cruza { from { transform: translateX(-24px); opacity: .2; } to { transform: none; opacity: 1; } }
+@keyframes fu-cruza-der { from { transform: translateX(24px); opacity: .2; } to { transform: none; opacity: 1; } }
+
+/* —— la clave (cuenta atrás) —— */
+.fu-cuenta .fu-antes { color: var(--hondo-acento, var(--acento-texto)); }
+.fu-clave { max-width: 30rem; margin: 2.6rem auto 0; text-align: center; }
+.fu-marcos { display: grid; grid-template-columns: repeat(4, 1fr); gap: .5rem; }
+.fu-marco {
+  position: relative; display: grid; gap: .2rem; padding: 1rem .2rem .8rem;
+  border-radius: 6px; border: 2px solid var(--laton);
+  background:
+    radial-gradient(circle, #ffe6a8 0 2px, transparent 2.5px) 0 0 / 12px 12px repeat-x,
+    radial-gradient(circle, #ffe6a8 0 2px, transparent 2.5px) 0 100% / 12px 12px repeat-x,
+    rgb(0 0 0 / .14);
+}
+.fu-marco-n { font-size: clamp(1.9rem, 9vw, 2.6rem); line-height: 1; }
+.fu-marco-et { font-size: 1.0625rem; letter-spacing: .08em; }
+.fu-cifra { display: inline-block; }
+@media (prefers-reduced-motion: no-preference) {
+  .fu-cifra { animation: fu-cifra 320ms var(--ease-carta) both; }
+}
+@keyframes fu-cifra { from { opacity: 0; transform: translateY(.25em); } }
+.fu-clave-fecha { font-size: clamp(1.8rem, 8vw, 2.6rem); text-wrap: balance; }
+.fu-clave-linea { position: relative; height: 1.4rem; margin: 2.2rem auto 0; max-width: 18rem; }
+.fu-clave-linea::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: currentColor; opacity: .4; }
+.fu-clave-linea i {
+  position: absolute; top: 50%; left: calc(var(--paso) / 16 * 100%); width: 12px; height: 12px; margin-top: -6px; border-radius: 50%;
+  background: #ffe1a0; box-shadow: 0 0 8px rgb(255 214 140 / .7);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .fu-clave-linea i { opacity: .3; animation: fu-golpe 2s linear 60; animation-delay: calc(var(--paso) * 125ms); }
+}
+@keyframes fu-golpe { 0% { opacity: 1; transform: scale(1.25); } 6% { opacity: 1; transform: none; } 14%, 100% { opacity: .3; } }
+.fu-clave-ley { margin-top: .9rem; font-size: 1.0625rem; opacity: .9; }
+
+/* —— el cartel del club —— */
+.fu-cartel {
+  position: relative; text-align: center; padding: 3rem 1.5rem;
+  border-radius: 6px; color: #fff3e6;
+  background: var(--terciopelo);
+  box-shadow: inset 0 0 0 6px var(--laton), inset 0 0 0 7px rgb(0 0 0 / .25), 0 18px 40px -20px rgb(60 10 6 / .6);
+}
+.fu-bombillas { position: absolute; inset: 6px 10px; pointer-events: none; }
+.fu-bombillas i {
+  position: absolute; width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; border-radius: 50%;
+  background: #ffe6a8;
+  box-shadow: 0 0 10px 2px rgb(255 214 140 / .6);
+  opacity: clamp(.2, calc(var(--fu-q) * 24 - var(--i)), 1);
+}
+.fu-cartel .fu-antes { color: #ffe0b8; }
+.fu-cartel-t { margin-top: .4rem; font-size: clamp(2.2rem, 10vw, 3rem); }
+.fu-cartel-t .fu-y { color: #ffd2a8; }
+.fu-cartel-dato { margin-top: .5rem; font-size: 1.125rem; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .fu-cartel {
+      animation: fu-enciende linear both;
+      animation-timeline: view();
+      animation-range: cover 10% cover 50%;
+    }
+  }
+}
+@keyframes fu-enciende { from { --fu-q: 0; } to { --fu-q: 1; } }
+
+/* —— el repertorio —— */
+.fu-repertorio { margin-top: 2.8rem; display: grid; gap: 2rem; }
+.fu-repertorio li { display: grid; grid-template-columns: auto 1fr; column-gap: 1rem; align-items: center; }
+.fu-rep-hora { font-size: 2.3rem; line-height: 1; color: var(--acento-texto); }
+.fu-rep-filete { height: 2px; background: var(--laton-g); transform-origin: 0 50%; }
+.fu-rep-que, .fu-rep-donde { grid-column: 1 / -1; }
+.fu-rep-que { margin-top: .4rem; font-size: 1.1875rem; font-weight: 500; }
+.fu-rep-donde { font-size: 1.0625rem; opacity: .85; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .fu-rep-filete {
+      animation: fu-traza linear both;
+      animation-timeline: view();
+      animation-range: cover 10% cover 40%;
+    }
+  }
+}
+@keyframes fu-traza { from { transform: scaleX(0); } to { transform: none; } }
+
+/* —— vestid para bailar —— */
+.fu-telas { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-top: 2.6rem; }
+.fu-telas li {
+  width: 4rem; height: 6rem; border-radius: 4px 4px 40% 40% / 4px 4px 14% 14%;
+  transform-origin: 50% 0;
+  box-shadow: 0 8px 16px -8px rgb(0 0 0 / .35), inset 0 3px 0 var(--laton);
+}
+.fu-telas li[data-tela="terciopelo"] { background: radial-gradient(120% 90% at 30% 20%, color-mix(in srgb, var(--c) 75%, #fff), var(--c) 50%, color-mix(in srgb, var(--c) 70%, #000)); }
+.fu-telas li[data-tela="seda"] { background: linear-gradient(100deg, var(--c), color-mix(in srgb, var(--c) 60%, #fff) 35%, var(--c) 55%, color-mix(in srgb, var(--c) 80%, #000)); }
+.fu-nota { margin-top: 2.2rem; text-align: center; text-wrap: pretty; }
+.fu-zapato { margin-top: 1rem; text-align: center; font-family: var(--pincel); font-size: 1.9rem; line-height: 1.1; color: var(--acento-texto); }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .fu-telas li {
+      animation: fu-balancea linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 40%;
+    }
+  }
+}
+@keyframes fu-balancea { 0% { transform: rotate(6deg); } 40% { transform: rotate(-2deg); } 70% { transform: rotate(1deg); } 100% { transform: none; } }
+
+/* —— regalos —— */
+.fu-detalle {
+  margin-block: 3.5rem; border-radius: 6px; padding-top: .5rem;
+  box-shadow: inset 0 0 0 1px var(--laton), inset 0 0 0 5px transparent, inset 0 0 0 6px color-mix(in srgb, var(--laton) 50%, transparent);
+}
+
+/* —— RSVP: el abanico chico que se abre al confirmar —— */
+.fu-rsvp-abanico { display: grid; place-items: center; padding-top: 4.5rem; margin-bottom: -2.5rem; }
+.fu-abanico-chico { width: 9rem; --fu-p: .12; }
+.mr-fuego[data-confirmado] .fu-abanico-chico { --fu-p: 1; }
+@media (prefers-reduced-motion: no-preference) {
+  .fu-abanico-chico .fu-pliegue { transition: transform 900ms cubic-bezier(.34,1.12,.64,1); }
+}
+.lienzo[data-plantilla="fuego"] .mr-frase { font-family: var(--pincel); font-weight: 400; font-size: clamp(2.6rem, 12vw, 3.6rem); color: var(--acento-texto); text-shadow: none; }
+
+/* —— dos bombillas —— */
+.fu-dos { padding: 5rem 1.25rem 2rem; text-align: center; }
+.fu-dos-fila { display: flex; justify-content: center; gap: .9rem; }
+.fu-dos-fila i {
+  width: 14px; height: 14px; border-radius: 50%; background: #ffe1a0; box-shadow: 0 0 12px 3px rgb(255 214 140 / .6);
+  opacity: calc(1 - var(--fu-r) * .85);
+}
+.fu-dos-fila i[data-par] { opacity: 1; background: #ffd27a; }
+.fu-dos-t { margin-top: 1.6rem; font-size: clamp(2rem, 9vw, 2.8rem); }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .fu-dos {
+      animation: fu-apaga linear both;
+      animation-timeline: view();
+      animation-range: cover 15% cover 55%;
+    }
+  }
+}
+@keyframes fu-apaga { from { --fu-r: 0; } to { --fu-r: 1; } }
+.fu-orn-cierre { width: 10rem; }
+
+/* Pilas de reserva sans (GENERICA de tokens.ts no conoce estas familias). */
+.lienzo[data-plantilla="fuego"] { font-family: var(--p-texto), "Work Sans", ui-sans-serif, system-ui, sans-serif; }

@@ -1,0 +1,351 @@
+/* ------------------------------------------------------------------
+   ÓRBITA (`orbita`) — K3 · docs/16a §9 · modo oscuro
+   Noche (--papel), luz de estrella (--tinta), violeta (--acento).
+   La plata (--metal) es material fijo: 11,77:1 sobre la noche, así que
+   también vale para texto. La nebulosa (--nebulosa) solo en fondos.
+   ------------------------------------------------------------------ */
+@property --or-av { syntax: "<number>"; inherits: true; initial-value: 1; }
+
+.lienzo[data-plantilla="orbita"] {
+  --metal: #c7ccd6;
+  --nebulosa: color-mix(in srgb, var(--acento) 45%, #2a1a6a);
+  --script: var(--p-script), "Parisienne", cursive;
+  --or-display: var(--p-display), "Josefin Sans", Futura, ui-sans-serif, sans-serif;
+  font-family: var(--p-texto), "Sora", ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.75;
+  background-image:
+    radial-gradient(1px 1px at 12% 8%, rgb(255 255 255 / .55), transparent 60%),
+    radial-gradient(1px 1px at 72% 22%, rgb(255 255 255 / .45), transparent 60%),
+    radial-gradient(1.5px 1.5px at 38% 61%, rgb(255 255 255 / .5), transparent 60%),
+    radial-gradient(1px 1px at 88% 79%, rgb(255 255 255 / .4), transparent 60%),
+    radial-gradient(120% 50% at 80% 0%, color-mix(in srgb, var(--nebulosa) 22%, transparent), transparent 70%);
+  background-size: 260px 300px, 340px 280px, 300px 420px, 220px 360px, 100% 100%;
+}
+.lienzo[data-plantilla="orbita"] .display {
+  font-family: var(--or-display); font-weight: 300; letter-spacing: .02em;
+}
+.lienzo[data-plantilla="orbita"] :is(.text-\[1rem\], .text-\[0\.95rem\], .text-sm, .text-base, label, legend) { font-size: 1.0625rem; }
+
+/* —— cabecera —— */
+.or-hero {
+  display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
+  padding: calc(env(safe-area-inset-top, 0px) + 5rem) 1.5rem calc(env(safe-area-inset-bottom, 0px) + 6.5rem);
+  text-align: center; color: var(--tinta);
+}
+/* El atardecer, virado a crepúsculo violeta. */
+.grad-orbita .kv-grad { filter: hue-rotate(205deg) saturate(.7) brightness(.6) contrast(1.12); }
+.or-tinte { position: absolute; inset: 0; pointer-events: none; }
+.or-tinte::before {
+  content: ""; position: absolute; inset: 0; mix-blend-mode: color; opacity: .5;
+  background: linear-gradient(180deg, #3a2a8a, var(--nebulosa) 50%, #0b0f24);
+}
+.or-tinte::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(to top,
+      color-mix(in srgb, var(--papel) 72%, transparent) 0 40%,
+      color-mix(in srgb, var(--papel) 24%, transparent) 72%,
+      color-mix(in srgb, var(--papel) 45%, transparent));
+}
+.or-polvo {
+  position: absolute; inset: 0 0 35%; pointer-events: none; opacity: .9;
+  background-image:
+    radial-gradient(1.2px 1.2px at 20% 30%, #fff, transparent 70%),
+    radial-gradient(1px 1px at 60% 12%, #fff, transparent 70%),
+    radial-gradient(1.6px 1.6px at 82% 46%, #fff, transparent 70%),
+    radial-gradient(1px 1px at 40% 70%, rgb(255 255 255 / .8), transparent 70%);
+  background-size: 140px 160px, 190px 150px, 230px 210px, 170px 190px;
+  -webkit-mask-image: linear-gradient(#000 40%, transparent);
+  mask-image: linear-gradient(#000 40%, transparent);
+}
+
+/* Los dos planetas, cada uno en su elipse, alrededor de las iniciales. */
+.or-astros {
+  position: absolute; z-index: 1; left: 50%; top: calc(env(safe-area-inset-top, 0px) + 13svh);
+  width: min(72vw, 19rem); aspect-ratio: 1.4; translate: -50% 0; pointer-events: none;
+}
+.or-elipse {
+  position: absolute; left: 50%; top: 50%; width: 100%; aspect-ratio: 2.1;
+  border: 1px solid color-mix(in srgb, var(--metal) 40%, transparent); border-radius: 50%;
+  translate: -50% -50%;
+}
+.or-e1 { rotate: -16deg; }
+.or-e2 { rotate: 20deg; width: 82%; }
+.or-gx, .or-gy { position: absolute; inset: 0; }
+.or-gx { transform: translateX(50%); }
+.or-e2 .or-gx { transform: translateX(-50%); }
+.or-planeta { position: absolute; left: 50%; top: 50%; width: 28px; height: 28px; margin: -14px 0 0 -14px; overflow: visible; }
+.or-p2 { width: 22px; height: 22px; margin: -11px 0 0 -11px; }
+.or-planeta-cuerpo { fill: color-mix(in srgb, var(--acento) 70%, #fff); }
+.or-p2 .or-planeta-cuerpo { fill: var(--metal); }
+.or-planeta-anillo { fill: none; stroke: var(--metal); stroke-width: 1.4; }
+.or-iniciales {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: .5rem;
+  font-family: var(--or-display); font-weight: 200; font-size: 2.6rem; letter-spacing: .1em; color: var(--tinta);
+}
+.or-iniciales span { font-size: 1.6rem; color: var(--acento); }
+@media (prefers-reduced-motion: no-preference) {
+  /* Dos senos desfasados = una elipse. 3 vueltas y se quedan quietos (WCAG 2.2.2). */
+  .or-e1 .or-gx { animation: or-x 20s cubic-bezier(.37,0,.63,1) -10s 6 alternate both; }
+  .or-e1 .or-gy { animation: or-y 20s cubic-bezier(.37,0,.63,1) -5s 6 alternate both; }
+  .or-e2 .or-gx { animation: or-x 27.5s cubic-bezier(.37,0,.63,1) -27.5s 6 alternate both; }
+  .or-e2 .or-gy { animation: or-y 27.5s cubic-bezier(.37,0,.63,1) -13.75s 6 alternate both; }
+}
+@keyframes or-x { from { transform: translateX(-50%); } to { transform: translateX(50%); } }
+@keyframes or-y { from { transform: translateY(-50%); } to { transform: translateY(50%); } }
+
+.or-rotulo { position: relative; z-index: 2; max-width: 30rem; text-shadow: 0 1px 20px rgb(0 0 0 / .45); }
+.or-lema { font-family: var(--or-display); font-weight: 300; font-size: 1.0625rem; letter-spacing: .18em; text-transform: uppercase; color: var(--metal); }
+.or-nombres {
+  margin-top: .6rem; font-family: var(--or-display); font-weight: 200; text-transform: uppercase;
+  line-height: 1.02; letter-spacing: .02em;
+}
+.or-y { display: block; font-family: var(--script); text-transform: none; font-size: max(2rem, .5em); line-height: 1.35; margin-block: .1em .05em; color: var(--acento-texto); }
+.or-fecha { margin-top: 1rem; font-size: 1.125rem; }
+.or-lugar { font-size: 1.0625rem; color: var(--metal); }
+.or-baja { margin-top: .9rem; font-family: var(--or-display); text-transform: uppercase; letter-spacing: .18em; color: var(--acento-texto); }
+@media (prefers-reduced-motion: no-preference) {
+  .or-rotulo > *, .or-iniciales { animation: or-enfoca 1600ms var(--ease-carta) both; }
+  .or-rotulo > :nth-child(2) { animation-delay: 300ms; }
+  .or-rotulo > :nth-child(n+3) { animation-delay: 700ms; }
+  main:has(> .apertura[data-estado="dentro"]) :is(.or-rotulo > *, .or-iniciales) { animation-play-state: paused; }
+}
+@keyframes or-enfoca { from { opacity: 0; filter: blur(10px); } }
+
+/* El botón «Ver el vídeo»: un planeta con anillo que gira 30° al pulsarlo. */
+.lienzo[data-plantilla="orbita"] .kv-play {
+  --kv-play-fondo: color-mix(in srgb, var(--papel) 70%, transparent);
+  --kv-play-texto: var(--tinta);
+  --kv-play-borde: color-mix(in srgb, var(--metal) 70%, transparent);
+  min-height: 56px; padding-left: .55rem;
+  font-family: var(--or-display); text-transform: uppercase; letter-spacing: .14em;
+}
+.lienzo[data-plantilla="orbita"] .kv-play::before {
+  content: ""; width: 38px; height: 38px; flex: none; border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, var(--acento) 0 9px, transparent 10px),
+    radial-gradient(closest-side, transparent 0 74%, var(--metal) 76% 82%, transparent 84%);
+  transform: scaleY(.55) rotate(-18deg);
+  transition: transform 400ms var(--ease-carta);
+}
+.lienzo[data-plantilla="orbita"] .kv-play:active::before { transform: scaleY(.55) rotate(12deg); }
+
+/* —— títulos y secciones —— */
+.or-seccion { padding: 5.5rem 1.25rem 4rem; }
+.or-titulo { text-align: center; padding-inline: 1rem; }
+.or-antes { font-family: var(--or-display); font-size: 1.0625rem; letter-spacing: .18em; text-transform: uppercase; color: var(--acento-texto); }
+.or-titulo h2 { text-transform: uppercase; letter-spacing: .14em; margin-top: .5rem; font-size: clamp(1.9rem, 8.6vw, 2.8rem); line-height: 1.15; }
+.or-vineta { display: flex; align-items: center; justify-content: center; gap: .6rem; margin: 1.1rem auto 0; width: min(13rem, 60vw); }
+.or-vineta > span { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--metal)); }
+.or-vineta > span:last-child { transform: scaleX(-1); }
+.or-vineta svg { width: 32px; height: 16px; flex: none; overflow: visible; }
+.or-vineta ellipse { fill: none; stroke: var(--metal); stroke-width: 1; }
+.or-vineta circle { fill: var(--acento); }
+
+/* —— EL WOW: dos órbitas que se encuentran —— */
+.or-historia { padding-top: 5rem; }
+.or-escenario { display: flex; flex-direction: column; align-items: center; justify-content: center; padding-inline: 1.25rem; }
+.or-cielo { position: relative; width: min(90vw, 24rem); aspect-ratio: 1.25; margin-top: 1.5rem; }
+.or-elipse-g {
+  position: absolute; left: 50%; top: 50%; width: 76%; aspect-ratio: 1.6;
+  border: 1px solid color-mix(in srgb, var(--metal) 55%, transparent); border-radius: 50%;
+}
+.or-ga { translate: calc(-50% - (1 - var(--or-av)) * 30%) -50%; rotate: calc((1 - var(--or-av)) * -24deg); }
+.or-gb { translate: calc(-50% + (1 - var(--or-av)) * 30%) -50%; rotate: calc((1 - var(--or-av)) * 24deg); border-color: color-mix(in srgb, var(--acento) 60%, transparent); }
+.or-nombre {
+  position: absolute; white-space: nowrap; padding: .1rem .5rem; background: var(--papel);
+  font-family: var(--or-display); font-size: 1.0625rem; letter-spacing: .16em; text-transform: uppercase;
+}
+.or-ga .or-nombre { left: 50%; top: 0; translate: -50% -50%; color: var(--tinta); }
+.or-gb .or-nombre { left: 50%; bottom: 0; translate: -50% 50%; color: var(--acento-texto); }
+.or-anillos {
+  position: absolute; left: 50%; top: 50%; width: 34%; translate: -50% -50%; overflow: visible;
+  opacity: clamp(0, calc((var(--or-av) - .72) * 4), 1);
+  scale: calc(.6 + var(--or-av) * .4);
+}
+.or-anillos circle { fill: none; stroke-width: 2.2; }
+.or-anillos circle:first-child { stroke: var(--metal); }
+.or-anillos circle:last-child { stroke: var(--acento); }
+.or-escena-pie { margin-top: 1.5rem; max-width: 22rem; text-align: center; font-size: 1.0625rem; color: var(--metal); }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .or-escena { height: 170svh; view-timeline: --or-cielo block; }
+    .or-escenario {
+      position: sticky; top: 0; height: 100svh;
+      animation: or-avance linear both; animation-timeline: --or-cielo; animation-range: contain 0% contain 85%;
+    }
+    .or-anillos { filter: drop-shadow(0 0 calc(var(--or-av) * 10px) color-mix(in srgb, var(--acento) 70%, transparent)); }
+  }
+}
+@keyframes or-avance { from { --or-av: 0; } to { --or-av: 1; } }
+
+.or-bitacora { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 2.5rem; padding-bottom: 3rem; }
+.or-entrada {
+  padding: 1.6rem 1.4rem; border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--metal) 22%, transparent);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--nebulosa) 22%, transparent), transparent 70%);
+}
+.or-cuando { font-family: var(--or-display); font-size: 1.0625rem; letter-spacing: .12em; text-transform: uppercase; color: var(--acento-texto); }
+.or-cap { margin-top: .35rem; font-family: var(--or-display); font-weight: 300; font-size: 1.55rem; line-height: 1.2; }
+.or-foto { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; margin-top: 1rem; border-radius: 10px; filter: saturate(.8); }
+.lienzo .or-foto { outline: none; }
+.or-texto { margin-top: .8rem; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    html.js .or-entrada { animation: or-entra linear both; animation-timeline: view(); animation-range: entry 0% cover 35%; }
+  }
+}
+@keyframes or-entra { from { opacity: 0; transform: translateY(28px) scale(.97); filter: blur(4px); } }
+
+/* —— la luna —— */
+.or-luna { display: flex; flex-direction: column; align-items: center; gap: 1.75rem; padding: 5rem 1.5rem; overflow: clip; }
+.or-luna-disco {
+  width: min(70vw, 18rem); aspect-ratio: 1; border-radius: 50%; overflow: clip;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--metal) 70%, transparent), 0 0 50px 6px color-mix(in srgb, var(--metal) 30%, transparent);
+}
+.or-luna-disco img { width: 100%; height: 115%; object-fit: cover; filter: grayscale(.4) saturate(.8); }
+.lienzo .or-luna-disco img { outline: none; }
+.or-luna-frase { max-width: 16ch; text-align: center; font-family: var(--script); font-size: clamp(2.2rem, 9vw, 3rem); line-height: 1.2; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .or-luna-disco img { animation: or-luna linear both; animation-timeline: view(); animation-range: cover 0% cover 100%; }
+  }
+}
+@keyframes or-luna { from { transform: translateY(-10%); } to { transform: translateY(0); } }
+
+/* —— coordenadas —— */
+.or-coordenadas { position: relative; overflow: clip; }
+.or-carta {
+  position: absolute; left: 50%; top: 3rem; width: min(110vw, 32rem); translate: -50% 0; z-index: 0; pointer-events: none;
+}
+.or-carta :is(circle, path) { fill: none; stroke: var(--metal); stroke-width: .5; opacity: .3; stroke-dasharray: 1; }
+.or-coord-dentro { position: relative; z-index: 1; }
+.or-coord-fecha { margin-top: 2rem; text-align: center; font-size: clamp(1.4rem, 6vw, 1.9rem); line-height: 1.3; text-wrap: balance; }
+.or-coord-datos { display: grid; gap: 1.1rem; width: min(100%, 26rem); margin: 2rem auto 0; text-align: center; }
+.or-coord-datos dt { font-family: var(--or-display); font-size: 1.0625rem; letter-spacing: .2em; text-transform: uppercase; color: var(--acento-texto); }
+.or-coord-datos dd { font-size: 1.1875rem; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .or-coordenadas { view-timeline: --or-coord block; }
+    .or-carta :is(circle, path) { animation: or-traza linear both; animation-timeline: --or-coord; animation-range: entry 10% cover 40%; }
+  }
+}
+@keyframes or-traza { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+
+/* —— T menos —— */
+.or-cuenta { display: flex; flex-direction: column; align-items: center; margin-top: 1.75rem; }
+.or-sistema { position: relative; width: min(86vw, 21rem); aspect-ratio: 1; }
+.or-sol {
+  position: absolute; left: 50%; top: 50%; width: 30%; aspect-ratio: 1; translate: -50% -50%; border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--nebulosa) 60%, transparent), transparent);
+}
+.or-orb {
+  position: absolute; left: 50%; top: 50%; aspect-ratio: 1; translate: -50% -50%; border-radius: 50%;
+  border: .75px solid color-mix(in srgb, var(--metal) 35%, transparent);
+  transition: rotate 1s linear;
+}
+.or-orb > i { position: absolute; top: -5px; left: calc(50% - 5px); width: 10px; height: 10px; border-radius: 50%; background: var(--metal); }
+.or-o1 > i { background: var(--acento); box-shadow: 0 0 10px var(--acento); }
+.or-o3 { transition: rotate 900ms var(--ease-sello); }
+.or-o3 > i { width: 14px; height: 14px; top: -7px; left: calc(50% - 7px); }
+.or-t {
+  position: absolute; inset: 0; display: grid; place-items: center; white-space: nowrap;
+  font-weight: 300; font-size: clamp(2rem, 8.8vw, 3rem); line-height: 1;
+  text-shadow: 0 0 14px var(--papel), 0 0 4px var(--papel);
+}
+.or-tm { color: var(--acento-texto); }
+.or-t-quieto { font-family: var(--or-display); letter-spacing: .1em; }
+.or-unidades { margin-top: .4rem; font-family: var(--or-display); font-size: 1.0625rem; letter-spacing: .18em; text-transform: uppercase; color: var(--metal); }
+.or-cuenta-pie { margin-top: 1.1rem; text-align: center; font-size: 1.125rem; text-wrap: balance; }
+@media (prefers-reduced-motion: reduce) { .or-orb { transition: none; } }
+
+/* —— fases de la misión —— */
+.or-fases { position: relative; margin-top: 3rem; padding-left: 3.6rem; }
+.or-fases ol { display: flex; flex-direction: column; gap: 2.2rem; }
+.or-trayecto {
+  position: absolute; left: 21px; top: 0; bottom: 0; width: 2px;
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--metal) 50%, transparent) 6%, color-mix(in srgb, var(--metal) 50%, transparent) 94%, transparent);
+}
+.or-trayecto i {
+  position: absolute; left: -6px; top: calc(100% - 14px); width: 14px; height: 14px; border-radius: 50%;
+  background: var(--acento); box-shadow: 0 0 14px 3px color-mix(in srgb, var(--acento) 60%, transparent);
+}
+.or-fase { position: relative; display: flex; flex-direction: column; }
+.or-fase-icono {
+  position: absolute; left: -3.6rem; top: 0; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;
+  color: var(--metal); background: var(--papel); border: 1px solid color-mix(in srgb, var(--metal) 60%, transparent);
+}
+.or-fase-nombre { font-family: var(--or-display); font-size: 1.0625rem; letter-spacing: .18em; text-transform: uppercase; color: var(--acento-texto); }
+.or-fase-hora { font-weight: 300; font-size: 1.85rem; line-height: 1.2; }
+.or-fase-que { font-size: 1.2rem; font-weight: 500; line-height: 1.35; }
+.or-fase-donde { font-size: 1.0625rem; color: var(--metal); }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .or-fases { view-timeline: --or-fases block; }
+    .or-trayecto i { animation: or-punto linear both; animation-timeline: --or-fases; animation-range: entry 40% exit 30%; }
+    html.js .or-fase { animation: or-entra linear both; animation-timeline: view(); animation-range: entry 10% cover 35%; }
+  }
+}
+@keyframes or-punto { from { top: 0; } to { top: calc(100% - 14px); } }
+
+/* —— dress code: planetas que entran en su órbita —— */
+.or-planetas { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1.4rem 1.8rem; margin-top: 2.75rem; }
+.or-planetas li { position: relative; width: 3.2rem; aspect-ratio: 1; }
+.or-planetas li:nth-child(4n+2) { width: 2.6rem; }
+.or-planetas li:nth-child(4n+3) { width: 3.8rem; }
+.or-mundo {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: radial-gradient(circle at 32% 30%, color-mix(in srgb, var(--c) 55%, #fff), var(--c) 45%, color-mix(in srgb, var(--c) 55%, #000));
+  box-shadow: 0 0 0 1px rgb(255 255 255 / .18), 0 0 22px -4px color-mix(in srgb, var(--c) 70%, transparent);
+}
+.or-mundo-anillo {
+  position: absolute; left: -35%; right: -35%; top: 40%; height: 22%; border-radius: 50%;
+  border: 1.5px solid var(--metal); rotate: -16deg;
+}
+.or-nota { margin-top: 2.25rem; text-align: center; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    html.js .or-planetas li { animation: or-orbita linear both; animation-timeline: view(); animation-range: entry 20% cover 45%; }
+  }
+}
+@keyframes or-orbita {
+  0% { opacity: 0; transform: translate(calc((var(--i) - 1.5) * 70px), -50px) scale(.4); }
+  60% { opacity: 1; }
+  100% { transform: none; }
+}
+
+/* —— la cápsula de los regalos —— */
+.or-capsula {
+  margin-block: 4rem; padding-top: 1.75rem; border-radius: 2.5rem;
+  border: 1px solid color-mix(in srgb, var(--metal) 55%, transparent);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--nebulosa) 18%, transparent), transparent 60%);
+}
+.or-capsula-antes { text-align: center; font-family: var(--or-display); font-size: 1.0625rem; letter-spacing: .16em; text-transform: uppercase; color: var(--acento-texto); padding-inline: 1.5rem; }
+
+/* —— el cierre: sistema binario —— */
+.or-binario { display: block; width: 60px; height: 60px; position: relative; }
+.or-binario-giro { position: absolute; inset: 0; }
+.or-binario i { position: absolute; top: 50%; width: 9px; height: 9px; margin-top: -4.5px; border-radius: 50%; box-shadow: 0 0 12px 3px currentColor; }
+.or-binario i:first-child { left: 8px; color: var(--metal); background: var(--metal); }
+.or-binario i:last-child { right: 8px; color: var(--acento); background: var(--acento); }
+@media (prefers-reduced-motion: no-preference) {
+  .or-binario-giro { animation: or-gira 60s linear 2; }
+}
+@keyframes or-gira { to { transform: rotate(360deg); } }
+
+/* —— al tocar: estrella fugaz —— */
+.or-toque { position: fixed; inset: 0; z-index: 40; pointer-events: none; overflow: clip; }
+.or-fugaz {
+  position: fixed; width: 60px; height: 2px; margin-top: -1px; transform-origin: 0 50%;
+  background: linear-gradient(90deg, #fff, transparent); border-radius: 2px;
+  animation: or-fugaz 700ms var(--ease-carta) both;
+}
+@keyframes or-fugaz {
+  from { opacity: 1; transform: rotate(145deg) translateX(-10px) scaleX(.2); }
+  to { opacity: 0; transform: rotate(145deg) translateX(70px) scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .or-rotulo > *, .or-iniciales, .or-gx, .or-gy, .or-binario-giro { animation: none !important; }
+}

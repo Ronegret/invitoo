@@ -2,249 +2,366 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { Iman } from "@/components/Gestos";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import EnlaceReserva from "@/components/sitio/EnlaceReserva";
+import { conEjemplo, fechaBonita, useNombres } from "@/components/sitio/nombres";
+import { Magnetico } from "@/components/sistema";
 import { enlaceReserva } from "@/lib/contacto";
+import s from "./cabecera.module.css";
 
 /**
- * Páginas de verdad, no anclas.
+ * La cabecera de invitoo.es (v3, «estilo rodd.es» con la marca de la casa).
  *
- * Antes eran cinco saltos dentro de una sola página de doce mil píxeles.
- * Ahora cada una es una URL: se puede mandar por WhatsApp el enlace de los
- * precios sin mandar la web entera, Google las indexa por separado y el
- * botón de atrás del móvil hace lo que uno espera.
+ *  · Una CÁPSULA FLOTANTE de papel esmerilado (backdrop-filter) que se
+ *    compacta al bajar: menos alto, menos ancho y una sombra cálida. La
+ *    marca no cambia: papel, tinta, granate, Bodoni y el logotipo.
+ *  · Enlaces en texto fino con un SUBRAYADO que se dibuja de izquierda a
+ *    derecha, y una CÁPSULA que se desliza hasta la página en la que estás
+ *    (un solo elemento con transform: al navegar, viaja).
+ *  · «Entrar», discreto, y el CTA «Hablemos» en cápsula con un círculo
+ *    granate y una flecha que gira al pasar el ratón.
+ *  · En móvil, un MENÚ A PANTALLA COMPLETA: enlaces grandes en Bodoni que
+ *    suben escalonados desde su línea (como FlowingMenu), una mini
+ *    invitación viva con los nombres que hayáis escrito y los dos CTA.
+ *
+ * Accesible: enlace para saltar al contenido, `aria-expanded` y
+ * `aria-controls` en el botón, el menú es un diálogo modal con trampa de
+ * foco, Escape lo cierra y el foco vuelve al botón. El resto de la página
+ * queda `inert` mientras está abierto.
+ *
+ * Sin JavaScript: los enlaces de escritorio se ven (en móvil, el pie lleva
+ * todos los enlaces y el CTA de la portada sigue ahí).
  */
-const ENLACES = [
-  { href: "/plantillas", texto: "Plantillas" },
-  { href: "/servicios", texto: "Qué lleva" },
-  { href: "/precios", texto: "Precios" },
-  { href: "/preguntas", texto: "Preguntas" },
+
+const ENLACES: { href: string; texto: string; nota: string; ancho?: boolean }[] = [
+  { href: "/plantillas", texto: "Plantillas", nota: "nueve, vivas" },
+  { href: "/en-directo", texto: "En directo", nota: "en el salón" },
+  { href: "/servicios", texto: "Qué lleva", nota: "todo hecho" },
+  { href: "/precios", texto: "Precios", nota: "pago único" },
+  { href: "/preguntas", texto: "Preguntas", nota: "sin letra pequeña" },
+  { href: "/colaboradores", texto: "Colaboradores", nota: "fincas", ancho: true },
 ];
 
-/**
- * La cabecera.
- *
- * Dos cosas la separan de un menú corriente:
- *
- *  · **La píldora que persigue.** Una pastilla de fondo se desplaza y se
- *    estira hasta el enlace que tienes debajo del ratón, y vuelve a la
- *    sección en la que estás al salir. Es UN solo elemento animado con
- *    `transform`, no un fondo por enlace: cuesta lo mismo tenerlo que no.
- *  · **El menú móvil escalonado.** Los enlaces entran uno detrás de otro
- *    desde la derecha, no todos de golpe.
- *
- * Además la cabecera se encoge al bajar, para devolver sitio a la página.
- */
-export default function Cabecera() {
+/** La invitación de ejemplo del menú. La calcula el layout (servidor). */
+export type Mini = { slug: string; ejemplo: [string, string, string]; fecha: string; desde: number };
+
+export default function Cabecera({ mini }: { mini: Mini }) {
+  const ruta = usePathname();
   const [abierto, setAbierto] = useState(false);
   const [bajado, setBajado] = useState(false);
-  const ruta = usePathname();
-  /**
-   * La portada de la home es el vídeo de marca, que es crema de principio a
-   * fin: ahí la cabecera tiene que ir en tinta desde el primer instante o no
-   * se ve. Las páginas interiores abren con fotografía bajo un degradado
-   * oscuro, y ahí manda el blanco.
-   */
-  const portadaClara = ruta === "/";
-  /** ¿Se escribe en tinta o en blanco? */
-  const enTinta = bajado || portadaClara;
-  // La píldora descansa sobre la página en la que estás.
+  const [pildora, setPildora] = useState<{ x: number; w: number } | null>(null);
+  const cabecera = useRef<HTMLElement>(null);
+  const nav = useRef<HTMLUListElement>(null);
+  const boton = useRef<HTMLButtonElement>(null);
+  const panel = useRef<HTMLDivElement>(null);
+
   const activo =
-    ENLACES.find((e) => ruta === e.href || ruta.startsWith(e.href + "/"))?.href ??
-    "";
-  const [pildora, setPildora] = useState({ x: 0, w: 0, visible: false });
-  const nav = useRef<HTMLElement>(null);
+    ENLACES.find((e) => ruta === e.href || ruta.startsWith(e.href + "/"))?.href ?? null;
+
+  /* ───── Se compacta al bajar ───── */
+  useEffect(() => {
+    let raf = 0;
+    const mirar = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => setBajado(window.scrollY > 24));
+    };
+    mirar();
+    window.addEventListener("scroll", mirar, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", mirar);
+    };
+  }, []);
+
+  /* ───── La cápsula de la página activa ───── */
+  const medir = useCallback(() => {
+    const lista = nav.current;
+    if (!lista || !activo) return setPildora(null);
+    const a = lista.querySelector<HTMLElement>(`[data-href="${activo}"]`);
+    if (!a) return setPildora(null);
+    setPildora({ x: a.offsetLeft, w: a.offsetWidth });
+  }, [activo]);
+
+  useLayoutEffect(() => {
+    medir();
+  }, [medir, bajado]);
 
   useEffect(() => {
-    document.body.style.overflow = abierto ? "hidden" : "";
+    const obs = new ResizeObserver(medir);
+    if (nav.current) obs.observe(nav.current);
+    // Las fuentes cambian el ancho de las palabras al llegar.
+    document.fonts?.ready.then(medir).catch(() => {});
+    return () => obs.disconnect();
+  }, [medir]);
+
+  /* ───── Cerrar al navegar ───── */
+  const [rutaVista, setRutaVista] = useState(ruta);
+  if (rutaVista !== ruta) {
+    setRutaVista(ruta);
+    setAbierto(false);
+  }
+
+  /* ───── El menú móvil: modal de verdad ───── */
+  useEffect(() => {
+    if (!abierto) return;
+    const html = document.documentElement;
+    const antes = html.style.overflow;
+    html.style.overflow = "hidden";
+    html.dataset.menu = "abierto";
+    // Lo de fuera queda inerte: ni foco, ni lector de pantalla.
+    const fuera = Array.from(document.body.children).filter(
+      (n) => n instanceof HTMLElement && !n.contains(cabecera.current) && n.tagName !== "SCRIPT",
+    ) as HTMLElement[];
+    const hermanos = cabecera.current?.parentElement
+      ? (Array.from(cabecera.current.parentElement.children).filter(
+          (n) => n !== cabecera.current,
+        ) as HTMLElement[])
+      : [];
+    const inertes = [...fuera, ...hermanos];
+    inertes.forEach((n) => n.setAttribute("inert", ""));
+
+    // El foco entra en el primer enlace.
+    const t = window.setTimeout(() => {
+      panel.current?.querySelector<HTMLElement>("a, button")?.focus({ preventScroll: true });
+    }, 60);
+
+    const tecla = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setAbierto(false);
+        boton.current?.focus();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const raiz = cabecera.current;
+      if (!raiz) return;
+      const enfocables = Array.from(
+        raiz.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input, [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((n) => n.offsetParent !== null && !n.closest("[inert]"));
+      if (!enfocables.length) return;
+      const primero = enfocables[0];
+      const ultimo = enfocables[enfocables.length - 1];
+      if (e.shiftKey && document.activeElement === primero) {
+        e.preventDefault();
+        ultimo.focus();
+      } else if (!e.shiftKey && document.activeElement === ultimo) {
+        e.preventDefault();
+        primero.focus();
+      }
+    };
+    document.addEventListener("keydown", tecla);
+
+    // Si la ventana crece hasta escritorio, el menú no tiene sentido.
+    const ancho = window.matchMedia("(min-width: 1024px)");
+    const alCrecer = () => ancho.matches && setAbierto(false);
+    ancho.addEventListener("change", alCrecer);
+
     return () => {
-      document.body.style.overflow = "";
+      window.clearTimeout(t);
+      html.style.overflow = antes;
+      delete html.dataset.menu;
+      inertes.forEach((n) => n.removeAttribute("inert"));
+      document.removeEventListener("keydown", tecla);
+      ancho.removeEventListener("change", alCrecer);
     };
   }, [abierto]);
 
-  useEffect(() => {
-    const mirar = () => setBajado(window.scrollY > 40);
-    mirar();
-    window.addEventListener("scroll", mirar, { passive: true });
-    return () => window.removeEventListener("scroll", mirar);
-  }, []);
-
-  const mover = useCallback(
-    (href: string | null) => {
-      const caja = nav.current;
-      if (!caja) return;
-      const destino = caja.querySelector<HTMLElement>(
-        `[data-href="${href ?? activo}"]`,
-      );
-      if (!destino) {
-        setPildora((p) => ({ ...p, visible: false }));
-        return;
-      }
-      const r = destino.getBoundingClientRect();
-      const rc = caja.getBoundingClientRect();
-      setPildora({ x: r.left - rc.left, w: r.width, visible: true });
-    },
-    [activo],
-  );
-
-  useEffect(() => {
-    mover(null);
-  }, [mover]);
+  const cerrar = () => setAbierto(false);
 
   return (
     <header
-      // Sobre la portada va transparente y en blanco, como una cabecera de
-      // revista; en cuanto se baja se vuelve papel. Si fuese opaca desde el
-      // principio partiría la fotografía en dos.
-      className="fixed inset-x-0 z-40 border-b transition-all duration-700"
-      style={{
-        top: "env(safe-area-inset-top, 0px)",
-        background: bajado ? "color-mix(in srgb, var(--papel) 88%, transparent)" : "transparent",
-        backdropFilter: bajado ? "blur(12px)" : "none",
-        borderColor: bajado
-          ? "color-mix(in srgb, var(--tinta) 12%, transparent)"
-          : "transparent",
-        color: enTinta ? "var(--tinta)" : "#fff",
-      }}
+      ref={cabecera}
+      className={s.cabecera}
+      data-bajado={bajado ? "1" : "0"}
+      data-abierto={abierto ? "1" : "0"}
     >
-      <div
-        className="mx-auto flex max-w-[72rem] items-center justify-between gap-6 px-5 transition-all duration-500"
-        style={{ paddingTop: bajado ? 6 : 12, paddingBottom: bajado ? 6 : 12 }}
-      >
-        <Link href="/" aria-label="Invitoo — inicio" className="shrink-0">
+      <a href="#contenido" className={s.saltar}>
+        Saltar al contenido
+      </a>
+
+      <div className={s.capsula}>
+        <Link href="/" aria-label="Invitoo, inicio" className={s.logo} onClick={cerrar}>
           {/* eslint-disable-next-line @next/next/no-img-element -- SVG del logo real */}
-          <img
-            src="/marca/palabra.svg"
-            alt="Invitoo"
-            width={104}
-            height={26}
-            className="w-auto transition-all duration-700"
-            style={{
-              height: bajado ? 21 : 26,
-              filter: enTinta ? "none" : "invert(1)",
-            }}
-          />
+          <img src="/marca/palabra.svg" alt="" width={104} height={26} />
         </Link>
 
-        <nav
-          ref={nav}
-          className="relative hidden items-center gap-1 md:flex"
-          onPointerLeave={() => mover(null)}
-        >
-          <span
-            aria-hidden
-            className="absolute inset-y-0 my-auto h-8 rounded-full"
-            style={{
-              width: pildora.w,
-              background: enTinta
-                ? "color-mix(in srgb, var(--tinta) 8%, transparent)"
-                : "rgba(255,255,255,.18)",
-              transform: `translateX(${pildora.x}px)`,
-              opacity: pildora.visible ? 1 : 0,
-              transition:
-                "transform 420ms cubic-bezier(.22,.7,.28,1), width 420ms cubic-bezier(.22,.7,.28,1), opacity 260ms ease",
-            }}
-          />
-          {ENLACES.map((e) => (
-            <Link
-              key={e.href}
-              href={e.href}
-              data-href={e.href}
-              aria-current={activo === e.href ? "page" : undefined}
-              onPointerEnter={() => mover(e.href)}
-              className="relative z-10 rounded-full px-3.5 py-2 text-[0.82rem] transition-opacity"
-              style={{ opacity: activo === e.href ? 1 : 0.68 }}
-            >
-              {e.texto}
-            </Link>
-          ))}
+        <nav aria-label="Principal" className={s.nav}>
+          <ul ref={nav} className={s.lista}>
+            <li
+              aria-hidden
+              className={s.pildora}
+              style={{
+                width: pildora?.w ?? 0,
+                transform: `translateX(${pildora?.x ?? 0}px)`,
+                opacity: pildora ? 1 : 0,
+              }}
+            />
+            {ENLACES.map((e) => (
+              <li key={e.href} className={e.ancho ? s.soloAncho : undefined}>
+                <Link
+                  href={e.href}
+                  data-href={e.href}
+                  aria-current={activo === e.href ? "page" : undefined}
+                  className={s.enlace}
+                >
+                  <span className={s.subrayado}>{e.texto}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </nav>
 
-        <div className="flex items-center gap-2">
-          <Iman fuerza={8}>
-            <a
-              href={enlaceReserva()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden min-h-11 items-center rounded-full border px-5 text-[0.78rem] uppercase tracking-[0.16em] transition-colors duration-700 sm:inline-flex"
-              style={
-                enTinta
-                  ? { background: "var(--tinta)", color: "var(--papel)", borderColor: "var(--tinta)" }
-                  : { background: "transparent", color: "#fff", borderColor: "rgba(255,255,255,.5)" }
-              }
-            >
-              Hablamos
-            </a>
-          </Iman>
+        <div className={s.derecha}>
+          <Link href="/cuenta/entrar" className={s.entrar} title="Entrar en vuestro panel">
+            Entrar
+          </Link>
+          <Magnetico fuerza={4}>
+            <EnlaceReserva href={enlaceReserva()} className={s.cta} data-petalos data-cursor-petalos="">
+              <span className={s.ctaTexto}>Hablemos</span>
+              <span className={s.circulo} aria-hidden>
+                <Flecha />
+              </span>
+              <span className="sr-only"> (abre WhatsApp en otra pestaña)</span>
+            </EnlaceReserva>
+          </Magnetico>
           <button
+            ref={boton}
             type="button"
+            className={s.hamburguesa}
             onClick={() => setAbierto((v) => !v)}
             aria-expanded={abierto}
-            aria-label={abierto ? "Cerrar menú" : "Abrir menú"}
-            className="grid h-11 w-11 place-items-center md:hidden"
+            aria-controls="menu-movil"
+            aria-label={abierto ? "Cerrar el menú" : "Abrir el menú"}
           >
-            <span className="flex w-5 flex-col gap-[5px]">
-              <span
-                className="h-px w-full bg-current transition-transform duration-300"
-                style={{
-                  transform: abierto ? "translateY(3px) rotate(45deg)" : undefined,
-                }}
-              />
-              <span
-                className="h-px w-full bg-current transition-transform duration-300"
-                style={{
-                  transform: abierto ? "translateY(-3px) rotate(-45deg)" : undefined,
-                }}
-              />
+            <span aria-hidden className={s.rayas}>
+              <i />
+              <i />
             </span>
           </button>
         </div>
       </div>
 
-      {/* Menú móvil: los enlaces entran escalonados desde la derecha. */}
-      <div
-        className="fixed inset-x-0 bottom-0 z-30 md:hidden"
-        style={{
-          top: "calc(env(safe-area-inset-top, 0px) + 3.4rem)",
-          pointerEvents: abierto ? "auto" : "none",
-          visibility: abierto ? "visible" : "hidden",
-        }}
-      >
-        <div
-          className="h-full bg-[var(--papel)] px-6 pb-10 pt-6 transition-opacity duration-300"
-          style={{ opacity: abierto ? 1 : 0 }}
-        >
-          {ENLACES.map((e, i) => (
-            <Link
-              key={e.href}
-              href={e.href}
-              onClick={() => setAbierto(false)}
-              className="display flex min-h-16 items-center border-b border-[var(--tinta)]/10 text-[2rem]"
-              style={{
-                opacity: abierto ? 1 : 0,
-                transform: abierto ? "none" : "translateX(28px)",
-                transition: `opacity 420ms ease ${abierto ? 90 + i * 70 : 0}ms, transform 520ms cubic-bezier(.22,.7,.28,1) ${abierto ? 90 + i * 70 : 0}ms`,
-              }}
-            >
-              {e.texto}
-            </Link>
-          ))}
-          <a
+      <MenuMovil
+        abierto={abierto}
+        activo={activo}
+        refPanel={panel}
+        alElegir={cerrar}
+        mini={mini}
+      />
+    </header>
+  );
+}
+
+/* ─────────────────────────────── Menú móvil ─────────────────────────────── */
+
+function MenuMovil({
+  abierto,
+  activo,
+  refPanel,
+  alElegir,
+  mini,
+}: {
+  mini: Mini;
+  abierto: boolean;
+  activo: string | null;
+  refPanel: React.RefObject<HTMLDivElement | null>;
+  alElegir: () => void;
+}) {
+  return (
+    <div
+      id="menu-movil"
+      ref={refPanel}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Menú"
+      className={s.menu}
+      data-abierto={abierto ? "1" : "0"}
+      // Cerrado no existe para el teclado ni para el lector de pantalla.
+      inert={!abierto}
+      aria-hidden={!abierto}
+    >
+      <div className={s.menuFondo} aria-hidden />
+      <div className={s.menuCuerpo}>
+        <nav aria-label="Menú del móvil">
+          <ul className={s.menuLista}>
+            {ENLACES.map((e, i) => (
+              <li key={e.href} style={{ "--i": i } as React.CSSProperties} className={s.menuFila}>
+                <Link
+                  href={e.href}
+                  onClick={alElegir}
+                  aria-current={activo === e.href ? "page" : undefined}
+                  className={s.menuEnlace}
+                >
+                  <span className={s.menuMascara}>
+                    <span className={s.menuPalabra}>{e.texto}</span>
+                  </span>
+                  <span className={s.menuNota}>{e.nota}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <MiniInvitacion alElegir={alElegir} mini={mini} />
+
+        <div className={s.menuCtas}>
+          <EnlaceReserva
             href={enlaceReserva()}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => setAbierto(false)}
-            className="mt-9 flex min-h-14 items-center justify-center rounded-full bg-[var(--tinta)] py-3.5 text-[0.82rem] uppercase tracking-[0.16em] text-[var(--papel)]"
-            style={{
-              opacity: abierto ? 1 : 0,
-              transform: abierto ? "none" : "translateY(16px)",
-              transition: `opacity 420ms ease ${abierto ? 440 : 0}ms, transform 520ms cubic-bezier(.22,.7,.28,1) ${abierto ? 440 : 0}ms`,
-            }}
+            className={`${s.cta} ${s.ctaGrande}`}
+            data-petalos
+            onClick={alElegir}
           >
-            Hablamos 20 minutos por Meet
-          </a>
+            <span className={s.ctaTexto}>Hablemos 20 minutos</span>
+            <span className={s.circulo} aria-hidden>
+              <Flecha />
+            </span>
+            <span className="sr-only"> (abre WhatsApp en otra pestaña)</span>
+          </EnlaceReserva>
+          <Link href="/cuenta/entrar" onClick={alElegir} className={s.menuEntrar}>
+            ¿Ya tenéis invitación? <span className={s.subrayado}>Entrad en vuestro panel</span>
+          </Link>
         </div>
       </div>
-    </header>
+    </div>
+  );
+}
+
+/**
+ * La mini invitación del menú: la cartulina de la portada, en pequeño, con
+ * los nombres que hayáis escrito (o los del ejemplo). Es viva: si escribís
+ * en la portada, aquí ya pone vuestros nombres.
+ */
+function MiniInvitacion({ alElegir, mini }: { alElegir: () => void; mini: Mini }) {
+  const [nombres] = useNombres();
+  const n = conEjemplo(nombres, mini.ejemplo);
+  const q = n.propios ? `?nombres=${encodeURIComponent(`${n.a},${n.b}`)}` : "";
+
+  return (
+    <Link href={`/i/${mini.slug}${q}`} onClick={alElegir} className={s.mini}>
+      <span className={s.miniCartulina} aria-hidden>
+        <span className={s.miniSobre}>Nos casamos</span>
+        <span className={s.miniNombres}>
+          {n.a} <em>&amp;</em> {n.b}
+        </span>
+        <span className={s.miniFecha}>{fechaBonita(nombres.fecha) || mini.fecha}</span>
+        <span className={s.miniBrillo} />
+      </span>
+      <span className={s.miniTexto}>
+        <span className={s.miniTitulo}>
+          {n.propios ? "Vuestra invitación, así" : "Abrid una invitación de ejemplo"}
+        </span>
+        <span className={s.miniBajo}>Desde {mini.desde} €, IVA incluido</span>
+      </span>
+    </Link>
+  );
+}
+
+function Flecha() {
+  return (
+    <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6" />
+    </svg>
   );
 }

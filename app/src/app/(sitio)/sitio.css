@@ -1,0 +1,86 @@
+/*
+ * Lo global de la web pública (solo el grupo `(sitio)`): las transiciones
+ * de página con View Transitions y el foco de la casa.
+ *
+ * La página que se va sube un poco y se desenfoca; la que llega sube desde
+ * abajo con un fundido. La cabecera no se mueve: es el ancla.
+ */
+
+::view-transition-old(.pagina) {
+  animation:
+    220ms cubic-bezier(0.65, 0, 0.35, 1) both pagina-sale;
+}
+::view-transition-new(.pagina) {
+  animation:
+    520ms cubic-bezier(0.22, 0.61, 0.36, 1) 120ms both pagina-entra;
+}
+
+@keyframes pagina-sale {
+  to {
+    opacity: 0;
+    transform: translateY(-12px);
+    filter: blur(4px);
+  }
+}
+@keyframes pagina-entra {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+    filter: blur(6px);
+  }
+}
+
+::view-transition-group(cabecera) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(cabecera) {
+  display: none;
+}
+::view-transition-new(cabecera) {
+  animation: none;
+}
+
+/* La plantilla que se abre a pantalla completa en /plantillas. */
+::view-transition-group(plantilla-abierta) {
+  animation-duration: 560ms;
+  animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+}
+::view-transition-image-pair(plantilla-abierta) {
+  animation-name: via-desenfoque;
+}
+@keyframes via-desenfoque {
+  40% {
+    filter: blur(2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* El contenido debajo de la cápsula flotante no se esconde al saltar a un ancla. */
+html:has(.sitio-raiz) {
+  scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 96px);
+}
+
+/* La onda de la canción: mientras suena, respira (escala vertical, nunca
+   el alto: nada se recoloca). Con movimiento reducido, quieta. */
+.onda-barra {
+  transform-origin: 50% 50%;
+  transition: background-color 300ms ease;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .onda-cancion[data-sonando] .onda-barra {
+    animation: onda-respira 1100ms cubic-bezier(0.65, 0, 0.35, 1) infinite alternate;
+  }
+}
+@keyframes onda-respira {
+  to {
+    transform: scaleY(0.55);
+  }
+}

@@ -1,0 +1,289 @@
+/* ------------------------------------------------------------------
+   NEÓN DE MEDIANOCHE — K4 · docs/16b §3
+   Negro tinta (--papel), rosa neón desaturado (--acento, legible: 7:1) y
+   un segundo tubo violeta (--acento2). Regla del neón elegante: dos piezas
+   encendidas por pantalla como mucho, resplandor ≤ 18 px y ≤ 0,55.
+   ------------------------------------------------------------------ */
+.lienzo[data-plantilla="neon"] {
+  --acento2: color-mix(in oklch, #9b7bff 82%, var(--acento));
+  --cromo: #d9dbe3;
+  --halo: 0 0 6px color-mix(in oklch, var(--acento) 55%, transparent), 0 0 18px color-mix(in oklch, var(--acento) 35%, transparent);
+  --halo2: 0 0 6px color-mix(in oklch, var(--acento2) 55%, transparent), 0 0 18px color-mix(in oklch, var(--acento2) 35%, transparent);
+  --guion: var(--p-acento), "Sacramento", cursive;
+  --ease-carta: cubic-bezier(.22,.61,.36,1);
+  font-size: 1.125rem;
+  line-height: 1.65;
+}
+.lienzo[data-plantilla="neon"] .display { font-weight: 500; letter-spacing: .01em; line-height: 1.1; }
+.lienzo[data-plantilla="neon"][data-ornamento] {
+  --orn-w: 140px; --orn-h: 16px;
+  --orn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 16'%3E%3Crect x='1' y='5' width='8' height='6' rx='1.5'/%3E%3Cpath d='M12 8 C40 2 52 14 70 8 S100 2 128 8' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round'/%3E%3Crect x='131' y='5' width='8' height='6' rx='1.5'/%3E%3C/svg%3E");
+}
+.lienzo[data-plantilla="neon"] .y-gesto { font-family: var(--guion); color: var(--acento2); font-style: normal; }
+
+/* —— cabecera —— */
+.ne-hero {
+  display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
+  padding: calc(env(safe-area-inset-top, 0px) + 5rem) 1.25rem calc(env(safe-area-inset-bottom, 0px) + 2rem);
+  text-align: center; color: var(--tinta);
+}
+.grad-neon .kv-grad { filter: grayscale(1) brightness(.42) contrast(1.35); }
+.ne-tinte { position: absolute; inset: 0; pointer-events: none; }
+.ne-tinte::before {
+  /* Viraje rosa y violeta: luz de neón sobre la escena. */
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(60% 40% at 20% 30%, color-mix(in oklch, var(--acento) 70%, transparent), transparent 70%),
+    radial-gradient(60% 45% at 85% 55%, color-mix(in oklch, var(--acento2) 70%, transparent), transparent 70%);
+  mix-blend-mode: color; opacity: .9;
+}
+.ne-tinte::after {
+  /* El neón necesita negro de verdad: 0,7 en el tercio inferior. */
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgb(10 9 16 / .92) 0 30%, rgb(10 9 16 / .55) 55%, rgb(10 9 16 / .2) 80%);
+}
+.ne-rotulo { position: relative; z-index: 2; width: 100%; max-width: 30rem; }
+.ne-nombres, .ne-reflejo {
+  font-family: var(--guion); font-weight: 400; line-height: 1.02;
+  color: var(--acento);
+}
+.ne-nombres .ne-l, .ne-nombres .ne-y { text-shadow: var(--halo); }
+.ne-nombres { line-height: 1.12; }
+.ne-y { display: block; font-size: .55em; line-height: 1.2; margin-block: .55em; color: var(--acento2); }
+.ne-nombres .ne-y { text-shadow: var(--halo2); }
+.ne-reflejo {
+  display: flex; flex-direction: column-reverse;
+  height: .7em; overflow: clip; margin-top: -.05em;
+  transform: scaleY(-1); opacity: .32; filter: blur(2px);
+  -webkit-mask-image: linear-gradient(to top, #000, transparent 85%);
+  mask-image: linear-gradient(to top, #000, transparent 85%);
+}
+.ne-reflejo .ne-y { display: none; }
+.ne-cuando { margin-top: .6rem; font-size: 1.0625rem; letter-spacing: .16em; }
+.ne-lugar { margin-top: .4rem; font-size: 1.0625rem; opacity: .9; }
+.ne-baja { margin-top: 1.1rem; color: var(--tinta); }
+.lienzo[data-plantilla="neon"] .kv-play {
+  --kv-play-fondo: rgb(10 9 16 / .55);
+  --kv-play-borde: color-mix(in srgb, var(--cromo) 60%, transparent);
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* MOMENTO WOW: los nombres se encienden letra a letra, tubo a tubo.
+     Dos parpadeos y fijo: menos de 3 destellos por segundo (WCAG 2.3.1). */
+  .ne-nombres .ne-l, .ne-nombres .ne-y, .ne-reflejo .ne-l {
+    animation: ne-tubo 900ms steps(1) both;
+    animation-delay: calc(400ms + var(--i) * 90ms);
+  }
+}
+@keyframes ne-tubo {
+  0% { opacity: .08; text-shadow: none; }
+  30% { opacity: 1; }
+  45% { opacity: .3; text-shadow: none; }
+  70%, 100% { opacity: 1; }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .lienzo .k-hero.ne-hero .k-hero-medio { animation-name: ne-hero-medio; }
+  }
+}
+@keyframes ne-hero-medio { to { transform: scale(1.08); filter: brightness(.5); } }
+
+/* —— títulos y secciones —— */
+.ne-seccion { padding: 5rem 1.25rem 3.5rem; }
+.ne-titulo { text-align: center; max-width: 30rem; margin-inline: auto; }
+.ne-antes { font-family: var(--display); font-size: 1.0625rem; letter-spacing: .2em; text-transform: uppercase; color: var(--acento2); text-align: center; }
+.ne-titulo h2 { margin-top: .5rem; font-size: clamp(2.1rem, 10vw, 3.2rem); text-wrap: balance; }
+.ne-tubo { display: block; width: 8rem; height: 1rem; margin: 1rem auto 0; overflow: visible; }
+.ne-tubo-e { fill: var(--cromo); opacity: .8; }
+.ne-tubo-luz {
+  fill: none; stroke: var(--acento); stroke-width: 2.4; stroke-linecap: round;
+  filter: drop-shadow(0 0 4px color-mix(in oklch, var(--acento) 55%, transparent));
+}
+
+/* Cristal ahumado. */
+.ne-cristal {
+  position: relative;
+  background: color-mix(in srgb, var(--tinta) 5%, transparent);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  border: 1px solid rgb(255 255 255 / .12);
+  border-radius: 18px;
+}
+
+/* —— la puerta: lista de invitados —— */
+.ne-puerta {
+  position: relative; text-align: center; padding: 4.6rem 1.4rem 2rem;
+  border: 1px solid rgb(255 255 255 / .12); border-radius: 18px;
+  background: linear-gradient(180deg, rgb(255 255 255 / .05), transparent);
+}
+.ne-cordon { position: absolute; top: 1rem; left: 1.2rem; right: 1.2rem; height: 2.6rem; }
+.ne-poste { position: absolute; top: 0; width: .9rem; height: 2.6rem; border-radius: 4px 4px 2px 2px; background: linear-gradient(90deg, #7d818a, #f2f3f6 45%, #8b9098); }
+.ne-poste.a { left: 0; }
+.ne-poste.b { right: 0; }
+.ne-cordon svg {
+  position: absolute; left: .45rem; right: .45rem; top: .3rem; width: calc(100% - .9rem); height: 2.4rem;
+  overflow: visible; transform-origin: 0 8%;
+  transform: rotate(62deg) scaleX(.22);
+}
+.ne-cordon path { fill: none; stroke: #7a1f45; stroke-width: 7; stroke-linecap: round; filter: drop-shadow(0 2px 2px rgb(0 0 0 / .5)); }
+.ne-puerta-t { margin-top: .6rem; font-size: clamp(2rem, 9vw, 2.8rem); }
+.ne-puerta-frase { margin-top: .8rem; text-wrap: pretty; }
+.ne-puerta-dato { margin-top: .6rem; font-size: 1.125rem; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .ne-cordon svg {
+      animation: ne-cordon linear both;
+      animation-timeline: view();
+      animation-range: cover 20% cover 45%;
+    }
+  }
+}
+@keyframes ne-cordon { from { transform: none; } to { transform: rotate(62deg) scaleX(.22); } }
+
+/* —— el set de la noche —— */
+.ne-set { position: relative; margin-top: 2.8rem; padding-left: 2rem; display: grid; gap: 2.2rem; }
+.ne-set::after {
+  content: "";
+  position: absolute; left: .4rem; top: .4rem; bottom: .4rem; width: 3px; border-radius: 3px;
+  background: var(--acento2); box-shadow: var(--halo2);
+  transform-origin: 50% 0;
+}
+.ne-set li { position: relative; display: grid; }
+.ne-set li::before {
+  content: ""; position: absolute; left: -1.95rem; top: .55rem; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--papel); border: 2px solid var(--acento2);
+}
+.ne-set-hora { font-size: 2.2rem; line-height: 1.05; color: var(--acento); text-shadow: var(--halo); }
+.ne-set-que { font-size: 1.1875rem; font-weight: 600; margin-top: .2rem; }
+.ne-set-donde { font-size: 1.0625rem; opacity: .85; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .ne-set::after {
+      animation: ne-baja linear both;
+      animation-timeline: view();
+      animation-range: cover 5% cover 70%;
+    }
+    .ne-set-hora {
+      animation: ne-enciende linear both;
+      animation-timeline: view();
+      animation-range: cover 30% cover 42%;
+    }
+  }
+}
+@keyframes ne-baja { from { transform: scaleY(0); } to { transform: none; } }
+@keyframes ne-enciende { from { color: color-mix(in srgb, var(--tinta) 55%, transparent); text-shadow: none; } to { color: var(--acento); } }
+
+/* —— la pista (cuenta atrás) —— */
+.ne-pista { max-width: 30rem; margin: 2.6rem auto 0; text-align: center; }
+.ne-baldosas { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+@media (min-width: 640px) { .ne-baldosas { grid-template-columns: repeat(4, 1fr); } }
+.ne-baldosa {
+  position: relative; display: grid; place-items: center; gap: .2rem; padding: 1.1rem .5rem 1rem;
+  border-radius: 14px; border: 1px solid rgb(255 255 255 / .14);
+  background: linear-gradient(160deg, rgb(255 255 255 / .08), rgb(255 255 255 / .02));
+}
+.ne-baldosa-n { font-weight: 700; font-size: 2.8rem; line-height: 1; }
+.ne-baldosa-et { font-size: 1.0625rem; letter-spacing: .2em; text-transform: uppercase; opacity: .9; }
+.ne-baldosa[data-et="seg"] { border-color: color-mix(in oklch, var(--hondo-acento, var(--acento)) 60%, transparent); }
+@media (prefers-reduced-motion: no-preference) {
+  .ne-baldosa-n { animation: ne-luz 400ms var(--ease-carta) both; }
+  .ne-baldosa[data-et="seg"] { animation: ne-respira 1s ease-in-out 120 alternate; }
+}
+@keyframes ne-luz { from { opacity: .35; text-shadow: 0 0 14px color-mix(in oklch, var(--acento) 55%, transparent); } }
+@keyframes ne-respira {
+  from { box-shadow: 0 0 0 color-mix(in oklch, var(--acento) 0%, transparent); }
+  to { box-shadow: 0 0 16px color-mix(in oklch, var(--acento) 35%, transparent); }
+}
+.ne-pista-fecha { font-size: clamp(1.7rem, 7.5vw, 2.4rem); text-wrap: balance; }
+.ne-bpm { margin-top: 1.2rem; font-size: 1.0625rem; letter-spacing: .26em; opacity: .75; }
+
+/* —— historia en cristal —— */
+.ne-capitulos { margin-top: 2.8rem; display: grid; gap: 1.6rem; }
+@property --ne-giro { syntax: "<angle>"; inherits: false; initial-value: 360deg; }
+.ne-capitulos .ne-cristal { overflow: clip; }
+.ne-capitulos .ne-cristal::before {
+  /* El filete de neón que da una vuelta al entrar. */
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px; pointer-events: none;
+  background: conic-gradient(var(--acento) var(--ne-giro), transparent 0);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  opacity: .8;
+}
+.ne-cap-foto { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; filter: saturate(.85) contrast(1.05); }
+.ne-cap-texto { padding: 1.3rem 1.3rem 1.5rem; }
+.ne-cap-cuando { font-size: 1.0625rem; letter-spacing: .1em; color: var(--acento2); }
+.ne-cap-texto h3 { margin: .3rem 0 .5rem; font-size: 1.6rem; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .ne-capitulos .ne-cristal::before {
+      animation: ne-vuelta linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 35%;
+    }
+  }
+}
+@keyframes ne-vuelta { from { --ne-giro: 0deg; } to { --ne-giro: 360deg; } }
+
+/* —— negro y brillo —— */
+.ne-muestras { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-top: 2.6rem; }
+.ne-muestras li {
+  position: relative; overflow: clip; width: 4.2rem; height: 5.4rem; border-radius: 14px;
+  background: linear-gradient(160deg, rgb(255 255 255 / .18), transparent 40%), var(--c);
+  border: 1px solid rgb(255 255 255 / .18);
+}
+.ne-muestras li::after {
+  content: ""; position: absolute; inset: -20% auto -20% -60%; width: 40%;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / .45), transparent);
+  transform: skewX(-18deg) translateX(-100%); opacity: 0;
+}
+.ne-nota { margin-top: 2.2rem; text-align: center; text-wrap: pretty; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .ne-muestras li::after {
+      animation: ne-reflejo-cruza linear both;
+      animation-timeline: view();
+      animation-range: cover 15% cover 45%;
+    }
+  }
+}
+@keyframes ne-reflejo-cruza { 0% { opacity: 1; transform: skewX(-18deg) translateX(0); } 100% { opacity: 1; transform: skewX(-18deg) translateX(600%); } }
+
+/* —— regalos —— */
+.ne-detalle { margin-block: 3.5rem; padding-top: .5rem; border-color: color-mix(in oklch, var(--acento2) 45%, transparent); }
+
+/* —— RSVP: el rótulo que se enciende —— */
+.ne-rotulo-rsvp { display: grid; place-items: center; padding: 4.5rem 1.25rem 0; margin-bottom: -2.5rem; }
+.ne-rotulo-t {
+  font-family: var(--guion); font-size: clamp(2.1rem, 9.5vw, 3.2rem); line-height: 1.15; text-align: center; text-wrap: balance;
+  color: color-mix(in srgb, var(--tinta) 22%, transparent);
+  padding: .3rem 1.2rem .5rem; border-radius: 18px; border: 1px solid rgb(255 255 255 / .1);
+}
+.mr-neon[data-confirmado] .ne-rotulo-t { color: var(--acento); text-shadow: var(--halo); }
+@media (prefers-reduced-motion: no-preference) {
+  .mr-neon[data-confirmado="recien"] .ne-rotulo-t { animation: ne-tubo 900ms steps(1) 200ms both; }
+}
+.lienzo[data-plantilla="neon"] .mr-frase { font-family: var(--display); font-size: clamp(1.5rem, 6.5vw, 2rem); color: var(--acento2); }
+
+/* —— la última: amanecer violeta —— */
+.ne-amanecer {
+  position: relative; isolation: isolate; overflow: clip;
+  min-height: 66svh; display: grid; place-content: center; gap: .8rem; text-align: center; padding: 5rem 1.5rem;
+  background: linear-gradient(180deg, var(--papel) 0%, #24163a 55%, #5b3a6e 85%, #b07a9a 100%);
+}
+.ne-amanecer::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; background: var(--papel); opacity: 0;
+}
+.ne-amanecer-t { font-size: clamp(2.2rem, 10vw, 3.4rem); max-width: 14ch; margin-inline: auto; text-wrap: balance; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .ne-amanecer::before {
+      animation: ne-clarea linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 70%;
+    }
+  }
+}
+@keyframes ne-clarea { from { opacity: .9; } to { opacity: 0; } }
+.ne-tubo-cierre { width: 9rem; }
+
+/* Pilas de reserva sans (GENERICA de tokens.ts no conoce estas familias). */
+.lienzo[data-plantilla="neon"] { font-family: var(--p-texto), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif; }
+.lienzo[data-plantilla="neon"] .display { font-family: var(--p-display), "Unbounded", ui-sans-serif, system-ui, sans-serif; }

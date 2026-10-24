@@ -1,0 +1,260 @@
+/* ------------------------------------------------------------------
+   ORILLA (Playa y mar) — K2 · docs/16a §7
+   Arena blanca, azul de profundidad, turquesa hondo; el turquesa de agua
+   somera (#7FCFCB) y el nácar (#B9C4C9) SOLO en acuarelas y adornos.
+   Todo se mueve como el agua: despacio, de lado y volviendo.
+   ------------------------------------------------------------------ */
+.lienzo[data-plantilla="orilla"] {
+  font-family: var(--p-texto), "Nunito Sans", ui-sans-serif, system-ui, sans-serif;
+  --somera: #7fcfcb;
+  --nacar: #b9c4c9;
+  font-size: 1.125rem;
+  line-height: 1.7;
+  background-image: radial-gradient(130% 60% at 50% 100%, rgb(214 196 160 / .12), transparent 70%);
+}
+.lienzo[data-plantilla="orilla"] .display { font-weight: 400; letter-spacing: .01em; }
+.lienzo[data-plantilla="orilla"] :is(.text-\[1rem\], .text-\[0\.95rem\], .text-sm, .text-base, label, legend) { font-size: 1.0625rem; }
+
+.ol-titulo { text-align: center; }
+.ol-antes { font-size: 1.0625rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--acento-texto); text-align: center; }
+.ol-titulo h2 { margin-top: .4rem; font-size: clamp(2.4rem, 10.5vw, 3.5rem); line-height: 1.05; }
+.ol-ola { display: block; width: min(11rem, 50vw); height: auto; margin: .9rem auto 0; overflow: visible; }
+.ol-ola path { fill: none; stroke: color-mix(in srgb, var(--acento) 70%, var(--somera)); stroke-width: 1.6; stroke-linecap: round; stroke-dasharray: 1; }
+.ol-seccion { padding: 5.5rem 1.25rem 4rem; }
+.ol-nota { margin-top: 2rem; text-align: center; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .ol-ola path { animation: ol-traza linear both; animation-timeline: view(); animation-range: entry 20% cover 40%; }
+  }
+}
+@keyframes ol-traza { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+
+/* ==================================================================
+   CABECERA: el mar con borde de ola acuarelada, y la arena
+   ================================================================== */
+.lienzo .k-hero.ol-hero { display: flex; flex-direction: column; overflow: clip; }
+.ol-mar {
+  position: relative; isolation: isolate;
+  height: max(78svh, 30rem);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 1.25rem 5.5rem;
+  -webkit-mask: url(/tematicas/orilla/borde-ola.svg) 0 100% / 100% 72px no-repeat, linear-gradient(#000, #000) 0 0 / 100% calc(100% - 70px) no-repeat;
+  mask: url(/tematicas/orilla/borde-ola.svg) 0 100% / 100% 72px no-repeat, linear-gradient(#000, #000) 0 0 / 100% calc(100% - 70px) no-repeat;
+}
+.ol-mar .k-hero-medio { z-index: -1; }
+.grad-orilla .kv-grad { filter: saturate(.9) brightness(1.03) hue-rotate(-6deg); }
+.ol-velo {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(0deg, color-mix(in srgb, var(--tinta) 72%, transparent) 0%, color-mix(in srgb, var(--tinta) 58%, transparent) 30%, color-mix(in srgb, var(--tinta) 15%, transparent) 58%, transparent 72%),
+    linear-gradient(180deg, color-mix(in srgb, var(--tinta) 30%, transparent), transparent 20%);
+}
+.ol-sobre-agua { position: relative; z-index: 1; text-align: center; color: #fff; text-shadow: 0 1px 18px rgb(0 0 0 / .3); }
+.ol-lema { font-size: 1.125rem; letter-spacing: .06em; }
+.ol-nombres { margin-top: .4rem; font-family: var(--display); font-weight: 400; line-height: .98; text-wrap: balance; }
+.ol-nombres .ol-y { display: block; font-family: var(--p-mano), cursive; font-size: .55em; line-height: 1.15; color: color-mix(in srgb, var(--somera) 55%, #fff); }
+@media (prefers-reduced-motion: no-preference) {
+  .ol-nombres { animation: ol-enfoca 1400ms var(--ease-carta, ease) 500ms both; }
+  .ol-lema { animation: ol-enfoca 1100ms ease 300ms both; }
+}
+@keyframes ol-enfoca { from { opacity: 0; filter: blur(8px); transform: translateY(10px); } }
+main:has(> .apertura[data-estado="dentro"]) :is(.ol-nombres, .ol-lema) { animation-play-state: paused; }
+/* LA RESACA: al bajar, la ola se retira hacia arriba y descubre la arena. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .ol-mar { animation: ol-resaca linear both; animation-timeline: --k-hero; animation-range: exit 0% exit 55%; }
+  }
+}
+@keyframes ol-resaca {
+  to {
+    -webkit-mask-position: 0 calc(100% - 20svh), 0 0;
+    -webkit-mask-size: 100% 72px, 100% calc(100% - 70px - 20svh);
+    mask-position: 0 calc(100% - 20svh), 0 0;
+    mask-size: 100% 72px, 100% calc(100% - 70px - 20svh);
+  }
+}
+
+.ol-arena { position: relative; z-index: 1; margin-top: -1.25rem; padding: 0 1.25rem calc(env(safe-area-inset-bottom, 0px) + 6.5rem); text-align: center; }
+.ol-fecha { font-family: var(--display); font-size: clamp(1.5rem, 6.4vw, 2rem); line-height: 1.25; text-wrap: balance; }
+.ol-lugar { margin-top: .4rem; font-size: 1.125rem; }
+.ol-baja { margin-top: .8rem; color: var(--acento-texto); }
+.ol-concha, .ol-estrella { width: 34px; height: auto; fill: none; stroke: color-mix(in srgb, var(--acento) 75%, var(--tinta)); stroke-width: 1.1; stroke-linejoin: round; stroke-dasharray: 1; }
+.ol-arena .ol-concha { display: block; margin: 0 auto .5rem; }
+.ol-arena .ol-estrella { display: block; margin: .8rem auto 0; width: 26px; rotate: 12deg; }
+@media (prefers-reduced-motion: no-preference) {
+  .ol-arena :is(.ol-concha, .ol-estrella) { animation: ol-dibuja 1600ms var(--ease-carta, ease) 1200ms both; }
+}
+@keyframes ol-dibuja { from { stroke-dashoffset: 1; } }
+.lienzo[data-plantilla="orilla"] .kv-play {
+  --kv-play-fondo: color-mix(in srgb, var(--tinta) 45%, transparent);
+  border-radius: 999px;
+  /* arriba a la izquierda va la etiqueta «Demo»: el botón, centrado */
+  left: 50%; translate: -50% 0; white-space: nowrap;
+}
+
+/* ==================================================================
+   MENSAJES EN UNA BOTELLA
+   ================================================================== */
+.ol-mensajes { display: grid; gap: 2rem; width: min(100%, 32rem); margin: 2.75rem auto 0; }
+.ol-mensaje { display: grid; grid-template-columns: 2.25rem 1fr; gap: .9rem; align-items: start; }
+.ol-botella { width: 2.25rem; height: auto; margin-top: .4rem; rotate: -14deg; }
+.ol-botella path:first-child { fill: color-mix(in srgb, var(--somera) 40%, #fff); stroke: color-mix(in srgb, var(--acento) 70%, var(--tinta)); stroke-width: 1.2; }
+.ol-botella-papel { fill: #fffaf0; stroke: color-mix(in srgb, var(--tinta) 30%, transparent); stroke-width: .6; }
+.ol-botella-corcho { fill: #b58a5a; }
+.ol-mensaje-papel {
+  padding: 1.25rem 1.2rem 1.35rem; border-radius: 4px 14px 6px 12px;
+  background: #fffcf6; box-shadow: 0 16px 30px -22px rgb(15 47 58 / .45), inset 0 0 0 1px rgb(15 47 58 / .06);
+}
+.ol-cuando { font-size: 1.0625rem; font-weight: 600; color: var(--acento-texto); }
+.ol-cap { margin-top: .2rem; font-family: var(--display); font-weight: 400; font-size: 1.6rem; line-height: 1.2; }
+.ol-mensaje-foto { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; margin-top: .8rem; border-radius: 8px; }
+.ol-texto { margin-top: .5rem; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    html.js .ol-mensaje { animation: ol-flota linear both; animation-timeline: view(); animation-range: entry 0% cover 35%; }
+  }
+}
+@keyframes ol-flota {
+  0% { opacity: 0; transform: translate(-18px, 10px) rotate(-1.5deg); }
+  35% { opacity: 1; transform: translate(-6px, -4px) rotate(.8deg); }
+  65% { transform: translate(-2px, 4px) rotate(-.4deg); }
+  100% { opacity: 1; transform: none; }
+}
+
+/* ==================================================================
+   LA OLA QUE PASA PÁGINA (respiro)
+   ================================================================== */
+.ol-pasa { position: relative; height: 30svh; min-height: 11rem; overflow: clip; }
+.ol-pasa > span {
+  position: absolute; inset: 12% -40%;
+  background: url(/tematicas/orilla/agua.svg) center / 100% 100% no-repeat;
+  opacity: .9;
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .ol-pasa > span { animation: ol-pasa linear both; animation-timeline: view(); animation-range: cover 0% cover 100%; }
+  }
+}
+@keyframes ol-pasa { from { transform: translateX(45%); } to { transform: translateX(-20%); } }
+
+/* ==================================================================
+   ESCRITO EN LA ARENA y LA MAREA
+   ================================================================== */
+.ol-escrito { background: linear-gradient(180deg, transparent, rgb(214 196 160 / .16) 40%, transparent); }
+.ol-arena-escena { position: relative; display: grid; grid-template-columns: 5rem 1fr; gap: .5rem; align-items: center; width: min(100%, 30rem); margin: 2.5rem auto 0; }
+.ol-huellas { width: 5rem; height: auto; }
+.ol-huella { fill: color-mix(in srgb, #8a7556 30%, transparent); }
+.ol-arena-texto { text-align: left; }
+.ol-arena-dia { font-size: clamp(2.8rem, 13vw, 4rem); line-height: 1; color: var(--acento-texto); text-shadow: 0 1px 0 rgb(255 255 255 / .8), 0 -1px 0 rgb(120 100 70 / .25); }
+.ol-arena-larga { margin-top: .5rem; font-size: 1.1875rem; }
+.ol-arena-lugar { margin-top: 1rem; font-size: 1.0625rem; line-height: 1.55; }
+.ol-arena-lugar strong { font-weight: 600; font-size: 1.1875rem; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .ol-arena-escena { view-timeline: --ol-huellas block; }
+    .ol-huella { animation: ol-huella linear both; animation-timeline: --ol-huellas; animation-range: entry calc(10% + var(--i) * 6%) cover calc(14% + var(--i) * 4%); }
+  }
+}
+@keyframes ol-huella { from { opacity: 0; } to { opacity: 1; } }
+
+.ol-cuenta {
+  position: relative; overflow: clip; isolation: isolate;
+  width: min(100%, 24rem); margin: 2.25rem auto 0; padding: 2.5rem 1rem 1.5rem; border-radius: 28px;
+  background: color-mix(in srgb, var(--papel) 82%, #e9dcc3);
+  box-shadow: inset 0 2px 10px rgb(120 100 70 / .12);
+  text-align: center;
+}
+.ol-agua {
+  position: absolute; z-index: -1; left: -20%; right: -20%; bottom: 0; height: calc(var(--marea) * 58%);
+  background: url(/tematicas/orilla/agua.svg) 0 0 / 50% 100% repeat-x;
+  opacity: .55;
+}
+.ol-espuma { position: absolute; z-index: -1; left: 0; right: 0; bottom: calc(var(--marea) * 58% - 4px); height: 6px; background: radial-gradient(circle at 6px 3px, rgb(255 255 255 / .9) 2px, transparent 3px) 0 0 / 12px 6px repeat-x; opacity: .7; }
+@media (prefers-reduced-motion: no-preference) {
+  /* 12 vaivenes (96 s) y se queda quieta: WCAG 2.2.2 */
+  .ol-agua { animation: ol-vaiven 8s ease-in-out 12 alternate; }
+  .ol-espuma { animation: ol-vaiven 8s ease-in-out 12 alternate; }
+}
+[data-mov-pausa] :is(.ol-agua, .ol-espuma) { animation-play-state: paused; }
+@keyframes ol-vaiven { to { transform: translateX(8%); } }
+.ol-olita { position: absolute; z-index: -1; left: -40%; bottom: 30%; width: 40%; height: 12px; border-radius: 50%; border-top: 2px solid #fff; animation: ol-olita 700ms var(--ease-carta, ease) forwards; }
+@keyframes ol-olita { to { transform: translateX(350%); opacity: 0; } }
+.ol-cifras { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.ol-cifra { font-size: clamp(2.3rem, 10vw, 2.6rem); line-height: 1; color: var(--tinta); text-shadow: 0 1px 0 rgb(255 255 255 / .7), 0 -1px 1px rgb(120 100 70 / .3); }
+.ol-cifra-v { display: inline-block; }
+.ol-cuenta[data-vivo] .ol-cifra-v { animation: ol-cifra 600ms var(--ease-carta, ease) both; }
+@keyframes ol-cifra { from { opacity: .3; filter: blur(3px); } }
+.ol-unidad { margin-top: .4rem; font-size: 1.0625rem; font-weight: 600; }
+.ol-cuenta-fecha { font-size: clamp(1.6rem, 7vw, 2.1rem); line-height: 1.25; color: var(--tinta); }
+.ol-marea-nota { margin-top: 1.4rem; font-size: 1.0625rem; font-style: italic; color: var(--tinta); }
+
+/* ==================================================================
+   BOYAS (programa)
+   ================================================================== */
+.ol-boyas { position: relative; margin-top: 2.5rem; padding-left: 3.4rem; }
+.ol-boyas::before { content: ""; position: absolute; left: 1.2rem; top: 0; bottom: 0; width: 10px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='40'%3E%3Cpath d='M5 0 C9 10 1 20 5 30 S9 40 5 40' fill='none' stroke='%230e6973' stroke-opacity='.45' stroke-width='1.5'/%3E%3C/svg%3E") 0 0 / 10px 40px repeat-y; }
+.ol-boyas li { position: relative; display: grid; padding-bottom: 1.9rem; }
+.ol-boya { position: absolute; left: -3.35rem; top: -.2rem; width: 2.4rem; }
+.ol-boya svg { width: 100%; height: auto; fill: none; stroke: var(--tinta); stroke-width: 1.4; stroke-linejoin: round; }
+.ol-boya svg path:nth-child(2) { fill: #fffcf6; }
+.ol-boya .ol-boya-banda { stroke: var(--acento); stroke-width: 4; }
+.ol-boya .ol-boya-agua { stroke: color-mix(in srgb, var(--acento) 60%, var(--somera)); }
+.ol-boya-hora { font-family: var(--display); font-size: 1.75rem; line-height: 1.1; color: var(--acento-texto); }
+.ol-boya-que { font-weight: 600; font-size: 1.1875rem; }
+.ol-boya-donde { font-size: 1.0625rem; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    html.js .ol-boya { animation: ol-boya linear both; animation-timeline: view(); animation-range: entry calc(5% + var(--i) * 6%) cover 30%; }
+  }
+}
+@keyframes ol-boya { 0% { transform: translateY(12px) rotate(-8deg); opacity: 0; } 60% { transform: translateY(-3px) rotate(4deg); opacity: 1; } 100% { transform: none; opacity: 1; } }
+
+/* ==================================================================
+   GUIJARROS PINTADOS (dress code)
+   ================================================================== */
+.ol-guijarros { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-top: 2.5rem; }
+.ol-guijarros li {
+  width: 3.8rem; height: 3.2rem;
+  background: radial-gradient(70% 60% at 35% 30%, rgb(255 255 255 / .35), transparent 60%), var(--c);
+  box-shadow: 0 8px 12px -8px rgb(15 47 58 / .5), inset 0 -4px 8px rgb(0 0 0 / .08);
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .ol-guijarros li { animation: ol-rueda linear both; animation-timeline: view(); animation-range: entry 20% cover 40%; }
+  }
+}
+@keyframes ol-rueda { from { transform: translateX(-6px) rotate(-40deg); opacity: .2; } to { transform: none; opacity: 1; } }
+
+/* ==================================================================
+   CAJA DE CONCHAS (regalos), RSVP y CIERRE
+   ================================================================== */
+.ol-regalo { padding-top: 4rem; }
+.ol-regalo-conchas { display: flex; justify-content: center; gap: .6rem; margin-bottom: -4rem; }
+.ol-regalo-conchas svg { width: 30px; }
+.ol-rsvp { padding-top: 4.5rem; }
+.ol-rsvp #confirmar { padding-top: 2rem; }
+.ol-rsvp .ol-antes { color: var(--acento-texto); }
+
+.ol-despedida { position: relative; overflow: clip; isolation: isolate; }
+.ol-cierre-conchas { margin-bottom: 1rem; display: flex; gap: .6rem; }
+.ol-cierre-conchas svg { width: 34px; }
+/* La última ola moja la firma sin borrarla. */
+.ol-moja { position: absolute; z-index: -1; left: 0; right: 0; top: 34%; height: 8rem; pointer-events: none; background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--somera) 22%, transparent) 40%, transparent); opacity: 0; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    html.js .ol-moja { animation: ol-moja linear both; animation-timeline: view(); animation-range: cover 20% cover 50%; }
+  }
+}
+@keyframes ol-moja { 0% { transform: translateX(100%); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateX(0); opacity: .9; } }
+
+/* —— ondas al tocar —— */
+.ol-onda {
+  position: fixed; z-index: 40; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; pointer-events: none;
+  border: 1.5px solid color-mix(in srgb, var(--acento) 60%, #fff);
+  animation: ol-onda 900ms var(--ease-carta, cubic-bezier(.22,.61,.36,1)) backwards;
+}
+@keyframes ol-onda { from { transform: scale(1); opacity: .9; } to { transform: scale(9); opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .ol-nombres, .ol-lema, .ol-agua, .ol-espuma, .ol-cifra-v, .ol-onda, .ol-arena :is(.ol-concha, .ol-estrella) { animation: none !important; }
+  .ol-olita { display: none; }
+}

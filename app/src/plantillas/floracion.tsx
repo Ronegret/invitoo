@@ -1,136 +1,87 @@
-import {
-  Album,
-  Alojamiento,
-  Capitulos,
-  Cierre,
-  CuentaAtras,
-  DressCode,
-  Entra,
-  Galeria,
-  Hashtag,
-  Itinerario,
-  Muro,
-  Notas,
-  Playlist,
-  PortadaFoto,
-  Regalos,
-  Respiro,
-  Rsvp,
-  type Props,
-} from "./comun";
+import { Figtree, Fraunces } from "next/font/google";
+import { Florecer } from "@/components/flores";
+import { Despedida, Secciones, Y, type Props } from "./comun";
+import { datosPortada } from "./datos-portada";
+import Lienzo from "./Lienzo";
 
 /**
- * FLORACIÓN — boda de campo, primavera, verdes y terracota
+ * FLORACIÓN — boda de campo o de jardín (absorbe Jardín, Terracota y Brasa).
  *
- * Criterio: **se entra por la emoción**. Una boda de campo se elige con el
- * corazón, así que aquí manda la fotografía y la historia, y la logística
- * viene detrás. El itinerario va en lista compacta y no en tarjetas
- * centradas: en el campo hay cuatro momentos y se leen de un vistazo.
+ * Tipografía: Fraunces con el eje SOFT al máximo —una serif blanda, de
+ * tinta que se corre— + Figtree. Fondo: papel verde muy pálido, o barro en
+ * la variante Brasa. Ornamento: ramas de línea que se dibujan solas.
+ * Portada: la foto dentro de un ARCO de invernadero, con dos ramas de olivo
+ * creciendo por los lados. Orden: la historia primero, porque en el campo
+ * hay tiempo; el itinerario justo después.
  */
-export default function Floracion({ inv, b }: Props) {
-  const portada = b("portada");
-  const itinerario = b("itinerario");
-  const capitulos = b("capitulos");
-  const galeria = b("galeria");
-  const notas = b("notas");
-  const hashtag = b("hashtag");
-  const dress = b("dressCode");
-  const aloj = b("alojamiento");
-  const playlist = b("playlist");
-  const regalos = b("regalos");
-  const album = b("album");
-  const rsvp = b("rsvp");
+const display = Fraunces({
+  subsets: ["latin"],
+  variable: "--p-display",
+  axes: ["SOFT", "opsz"],
+  style: ["normal", "italic"],
+  display: "swap",
+  preload: false,
+});
+const texto = Figtree({
+  subsets: ["latin"],
+  variable: "--p-texto",
+  display: "swap",
+  preload: false,
+});
 
+function Portada(props: Props) {
+  const d = datosPortada(props);
   return (
-    <>
-      {portada && (
-        <PortadaFoto
-          a={inv.pareja.a}
-          b={inv.pareja.b}
-          fecha={inv.pareja.fecha}
-          frase={portada.frase}
-          foto={portada.foto}
-          variante="centro"
-        />
+    <header className="relative overflow-hidden px-6 pb-20 pt-[max(2rem,env(safe-area-inset-top))] text-center">
+      <div className="relative mx-auto w-[78%] max-w-[22rem]">
+        <div className="floracion-arco aspect-[3/4] w-full overflow-hidden bg-[color-mix(in_srgb,var(--acento)_18%,var(--papel))]">
+          {d.foto && (
+            /* eslint-disable-next-line @next/next/no-img-element -- AVIF ya optimizado */
+            <img
+              src={d.foto}
+              alt={`${d.a} y ${d.b}`}
+              width={900}
+              height={1200}
+              fetchPriority="high"
+              className="foto-entra respira-lento h-full w-full object-cover"
+            />
+          )}
+        </div>
+      </div>
+      {/* El momento: cuatro ramas nacen en los bordes de la pantalla y
+          crecen hacia los nombres; al acabar, abre el azahar. */}
+      <Florecer variante="olivo" alCargar retraso={200} tamano="min(48vw, 230px)" densidad="plena" className="floracion-rama izq-1" />
+      <Florecer variante="azahar" alCargar retraso={900} tamano="min(28vw, 120px)" className="floracion-rama izq-2" />
+      <Florecer variante="eucalipto" alCargar retraso={500} lado="derecha" tamano="min(46vw, 220px)" densidad="plena" className="floracion-rama der-1" />
+      <Florecer variante="peonia" alCargar retraso={1200} lado="derecha" tamano="min(26vw, 110px)" className="floracion-rama der-2" />
+      <h1 className="display asienta vt-nombres mt-10 text-[clamp(3rem,14vw,5rem)] leading-[1]">
+        {d.a} <Y signo="&" /> {d.b}
+      </h1>
+      <p className="mt-5 text-[1.125rem] first-letter:uppercase">{d.fechaLarga}</p>
+      <p className="mt-1 text-[1.0625rem] opacity-80">{d.lugar}</p>
+      {d.frase && (
+        <p className="mx-auto mt-6 max-w-[25rem] text-[1.125rem] leading-[1.7] opacity-90">{d.frase}</p>
       )}
+      <a
+        href="#confirmar"
+        className="mt-9 inline-flex min-h-14 items-center bg-[var(--acento)] px-9 text-[1.0625rem] text-[var(--sobre-acento)]"
+        style={{ borderRadius: "var(--radio)" }}
+      >
+        Confirmar asistencia
+      </a>
+    </header>
+  );
+}
 
-      {capitulos && (
-        <Entra>
-          <Capitulos {...capitulos} />
-        </Entra>
-      )}
+/** Las clases de next/font de esta plantilla (también las usa el <main>). */
+export const fuentes = `${display.variable} ${texto.variable}`;
 
-      <Respiro foto={galeria?.fotos[1]} frase={"Nos casamos entre olivos. Venid con calzado cómodo."} />
-
-      {itinerario && (
-        <Entra>
-          <Itinerario {...itinerario} fecha={inv.pareja.fecha} forma="lista" />
-        </Entra>
-      )}
-
-      <Entra>
-        <CuentaAtras hasta={inv.pareja.fecha} />
-      </Entra>
-
-      {galeria && (
-        <Entra>
-          <Galeria fotos={galeria.fotos} titulo={galeria.titulo} variante="sangre" />
-        </Entra>
-      )}
-
-      {dress && (
-        <Entra>
-          <DressCode {...dress} />
-        </Entra>
-      )}
-
-      {aloj && (
-        <Entra>
-          <Alojamiento {...aloj} />
-        </Entra>
-      )}
-
-      {notas && (
-        <Entra>
-          <Notas {...notas} />
-        </Entra>
-      )}
-
-      {playlist && (
-        <Entra>
-          <Playlist {...playlist} />
-        </Entra>
-      )}
-
-      {regalos && (
-        <Entra>
-          <Regalos {...regalos} />
-        </Entra>
-      )}
-
-      {album && (
-        <Entra>
-          <Album {...album} />
-        </Entra>
-      )}
-
-      {hashtag && (
-        <Entra>
-          <Hashtag {...hashtag} />
-        </Entra>
-      )}
-
-      {rsvp && (
-        <Entra>
-          <Rsvp slug={inv.slug} {...rsvp} />
-        </Entra>
-      )}
-
-      <Entra>
-        <Muro slug={inv.slug} />
-      </Entra>
-
-      <Cierre a={inv.pareja.a} b={inv.pareja.b} fecha={inv.pareja.fecha} />
-    </>
+export default function Floracion(props: Props) {
+  return (
+    <Lienzo inv={props.inv} variante={props.variante} fuentes={fuentes}>
+      <Portada {...props} />
+      <Secciones {...props} opciones={{ tonos: { capitulos: "velo", notas: "velo", playlist: "hondo" } }} />
+      <Despedida inv={props.inv} ornamento="rama" />
+    </Lienzo>
   );
 }

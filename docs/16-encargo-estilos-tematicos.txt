@@ -1,0 +1,40 @@
+Actúa como un Director de Arte de vanguardia y un equipo completo de desarrollo Frontend especializado en experiencias web inmersivas. Tu objetivo es diseñar y estructurar plantillas de invitaciones de boda digitales premium para el proyecto "Invitoo".
+Para lograr un resultado excepcional, dividirás tu procesamiento interno asumiendo el rol de tres agentes expertos simultáneos:
+1. Agente UI/UX (Mobile-First): Especializado en interfaces táctiles, diseño elegante, toques de modernismo y usabilidad en pantallas pequeñas, asumiendo que el 95% de los invitados lo verán en su móvil.
+2. Agente de Animación e Interacción: Experto en GSAP, Framer Motion o CSS avanzado. Encargado de crear experiencias didácticas donde el scroll desencadene magia: imágenes que aparecen suavemente, elementos flotantes, efectos parallax y transiciones que enamoren al usuario.
+3. Agente Frontend (Estructura): Encargado de la arquitectura de la información, asegurando la integración perfecta de elementos multimedia y scripts.
+Requisitos Técnicos Obligatorios para TODAS las plantillas:
+ Mobile-First Inmersivo: El diseño debe estar pensado nativamente para móvil, ocupando toda la pantalla y guiando el pulgar del usuario.
+ Vídeo Introductorio (Hero Section): La primera impresión debe ser un vídeo (de los novios o temático) integrado de forma elegante en la cabecera, con reproducción automática silenciada o un botón de "Play" estilizado.
+ Cuenta Regresiva Dinámica: Un reloj interactivo (días, horas, minutos, segundos) hasta el día de la boda, integrado visualmente con el tema.
+ Scroll Storytelling: A medida que se hace scroll, la información (dónde, cuándo, dress code, regalos) debe revelarse con animaciones sofisticadas. No debe ser estático bajo ninguna circunstancia.
+Entregables por cada estilo:
+Para cada uno de los estilos listados a continuación, tu equipo de agentes deberá entregar:
+1. Concepto y Dirección de Arte: Paleta de colores exacta (Hex), selección tipográfica (Google Fonts) y descripción del mood visual.
+2. Guion de Scroll y Animaciones: Descripción paso a paso de qué sucede en la pantalla al hacer scroll hacia abajo (ej. "Al llegar a la fecha, caen pétalos en 3D mientras el fondo hace zoom").
+3. Estructura de Código Sugerida: Los componentes clave en HTML/CSS/JS (o React/Tailwind) para el Vídeo, el Contador y la lógica base del Scroll Animation.
+Lista de Estilos a Desarrollar:
+Procesa esta lista paso a paso. Puedes entregar los primeros 3 estilos en tu primera respuesta y preguntarme si quieres que continúes con los demás.
+Época, Elegancia y Románticos
+ Bridgerton / Alta Sociedad: Regencia inglesa, tonos pastel, fuentes caligráficas, cera sellada.
+ Elegancia Pura / Minimalista: Sobrio, sofisticado, espacios en blanco, serif fina, oro o plata.
+ Cuentos de Hadas: Magia, polvo de hadas, libros antiguos, púrpura y dorado.
+ Castillos / Nobleza: Realeza, escudos de armas, pergamino, borgoña y oro viejo.
+ Historia Romántica: Vintage, papel envejecido, sepia, encajes, máquina de escribir.
+Viajes, Naturaleza y Entornos
+ Viajeros Enamorados: Pasaporte, mapas del mundo, sellos, maletas, tonos tierra.
+ Playa y Mar: Acuarelas de olas, arena, turquesa, blanco, tipografías fluidas.
+ Bosque Encantado: Rústico, pino, eucalipto, madera kraft, verdes profundos.
+ El Espacio y los Planetas: Galaxias, constelaciones, azul oscuro, violeta, plata.
+ Natación y Agua: Dinámico, reflejos de piscina o mar abierto, tonos cian, burbujas animadas.
+Música, Baile y Vida Nocturna
+ Conciertos / Festival: Entrada VIP, códigos de barras, line-up, colores vibrantes.
+ Rock & Roll: Cuero, vinilos, guitarras, negro, rojo, actitud alternativa.
+ Reggaeton y Fiesta: Luces de neón, flúor, urbano, nocturno.
+ Salsa y Fuego: Colores cálidos, movimiento, rojo, siluetas de bailarines.
+ Bachata Romántica: Tonos púrpuras, guitarras acústicas, ambiente íntimo.
+Pasatiempos, Deportes y Estilo de Vida
+ Cerveza / Artesanal: Lúpulos, jarras, pizarra, ámbar, rústico industrial.
+ Fútbol: Césped, entrada de estadio, alineación, colores de equipo.
+ Runners y Deporte: Maratón, dorsales, zapatillas, cronómetros, energía pura.
+ Coches y Compras (Lujo): Alta costura, boutiques, vehículos clásicos, sofisticación.

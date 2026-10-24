@@ -1,0 +1,442 @@
+/* ------------------------------------------------------------------
+   VIDA (F2) — lo que hace que las nueve invitaciones se muevan con el
+   scroll y que cada portada tenga su «momento».
+
+   Reglas de este archivo:
+    · Solo opacity, transform, filter, clip-path y colores de fondo.
+    · El scroll manda: nada secuestra el desplazamiento. Las animaciones
+      ligadas al scroll (`animation-timeline: view()`) van dentro de
+      @supports; donde no existen, el contenido se ve quieto y entero
+      (las secciones siguen entrando con el observador del lienzo).
+    · `prefers-reduced-motion`: todo lo de aquí se apaga y se ve el
+      estado final.
+    · Sin JavaScript: nada de esto esconde contenido. Lo ligado al scroll
+      es CSS puro, y lo que sale «desde» invisible llega a su estado final
+      en cuanto asoma en pantalla.
+    · Los momentos de portada esperan a que la apertura se retire
+      (`.wow` en pausa mientras `.apertura[data-estado="dentro"]`).
+   ------------------------------------------------------------------ */
+
+/* —— utilidades —— */
+.lienzo .decor { pointer-events: none; user-select: none; }
+.lienzo img { outline: 1px solid rgb(0 0 0 / 0.05); outline-offset: -1px; }
+
+main:has(> .apertura[data-estado="dentro"]) .lienzo :is(.wow, .wow *, .wow::before, .wow::after, .wow *::before, .wow *::after) {
+  animation-play-state: paused !important;
+}
+
+/* ==================================================================
+   1. TONOS DE SECCIÓN — la página cambia de color al bajar.
+      velo: papel teñido del acento. hondo: la sección en negativo.
+      Variables de tokens.ts (tonosDerivados), con AA garantizado; el
+      color en vivo (G3) las recalcula.
+   ================================================================== */
+.lienzo .tono { position: relative; isolation: isolate; }
+.lienzo .tono-velo {
+  background-color: var(--velo);
+  --acento-texto: var(--velo-acento);
+}
+.lienzo .tono-hondo {
+  background-color: var(--hondo);
+  color: var(--hondo-texto);
+  --tinta: var(--hondo-texto);
+  --papel: var(--hondo);
+  --acento-texto: var(--hondo-acento);
+  --acento: var(--hondo-acento);
+  --sobre-acento: var(--hondo);
+  --velo: var(--hondo);
+}
+.lienzo .tono-hondo::before { display: none; }
+.lienzo .tono-hondo + [data-revelar]::before { display: none; }
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* El fondo pasa del papel a su tono en los primeros 180 px. */
+    .lienzo .tono-velo {
+      animation: tono-velo linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 180px;
+    }
+    .lienzo .tono-hondo {
+      animation: tono-hondo linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 140px;
+    }
+  }
+}
+@keyframes tono-velo { from { background-color: var(--papel-base); } }
+@keyframes tono-hondo { from { background-color: var(--papel-base); } }
+
+/* ==================================================================
+   2. REVELADOS LIGADOS AL SCROLL
+   ================================================================== */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Los títulos de sección suben y se enfocan mientras entran. */
+    html.js .lienzo section h2.display {
+      animation: vida-titulo linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 28%;
+    }
+    /* Fotos que se descubren con una máscara, de abajo arriba. */
+    html.js .lienzo .revela-foto {
+      animation: vida-mascara linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 42%;
+    }
+    html.js .lienzo img.revela-foto {
+      animation: vida-mascara-sola linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 45%;
+    }
+    html.js .lienzo .revela-foto img {
+      animation: vida-mascara-img linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 50%;
+    }
+    /* El corte a sangre: la foto se abre como una ventana y la frase se
+       enfoca al llegar al centro. Parallax suave, solo transform. */
+    html.js .lienzo .respiro-corte {
+      animation: vida-ventana linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 45%;
+    }
+    html.js .lienzo .respiro-foto {
+      animation: vida-parallax linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+    html.js .lienzo .respiro-frase {
+      animation: vida-enfoca linear both;
+      animation-timeline: view();
+      animation-range: cover 18% cover 46%;
+    }
+    /* Las citas grandes: la comilla crece y la frase se asienta. */
+    html.js .lienzo .cita-comilla {
+      animation: vida-comilla linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 35%;
+    }
+    /* Carruseles: cada tarjeta se posa al entrar en el carril (eje x). */
+    html.js .lienzo .carril > * > :is(figure, img, div):first-child {
+      animation: vida-carril linear both;
+      animation-timeline: view(inline);
+      animation-range: entry 0% entry 100%;
+    }
+  }
+}
+@keyframes vida-titulo {
+  from { opacity: 0; transform: translateY(28px); filter: blur(6px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+@keyframes vida-mascara { from { clip-path: inset(18% 8% 0 8% round var(--radio, 2px)); } to { clip-path: inset(0 0 0 0); } }
+@keyframes vida-mascara-sola { from { clip-path: inset(22% 6% 0 6% round var(--radio, 2px)); filter: saturate(.7); } to { clip-path: inset(0 0 0 0); filter: none; } }
+@keyframes vida-mascara-img { from { transform: scale(1.14); filter: saturate(.7); } to { transform: none; filter: none; } }
+@keyframes vida-ventana { from { clip-path: inset(10% 7% 10% 7% round 28px); } to { clip-path: inset(0 0 0 0 round 0); } }
+@keyframes vida-parallax { from { transform: translateY(-7%) scale(1.16); } to { transform: translateY(7%) scale(1.16); } }
+@keyframes vida-enfoca {
+  from { opacity: 0; filter: blur(10px); transform: scale(1.06); letter-spacing: 0.04em; }
+  to { opacity: 1; filter: none; transform: none; }
+}
+@keyframes vida-comilla { from { opacity: 0; transform: translateY(30%) scale(.6); } }
+@keyframes vida-carril { from { opacity: .45; transform: scale(.92); } to { opacity: 1; transform: none; } }
+
+/* ==================================================================
+   3. FECHAS QUE SE ENFOCAN — <Enfoca> (vida.tsx)
+   ================================================================== */
+.enfoca-palabra { display: inline-block; white-space: nowrap; }
+.enfoca-l { display: inline-block; }
+@media (prefers-reduced-motion: no-preference) {
+  .enfoca[data-enfoca="carga"] .enfoca-l {
+    animation: enfoca-l 900ms var(--ease-carta, cubic-bezier(.22,.61,.36,1)) both;
+    animation-delay: calc(var(--e0, 0ms) + var(--l) * 42ms);
+  }
+  main:has(> .apertura[data-estado="dentro"]) .enfoca[data-enfoca="carga"] .enfoca-l { animation-play-state: paused; }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .enfoca[data-enfoca="scroll"] { view-timeline: --enfoca block; }
+    .enfoca[data-enfoca="scroll"] .enfoca-l {
+      animation: enfoca-l linear both;
+      animation-timeline: --enfoca;
+      animation-range: cover calc(4% + var(--l) * 0.9%) cover calc(26% + var(--l) * 0.9%);
+    }
+  }
+}
+@keyframes enfoca-l {
+  from { opacity: 0; filter: blur(7px); transform: translateY(.18em) scale(1.12); }
+  to { opacity: 1; filter: none; transform: none; }
+}
+
+/* ==================================================================
+   4. CITA GRANDE — <CitaGrande> (vida.tsx)
+   ================================================================== */
+.cita-grande {
+  display: grid;
+  gap: 2.5rem;
+  max-width: 64rem;
+  margin-inline: auto;
+  padding: 6rem 1.5rem 5rem;
+  text-align: center;
+}
+.cita-texto { position: relative; }
+.cita-comilla {
+  display: block;
+  font-family: var(--display);
+  font-size: clamp(6rem, 30vw, 10rem);
+  line-height: 0.6;
+  height: 0.5em;
+  color: var(--acento-texto);
+  opacity: 0.55;
+}
+.cita-frase {
+  max-width: 19ch;
+  margin-inline: auto;
+  font-style: italic;
+  font-size: clamp(2rem, 8.4vw, 3.4rem);
+  line-height: 1.16;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.cita-firma { margin-top: 1.75rem; font-size: 1.0625rem; letter-spacing: 0.08em; opacity: .85; }
+.cita-foto { margin: 0; overflow: hidden; border-radius: var(--radio); box-shadow: var(--sombra-3); }
+.cita-foto img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+@media (min-width: 768px) {
+  .cita-con-foto { grid-template-columns: 1fr 1.2fr; align-items: center; text-align: left; }
+  .cita-con-foto .cita-frase { margin-inline: 0; }
+}
+
+/* ==================================================================
+   5. SOMBRAS DEL SISTEMA (G2) dentro de la invitación
+   ================================================================== */
+.lienzo .sobre-cartulina { box-shadow: var(--sombra-papel, 0 26px 50px -34px rgba(60, 30, 20, .45)); }
+.lienzo .carta-tarjeta { box-shadow: var(--sombra-papel); }
+.lienzo .boton-oro { box-shadow: var(--sombra-dorada); }
+.lienzo .carta-foto,
+.lienzo .carril img { box-shadow: var(--sombra-2); }
+.lienzo .como-selector { box-shadow: var(--sombra-1); }
+.lienzo[data-modo="oscuro"] .carril img { box-shadow: none; }
+.lienzo a.min-h-14:not(.boton-oro):not([class*="border-"]) { box-shadow: var(--sombra-2); }
+@media (hover: hover) and (pointer: fine) {
+  .lienzo a.min-h-14 { transition: transform 200ms var(--ease-carta), box-shadow 200ms var(--ease-carta); }
+  .lienzo a.min-h-14:hover { transform: translateY(-1px); }
+}
+.lienzo a.min-h-14:active { transform: scale(.97); }
+
+/* ==================================================================
+   6. LOS MOMENTOS DE PORTADA
+   ================================================================== */
+
+/* —— SOBRE: la guirnalda de peonías alrededor de los nombres —— */
+.sobre-peonias { position: absolute; z-index: 1; }
+.sobre-peonias.arriba { top: -14px; left: -14px; }
+.sobre-peonias.abajo { bottom: -14px; right: -14px; }
+.sobre-peonias.arriba-der { top: -14px; right: -14px; }
+.sobre-peonias.abajo-izq { bottom: -14px; left: -14px; }
+.sobre-cartulina > :not(.sobre-peonias) { position: relative; z-index: 2; }
+
+/* —— FLORACIÓN: ramas que crecen desde los bordes de la pantalla —— */
+.floracion-rama { position: absolute; z-index: 2; }
+/* Todas nacen a la altura del arco: nunca bajan hasta los nombres. */
+.floracion-rama.izq-1 { left: 0; top: 40px; transform: translateX(-50%) rotate(56deg); transform-origin: 50% 100%; }
+.floracion-rama.izq-2 { left: 0; top: 150px; transform: translateX(-50%) rotate(84deg); transform-origin: 50% 100%; }
+.floracion-rama.der-1 { right: 0; top: 0; transform: translateX(50%) rotate(-58deg); transform-origin: 50% 100%; }
+.floracion-rama.der-2 { right: 0; top: 130px; transform: translateX(50%) rotate(-82deg); transform-origin: 50% 100%; }
+.floracion-arco { position: relative; z-index: 1; box-shadow: var(--sombra-3); }
+
+/* —— MAR: el agua al pie de la foto, y la luz que rompe en ella —— */
+.mar-agua { position: absolute; inset: auto 0 0; height: 84px; overflow: hidden; pointer-events: none;
+  background: linear-gradient(to bottom, transparent 0, color-mix(in srgb, var(--acento) 26%, var(--papel)) 40%); }
+.mar-agua > svg { position: absolute; left: 0; bottom: 0; width: 200%; height: 100%; }
+.mar-agua > svg path { fill: var(--acento); }
+.mar-ola-1 path { fill-opacity: .38; }
+.mar-ola-2 { height: 82% !important; }
+.mar-ola-2 path { fill: color-mix(in srgb, var(--acento) 70%, var(--papel)); fill-opacity: .55; }
+.mar-ola-3 { height: 62% !important; }
+.mar-ola-3 path { fill: color-mix(in srgb, var(--acento) 82%, #000); fill-opacity: .55; }
+.mar-reflejo { position: absolute; inset: 10% 0 0; overflow: hidden; mix-blend-mode: screen;
+  -webkit-mask: linear-gradient(to bottom, transparent, #000 30%); mask: linear-gradient(to bottom, transparent, #000 30%); }
+.mar-reflejo > span { position: absolute; inset: 0 -50%; }
+.mar-brillos {
+  background:
+    radial-gradient(ellipse 18% 16% at 38% 46%, rgb(255 246 222 / .75), transparent 70%),
+    radial-gradient(ellipse 12% 10% at 66% 66%, rgb(255 246 222 / .6), transparent 70%),
+    repeating-linear-gradient(180deg, transparent 0 6px, rgb(255 250 235 / .3) 6px 7px, transparent 7px 12px);
+  -webkit-mask: radial-gradient(ellipse 38% 90% at 50% 60%, #000 25%, transparent 75%);
+  mask: radial-gradient(ellipse 38% 90% at 50% 60%, #000 25%, transparent 75%);
+  animation: mar-ondea 6s cubic-bezier(.45,0,.55,1) infinite alternate;
+}
+.mar-barrido {
+  background: linear-gradient(100deg, transparent 40%, rgb(255 248 230 / .5) 48%, rgb(255 255 255 / .8) 50%, rgb(255 248 230 / .5) 52%, transparent 60%);
+  animation: mar-barre 6.5s var(--ease-velo, cubic-bezier(.65,0,.35,1)) 1.2s infinite;
+}
+.mar-chispas {
+  background-image:
+    radial-gradient(2px 2px at 22% 44%, #fff 50%, transparent 52%),
+    radial-gradient(1.6px 1.6px at 41% 70%, #fff 50%, transparent 52%),
+    radial-gradient(2.4px 2.4px at 57% 38%, #fff 50%, transparent 52%),
+    radial-gradient(1.4px 1.4px at 68% 80%, #fff 50%, transparent 52%),
+    radial-gradient(2px 2px at 79% 55%, #fff 50%, transparent 52%),
+    radial-gradient(1.6px 1.6px at 33% 86%, #fff 50%, transparent 52%);
+  animation: mar-titila 1.8s ease-in-out infinite alternate;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .mar-ola-1 { animation: mar-deriva 14s linear infinite; }
+  .mar-ola-2 { animation: mar-deriva 10s linear infinite reverse; }
+  .mar-ola-3 { animation: mar-deriva 8s linear infinite; }
+}
+@keyframes mar-deriva { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes mar-ondea { from { transform: translateX(-4%) scaleY(1); } to { transform: translateX(4%) scaleY(1.12); } }
+@keyframes mar-barre { 0% { transform: translateX(-38%); opacity: 0; } 12% { opacity: 1; } 60%, 100% { transform: translateX(38%); opacity: 0; } }
+@keyframes mar-titila { from { opacity: .15; transform: translateX(-1%); } to { opacity: .95; transform: translateX(1%); } }
+
+/* —— VELO: el tul que se mece —— */
+.velo-tul { position: absolute; inset: 0 -12% 6%; z-index: 0; transform-origin: 50% 0; }
+.velo-tul.capa-1 {
+  background:
+    repeating-linear-gradient(62deg, color-mix(in srgb, var(--papel) 70%, transparent) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(-62deg, color-mix(in srgb, var(--papel) 70%, transparent) 0 1px, transparent 1px 5px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--papel) 40%, transparent), color-mix(in srgb, var(--papel) 26%, transparent));
+  -webkit-mask: radial-gradient(120% 92% at 50% 0, #000 58%, transparent 86%);
+  mask: radial-gradient(120% 92% at 50% 0, #000 58%, transparent 86%);
+  animation: velo-mece 7.5s cubic-bezier(.45,0,.55,1) infinite alternate;
+}
+.velo-tul.capa-2 {
+  inset: 0 -20% 32%;
+  background:
+    linear-gradient(90deg, transparent, color-mix(in srgb, var(--papel) 38%, transparent) 30%, transparent 46%, color-mix(in srgb, var(--papel) 30%, transparent) 70%, transparent),
+    linear-gradient(to bottom, color-mix(in srgb, var(--papel) 35%, transparent), transparent);
+  -webkit-mask: radial-gradient(120% 70% at 50% 0, #000 45%, transparent 76%);
+  mask: radial-gradient(120% 70% at 50% 0, #000 45%, transparent 76%);
+  animation: velo-mece-2 9.5s cubic-bezier(.45,0,.55,1) -3s infinite alternate;
+}
+@keyframes velo-mece { from { transform: skewX(-3deg) translateX(-2.5%) scaleY(1); } to { transform: skewX(3deg) translateX(2.5%) scaleY(1.05); } }
+@keyframes velo-mece-2 { from { transform: skewX(4deg) translateX(3%) scaleY(1.04); } to { transform: skewX(-4deg) translateX(-3%) scaleY(.97); } }
+
+/* —— CONSTELACIÓN: las estrellas dibujan las iniciales —— */
+.const-iniciales { display: block; width: min(78vw, 20rem); height: auto; margin-inline: auto; overflow: visible; }
+.const-iniciales .c-linea {
+  fill: none; stroke: var(--acento); stroke-width: 1.1; stroke-linecap: round; stroke-linejoin: round;
+  stroke-opacity: .75; vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1; stroke-dashoffset: 0;
+}
+.const-iniciales .c-estrella { fill: var(--tinta); transform-box: fill-box; transform-origin: center; }
+.const-iniciales .c-estrella.grande { fill: var(--acento); }
+.const-iniciales .c-fondo { fill: var(--tinta); opacity: .45; }
+.const-iniciales .c-halo { fill: var(--acento); opacity: .18; transform-box: fill-box; transform-origin: center; }
+@media (prefers-reduced-motion: no-preference) {
+  .const-iniciales .c-estrella { animation: c-nace 700ms var(--ease-sello, ease-out) calc(var(--d) * 1ms) both, c-titila 3.4s ease-in-out calc(var(--d) * 1ms + 900ms) infinite alternate; }
+  .const-iniciales .c-linea { animation: c-traza 1300ms cubic-bezier(.4,0,.2,1) calc(var(--d) * 1ms) both; }
+  .const-iniciales .c-fondo { animation: c-titila 4.6s ease-in-out calc(var(--d) * 1ms) infinite alternate; }
+  .const-iniciales .c-halo { animation: c-halo 4s ease-in-out 2.6s infinite alternate; }
+}
+@keyframes c-nace { from { opacity: 0; transform: scale(0); } 60% { opacity: 1; transform: scale(1.6); } to { opacity: 1; transform: none; } }
+@keyframes c-titila { from { opacity: 1; } to { opacity: .45; } }
+@keyframes c-traza { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes c-halo { from { transform: scale(.7); opacity: .08; } to { transform: scale(1.2); opacity: .26; } }
+
+/* —— TINTA: una gota que se expande —— */
+.tinta-portada { overflow: clip; position: relative; }
+.lienzo .tinta-gota { position: relative; }
+.tinta-mancha {
+  position: absolute; z-index: -1;
+  left: 50%; top: 50%;
+  width: 150vmax; height: 150vmax;
+  margin: -75vmax 0 0 -75vmax;
+  color: var(--tinta);
+  pointer-events: none;
+}
+.tinta-mancha svg { width: 100%; height: 100%; display: block; }
+.tinta-onda {
+  position: absolute; left: 50%; top: 50%;
+  width: 16px; height: 16px; margin: -8px 0 0 -8px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--tinta) 55%, transparent);
+  opacity: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tinta-mancha { animation: tinta-expande 2600ms cubic-bezier(.16,.84,.3,1) 1500ms both; }
+  .tinta-onda { animation: tinta-onda 2400ms cubic-bezier(.2,.7,.3,1) calc(1550ms + var(--o) * 260ms) both; }
+}
+@keyframes tinta-expande { from { transform: scale(0.004); opacity: 1; } to { transform: scale(1); opacity: 1; } }
+@keyframes tinta-onda { from { transform: scale(1); opacity: .9; } to { transform: scale(26); opacity: 0; } }
+
+/* —— REGISTRO: el sello con tinta y el acento que se mueve —— */
+.lienzo .registro-sello-fijo { transform-origin: 50% 50%; }
+.registro-marca { position: relative; }
+.registro-marca::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -0.05em; right: -0.05em; bottom: 0.2em;
+  height: 0.36em;
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--acento) 38%, var(--papel)) 0%,
+    color-mix(in srgb, var(--acento) 14%, var(--papel)) 50%,
+    color-mix(in srgb, var(--acento) 38%, var(--papel)) 100%) 0 0 / 200% 100%;
+  transform-origin: 0 50%;
+  /* Dentro del h1 (que con su animación es un contexto de apilado) el
+     marcador queda ENCIMA del texto recortado del reflejo: multiplicar
+     hace que la tinta se vea igual de oscura a través del color. */
+  mix-blend-mode: multiply;
+}
+.registro-cinta {
+  display: block; height: 6px; overflow: hidden;
+  background: color-mix(in srgb, var(--acento) 22%, var(--papel));
+}
+.registro-cinta::after {
+  content: ""; display: block; height: 100%; width: 34%;
+  background: var(--acento);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .lienzo .registro-sello-fijo { animation: registro-estampa 900ms var(--ease-sello, cubic-bezier(.3,1.3,.56,1)) 1500ms both; }
+  .registro-tinta { animation: registro-salpica 900ms ease-out 1950ms both; }
+  .registro-marca::before { animation: registro-marca 1100ms var(--ease-carta) 900ms both, registro-vive 6s ease-in-out 2200ms infinite alternate; }
+  .registro-cinta::after { animation: registro-cinta 4.8s cubic-bezier(.65,0,.35,1) 600ms infinite alternate; }
+}
+@keyframes registro-estampa {
+  0% { opacity: 0; transform: translateY(-30px) rotate(-26deg) scale(1.9); }
+  55% { opacity: 1; transform: rotate(-12deg) scale(.94); }
+  100% { opacity: .9; transform: rotate(-12deg) scale(1); }
+}
+@keyframes registro-salpica { from { opacity: 0; transform: scale(.6); } 40% { opacity: .5; } to { opacity: .22; transform: scale(1); } }
+@keyframes registro-marca { from { transform: scaleX(0); } to { transform: none; } }
+@keyframes registro-vive { from { background-position: 0 0; } to { background-position: 100% 0; } }
+@keyframes registro-cinta { from { transform: translateX(-100%); } to { transform: translateX(300%); } }
+.registro-tinta { position: absolute; z-index: -1; pointer-events: none; color: var(--acento); }
+
+/* —— AZULEJO: las teselas giran —— */
+.tesela { transform-box: fill-box; transform-origin: center; }
+@media (prefers-reduced-motion: no-preference) {
+  .puerta-viva .tesela {
+    animation:
+      tesela-entra 900ms var(--ease-carta) calc(var(--t) * 1ms) both,
+      tesela-gira 11s cubic-bezier(.65,0,.35,1) calc(var(--t) * 1ms + 3200ms) infinite;
+  }
+}
+@keyframes tesela-entra { from { opacity: 0; transform: rotate(-90deg) scale(.3); } to { opacity: 1; transform: none; } }
+/* Un cuarto de vuelta cada 11 s, en ola diagonal. La pieza es simétrica:
+   al acabar el giro es la misma, así que el salto del bucle no se ve. */
+@keyframes tesela-gira { 0%, 6% { transform: none; } 14%, 100% { transform: rotate(90deg); } }
+
+/* —— CARTA —— */
+.carta-flores { position: absolute; z-index: 0; }
+.carta-flores.arriba { top: -12px; left: -12px; }
+.carta-flores.arriba-der { top: -12px; right: -12px; }
+.carta-flores.abajo { bottom: -10px; right: -10px; }
+.carta-marco > :not(.carta-flores) { position: relative; z-index: 1; }
+
+/* ==================================================================
+   7. MENOS MOVIMIENTO: todo quieto y entero.
+   ================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .lienzo .mar-reflejo > span, .lienzo .mar-ola path, .lienzo .mar-agua > svg { animation: none !important; }
+  .lienzo .velo-tul { animation: none !important; }
+}
+
+/* El reflejo dorado de F1 recorta el degradado al texto (background-clip),
+   y el fondo solo llega a la caja del h1: con interlineados < 1 las
+   letras se salen por arriba y por abajo y quedaban cortadas. Aire
+   dentro de la caja (sin tocar los márgenes de cada plantilla). La «y» y el
+   marcador conservan su color propio. */
+.lienzo h1.vt-nombres[data-nv-brillo] :is(.y-gesto, .carta-y) { -webkit-text-fill-color: currentColor; }

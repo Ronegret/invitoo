@@ -152,7 +152,10 @@ export default function PantallaViva({
       role="img"
       aria-label={titulo}
     >
-      {tira && (
+      {/* Rendimiento: la tira entera (600×~8.000 px) no entra hasta que la
+          página ha cargado y está ociosa (`puede`). Antes, solo su primera
+          pantalla (~40 KB): así el LCP es una imagen pequeña y no la tira. */}
+      {tira && puede && (
         <picture>
           <source type="image/avif" srcSet={`/sitio/recorridos/${tira}.avif`} />
           <img
@@ -160,9 +163,25 @@ export default function PantallaViva({
             alt=""
             width={600}
             height={altoTira}
-            loading={prioridad && !video ? "eager" : "lazy"}
+            loading="lazy"
             decoding="async"
             className={s.tira}
+            draggable={false}
+          />
+        </picture>
+      )}
+      {tira && !puede && (
+        <picture>
+          <source type="image/avif" srcSet={`/sitio/recorridos/${tira}-inicio.avif`} />
+          <img
+            src={`/sitio/recorridos/${tira}-inicio.webp`}
+            alt=""
+            width={600}
+            height={1302}
+            loading={prioridad && !video ? "eager" : "lazy"}
+            fetchPriority={prioridad && !video ? "high" : undefined}
+            decoding="async"
+            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "top", zIndex: 0 }}
             draggable={false}
           />
         </picture>
